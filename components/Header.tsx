@@ -129,6 +129,7 @@ export const Header: React.FC = () => {
         <button
           className="lg:hidden z-50 w-12 h-12 flex items-center justify-center text-white bg-white/5 rounded-full border border-white/10 backdrop-blur-md active:scale-95 transition-all hover:bg-white/10"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Abrir menu de navegação"
         >
           {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>

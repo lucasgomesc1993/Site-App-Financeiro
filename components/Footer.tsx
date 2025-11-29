@@ -14,19 +14,19 @@ export const Footer: React.FC = () => {
                         </div>
                         <span className="text-xl font-bold text-white tracking-tight">FinZap.ai</span>
                     </div>
-                    <p className="text-sm text-gray-500 max-w-xs text-center md:text-left">
+                    <p className="text-sm text-gray-400 max-w-xs text-center md:text-left">
                         Inteligência artificial aplicada à liberdade financeira. Simples, seguro e direto no seu WhatsApp.
                     </p>
-                    <span className="text-xs text-gray-600">© 2025 FinZap AI. Todos os direitos reservados.</span>
+                    <span className="text-xs text-gray-400">© 2025 FinZap AI. Todos os direitos reservados.</span>
                 </div>
 
                 <div className="flex flex-col items-center md:items-end gap-6">
                     <div className="flex gap-6">
-                        <a href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram /></a>
-                        <a href="#" className="text-gray-400 hover:text-white transition-colors"><Youtube /></a>
-                        <a href="#" className="text-gray-400 hover:text-white transition-colors"><Linkedin /></a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Instagram"><Instagram /></a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Youtube"><Youtube /></a>
+                        <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin /></a>
                     </div>
-                    <div className="flex gap-6 text-sm text-gray-500">
+                    <div className="flex gap-6 text-sm text-gray-400">
                         <Link to="/terms" className="hover:text-gray-300">Termos de Uso</Link>
                         <Link to="/privacy" className="hover:text-gray-300">Privacidade</Link>
                         <Link to="/calculadoras" className="hover:text-gray-300">Calculadoras</Link>

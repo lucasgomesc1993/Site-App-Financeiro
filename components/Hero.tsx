@@ -63,7 +63,7 @@ export const Hero: React.FC = () => {
             <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#ffffff_50%,transparent_100%)]" />
 
-            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-accent px-8 py-4 text-lg font-medium text-white backdrop-blur-3xl transition-all group-hover:bg-accent/90 relative z-10">
+            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-accent px-8 py-4 text-lg font-bold text-[#0a0a0a] backdrop-blur-3xl transition-all group-hover:bg-accent/90 relative z-10">
               Testar Grátis Agora
             </span>
           </a>

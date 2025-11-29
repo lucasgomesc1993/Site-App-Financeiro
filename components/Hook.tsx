@@ -313,7 +313,7 @@ export const Hook: React.FC = () => {
 
                             {/* Input Area */}
                             <div className="bg-[#202c33] p-2 flex items-end gap-2 min-h-[62px] items-center">
-                                <button className="p-2 text-[#8696a0] hover:text-white transition-colors">
+                                <button className="p-2 text-[#8696a0] hover:text-white transition-colors" aria-label="Inserir emoji">
                                     <Smile size={24} />
                                 </button>
                                 <div className="flex-1 bg-[#2a3942] rounded-lg flex items-center min-h-[42px] px-3 gap-2">
@@ -335,6 +335,7 @@ export const Hook: React.FC = () => {
                                     onClick={handleSend}
                                     disabled={!input.trim() || isLoading}
                                     className="w-12 h-12 rounded-full bg-[#00a884] flex items-center justify-center text-white shadow-md hover:bg-[#008f6f] transition-colors shrink-0"
+                                    aria-label={input.trim() ? "Enviar mensagem" : "Gravar áudio"}
                                 >
                                     {input.trim() ? <Send size={20} className="ml-0.5" /> : <Mic size={20} />}
                                 </button>
