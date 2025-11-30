@@ -68,15 +68,15 @@ export const InvestmentSimulator: React.FC = () => {
                 {/* Controls */}
                 <div className="lg:col-span-5 space-y-6">
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                             <Calculator className="w-5 h-5 text-primary" />
                             Parâmetros
-                        </h3>
+                        </h2>
 
                         <div className="space-y-5">
                             <div>
-                                <label className="block text-sm text-gray-400 mb-2">Tipo de Investimento</label>
-                                <div className="grid grid-cols-2 gap-2">
+                                <label htmlFor="investment-type" className="block text-sm text-gray-400 mb-2">Tipo de Investimento</label>
+                                <div id="investment-type" className="grid grid-cols-2 gap-2">
                                     {(['cdb', 'lci', 'tesouro', 'debentures'] as InvestmentType[]).map((t) => (
                                         <button
                                             key={t}
@@ -93,10 +93,11 @@ export const InvestmentSimulator: React.FC = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm text-gray-400 mb-2">Investimento Inicial</label>
+                                <label htmlFor="initial-amount" className="block text-sm text-gray-400 mb-2">Investimento Inicial</label>
                                 <div className="relative">
                                     <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                     <input
+                                        id="initial-amount"
                                         type="number"
                                         value={initialAmount}
                                         onChange={(e) => setInitialAmount(Number(e.target.value))}
@@ -106,10 +107,11 @@ export const InvestmentSimulator: React.FC = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm text-gray-400 mb-2">Aporte Mensal</label>
+                                <label htmlFor="monthly-contribution" className="block text-sm text-gray-400 mb-2">Aporte Mensal</label>
                                 <div className="relative">
                                     <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                     <input
+                                        id="monthly-contribution"
                                         type="number"
                                         value={monthlyContribution}
                                         onChange={(e) => setMonthlyContribution(Number(e.target.value))}
@@ -120,10 +122,11 @@ export const InvestmentSimulator: React.FC = () => {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Prazo (Anos)</label>
+                                    <label htmlFor="years" className="block text-sm text-gray-400 mb-2">Prazo (Anos)</label>
                                     <div className="relative">
                                         <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
+                                            id="years"
                                             type="number"
                                             value={years}
                                             onChange={(e) => setYears(Number(e.target.value))}
@@ -132,10 +135,11 @@ export const InvestmentSimulator: React.FC = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Taxa Anual (%)</label>
+                                    <label htmlFor="rate" className="block text-sm text-gray-400 mb-2">Taxa Anual (%)</label>
                                     <div className="relative">
                                         <Percent className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
+                                            id="rate"
                                             type="number"
                                             value={rate}
                                             onChange={(e) => setRate(Number(e.target.value))}
@@ -165,10 +169,10 @@ export const InvestmentSimulator: React.FC = () => {
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
 
                         <div className="relative z-10">
-                            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center gap-2">
+                            <h2 className="text-lg font-medium text-gray-300 mb-6 flex items-center gap-2">
                                 <TrendingUp className="w-5 h-5 text-primary" />
                                 Resultado Final
-                            </h3>
+                            </h2>
 
                             <div className="space-y-4">
                                 <div className="flex justify-between items-center py-3 border-b border-white/5">

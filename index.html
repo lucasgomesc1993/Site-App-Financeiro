@@ -16,78 +16,6 @@
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:wght@100..900&display=swap"
     rel="stylesheet">
 
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['"DM Sans"', 'Inter', 'sans-serif'],
-            display: ['"Inter"', 'sans-serif'],
-          },
-          colors: {
-            background: '#0d0d0d',
-            surface: '#141414',
-            primary: '#47ffb7',
-            secondary: '#00ffb2',
-            accent: '#10a37f',
-            muted: '#bfbdbd',
-            light: '#f5f5f5',
-          },
-          backgroundImage: {
-            'hero-glow': 'radial-gradient(circle at center, rgba(71, 255, 183, 0.15) 0%, rgba(13, 13, 13, 0) 70%)',
-            'card-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)',
-            'grid-pattern': "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e\")",
-          },
-          animation: {
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'marquee': 'marquee 25s linear infinite',
-          },
-          keyframes: {
-            marquee: {
-              '0%': { transform: 'translateX(0%)' },
-              '100%': { transform: 'translateX(-100%)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body {
-      background-color: #0d0d0d;
-      color: #f5f5f5;
-      overflow-x: hidden;
-    }
-
-    .glass {
-      background: rgba(13, 13, 13, 0.7);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .glass-card {
-      background: linear-gradient(233deg, #000 0%, #0e0e0e 78%, #033629 100%);
-      backdrop-filter: blur(10px);
-      border: 1px solid #424242;
-    }
-
-    .text-gradient {
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(90deg, #ffffff 0%, #bfbdbd 100%);
-    }
-
-    .text-gradient-green {
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(90deg, #47ffb7 0%, #00ffb2 100%);
-    }
-  </style>
   <script type="importmap">
 {
   "imports": {
@@ -100,7 +28,6 @@
   }
 }
 </script>
-  <link rel="stylesheet" href="/index.css">
 </head>
 
 <body>
