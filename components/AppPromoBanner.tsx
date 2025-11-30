@@ -59,7 +59,12 @@ export const AppPromoBanner: React.FC = () => {
                             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-emerald-500 rounded-2xl blur opacity-30" />
                             <img
                                 src="/hero.jpg"
-                                alt="FinZap App Interface"
+                                alt="FinZap App Dashboard"
+                                width={1200}
+                                height={563}
+                                loading="lazy"
+                                decoding="async"
+
                                 className="relative rounded-2xl border border-white/10 shadow-2xl w-full"
                             />
                         </div>

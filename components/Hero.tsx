@@ -98,7 +98,14 @@ export const Hero: React.FC = () => {
         <div className="relative transform rotate-x-12 scale-90 opacity-90 border border-white/10 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(71,255,183,0.15)] bg-[#0a0a0a]">
           <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
           {/* Using a placeholder finance dashboard image since specific framer URL might be generic */}
-          <img src="/hero.jpg" alt="FinZap Dashboard" className="w-full h-auto object-cover opacity-80" />
+          <img
+            src="/hero.jpg"
+            alt="FinZap Dashboard"
+            width={1200}
+            height={563}
+            decoding="async"
+            className="w-full h-auto object-cover opacity-80"
+          />
 
 
         </div>
