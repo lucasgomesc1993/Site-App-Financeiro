@@ -99,7 +99,7 @@ export const Hero: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
           {/* Using a placeholder finance dashboard image since specific framer URL might be generic */}
           <img
-            src="/hero.jpg"
+            src="/hero.webp"
             alt="FinZap Dashboard"
             width={1200}
             height={563}
