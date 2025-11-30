@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, TrendingUp, DollarSign, Calendar, Percent } from 'lucide-react';
 
-type InvestmentType = 'cdb' | 'lci' | 'tesouro';
+type InvestmentType = 'cdb' | 'lci' | 'tesouro' | 'debentures';
 
 export const InvestmentSimulator: React.FC = () => {
     const [initialAmount, setInitialAmount] = useState(1000);
@@ -38,7 +38,7 @@ export const InvestmentSimulator: React.FC = () => {
         const totalInterest = grossTotal - totalInvested;
 
         let taxRate = 0;
-        if (type === 'cdb' || type === 'tesouro') {
+        if (type === 'cdb' || type === 'tesouro' || type === 'debentures') {
             const days = years * 365;
             if (days <= 180) taxRate = 0.225;
             else if (days <= 360) taxRate = 0.20;
@@ -76,17 +76,17 @@ export const InvestmentSimulator: React.FC = () => {
                         <div className="space-y-5">
                             <div>
                                 <label className="block text-sm text-gray-400 mb-2">Tipo de Investimento</label>
-                                <div className="grid grid-cols-3 gap-2">
-                                    {(['cdb', 'lci', 'tesouro'] as InvestmentType[]).map((t) => (
+                                <div className="grid grid-cols-2 gap-2">
+                                    {(['cdb', 'lci', 'tesouro', 'debentures'] as InvestmentType[]).map((t) => (
                                         <button
                                             key={t}
                                             onClick={() => setType(t)}
                                             className={`py-2 px-3 rounded-xl text-sm font-medium transition-all ${type === t
-                                                    ? 'bg-primary text-black shadow-[0_0_15px_rgba(71,255,183,0.3)]'
-                                                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                                                ? 'bg-primary text-black shadow-[0_0_15px_rgba(71,255,183,0.3)]'
+                                                : 'bg-white/5 text-gray-400 hover:bg-white/10'
                                                 }`}
                                         >
-                                            {t === 'cdb' ? 'CDB' : t === 'lci' ? 'LCI/LCA' : 'Tesouro'}
+                                            {t === 'cdb' ? 'CDB' : t === 'lci' ? 'LCI/LCA' : t === 'tesouro' ? 'Tesouro' : 'Debêntures'}
                                         </button>
                                     ))}
                                 </div>

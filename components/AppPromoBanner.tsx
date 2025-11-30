@@ -46,14 +46,9 @@ export const AppPromoBanner: React.FC = () => {
                         <div className="pt-4">
                             <a
                                 href="https://fin-love.vercel.app/criar-conta"
-                                className="relative inline-flex overflow-hidden rounded-full p-[2px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent shadow-[0_0_20px_rgba(16,163,127,0.4)] group/btn hover:scale-105 transition-transform duration-300"
+                                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#008c69] to-[#008c69] hover:brightness-110 text-white font-bold text-lg rounded-full transition-all shadow-[0_0_30px_rgba(71,255,183,0.2)] hover:shadow-[0_0_50px_rgba(71,255,183,0.4)] text-center uppercase tracking-wide transform hover:scale-[1.02]"
                             >
-                                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500" />
-                                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,transparent_0%,#ffffff_50%,transparent_100%)]" />
-
-                                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-accent px-8 py-4 text-lg font-bold text-white backdrop-blur-3xl transition-all group-hover/btn:bg-accent/90 relative z-10 gap-2">
-                                    Testar Grátis Agora <ArrowRight className="w-5 h-5" />
-                                </span>
+                                Testar Grátis Agora <ArrowRight className="w-5 h-5" />
                             </a>
                         </div>
                     </div>

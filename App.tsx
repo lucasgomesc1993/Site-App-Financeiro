@@ -9,6 +9,7 @@ import { Calculators } from './components/Calculators';
 import { InvestmentPage } from './components/tools/InvestmentPage';
 import { VacationPage } from './components/tools/VacationPage';
 import { EnergyPage } from './components/tools/EnergyPage';
+import { FuelPage } from './components/tools/FuelPage';
 import { ScrollToTop } from './components/ScrollToTop';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/calculadoras/investimentos" element={<InvestmentPage />} />
             <Route path="/calculadoras/ferias" element={<VacationPage />} />
             <Route path="/calculadoras/energia" element={<EnergyPage />} />
+            <Route path="/calculadoras/combustivel" element={<FuelPage />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/support" element={<Support />} />
