@@ -4,6 +4,7 @@ import { Plane, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { VacationCalculator } from './VacationCalculator';
 import { AppPromoBanner } from '../AppPromoBanner';
+import { Breadcrumb } from '../Breadcrumb';
 
 export const VacationPage: React.FC = () => {
     return (
@@ -14,9 +15,11 @@ export const VacationPage: React.FC = () => {
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
-                    <Link to="/calculadoras" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6">
-                        <ArrowLeft className="w-4 h-4" /> Voltar para Calculadoras
-                    </Link>
+                    <Breadcrumb items={[
+                        { label: 'Calculadoras', href: '/calculadoras' },
+                        { label: 'Calculadora de Férias', href: '/calculadoras/ferias' }
+                    ]} />
+
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

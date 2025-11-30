@@ -4,6 +4,7 @@ import { Calculator, Fuel, TrendingUp, DollarSign, Info, ArrowLeft } from 'lucid
 import { Link } from 'react-router-dom';
 import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQ } from '../FAQ';
+import { Breadcrumb } from '../Breadcrumb';
 import { FAQItem } from '../../types';
 
 const FUEL_FAQS: FAQItem[] = [
@@ -58,9 +59,11 @@ export const FuelPage: React.FC = () => {
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
-                    <Link to="/calculadoras" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6">
-                        <ArrowLeft className="w-4 h-4" /> Voltar para Calculadoras
-                    </Link>
+                    <Breadcrumb items={[
+                        { label: 'Calculadoras', href: '/calculadoras' },
+                        { label: 'Calculadora de Combustível', href: '/calculadoras/combustivel' }
+                    ]} />
+
 
                     {/* Header */}
                     <motion.div

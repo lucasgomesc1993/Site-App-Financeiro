@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Breadcrumb } from './Breadcrumb';
 import { AppPromoBanner } from './AppPromoBanner';
 
 export const Calculators: React.FC = () => {
@@ -12,6 +13,7 @@ export const Calculators: React.FC = () => {
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
+                <Breadcrumb items={[{ label: 'Calculadoras', href: '/calculadoras' }]} />
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

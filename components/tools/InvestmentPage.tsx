@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { InvestmentSimulator } from './InvestmentSimulator';
 import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQ } from '../FAQ';
+import { Breadcrumb } from '../Breadcrumb';
 import { FAQItem } from '../../types';
 
 const INVESTMENT_FAQS: FAQItem[] = [
@@ -43,9 +44,11 @@ export const InvestmentPage: React.FC = () => {
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
-                    <Link to="/calculadoras" className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-6">
-                        <ArrowLeft className="w-4 h-4" /> Voltar para Calculadoras
-                    </Link>
+                    <Breadcrumb items={[
+                        { label: 'Calculadoras', href: '/calculadoras' },
+                        { label: 'Simulador de Investimentos', href: '/calculadoras/investimentos' }
+                    ]} />
+
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
