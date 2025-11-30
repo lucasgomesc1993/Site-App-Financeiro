@@ -110,17 +110,19 @@ export const VacationCalculator: React.FC = () => {
                 {/* Controls */}
                 <div className="lg:col-span-5 space-y-6">
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                             <Calculator className="w-5 h-5 text-primary" />
                             Dados das Férias
-                        </h3>
+                        </h2>
 
                         <div className="space-y-5">
                             <div>
-                                <label className="block text-sm text-gray-400 mb-2">Salário Bruto</label>
+                                <label htmlFor="salary" className="block text-sm text-gray-400 mb-2">Salário Bruto</label>
                                 <div className="relative">
                                     <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                     <input
+                                        id="salary"
+                                        aria-label="Salário Bruto"
                                         type="number"
                                         value={salary}
                                         onChange={(e) => setSalary(Number(e.target.value))}
@@ -130,10 +132,12 @@ export const VacationCalculator: React.FC = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm text-gray-400 mb-2">Dias de Férias</label>
+                                <label htmlFor="days" className="block text-sm text-gray-400 mb-2">Dias de Férias</label>
                                 <div className="relative">
                                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                     <select
+                                        id="days"
+                                        aria-label="Dias de Férias"
                                         value={days}
                                         onChange={(e) => setDays(Number(e.target.value))}
                                         className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none"
@@ -147,10 +151,12 @@ export const VacationCalculator: React.FC = () => {
                             </div>
 
                             <div>
-                                <label className="block text-sm text-gray-400 mb-2">Dependentes</label>
+                                <label htmlFor="dependents" className="block text-sm text-gray-400 mb-2">Dependentes</label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                     <input
+                                        id="dependents"
+                                        aria-label="Dependentes"
                                         type="number"
                                         value={dependents}
                                         onChange={(e) => setDependents(Number(e.target.value))}
@@ -181,10 +187,10 @@ export const VacationCalculator: React.FC = () => {
                         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
 
                         <div className="relative z-10">
-                            <h3 className="text-lg font-medium text-gray-300 mb-6 flex items-center gap-2">
+                            <h2 className="text-lg font-medium text-gray-300 mb-6 flex items-center gap-2">
                                 <TrendingUp className="w-5 h-5 text-primary" />
                                 Detalhamento
-                            </h3>
+                            </h2>
 
                             <div className="space-y-3">
                                 <div className="flex justify-between items-center py-2 border-b border-white/5">

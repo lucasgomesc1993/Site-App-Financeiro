@@ -142,7 +142,7 @@ export const InvestmentPage: React.FC = () => {
                                 <p className="text-gray-400 text-sm mb-4">
                                     Programa do Tesouro Nacional para venda de títulos públicos. Considerado o investimento mais seguro do país.
                                 </p>
-                                <ul className="text-xs text-gray-400 space-y-1">
+                                <ul className="text-xs text-gray-300 space-y-1">
                                     <li>• Tesouro Selic (Liquidez diária)</li>
                                     <li>• Tesouro IPCA+ (Proteção contra inflação)</li>
                                     <li>• Tesouro Prefixado (Rentabilidade fixa)</li>
@@ -154,7 +154,7 @@ export const InvestmentPage: React.FC = () => {
                                 <p className="text-gray-400 text-sm mb-4">
                                     Certificado de Depósito Bancário. Você empresta dinheiro para o banco em troca de juros.
                                 </p>
-                                <ul className="text-xs text-gray-400 space-y-1">
+                                <ul className="text-xs text-gray-300 space-y-1">
                                     <li>• Garantia do FGC</li>
                                     <li>• Rentabilidade geralmente atrelada ao CDI</li>
                                     <li>• Opções com liquidez diária</li>
@@ -166,7 +166,7 @@ export const InvestmentPage: React.FC = () => {
                                 <p className="text-gray-400 text-sm mb-4">
                                     Letras de Crédito Imobiliário e do Agronegócio. Isentas de Imposto de Renda para pessoa física.
                                 </p>
-                                <ul className="text-xs text-gray-400 space-y-1">
+                                <ul className="text-xs text-gray-300 space-y-1">
                                     <li>• Isenção de IR</li>
                                     <li>• Garantia do FGC</li>
                                     <li>• Foco em setores específicos (Imóveis/Agro)</li>
@@ -178,7 +178,7 @@ export const InvestmentPage: React.FC = () => {
                                 <p className="text-gray-400 text-sm mb-4">
                                     Títulos de dívida emitidos por empresas. Geralmente oferecem retornos maiores que títulos bancários.
                                 </p>
-                                <ul className="text-xs text-gray-400 space-y-1">
+                                <ul className="text-xs text-gray-300 space-y-1">
                                     <li>• Risco de crédito da empresa</li>
                                     <li>• Prazos geralmente mais longos</li>
                                     <li>• Algumas são isentas de IR (Incentivadas)</li>
