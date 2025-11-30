@@ -83,7 +83,7 @@ export const PromoPopup: React.FC = () => {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 animate={buttonControls}
-                                className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98]"
+                                className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
                             >
                                 Testar Grátis Agora
                                 <ArrowRight className="w-3.5 h-3.5" />
