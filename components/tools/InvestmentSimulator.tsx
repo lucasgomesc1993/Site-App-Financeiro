@@ -98,6 +98,7 @@ export const InvestmentSimulator: React.FC = () => {
                                     <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                     <input
                                         id="initial-amount"
+                                        aria-label="Investimento Inicial"
                                         type="number"
                                         value={initialAmount}
                                         onChange={(e) => setInitialAmount(Number(e.target.value))}
@@ -112,6 +113,7 @@ export const InvestmentSimulator: React.FC = () => {
                                     <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                     <input
                                         id="monthly-contribution"
+                                        aria-label="Aporte Mensal"
                                         type="number"
                                         value={monthlyContribution}
                                         onChange={(e) => setMonthlyContribution(Number(e.target.value))}
@@ -127,6 +129,7 @@ export const InvestmentSimulator: React.FC = () => {
                                         <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
                                             id="years"
+                                            aria-label="Prazo (Anos)"
                                             type="number"
                                             value={years}
                                             onChange={(e) => setYears(Number(e.target.value))}
@@ -140,6 +143,7 @@ export const InvestmentSimulator: React.FC = () => {
                                         <Percent className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
                                             id="rate"
+                                            aria-label="Taxa Anual (%)"
                                             type="number"
                                             value={rate}
                                             onChange={(e) => setRate(Number(e.target.value))}

@@ -17,7 +17,7 @@ const TestimonialCard: React.FC<{ t: Testimonial }> = ({ t }) => (
                 <img src={t.image} alt={t.name} className="w-10 h-10 rounded-full object-cover border border-white/10" />
                 <div>
                     <h4 className="text-white font-semibold text-sm">{t.name}</h4>
-                    <span className="text-xs text-gray-500">{t.handle}</span>
+                    <span className="text-xs text-gray-400">{t.handle}</span>
                 </div>
             </div>
             <Quote className="w-5 h-5 text-primary/30" />
