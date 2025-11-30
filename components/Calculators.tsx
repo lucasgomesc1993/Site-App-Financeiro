@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
-import { AppPromoBanner } from './AppPromoBanner';
+
+const AppPromoBanner = lazy(() => import('./AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
 
 export const Calculators: React.FC = () => {
     return (
@@ -14,12 +15,7 @@ export const Calculators: React.FC = () => {
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <Breadcrumb items={[{ label: 'Calculadoras', href: '/calculadoras' }]} />
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
+                <div className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                         <Calculator className="w-4 h-4 text-primary" />
                         <span className="text-sm text-gray-300">Calculadoras Gratuitas</span>
@@ -30,7 +26,7 @@ export const Calculators: React.FC = () => {
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Utilize nossas calculadoras gratuitas para planejar seus investimentos, calcular suas férias e organizar sua vida financeira.
                     </p>
-                </motion.div>
+                </div>
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <Link to="/calculadoras/investimentos" className="group">
@@ -126,7 +122,9 @@ export const Calculators: React.FC = () => {
                     </Link>
                 </div>
 
-                <AppPromoBanner />
+                <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                    <AppPromoBanner />
+                </Suspense>
             </div>
         </section>
     );
