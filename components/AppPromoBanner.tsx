@@ -58,7 +58,7 @@ export const AppPromoBanner: React.FC = () => {
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0d] via-transparent to-transparent z-20 rounded-2xl" />
                             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-emerald-500 rounded-2xl blur opacity-30" />
                             <img
-                                src="/hero.jpg"
+                                src="/hero.webp"
                                 alt="FinZap App Dashboard"
                                 width={1200}
                                 height={563}
