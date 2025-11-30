@@ -4,6 +4,7 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Home } from './components/Home';
 import { ScrollToTop } from './components/ScrollToTop';
+import { PromoPopup } from './components/PromoPopup';
 
 // Lazy load non-critical routes
 const Terms = lazy(() => import('./components/Terms').then(module => ({ default: module.Terms })));
@@ -37,6 +38,7 @@ function App() {
           </Suspense>
         </main>
         <Footer />
+        <PromoPopup />
       </div>
     </Router>
   );
