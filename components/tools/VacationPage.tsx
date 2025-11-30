@@ -7,8 +7,25 @@ import { Breadcrumb } from '../Breadcrumb';
 const AppPromoBanner = lazy(() => import('../AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
 
 export const VacationPage: React.FC = () => {
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Calculadora de Férias FinZap",
+        "description": "Calcule o valor exato das suas férias com 1/3 constitucional e descontos.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "BRL"
+        }
+    };
+
     return (
         <section className="relative min-h-screen pt-24 md:pt-32 pb-24 px-4 overflow-hidden">
+            <script type="application/ld+json">
+                {JSON.stringify(schema)}
+            </script>
             {/* Background Orbs */}
             <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />

@@ -27,8 +27,25 @@ const ENERGY_FAQS = [
 ];
 
 export const EnergyPage: React.FC = () => {
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Calculadora de Consumo de Energia FinZap",
+        "description": "Simule o consumo de energia dos seus eletrodomésticos e economize na conta de luz.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "BRL"
+        }
+    };
+
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <script type="application/ld+json">
+                {JSON.stringify(schema)}
+            </script>
             {/* Background Orbs */}
             <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
