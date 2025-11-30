@@ -64,7 +64,7 @@ export const AppPromoBanner: React.FC = () => {
                                 height={563}
                                 loading="lazy"
                                 decoding="async"
-
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="relative rounded-2xl border border-white/10 shadow-2xl w-full"
                             />
                         </div>

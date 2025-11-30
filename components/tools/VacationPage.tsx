@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
-import { Plane, ArrowLeft } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Plane } from 'lucide-react';
 import { VacationCalculator } from './VacationCalculator';
-import { AppPromoBanner } from '../AppPromoBanner';
 import { Breadcrumb } from '../Breadcrumb';
+
+const AppPromoBanner = lazy(() => import('../AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
 
 export const VacationPage: React.FC = () => {
     return (
-        <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+        <section className="relative min-h-screen pt-24 md:pt-32 pb-24 px-4 overflow-hidden">
             {/* Background Orbs */}
             <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
@@ -83,7 +83,9 @@ export const VacationPage: React.FC = () => {
                     </p>
                 </motion.div>
 
-                <AppPromoBanner />
+                <Suspense fallback={<div className="h-96 w-full flex items-center justify-center text-gray-500">Carregando oferta...</div>}>
+                    <AppPromoBanner />
+                </Suspense>
             </div>
         </section>
     );
