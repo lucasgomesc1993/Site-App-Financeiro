@@ -45,7 +45,7 @@ export const Calculators: React.FC = () => {
                                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
                                     <TrendingUp className="text-primary w-6 h-6" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Simulador de Investimentos</h3>
+                                <h2 className="text-2xl font-bold text-white mb-3">Simulador de Investimentos</h2>
                                 <p className="text-gray-400 mb-6">
                                     Compare CDB, LCI, LCA e Tesouro Direto. Descubra quanto seu dinheiro pode render com juros compostos.
                                 </p>
@@ -68,7 +68,7 @@ export const Calculators: React.FC = () => {
                                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
                                     <Plane className="text-primary w-6 h-6" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Calculadora de Férias</h3>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Férias</h2>
                                 <p className="text-gray-400 mb-6">
                                     Calcule o valor exato das suas férias, incluindo 1/3 constitucional, abono pecuniário e descontos de INSS/IRRF.
                                 </p>
@@ -91,7 +91,7 @@ export const Calculators: React.FC = () => {
                                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
                                     <Zap className="text-primary w-6 h-6" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Consumo de Energia</h3>
+                                <h2 className="text-2xl font-bold text-white mb-3">Consumo de Energia</h2>
                                 <p className="text-gray-400 mb-6">
                                     Descubra quanto seus aparelhos consomem e economize na conta de luz.
                                 </p>
@@ -114,7 +114,7 @@ export const Calculators: React.FC = () => {
                                 <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
                                     <Fuel className="text-primary w-6 h-6" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-white mb-3">Álcool ou Gasolina</h3>
+                                <h2 className="text-2xl font-bold text-white mb-3">Álcool ou Gasolina</h2>
                                 <p className="text-gray-400 mb-6">
                                     Descubra qual combustível compensa mais para abastecer seu veículo e economize no posto.
                                 </p>

@@ -25,10 +25,10 @@ export const EnergyCalculator: React.FC = () => {
         <div className="w-full max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
             {/* Input Section */}
             <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                     <Zap className="w-6 h-6 text-primary" />
                     Dados do Aparelho
-                </h3>
+                </h2>
 
                 <div className="space-y-6">
                     <div>
@@ -95,7 +95,7 @@ export const EnergyCalculator: React.FC = () => {
                 <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
 
                 <div className="relative z-10 text-center">
-                    <h3 className="text-xl text-gray-400 mb-2">Custo Mensal Estimado</h3>
+                    <h2 className="text-xl text-gray-400 mb-2">Custo Mensal Estimado</h2>
 
                     {result !== null ? (
                         <motion.div
