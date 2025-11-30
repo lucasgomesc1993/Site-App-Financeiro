@@ -4,6 +4,7 @@ import { Zap, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { EnergyCalculator } from './EnergyCalculator';
 import { AppPromoBanner } from '../AppPromoBanner';
+import { Breadcrumb } from '../Breadcrumb';
 import { FAQ } from '../FAQ';
 
 const ENERGY_FAQS = [

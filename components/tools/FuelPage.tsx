@@ -95,10 +95,10 @@ export const FuelPage: React.FC = () => {
                     {/* Controls */}
                     <div className="lg:col-span-5 space-y-6">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                            <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                                 <Calculator className="w-5 h-5 text-primary" />
                                 Preços na Bomba
-                            </h3>
+                            </h2>
 
                             <div className="space-y-5">
                                 <div>
@@ -146,7 +146,7 @@ export const FuelPage: React.FC = () => {
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
                                     >
-                                        <h3 className="text-lg font-medium text-gray-400 mb-2 uppercase tracking-widest">Melhor Opção</h3>
+                                        <h2 className="text-lg font-medium text-gray-400 mb-2 uppercase tracking-widest">Melhor Opção</h2>
                                         <div className="text-5xl md:text-7xl font-bold text-white mb-4">
                                             {result.bestOption === 'alcohol' ? (
                                                 <span className="text-primary">Álcool</span>
