@@ -6,6 +6,7 @@ import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQ } from '../FAQ';
 import { Breadcrumb } from '../Breadcrumb';
 import { FAQItem } from '../../types';
+import { SEO } from '../SEO';
 
 const FUEL_FAQS: FAQItem[] = [
     {
@@ -67,6 +68,11 @@ export const FuelPage: React.FC = () => {
 
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Calculadora Álcool ou Gasolina - Qual Vale a Pena?"
+                description="Descubra qual combustível compensa mais para o seu bolso agora mesmo. Simples, rápido e direto."
+                canonical="/calculadoras/combustivel"
+            />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>

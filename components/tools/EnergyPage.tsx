@@ -6,6 +6,7 @@ import { EnergyCalculator } from './EnergyCalculator';
 import { AppPromoBanner } from '../AppPromoBanner';
 import { Breadcrumb } from '../Breadcrumb';
 import { FAQ } from '../FAQ';
+import { SEO } from '../SEO';
 
 const ENERGY_FAQS = [
     {
@@ -43,6 +44,11 @@ export const EnergyPage: React.FC = () => {
 
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Calculadora de Consumo de Energia - Economize Luz"
+                description="Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora do FinZap."
+                canonical="/calculadoras/energia"
+            />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>

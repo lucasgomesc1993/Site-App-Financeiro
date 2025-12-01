@@ -2,10 +2,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageCircle, HelpCircle, ArrowRight } from 'lucide-react';
 import { FAQ } from './FAQ';
+import { SEO } from './SEO';
 
 export const Support: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Central de Ajuda - Suporte FinZap"
+                description="Precisa de ajuda? Entre em contato com o suporte do FinZap via WhatsApp ou E-mail, ou consulte nossas perguntas frequentes."
+                canonical="/support"
+            />
             {/* Background Orbs */}
             <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />

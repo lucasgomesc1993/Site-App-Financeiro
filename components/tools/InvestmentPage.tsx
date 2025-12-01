@@ -7,6 +7,7 @@ import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQ } from '../FAQ';
 import { Breadcrumb } from '../Breadcrumb';
 import { FAQItem } from '../../types';
+import { SEO } from '../SEO';
 
 const INVESTMENT_FAQS: FAQItem[] = [
     {
@@ -52,6 +53,11 @@ export const InvestmentPage: React.FC = () => {
 
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Simulador de Investimentos - Renda Fixa"
+                description="Compare CDB, LCI, LCA e Tesouro Direto. Calcule o rendimento dos seus investimentos com nosso simulador gratuito."
+                canonical="/calculadoras/investimentos"
+            />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>

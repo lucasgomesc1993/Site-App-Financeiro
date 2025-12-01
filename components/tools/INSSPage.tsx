@@ -5,6 +5,7 @@ import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQ } from '../FAQ';
 import { Breadcrumb } from '../Breadcrumb';
 import { FAQItem } from '../../types';
+import { SEO } from '../SEO';
 
 const INSS_FAQS: FAQItem[] = [
     {
@@ -112,6 +113,11 @@ export const INSSPage: React.FC = () => {
 
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Calculadora de INSS 2025 - Tabela Atualizada"
+                description="Simule o desconto do INSS com base no salário e tipo de contribuinte. Resultado rápido e atualizado com as faixas de contribuição de 2025."
+                canonical="/calculadoras/inss"
+            />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>

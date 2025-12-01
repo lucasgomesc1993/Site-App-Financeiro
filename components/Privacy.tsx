@@ -1,10 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Eye, ShieldCheck, Share2, FileText } from 'lucide-react';
+import { SEO } from './SEO';
 
 export const Privacy: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Política de Privacidade - FinZap"
+                description="Saiba como o FinZap coleta, usa e protege seus dados pessoais. Sua privacidade é nossa prioridade."
+                canonical="/privacy"
+            />
             {/* Background Orbs */}
             <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />

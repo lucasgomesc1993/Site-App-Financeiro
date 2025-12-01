@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Plane } from 'lucide-react';
 import { VacationCalculator } from './VacationCalculator';
 import { Breadcrumb } from '../Breadcrumb';
+import { SEO } from '../SEO';
 
 const AppPromoBanner = lazy(() => import('../AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
 
@@ -23,6 +24,11 @@ export const VacationPage: React.FC = () => {
 
     return (
         <section className="relative min-h-screen pt-24 md:pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Calculadora de Férias 2025 - Cálculo Exato e Gratuito"
+                description="Calcule o valor exato das suas férias, incluindo 1/3 constitucional, abono pecuniário e descontos de INSS/IRRF."
+                canonical="/calculadoras/ferias"
+            />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>

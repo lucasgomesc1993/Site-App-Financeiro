@@ -5,6 +5,7 @@ import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQ } from '../FAQ';
 import { Breadcrumb } from '../Breadcrumb';
 import { FAQItem } from '../../types';
+import { SEO } from '../SEO';
 
 const TERMINATION_FAQS: FAQItem[] = [
     {
@@ -170,6 +171,11 @@ export const TerminationPage: React.FC = () => {
 
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Calculadora de Rescisão Trabalhista CLT - Simulação Completa"
+                description="Simule o valor da sua rescisão trabalhista CLT. Calcule saldo de salário, férias, 13º, aviso prévio e multa do FGTS."
+                canonical="/calculadoras/rescisao"
+            />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>

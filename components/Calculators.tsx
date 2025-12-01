@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
+import { SEO } from './SEO';
 
 const AppPromoBanner = lazy(() => import('./AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
 
@@ -23,6 +24,11 @@ export const Calculators: React.FC = () => {
 
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
+            <SEO
+                title="Calculadoras Financeiras Gratuitas"
+                description="Ferramentas gratuitas para cálculo de férias, décimo terceiro, salário líquido, investimentos e mais."
+                canonical="/calculadoras"
+            />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>
