@@ -308,6 +308,10 @@ export const Calculators: React.FC = () => {
                     />
                 </div>
 
+                <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                    <AppPromoBanner />
+                </Suspense>
+
                 {/* Disclaimer */}
                 <div className="mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12">
                     <p className="text-sm text-gray-500">
@@ -316,10 +320,6 @@ export const Calculators: React.FC = () => {
                         Consulte sempre um profissional para orientações específicas ao seu caso.
                     </p>
                 </div>
-
-                <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
-                    <AppPromoBanner />
-                </Suspense>
             </div>
         </section>
     );
