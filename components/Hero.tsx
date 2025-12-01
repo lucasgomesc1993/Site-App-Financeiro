@@ -100,6 +100,8 @@ export const Hero: React.FC = () => {
           {/* Using a placeholder finance dashboard image since specific framer URL might be generic */}
           <img
             src="/hero.webp"
+            srcSet="/hero-mobile.webp 600w, /hero-medium.webp 900w, /hero.webp 1200w"
+            sizes="(max-width: 768px) 100vw, 1200px"
             alt="FinZap Dashboard"
             width={1200}
             height={563}

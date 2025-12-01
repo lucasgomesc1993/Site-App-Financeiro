@@ -200,15 +200,15 @@ const INVESTMENT_FAQS = [
   },
   {
     question: "O que é um Certificado de Depósito Bancário (CDB)?",
-    answer: "CDB é a sigla para Certificado de Depósito Bancário. Na prática, é uma aplicação onde se empresta dinheiro para um banco em troca de um rendimento pré-acordado (maior do que a poupança). É um investimento protegido pelo FGC."
+    answer: "CDB (Certificado de Depósito Bancário) é quando você 'empresta' dinheiro para o banco e ele te devolve com juros. É um dos investimentos mais populares do Brasil, rendendo mais que a poupança e com a mesma segurança (garantido pelo FGC)."
   },
   {
     question: "O que é uma Letra de Crédito Imobiliário (LCI)?",
-    answer: "LCI é a sigla para Letra de Crédito Imobiliário. É um investimento de renda fixa lastreado em crédito imobiliário. É isento de imposto de renda para pessoas físicas e conta com a proteção do FGC."
+    answer: "LCI (Letra de Crédito Imobiliário) é um investimento onde seu dinheiro financia o setor imobiliário. A grande vantagem? É 100% isento de Imposto de Renda para pessoa física e também tem a proteção do FGC."
   },
   {
     question: "O que é uma Letra de Crédito do Agronegócio (LCA)?",
-    answer: "LCA é a sigla para Letra de Crédito do Agronegócio. É um título de renda fixa vinculado ao setor agrícola. Assim como a LCI, é isenta de imposto de renda e tem a cobertura do Fundo Garantidor de Crédito."
+    answer: "LCA (Letra de Crédito do Agronegócio) funciona igual à LCI, mas o dinheiro vai para o setor agropecuário. Também é isenta de Imposto de Renda e garantida pelo FGC. É uma ótima opção para diversificar sua carteira."
   },
   {
     question: "Qual a diferença entre LCI e LCA?",
@@ -216,7 +216,7 @@ const INVESTMENT_FAQS = [
   },
   {
     question: "Para que serve um simulador de investimentos online?",
-    answer: "Serve para projetar a rentabilidade de diferentes aplicações financeiras, permitindo comparar opções, entender o impacto dos juros compostos e do imposto de renda, e planejar metas financeiras com mais clareza."
+    answer: "Para te dar clareza. Com ele, você projeta exatamente quanto seu dinheiro vai render, compara diferentes opções (como CDB vs LCI) e entende o impacto dos impostos e do tempo nos seus ganhos. É a ferramenta essencial para planejar suas metas."
   }
 ];
 const InvestmentPage = () => {

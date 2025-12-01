@@ -194,7 +194,7 @@ export const Hook: React.FC = () => {
                             {/* Messages Area */}
                             <div className="flex-1 relative bg-black overflow-hidden">
                                 {/* WhatsApp Doodle Background - Fixed */}
-                                <div className="absolute inset-0 opacity-[0.1] bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-repeat bg-[length:400px_auto] pointer-events-none grayscale z-0"></div>
+                                <div className="absolute inset-0 opacity-[0.1] bg-[url('/whatsapp-bg.webp')] bg-repeat bg-[length:400px_auto] pointer-events-none grayscale z-0"></div>
 
                                 {/* Scrollable Content */}
                                 <div

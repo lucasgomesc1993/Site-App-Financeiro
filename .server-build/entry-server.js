@@ -898,42 +898,42 @@ const MODULES = [
     id: 1,
     title: "Lançamento via WhatsApp",
     description: "Envie áudios, textos ou fotos de notas fiscais. Nossa IA processa em segundos.",
-    image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=70&w=600&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 2,
     title: "Categorização com IA",
     description: "Não perca tempo escolhendo categorias. A IA entende que 'Méqui' é Alimentação e 'Uber' é Transporte.",
-    image: "https://images.unsplash.com/photo-1642427749670-f20e2e76ed8c?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1642427749670-f20e2e76ed8c?q=70&w=600&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 3,
     title: "Dashboard em Tempo Real",
     description: "Visualize para onde seu dinheiro vai com gráficos interativos e bonitos, direto no navegador ou celular.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=70&w=600&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 4,
     title: "Metas Inteligentes",
     description: "Defina quanto quer gastar por categoria. O FinZap te avisa no WhatsApp se você estiver perto do limite.",
-    image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=70&w=600&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 5,
     title: "Relatórios Semanais",
     description: "Receba um resumo da sua semana toda sexta-feira direto no seu WhatsApp.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=70&w=600&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 6,
     title: "Segurança Total",
     description: "Seus dados são criptografados. Não pedimos senha de banco. Você tem o controle.",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1000&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=70&w=600&auto=format&fit=crop",
     cols: 1
   }
 ];
@@ -1226,6 +1226,8 @@ const Hero = () => {
             "img",
             {
               src: "/hero.webp",
+              srcSet: "/hero-mobile.webp 600w, /hero-medium.webp 900w, /hero.webp 1200w",
+              sizes: "(max-width: 768px) 100vw, 1200px",
               alt: "FinZap Dashboard",
               width: 1200,
               height: 563,
@@ -1370,7 +1372,7 @@ const Hook = () => {
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "flex-1 relative bg-black overflow-hidden", children: [
-                /* @__PURE__ */ jsx("div", { className: "absolute inset-0 opacity-[0.1] bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')] bg-repeat bg-[length:400px_auto] pointer-events-none grayscale z-0" }),
+                /* @__PURE__ */ jsx("div", { className: "absolute inset-0 opacity-[0.1] bg-[url('/whatsapp-bg.webp')] bg-repeat bg-[length:400px_auto] pointer-events-none grayscale z-0" }),
                 /* @__PURE__ */ jsxs(
                   "div",
                   {
@@ -2042,7 +2044,7 @@ const Terms = lazy(() => import("./assets/Terms-DxvkZ4jC.js").then((module) => (
 const Privacy = lazy(() => import("./assets/Privacy-BgUVqtGz.js").then((module) => ({ default: module.Privacy })));
 const Support = lazy(() => import("./assets/Support-BmMCwfrP.js").then((module) => ({ default: module.Support })));
 const Calculators = lazy(() => import("./assets/Calculators-BiekH7zO.js").then((module) => ({ default: module.Calculators })));
-const InvestmentPage = lazy(() => import("./assets/InvestmentPage-C4Afy1bW.js").then((module) => ({ default: module.InvestmentPage })));
+const InvestmentPage = lazy(() => import("./assets/InvestmentPage-BewI9Nrl.js").then((module) => ({ default: module.InvestmentPage })));
 const VacationPage = lazy(() => import("./assets/VacationPage-DUEcDpom.js").then((module) => ({ default: module.VacationPage })));
 const EnergyPage = lazy(() => import("./assets/EnergyPage-B62-ShxG.js").then((module) => ({ default: module.EnergyPage })));
 const FuelPage = lazy(() => import("./assets/FuelPage-DpjbEg6c.js").then((module) => ({ default: module.FuelPage })));

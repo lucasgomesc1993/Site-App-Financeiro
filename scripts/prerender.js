@@ -2,25 +2,15 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { getRoutes } from './utils/get-routes.js';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const toAbsolute = (p) => path.resolve(__dirname, '..', p);
 
 const template = fs.readFileSync(toAbsolute('dist/index.html'), 'utf-8');
 const { render } = await import(pathToFileURL(toAbsolute('.server-build/entry-server.js')).href);
 
-const routesToPrerender = [
-    '/',
-    '/calculadoras',
-    '/calculadoras/investimentos',
-    '/calculadoras/ferias',
-    '/calculadoras/energia',
-    '/calculadoras/combustivel',
-    '/calculadoras/rescisao',
-    '/calculadoras/inss',
-    '/terms',
-    '/privacy',
-    '/support',
-];
+const routesToPrerender = getRoutes();
 
 (async () => {
     // pre-render each route...
