@@ -8,7 +8,7 @@ interface SEOProps {
 }
 
 export function SEO({ title, description, canonical, image }: SEOProps) {
-    const siteUrl = 'https://finzap.com.br'; // Replace with actual domain if known, or make it dynamic
+    const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://finzap.com.br';
     const fullCanonical = canonical ? (canonical.startsWith('http') ? canonical : `${siteUrl}${canonical}`) : undefined;
     const ogImage = image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : `${siteUrl}/og-image.png`;
 
