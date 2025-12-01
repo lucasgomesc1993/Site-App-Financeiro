@@ -221,10 +221,11 @@ export const TerminationPage: React.FC = () => {
 
                             <div className="space-y-5">
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Salário Bruto (R$)</label>
+                                    <label htmlFor="salary" className="block text-sm text-gray-400 mb-2">Salário Bruto (R$)</label>
                                     <div className="relative">
                                         <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
+                                            id="salary"
                                             type="number"
                                             placeholder="Ex: 3000"
                                             value={salary || ''}
@@ -236,8 +237,9 @@ export const TerminationPage: React.FC = () => {
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm text-gray-400 mb-2">Data de Admissão</label>
+                                        <label htmlFor="startDate" className="block text-sm text-gray-400 mb-2">Data de Admissão</label>
                                         <input
+                                            id="startDate"
                                             type="date"
                                             value={startDate}
                                             onChange={(e) => setStartDate(e.target.value)}
@@ -245,8 +247,9 @@ export const TerminationPage: React.FC = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm text-gray-400 mb-2">Data de Demissão</label>
+                                        <label htmlFor="endDate" className="block text-sm text-gray-400 mb-2">Data de Demissão</label>
                                         <input
+                                            id="endDate"
                                             type="date"
                                             value={endDate}
                                             onChange={(e) => setEndDate(e.target.value)}
@@ -256,8 +259,9 @@ export const TerminationPage: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Motivo da Saída</label>
+                                    <label htmlFor="reason" className="block text-sm text-gray-400 mb-2">Motivo da Saída</label>
                                     <select
+                                        id="reason"
                                         value={reason}
                                         onChange={(e) => setReason(e.target.value)}
                                         className="w-full bg-black/30 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none"
@@ -270,8 +274,9 @@ export const TerminationPage: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Aviso Prévio</label>
+                                    <label htmlFor="notice" className="block text-sm text-gray-400 mb-2">Aviso Prévio</label>
                                     <select
+                                        id="notice"
                                         value={notice}
                                         onChange={(e) => setNotice(e.target.value)}
                                         className="w-full bg-black/30 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none"
@@ -286,6 +291,7 @@ export const TerminationPage: React.FC = () => {
                                     <label className="text-sm text-gray-400">Tem Férias Vencidas?</label>
                                     <button
                                         onClick={() => setHasVacationDue(!hasVacationDue)}
+                                        aria-label="Alternar férias vencidas"
                                         className={`w-12 h-6 rounded-full transition-colors relative ${hasVacationDue ? 'bg-primary' : 'bg-white/10'}`}
                                     >
                                         <div className={`absolute top-1 w-4 h-4 rounded-full bg-white transition-transform ${hasVacationDue ? 'left-7' : 'left-1'}`} />
@@ -293,10 +299,11 @@ export const TerminationPage: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Saldo FGTS (R$)</label>
+                                    <label htmlFor="fgtsBalance" className="block text-sm text-gray-400 mb-2">Saldo FGTS (R$)</label>
                                     <div className="relative">
                                         <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
+                                            id="fgtsBalance"
                                             type="number"
                                             placeholder="Ex: 5000"
                                             value={fgtsBalance || ''}

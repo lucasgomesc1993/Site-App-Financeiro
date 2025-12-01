@@ -119,10 +119,11 @@ export const FuelPage: React.FC = () => {
 
                             <div className="space-y-5">
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Preço do Álcool (Etanol)</label>
+                                    <label htmlFor="alcoholPrice" className="block text-sm text-gray-400 mb-2">Preço do Álcool (Etanol)</label>
                                     <div className="relative">
                                         <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
+                                            id="alcoholPrice"
                                             type="number"
                                             step="0.01"
                                             placeholder="0,00"
@@ -134,10 +135,11 @@ export const FuelPage: React.FC = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-2">Preço da Gasolina</label>
+                                    <label htmlFor="gasolinePrice" className="block text-sm text-gray-400 mb-2">Preço da Gasolina</label>
                                     <div className="relative">
                                         <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                         <input
+                                            id="gasolinePrice"
                                             type="number"
                                             step="0.01"
                                             placeholder="0,00"
