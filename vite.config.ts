@@ -20,11 +20,14 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
+      cssCodeSplit: true,
+      chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
           manualChunks: {
-            vendor: ['react', 'react-dom', 'react-router-dom'],
-            ui: ['framer-motion', 'lucide-react']
+            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+            'framer': ['framer-motion'],
+            'ui-libs': ['lucide-react']
           }
         }
       }
