@@ -5,8 +5,8 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const toAbsolute = (p) => path.resolve(__dirname, '..', p);
 
-const template = fs.readFileSync(toAbsolute('dist/static/index.html'), 'utf-8');
-const { render } = await import(pathToFileURL(toAbsolute('dist/server/entry-server.js')).href);
+const template = fs.readFileSync(toAbsolute('dist/index.html'), 'utf-8');
+const { render } = await import(pathToFileURL(toAbsolute('.server-build/entry-server.js')).href);
 
 const routesToPrerender = [
     '/',
@@ -51,7 +51,7 @@ const routesToPrerender = [
         // Inject the app content
         finalHtml = finalHtml.replace(`<div id="root"></div>`, `<div id="root">${appHtml.html}</div>`);
 
-        const filePath = `dist/static${url === '/' ? '/index.html' : `${url}/index.html`}`;
+        const filePath = `dist${url === '/' ? '/index.html' : `${url}/index.html`}`;
         const dir = path.dirname(filePath);
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });

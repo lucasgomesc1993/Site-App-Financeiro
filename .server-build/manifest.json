@@ -1,0 +1,16 @@
+{
+    "name": "FinZap - Controle Financeiro Inteligente",
+    "short_name": "FinZap",
+    "description": "Organize suas finanças sem sair do chat. O FinZap é a maneira mais simples e rápida de controlar seus gastos usando Inteligência Artificial no WhatsApp.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#000000",
+    "theme_color": "#10a37f",
+    "icons": [
+        {
+            "src": "/favicon.ico",
+            "sizes": "64x64 32x32 24x24 16x16",
+            "type": "image/x-icon"
+        }
+    ]
+}
