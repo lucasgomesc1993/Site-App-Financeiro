@@ -4,10 +4,34 @@ import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel } from 'lucide-rea
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
 import { SEO } from './SEO';
+import { FAQ } from './FAQ';
 
 const AppPromoBanner = lazy(() => import('./AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
 
 export const Calculators: React.FC = () => {
+    const CALCULATOR_FAQS = [
+        {
+            question: "Qual a diferença entre simulador e calculadora?",
+            answer: "Calculadoras normalmente retornam resultados diretos e exatos com base em dados objetivos e fórmulas fixas (como impostos). Simuladores projetam cenários futuros considerando variáveis dinâmicas e estimativas (como rentabilidade de investimentos)."
+        },
+        {
+            question: "As calculadoras online são confiáveis?",
+            answer: "Sim, nossas calculadoras são desenvolvidas com base nas regras, alíquotas e índices oficiais vigentes. No entanto, elas servem como ferramentas de estimativa e orientação."
+        },
+        {
+            question: "Posso confiar nos resultados para tomar decisões financeiras?",
+            answer: "Elas são ótimas para orientação inicial e planejamento, mas não substituem a análise de um profissional especializado. Sempre consulte um contador ou consultor financeiro para decisões críticas."
+        },
+        {
+            question: "Posso usar as calculadoras pelo celular?",
+            answer: "Sim! Nossa plataforma é totalmente responsiva e todas as ferramentas funcionam perfeitamente em qualquer dispositivo com acesso à internet, seja celular, tablet ou computador."
+        },
+        {
+            question: "Como usar uma calculadora financeira corretamente?",
+            answer: "O segredo é a precisão dos dados de entrada. Preencha campos como valor inicial, taxas e prazos com atenção. O resultado será calculado automaticamente com base nas fórmulas financeiras padrão do mercado."
+        }
+    ];
+
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
@@ -31,6 +55,20 @@ export const Calculators: React.FC = () => {
             />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
+            </script>
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": CALCULATOR_FAQS.map(faq => ({
+                        "@type": "Question",
+                        "name": faq.question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": faq.answer
+                        }
+                    }))
+                })}
             </script>
 
             {/* Background Orbs */}
@@ -190,6 +228,93 @@ export const Calculators: React.FC = () => {
                             </div>
                         </motion.div>
                     </Link>
+                </div>
+
+                {/* SEO Content Section */}
+                <div className="mt-24 max-w-4xl mx-auto space-y-16">
+
+                    {/* Introduction */}
+                    <section className="text-center">
+                        <h2 className="text-3xl font-bold text-white mb-6">Calculadoras Online: Ferramentas para Decisões Financeiras</h2>
+                        <p className="text-gray-400 text-lg leading-relaxed">
+                            As calculadoras online do FinZap são ferramentas digitais desenvolvidas para facilitar o cálculo de diferentes tipos de informações de forma automatizada.
+                            Elas funcionam diretamente no navegador, sem necessidade de instalação, e oferecem resultados imediatos com base nos dados fornecidos.
+                            Seja para resolver questões financeiras, trabalhistas ou de planejamento, nossas ferramentas ajudam você a economizar tempo, evitar erros manuais e tomar decisões mais conscientes.
+                        </p>
+                    </section>
+
+                    {/* Why Use & How to Use Grid */}
+                    <div className="grid md:grid-cols-2 gap-12">
+                        {/* Why Use */}
+                        <section className="bg-white/5 rounded-3xl p-8 border border-white/10">
+                            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                                <Zap className="text-primary w-6 h-6" />
+                                Por que usar nossas calculadoras?
+                            </h3>
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
+                                    <span><strong>Precisão nos cálculos:</strong> Reduz erros comuns em contas complexas e segue as regras vigentes.</span>
+                                </li>
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
+                                    <span><strong>Rapidez e praticidade:</strong> Resultados instantâneos com poucos cliques.</span>
+                                </li>
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
+                                    <span><strong>Gratuidade:</strong> Ferramentas 100% gratuitas e sem necessidade de cadastro.</span>
+                                </li>
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0" />
+                                    <span><strong>Acessível em qualquer lugar:</strong> Funciona no celular, tablet ou computador.</span>
+                                </li>
+                            </ul>
+                        </section>
+
+                        {/* How to Use */}
+                        <section className="bg-white/5 rounded-3xl p-8 border border-white/10">
+                            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                                <Calculator className="text-primary w-6 h-6" />
+                                Como usar corretamente
+                            </h3>
+                            <ul className="space-y-4">
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold">1</span>
+                                    <span>Escolha a calculadora adequada para sua necessidade específica.</span>
+                                </li>
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold">2</span>
+                                    <span>Informe os dados corretamente nos campos indicados (atenção aos valores brutos).</span>
+                                </li>
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold">3</span>
+                                    <span>Revise os valores inseridos antes de clicar em calcular.</span>
+                                </li>
+                                <li className="flex items-start gap-3 text-gray-400">
+                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold">4</span>
+                                    <span>Analise o resultado e, se necessário, faça novas simulações com cenários diferentes.</span>
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+
+                </div>
+
+                <div className="mt-24">
+                    <FAQ
+                        title="Dúvidas Frequentes sobre Calculadoras"
+                        items={CALCULATOR_FAQS}
+                        showSocialProof={false}
+                    />
+                </div>
+
+                {/* Disclaimer */}
+                <div className="mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12">
+                    <p className="text-sm text-gray-500">
+                        <strong>Aviso legal:</strong> As ferramentas disponibilizadas neste site são apenas para fins informativos e educacionais.
+                        Embora busquemos manter os cálculos e fórmulas atualizados, não nos responsabilizamos por eventuais divergências, perdas ou decisões tomadas com base nos resultados obtidos.
+                        Consulte sempre um profissional para orientações específicas ao seu caso.
+                    </p>
                 </div>
 
                 <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
