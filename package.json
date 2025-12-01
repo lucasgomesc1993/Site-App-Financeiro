@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run sitemap",
+    "build": "npm run build:client && npm run build:server && npm run prerender && npm run sitemap",
+    "build:client": "vite build --outDir dist/static",
+    "build:server": "vite build --ssr entry-server.tsx --outDir dist/server",
+    "prerender": "node scripts/prerender.js",
+    "serve:static": "npx serve dist/static",
     "preview": "vite preview",
     "sitemap": "node scripts/generate-sitemap.js"
   },

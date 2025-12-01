@@ -4,6 +4,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
+  const isSSR = process.argv.includes('--ssr');
+
   return {
     server: {
       port: 3000,
@@ -16,7 +18,7 @@ export default defineConfig(({ mode }) => {
     },
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, '.'),
+        '@': path.resolve('.'),
       }
     },
     build: {
@@ -24,13 +26,16 @@ export default defineConfig(({ mode }) => {
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
-          manualChunks: {
+          manualChunks: isSSR ? undefined : {
             'react-vendor': ['react', 'react-dom', 'react-router-dom'],
             'framer': ['framer-motion'],
             'ui-libs': ['lucide-react']
           }
         }
       }
+    },
+    ssr: {
+      noExternal: ['react-helmet-async']
     }
   };
 });
