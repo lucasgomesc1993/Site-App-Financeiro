@@ -57,6 +57,7 @@ export const PromoPopup: React.FC = () => {
 
                         <button
                             onClick={handleDismiss}
+                            aria-label="Fechar popup"
                             className="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors"
                         >
                             <X className="w-4 h-4" />
