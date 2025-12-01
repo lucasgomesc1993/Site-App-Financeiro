@@ -138,6 +138,29 @@ export const Calculators: React.FC = () => {
                             </div>
                         </motion.div>
                     </Link>
+
+                    <Link to="/calculadoras/rescisao" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.6 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Calculator className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Rescisão Trabalhista</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Simule sua rescisão CLT. Calcule saldo de salário, férias, 13º, aviso prévio e multa do FGTS.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
                 </div>
 
                 <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>

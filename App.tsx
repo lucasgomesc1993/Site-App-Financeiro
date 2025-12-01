@@ -15,6 +15,7 @@ const InvestmentPage = lazy(() => import('./components/tools/InvestmentPage').th
 const VacationPage = lazy(() => import('./components/tools/VacationPage').then(module => ({ default: module.VacationPage })));
 const EnergyPage = lazy(() => import('./components/tools/EnergyPage').then(module => ({ default: module.EnergyPage })));
 const FuelPage = lazy(() => import('./components/tools/FuelPage').then(module => ({ default: module.FuelPage })));
+const TerminationPage = lazy(() => import('./components/tools/TerminationPage').then(module => ({ default: module.TerminationPage })));
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="/calculadoras/ferias" element={<VacationPage />} />
               <Route path="/calculadoras/energia" element={<EnergyPage />} />
               <Route path="/calculadoras/combustivel" element={<FuelPage />} />
+              <Route path="/calculadoras/rescisao" element={<TerminationPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/support" element={<Support />} />
