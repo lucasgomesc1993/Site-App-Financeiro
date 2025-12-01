@@ -8,7 +8,7 @@ interface SEOProps {
 }
 
 export function SEO({ title, description, canonical, image }: SEOProps) {
-    const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://site-app-financeiro.vercel.app';
+    const siteUrl = typeof window !== 'undefined' ? window.location.origin : 'https://finzap.io';
     const fullCanonical = canonical ? (canonical.startsWith('http') ? canonical : `${siteUrl}${canonical}`) : undefined;
     const ogImage = image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : `${siteUrl}/og-image.png`;
 

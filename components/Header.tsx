@@ -126,7 +126,7 @@ export const Header: React.FC = () => {
         {/* Desktop CTA - Visible on LG+ */}
         <div className="hidden lg:flex items-center gap-3 shrink-0">
           <a
-            href="https://fin-love.vercel.app/criar-conta"
+            href="https://finzap.io/criar-conta"
             className="px-7 py-3 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 hover:scale-105 transition-all duration-300 text-white font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)]"
           >
             Começar Grátis
@@ -162,7 +162,7 @@ export const Header: React.FC = () => {
             </div>
 
             <a
-              href="https://fin-love.vercel.app/criar-conta"
+              href="https://finzap.io/criar-conta"
               className="px-10 py-4 rounded-full bg-primary text-black font-bold text-lg uppercase mt-8 cursor-pointer relative z-10 shadow-[0_0_30px_rgba(71,255,183,0.3)] hover:scale-105 transition-transform"
             >
               Começar Grátis

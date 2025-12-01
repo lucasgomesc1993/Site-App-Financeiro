@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://site-app-financeiro.vercel.app/sitemap.xml
+Sitemap: https://finzap.io/sitemap.xml

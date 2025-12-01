@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://site-app-financeiro.vercel.app/</loc>
+    <loc>https://finzap.io/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/calculadoras</loc>
+    <loc>https://finzap.io/calculadoras</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/calculadoras/combustivel</loc>
+    <loc>https://finzap.io/calculadoras/combustivel</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/calculadoras/energia</loc>
+    <loc>https://finzap.io/calculadoras/energia</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/calculadoras/ferias</loc>
+    <loc>https://finzap.io/calculadoras/ferias</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/calculadoras/inss</loc>
+    <loc>https://finzap.io/calculadoras/inss</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/calculadoras/investimentos</loc>
+    <loc>https://finzap.io/calculadoras/investimentos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/calculadoras/rescisao</loc>
+    <loc>https://finzap.io/calculadoras/rescisao</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/privacy</loc>
+    <loc>https://finzap.io/privacy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/support</loc>
+    <loc>https://finzap.io/support</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://site-app-financeiro.vercel.app/terms</loc>
+    <loc>https://finzap.io/terms</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

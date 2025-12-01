@@ -22,8 +22,8 @@ export const Home: React.FC = () => {
                     "@context": "https://schema.org",
                     "@type": "Organization",
                     "name": "FinZap",
-                    "url": "https://site-app-financeiro.vercel.app",
-                    "logo": "https://site-app-financeiro.vercel.app/favicon.ico",
+                    "url": "https://finzap.io",
+                    "logo": "https://finzap.io/favicon.ico",
                     "description": "Organize suas finanças sem sair do chat. O FinZap é a maneira mais simples e rápida de controlar seus gastos usando Inteligência Artificial no WhatsApp.",
                     "sameAs": []
                 })}
