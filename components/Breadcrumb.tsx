@@ -21,13 +21,13 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://finzap.com.br/" // Replace with actual domain if known, or use relative
+                "item": "https://site-app-financeiro.vercel.app/" // Replace with actual domain if known, or use relative
             },
             ...items.map((item, index) => ({
                 "@type": "ListItem",
                 "position": index + 2,
                 "name": item.label,
-                "item": `https://finzap.com.br${item.href}`
+                "item": `https://site-app-financeiro.vercel.app${item.href}`
             }))
         ]
     };
