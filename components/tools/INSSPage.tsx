@@ -234,7 +234,7 @@ export const INSSPage: React.FC = () => {
                                             <div className="text-5xl font-bold text-white mb-2">
                                                 {formatCurrency(result.discount)}
                                             </div>
-                                            <p className="text-sm text-gray-500">
+                                            <p className="text-sm text-gray-400">
                                                 Alíquota Efetiva: <span className="text-primary font-bold">{formatPercent(result.effectiveRate)}</span>
                                             </p>
                                         </div>
@@ -302,7 +302,7 @@ export const INSSPage: React.FC = () => {
                                     Tabela de Alíquotas do INSS 2025
                                 </h3>
                                 <div className="overflow-x-auto">
-                                    <table className="w-full text-left text-sm text-gray-400">
+                                    <table className="w-full text-left text-sm text-gray-300">
                                         <thead className="text-xs text-gray-200 uppercase bg-white/5">
                                             <tr>
                                                 <th className="px-4 py-3 rounded-l-lg">Faixa Salarial (R$)</th>
@@ -329,7 +329,7 @@ export const INSSPage: React.FC = () => {
                                         </tbody>
                                     </table>
                                 </div>
-                                <p className="text-xs text-gray-500 mt-4">*O valor máximo de contribuição (teto) é limitado ao salário de contribuição de R$ 7.786,02.</p>
+                                <p className="text-xs text-gray-400 mt-4">*O valor máximo de contribuição (teto) é limitado ao salário de contribuição de R$ 7.786,02.</p>
                             </div>
 
                             <h3 className="text-2xl font-bold text-white mb-4">Exemplo Prático de Cálculo</h3>
