@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel } from 'lucide-react';
+import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
 import { SEO } from './SEO';
@@ -221,6 +221,328 @@ export const Calculators: React.FC = () => {
                                 <h2 className="text-2xl font-bold text-white mb-3">Calculadora de INSS</h2>
                                 <p className="text-gray-400 mb-6">
                                     Simule o desconto do INSS 2025. Tabela progressiva atualizada para CLT, Autônomos e Pro-labore.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/salario-liquido" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.8 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <DollarSign className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Salário Líquido 2025</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra quanto vai cair na conta. Cálculo exato com descontos de INSS e IRRF 2025.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/decimo-terceiro" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.9 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Calendar className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Décimo Terceiro</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Antecipe seu planejamento. Simule o valor exato da 1ª e 2ª parcela do seu 13º salário.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/horas-extras" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.0 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Clock className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Horas Extras</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Estendeu a jornada? Simule o valor exato com adicionais de 50%, 100% e reflexo no DSR.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/seguro-desemprego" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.1 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Briefcase className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Seguro-Desemprego</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Foi demitido? Simule o valor exato e a quantidade de parcelas que você tem direito.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/adicional-noturno" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.2 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Moon className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Adicional Noturno</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Trabalha a noite? Descubra o valor real com acréscimo de 20% e hora reduzida.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/fgts" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.3 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <PiggyBank className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">FGTS (Saldo Futuro)</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Simule o rendimento do seu FGTS com depósitos mensais e juros.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/custo-funcionario" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.4 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Building2 className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Custo de Funcionário</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Vai contratar? Descubra o custo real de um funcionário para a empresa.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/plr" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.5 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Award className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">PLR e IRRF</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Vai receber a bolada? Simule o desconto do IR sobre a sua PLR.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/fire" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.6 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Flame className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">FIRE</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Independência Financeira: Quanto preciso juntar para parar de trabalhar?
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/juros-compostos" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.7 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <BarChart3 className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Juros Compostos</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Simule o crescimento exponencial do seu patrimônio com a força dos juros sobre juros.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/alugar-ou-financiar" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.8 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Home className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Alugar ou Financiar?</h2>
+                                <p className="text-gray-400 mb-6">
+                                    A dúvida de milhões. Descubra matematicamente se vale mais a pena comprar ou alugar.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/uber-ou-carro" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.9 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Car className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Uber ou Carro?</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Será que vale a pena manter um carro na garagem? Descubra se é mais barato dirigir ou usar apps.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/primeiro-milhao" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 2.0 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Gem className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Primeiro Milhão</h2>
+                                <p className="text-gray-400 mb-6">
+                                    O sonho é possível. Simule quanto você precisa investir por mês para conquistar o seu primeiro milhão.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </motion.div>
+                    </Link>
+
+                    <Link to="/calculadoras/conversor-moedas" className="group">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 2.1 }}
+                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Globe className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Conversor de Moedas</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Converta valores entre Real, Dólar e Euro com a cotação atualizada em tempo real.
                                 </p>
                                 <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
                                     Acessar ferramenta <ArrowRight className="w-4 h-4" />
