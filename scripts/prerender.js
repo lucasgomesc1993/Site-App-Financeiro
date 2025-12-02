@@ -21,7 +21,8 @@ const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SU
     const routesToPrerender = await getRoutes();
 
     // pre-render each route...
-    for (const url of routesToPrerender) {
+    for (const route of routesToPrerender) {
+        const url = route.path;
         // Skip static HTML files (like stories)
         if (url.endsWith('.html')) {
             continue;

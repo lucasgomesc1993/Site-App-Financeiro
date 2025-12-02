@@ -106,6 +106,31 @@ export const WebStoryPage: React.FC = () => {
             <Helmet>
                 <title>{story.title} | Web Stories</title>
                 <meta name="theme-color" content="#000000" />
+                <script type="application/ld+json">
+                    {JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "CreativeWork",
+                        "headline": story.title,
+                        "image": [story.posterPortrait],
+                        "datePublished": "2024-01-01T00:00:00Z", // TODO: Add date to story data
+                        "author": {
+                            "@type": "Organization",
+                            "name": story.publisher,
+                            "logo": {
+                                "@type": "ImageObject",
+                                "url": story.publisherLogo
+                            }
+                        },
+                        "publisher": {
+                            "@type": "Organization",
+                            "name": "FinZap",
+                            "logo": {
+                                "@type": "ImageObject",
+                                "url": "https://finzap.io/favicon.ico"
+                            }
+                        }
+                    })}
+                </script>
             </Helmet>
 
             {/* Container Mobile (9:16) */}

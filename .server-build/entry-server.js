@@ -10824,7 +10824,31 @@ const WebStoryPage = () => {
         story.title,
         " | Web Stories"
       ] }),
-      /* @__PURE__ */ jsx("meta", { name: "theme-color", content: "#000000" })
+      /* @__PURE__ */ jsx("meta", { name: "theme-color", content: "#000000" }),
+      /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "headline": story.title,
+        "image": [story.posterPortrait],
+        "datePublished": "2024-01-01T00:00:00Z",
+        // TODO: Add date to story data
+        "author": {
+          "@type": "Organization",
+          "name": story.publisher,
+          "logo": {
+            "@type": "ImageObject",
+            "url": story.publisherLogo
+          }
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "FinZap",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://finzap.io/favicon.ico"
+          }
+        }
+      }) })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "relative w-full h-full md:w-[400px] md:h-[90vh] md:rounded-2xl overflow-hidden bg-gray-900 shadow-2xl", children: [
       /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-0 w-full px-2 flex gap-1 z-30", children: story.slides.map((slide, index) => /* @__PURE__ */ jsx("div", { className: "h-1 flex-1 bg-white/30 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx(

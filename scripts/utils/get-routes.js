@@ -25,7 +25,7 @@ export async function getRoutes() {
         // Skip 404 or catch-all routes if any (usually *)
         if (routePath === '*') continue;
 
-        routes.push(routePath);
+        routes.push({ path: routePath });
     }
 
     // Add Blog Routes
@@ -36,15 +36,15 @@ export async function getRoutes() {
     const storiesDir = path.resolve(__dirname, '../../public/stories');
     if (fs.existsSync(storiesDir)) {
         const storyFiles = fs.readdirSync(storiesDir).filter(file => file.endsWith('.html'));
-        const storyRoutes = storyFiles.map(file => `/stories/${file}`);
+        const storyRoutes = storyFiles.map(file => ({ path: `/stories/${file}` }));
         routes.push(...storyRoutes);
     }
 
     // Sort routes: Home first, then alphabetical
     routes.sort((a, b) => {
-        if (a === '/') return -1;
-        if (b === '/') return 1;
-        return a.localeCompare(b);
+        if (a.path === '/') return -1;
+        if (b.path === '/') return 1;
+        return a.path.localeCompare(b.path);
     });
 
     return routes;
