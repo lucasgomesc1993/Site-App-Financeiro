@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run sitemap && npm run build:server && npm run build:client && npm run prerender",
+    "build": "npm run sitemap && npm run generate:stories && npm run build:server && npm run build:client && npm run prerender",
     "build:client": "vite build --outDir dist",
     "build:server": "vite build --ssr entry-server.tsx --outDir .server-build",
     "prerender": "node scripts/prerender.js",
     "serve:static": "npx serve dist",
     "preview": "vite preview",
-    "sitemap": "node scripts/generate-sitemap.js"
+    "sitemap": "node scripts/generate-sitemap.js",
+    "generate:stories": "node scripts/generate-stories.js"
   },
   "dependencies": {
     "@google/genai": "^1.30.0",
