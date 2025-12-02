@@ -106,13 +106,14 @@ export const WebStoryPage: React.FC = () => {
             <Helmet>
                 <title>{story.title} | Web Stories</title>
                 <meta name="theme-color" content="#000000" />
+                <link rel="amphtml" href={`https://finzap.io/stories/${story.slug}.html`} />
                 <script type="application/ld+json">
                     {JSON.stringify({
                         "@context": "https://schema.org",
                         "@type": "CreativeWork",
                         "headline": story.title,
                         "image": [story.posterPortrait],
-                        "datePublished": "2024-01-01T00:00:00Z", // TODO: Add date to story data
+                        "datePublished": new Date().toISOString(),
                         "author": {
                             "@type": "Organization",
                             "name": story.publisher,

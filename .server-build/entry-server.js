@@ -10825,13 +10825,13 @@ const WebStoryPage = () => {
         " | Web Stories"
       ] }),
       /* @__PURE__ */ jsx("meta", { name: "theme-color", content: "#000000" }),
+      /* @__PURE__ */ jsx("link", { rel: "amphtml", href: `https://finzap.io/stories/${story.slug}.html` }),
       /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "CreativeWork",
         "headline": story.title,
         "image": [story.posterPortrait],
-        "datePublished": "2024-01-01T00:00:00Z",
-        // TODO: Add date to story data
+        "datePublished": (/* @__PURE__ */ new Date()).toISOString(),
         "author": {
           "@type": "Organization",
           "name": story.publisher,
@@ -10963,7 +10963,6 @@ const StoriesGallery = () => {
     /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
     /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
       /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: [
-        { label: "Home", href: "/" },
         { label: "Stories", href: "/stories" }
       ] }) }),
       /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
