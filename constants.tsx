@@ -89,42 +89,42 @@ export const MODULES: Module[] = [
     id: 1,
     title: "Lançamento via WhatsApp",
     description: "Envie áudios, textos ou fotos de notas fiscais. Nossa IA processa em segundos.",
-    image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=70&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1611606063065-ee7946f0787a?q=60&w=400&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 2,
     title: "Categorização com IA",
     description: "Não perca tempo escolhendo categorias. A IA entende que 'Méqui' é Alimentação e 'Uber' é Transporte.",
-    image: "https://images.unsplash.com/photo-1642427749670-f20e2e76ed8c?q=70&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1642427749670-f20e2e76ed8c?q=60&w=400&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 3,
     title: "Dashboard em Tempo Real",
     description: "Visualize para onde seu dinheiro vai com gráficos interativos e bonitos, direto no navegador ou celular.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=70&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=60&w=400&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 4,
     title: "Metas Inteligentes",
     description: "Defina quanto quer gastar por categoria. O FinZap te avisa no WhatsApp se você estiver perto do limite.",
-    image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=70&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=60&w=400&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 5,
     title: "Relatórios Semanais",
     description: "Receba um resumo da sua semana toda sexta-feira direto no seu WhatsApp.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=70&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=60&w=400&auto=format&fit=crop",
     cols: 1
   },
   {
     id: 6,
     title: "Segurança Total",
     description: "Seus dados são criptografados. Não pedimos senha de banco. Você tem o controle.",
-    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=70&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=60&w=400&auto=format&fit=crop",
     cols: 1
   }
 ];
