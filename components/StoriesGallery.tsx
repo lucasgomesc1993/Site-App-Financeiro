@@ -21,7 +21,6 @@ export const StoriesGallery: React.FC = () => {
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
                     <Breadcrumb items={[
-                        { label: 'Home', href: '/' },
                         { label: 'Stories', href: '/stories' }
                     ]} />
                 </div>
