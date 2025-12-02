@@ -8,7 +8,7 @@ interface SEOProps {
 }
 
 export function SEO({ title, description, canonical, image }: SEOProps) {
-    const siteUrl = 'https://finzap.io';
+    const siteUrl = import.meta.env.VITE_SITE_URL;
     const fullCanonical = canonical ? (canonical.startsWith('http') ? canonical : `${siteUrl}${canonical}`) : undefined;
     const ogImage = image ? (image.startsWith('http') ? image : `${siteUrl}${image}`) : `${siteUrl}/og-image.png`;
 

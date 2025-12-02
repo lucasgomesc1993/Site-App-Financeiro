@@ -9,8 +9,8 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, ChevronRight, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { QRCodeSVG } from "qrcode.react";
 import { format } from "date-fns";
@@ -997,6 +997,16 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isMobileMenuOpen]);
   const handleLinkClick = (e, href) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
@@ -1036,6 +1046,32 @@ const Header = () => {
       }
     }
   };
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      y: "-100%",
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+        staggerChildren: 0.05,
+        staggerDirection: -1
+      }
+    },
+    open: {
+      opacity: 1,
+      y: "0%",
+      transition: {
+        duration: 0.5,
+        ease: "easeInOut",
+        staggerChildren: 0.07,
+        delayChildren: 0.2
+      }
+    }
+  };
+  const itemVariants = {
+    closed: { opacity: 0, y: 20 },
+    open: { opacity: 1, y: 0 }
+  };
   return /* @__PURE__ */ jsxs(
     "header",
     {
@@ -1051,8 +1087,8 @@ const Header = () => {
           border-b border-white/5`
           }
         ),
-        /* @__PURE__ */ jsxs("div", { className: "max-w-[1400px] mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between relative z-10", children: [
-          /* @__PURE__ */ jsxs(Link, { to: "/", className: "flex items-center gap-2 z-50 relative shrink-0 group", children: [
+        /* @__PURE__ */ jsxs("div", { className: "max-w-[1400px] mx-auto px-4 md:px-8 h-20 md:h-24 flex items-center justify-between relative z-50", children: [
+          /* @__PURE__ */ jsxs(Link, { to: "/", className: "flex items-center gap-2 relative shrink-0 group z-50", onClick: () => setIsMobileMenuOpen(false), children: [
             /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 group-hover:border-primary/50 transition-colors", children: /* @__PURE__ */ jsx(Wallet, { className: "text-primary w-6 h-6" }) }),
             /* @__PURE__ */ jsxs("span", { className: "text-2xl font-bold text-white tracking-tight", children: [
               "FinZap",
@@ -1089,32 +1125,54 @@ const Header = () => {
             {
               className: "lg:hidden z-50 w-12 h-12 flex items-center justify-center text-white bg-white/5 rounded-full border border-white/10 backdrop-blur-md active:scale-95 transition-all hover:bg-white/10",
               onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen),
-              "aria-label": "Abrir menu de navegação",
+              "aria-label": isMobileMenuOpen ? "Fechar menu" : "Abrir menu",
               children: isMobileMenuOpen ? /* @__PURE__ */ jsx(X, { size: 22 }) : /* @__PURE__ */ jsx(Menu, { size: 22 })
             }
-          ),
-          isMobileMenuOpen && /* @__PURE__ */ jsxs("div", { className: "fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 p-8 animate-in fade-in duration-300 bg-[#000000]/90 backdrop-blur-2xl", children: [
-            /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" }),
-            /* @__PURE__ */ jsx("div", { className: "flex flex-col items-center gap-8 relative z-10", children: NAV_ITEMS.map((item) => /* @__PURE__ */ jsx(
-              "a",
-              {
-                href: item.href,
-                onClick: (e) => handleLinkClick(e, item.href),
-                className: "text-3xl font-medium text-white uppercase tracking-wider cursor-pointer hover:text-primary transition-colors",
-                children: item.label
-              },
-              item.label
-            )) }),
-            /* @__PURE__ */ jsx(
-              "a",
-              {
-                href: "https://finzap.io/criar-conta",
-                className: "px-10 py-4 rounded-full bg-primary text-black font-bold text-lg uppercase mt-8 cursor-pointer relative z-10 shadow-[0_0_30px_rgba(71,255,183,0.3)] hover:scale-105 transition-transform",
-                children: "Começar Grátis"
-              }
-            )
-          ] })
-        ] })
+          )
+        ] }),
+        /* @__PURE__ */ jsx(AnimatePresence, { children: isMobileMenuOpen && /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: "closed",
+            animate: "open",
+            exit: "closed",
+            variants: menuVariants,
+            className: "fixed inset-0 z-40 bg-[#000000] flex flex-col pt-32 px-6 pb-10 overflow-y-auto min-h-screen",
+            children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 w-[200px] h-[200px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" }),
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 relative z-10 max-w-lg mx-auto w-full", children: [
+                NAV_ITEMS.map((item, i) => /* @__PURE__ */ jsxs(
+                  motion.a,
+                  {
+                    variants: itemVariants,
+                    href: item.href,
+                    onClick: (e) => handleLinkClick(e, item.href),
+                    className: "group flex items-center justify-between p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300",
+                    children: [
+                      /* @__PURE__ */ jsx("span", { className: "text-2xl font-medium text-gray-300 group-hover:text-white tracking-tight", children: item.label }),
+                      /* @__PURE__ */ jsx(ChevronRight, { className: "text-gray-600 group-hover:text-primary transition-colors", size: 20 })
+                    ]
+                  },
+                  item.label
+                )),
+                /* @__PURE__ */ jsx(motion.div, { variants: itemVariants, className: "mt-8", children: /* @__PURE__ */ jsx(
+                  "a",
+                  {
+                    href: "https://finzap.io/criar-conta",
+                    className: "flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]",
+                    children: "Começar Grátis"
+                  }
+                ) }),
+                /* @__PURE__ */ jsx(motion.div, { variants: itemVariants, className: "mt-auto pt-10 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-gray-500 text-sm", children: [
+                  "© 2025 FinZap AI. ",
+                  /* @__PURE__ */ jsx("br", {}),
+                  " Todos os direitos reservados."
+                ] }) })
+              ] })
+            ]
+          }
+        ) })
       ]
     }
   );
@@ -1135,7 +1193,7 @@ const Footer = () => {
         /* @__PURE__ */ jsx("a", { href: "#", className: "text-gray-400 hover:text-white transition-colors", "aria-label": "Youtube", children: /* @__PURE__ */ jsx(Youtube, {}) }),
         /* @__PURE__ */ jsx("a", { href: "#", className: "text-gray-400 hover:text-white transition-colors", "aria-label": "LinkedIn", children: /* @__PURE__ */ jsx(Linkedin, {}) })
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "flex gap-6 text-sm text-gray-400", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-gray-400", children: [
         /* @__PURE__ */ jsx(Link, { to: "/terms", className: "hover:text-gray-300", children: "Termos de Uso" }),
         /* @__PURE__ */ jsx(Link, { to: "/privacy", className: "hover:text-gray-300", children: "Privacidade" }),
         /* @__PURE__ */ jsx(Link, { to: "/blog", className: "hover:text-gray-300", children: "Blog" }),
@@ -1148,7 +1206,7 @@ const Footer = () => {
   ] }) });
 };
 const Hero = () => {
-  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 md:pt-48 md:pb-32 px-4 overflow-hidden", children: [
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 md:pt-48 md:pb-32 px-4 overflow-hidden max-w-[100vw]", children: [
     /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
     /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
     /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-10 text-center", children: [
@@ -1784,7 +1842,7 @@ const TestimonialCard = ({ t }) => /* @__PURE__ */ jsxs("div", { className: "rel
 const Testimonials = () => {
   const firstRow = TESTIMONIALS.slice(0, 5);
   const secondRow = TESTIMONIALS.slice(5, 10);
-  return /* @__PURE__ */ jsxs("section", { id: "depoimentos", className: "py-24 md:py-32 relative bg-[#0d0d0d] overflow-hidden", children: [
+  return /* @__PURE__ */ jsxs("section", { id: "depoimentos", className: "py-24 md:py-32 relative bg-[#0d0d0d] overflow-hidden max-w-[100vw]", children: [
     /* @__PURE__ */ jsx("div", { className: "absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent" }),
     /* @__PURE__ */ jsx("div", { className: "absolute top-20 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none" }),
     /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 mb-20 text-center relative z-10", children: /* @__PURE__ */ jsxs(
