@@ -11,30 +11,32 @@ import { PromoPopup } from './components/PromoPopup';
 const Terms = lazy(() => import('./components/Terms').then(module => ({ default: module.Terms })));
 const Privacy = lazy(() => import('./components/Privacy').then(module => ({ default: module.Privacy })));
 const Support = lazy(() => import('./components/Support').then(module => ({ default: module.Support })));
-const Calculators = lazy(() => import('./components/Calculators').then(module => ({ default: module.Calculators })));
-const Tools = lazy(() => import('./components/Tools').then(module => ({ default: module.Tools })));
-const InvestmentPage = lazy(() => import('./components/tools/InvestmentPage').then(module => ({ default: module.InvestmentPage })));
-const VacationPage = lazy(() => import('./components/tools/VacationPage').then(module => ({ default: module.VacationPage })));
-const EnergyPage = lazy(() => import('./components/tools/EnergyPage').then(module => ({ default: module.EnergyPage })));
-const FuelPage = lazy(() => import('./components/tools/FuelPage').then(module => ({ default: module.FuelPage })));
-const TerminationPage = lazy(() => import('./components/tools/TerminationPage').then(module => ({ default: module.TerminationPage })));
-const INSSPage = lazy(() => import('./components/tools/INSSPage').then(module => ({ default: module.INSSPage })));
-const NetSalaryPage = lazy(() => import('./components/tools/NetSalaryPage').then(module => ({ default: module.NetSalaryPage })));
-const ThirteenthSalaryPage = lazy(() => import('./components/tools/ThirteenthSalaryPage').then(module => ({ default: module.ThirteenthSalaryPage })));
-const OvertimePage = lazy(() => import('./components/tools/OvertimePage').then(module => ({ default: module.OvertimePage })));
-const UnemploymentInsurancePage = lazy(() => import('./components/tools/UnemploymentInsurancePage').then(module => ({ default: module.UnemploymentInsurancePage })));
-const NightShiftPage = lazy(() => import('./components/tools/NightShiftPage').then(module => ({ default: module.NightShiftPage })));
-const FGTSPage = lazy(() => import('./components/tools/FGTSPage').then(module => ({ default: module.FGTSPage })));
-const EmployeeCostPage = lazy(() => import('./components/tools/EmployeeCostPage').then(module => ({ default: module.EmployeeCostPage })));
-const PLRPage = lazy(() => import('./components/tools/PLRPage').then(module => ({ default: module.PLRPage })));
-const FIREPage = lazy(() => import('./components/tools/FIREPage').then(module => ({ default: module.FIREPage })));
-const CompoundInterestPage = lazy(() => import('./components/tools/CompoundInterestPage').then(module => ({ default: module.CompoundInterestPage })));
-const RentVsBuyPage = lazy(() => import('./components/tools/RentVsBuyPage').then(module => ({ default: module.RentVsBuyPage })));
-const UberVsCarPage = lazy(() => import('./components/tools/UberVsCarPage').then(module => ({ default: module.UberVsCarPage })));
-const FirstMillionPage = lazy(() => import('./components/tools/FirstMillionPage').then(module => ({ default: module.FirstMillionPage })));
-const CurrencyConverterPage = lazy(() => import('./components/tools/CurrencyConverterPage').then(module => ({ default: module.CurrencyConverterPage })));
-const PixGeneratorPage = lazy(() => import('./components/tools/PixGeneratorPage').then(module => ({ default: module.PixGeneratorPage })));
-const WebStoryPage = lazy(() => import('./components/tools/WebStoryPage').then(module => ({ default: module.WebStoryPage })));
+
+// Static imports for critical SEO pages
+import { Calculators } from './components/Calculators';
+import { Tools } from './components/Tools';
+import { InvestmentPage } from './components/tools/InvestmentPage';
+import { VacationPage } from './components/tools/VacationPage';
+import { EnergyPage } from './components/tools/EnergyPage';
+import { FuelPage } from './components/tools/FuelPage';
+import { TerminationPage } from './components/tools/TerminationPage';
+import { INSSPage } from './components/tools/INSSPage';
+import { NetSalaryPage } from './components/tools/NetSalaryPage';
+import { ThirteenthSalaryPage } from './components/tools/ThirteenthSalaryPage';
+import { OvertimePage } from './components/tools/OvertimePage';
+import { UnemploymentInsurancePage } from './components/tools/UnemploymentInsurancePage';
+import { NightShiftPage } from './components/tools/NightShiftPage';
+import { FGTSPage } from './components/tools/FGTSPage';
+import { EmployeeCostPage } from './components/tools/EmployeeCostPage';
+import { PLRPage } from './components/tools/PLRPage';
+import { FIREPage } from './components/tools/FIREPage';
+import { CompoundInterestPage } from './components/tools/CompoundInterestPage';
+import { RentVsBuyPage } from './components/tools/RentVsBuyPage';
+import { UberVsCarPage } from './components/tools/UberVsCarPage';
+import { FirstMillionPage } from './components/tools/FirstMillionPage';
+import { CurrencyConverterPage } from './components/tools/CurrencyConverterPage';
+import { PixGeneratorPage } from './components/tools/PixGeneratorPage';
+import { WebStoryPage } from './components/tools/WebStoryPage';
 
 function App() {
   return (
