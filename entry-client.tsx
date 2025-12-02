@@ -2,20 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { ServerDataProvider } from './context/ServerContext';
 import App from './App';
 import './index.css';
 
-const rootElement = document.getElementById('root');
-if (!rootElement) {
-    throw new Error("Could not find root element to mount to");
-}
+// Get initial data injected by prerender
+const initialData = (window as any).__INITIAL_DATA__;
 
 ReactDOM.hydrateRoot(
-    rootElement,
+    document.getElementById('root') as HTMLElement,
     <React.StrictMode>
         <BrowserRouter>
             <HelmetProvider>
-                <App />
+                <ServerDataProvider value={initialData}>
+                    <App />
+                </ServerDataProvider>
             </HelmetProvider>
         </BrowserRouter>
     </React.StrictMode>

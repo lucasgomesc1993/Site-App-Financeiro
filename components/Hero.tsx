@@ -30,15 +30,12 @@ export const Hero: React.FC = () => {
         </motion.div>
 
         {/* Main Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+        <h1
           className="text-4xl md:text-6xl lg:text-7xl font-medium leading-tight text-white tracking-tight"
         >
           Controle financeiro no <br className="hidden md:block" />
           WhatsApp com <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-500">Inteligência Artificial</span>
-        </motion.h1>
+        </h1>
 
         {/* Subheadline */}
         <motion.div
@@ -88,10 +85,7 @@ export const Hero: React.FC = () => {
       </div>
 
       {/* Dashboard Preview (Perspective Transform) */}
-      <motion.div
-        initial={{ opacity: 0, rotateX: 45, y: 100 }}
-        animate={{ opacity: 1, rotateX: 20, y: 0 }}
-        transition={{ duration: 1.2, delay: 0.5 }}
+      <div
         className="mt-20 w-full max-w-6xl mx-auto perspective-1000 relative z-0"
         style={{ perspective: '1200px' }}
       >
@@ -106,12 +100,13 @@ export const Hero: React.FC = () => {
             width={1200}
             height={563}
             decoding="async"
+            fetchPriority="high"
             className="w-full h-auto object-cover opacity-80"
           />
 
 
         </div>
-      </motion.div>
+      </div>
 
     </section>
   );

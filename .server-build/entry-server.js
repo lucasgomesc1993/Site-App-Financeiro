@@ -2,8 +2,8 @@ var __defProp = Object.defineProperty;
 var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 var _a, _b;
-import { jsxs, jsx, Fragment } from "react/jsx-runtime";
-import React3, { Component, useState, useEffect, useRef, lazy, Suspense } from "react";
+import { jsx, jsxs, Fragment } from "react/jsx-runtime";
+import React3, { Component, createContext, useContext, useState, useEffect, useRef, lazy, Suspense } from "react";
 import ReactDOMServer from "react-dom/server";
 import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter } from "react-router-dom";
 import fastCompare from "react-fast-compare";
@@ -819,6 +819,13 @@ var Helmet = (_b = class extends Component {
   encodeSpecialCharacters: true,
   prioritizeSeoTags: false
 }), _b);
+const ServerContext = createContext(null);
+const ServerDataProvider = ({ value, children }) => {
+  return /* @__PURE__ */ jsx(ServerContext.Provider, { value, children });
+};
+const useServerData = () => {
+  return useContext(ServerContext);
+};
 const NAV_ITEMS = [
   { label: "Como Funciona", href: "#solucao" },
   { label: "Recursos", href: "#modulos" },
@@ -1161,11 +1168,8 @@ const Hero = () => {
         }
       ),
       /* @__PURE__ */ jsxs(
-        motion.h1,
+        "h1",
         {
-          initial: { opacity: 0, y: 30 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.8, delay: 0.2 },
           className: "text-4xl md:text-6xl lg:text-7xl font-medium leading-tight text-white tracking-tight",
           children: [
             "Controle financeiro no ",
@@ -1222,11 +1226,8 @@ const Hero = () => {
       )
     ] }),
     /* @__PURE__ */ jsx(
-      motion.div,
+      "div",
       {
-        initial: { opacity: 0, rotateX: 45, y: 100 },
-        animate: { opacity: 1, rotateX: 20, y: 0 },
-        transition: { duration: 1.2, delay: 0.5 },
         className: "mt-20 w-full max-w-6xl mx-auto perspective-1000 relative z-0",
         style: { perspective: "1200px" },
         children: /* @__PURE__ */ jsxs("div", { className: "relative transform rotate-x-12 scale-90 opacity-90 border border-white/10 rounded-xl overflow-hidden shadow-[0_0_50px_rgba(71,255,183,0.15)] bg-[#0a0a0a]", children: [
@@ -1241,6 +1242,7 @@ const Hero = () => {
               width: 1200,
               height: 563,
               decoding: "async",
+              fetchPriority: "high",
               className: "w-full h-auto object-cover opacity-80"
             }
           )
@@ -11358,17 +11360,20 @@ const PostContent = ({ content }) => {
 const BlogPost = () => {
   var _a2, _b2, _c, _d, _e, _f, _g;
   const { slug } = useParams();
-  const [post, setPost] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const serverData = useServerData();
+  const [post, setPost] = useState(
+    serverData && serverData.slug === slug ? serverData : null
+  );
+  const [loading, setLoading] = useState(!post);
   useEffect(() => {
     const fetchPost = async () => {
-      if (!slug) return;
+      if (!slug || post) return;
       const data = await blogService.getPostBySlug(slug);
       setPost(data);
       setLoading(false);
     };
     fetchPost();
-  }, [slug]);
+  }, [slug, post]);
   if (loading) {
     return /* @__PURE__ */ jsx("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 py-20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto space-y-8 animate-pulse", children: [
       /* @__PURE__ */ jsx("div", { className: "h-8 bg-white/5 rounded w-3/4" }),
@@ -11533,10 +11538,10 @@ function App() {
     ] })
   ] });
 }
-function render({ path, context = {} }) {
+function render({ path, context = {}, initialData = null }) {
   const helmetContext = {};
   const html = ReactDOMServer.renderToString(
-    /* @__PURE__ */ jsx(React3.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(App, {}) }) }) })
+    /* @__PURE__ */ jsx(React3.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) })
   );
   return { html, helmetContext };
 }

@@ -1,8 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createClient } from '@supabase/supabase-js';
+import dotenv from 'dotenv';
 
 import { getRoutes } from './utils/get-routes.js';
+
+dotenv.config();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const toAbsolute = (p) => path.resolve(__dirname, '..', p);
@@ -10,23 +14,36 @@ const toAbsolute = (p) => path.resolve(__dirname, '..', p);
 const template = fs.readFileSync(toAbsolute('dist/index.html'), 'utf-8');
 const { render } = await import(pathToFileURL(toAbsolute('.server-build/entry-server.js')).href);
 
-const routesToPrerender = await getRoutes();
+// Initialize Supabase
+const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SUPABASE_ANON_KEY);
 
 (async () => {
+    const routesToPrerender = await getRoutes();
+
     // pre-render each route...
     for (const url of routesToPrerender) {
-        const context = {};
-        const appHtml = render({ path: url, context });
+        let initialData = null;
 
-        const html = template.replace(`<!--app-html-->`, appHtml.html);
-        // Note: You might want to inject helmet data here if you extracted it in render()
-        // For now, let's assume Helmet handles it client-side or we need to extract it.
-        // The render function returns { html, helmetContext }.
+        // If it's a blog post route (but not a category page), fetch the post data
+        if (url.startsWith('/blog/') && !url.startsWith('/blog/categoria')) {
+            const slug = url.split('/').pop();
+            console.log(`Fetching data for blog post: ${slug}`);
 
-        // Let's improve this to inject Helmet tags.
+            const { data } = await supabase
+                .from('posts')
+                .select('*, author:authors(*), category:categories(*)')
+                .eq('slug', slug)
+                .single();
+
+            initialData = data;
+        }
+
+        const appHtml = render({ path: url, context: {}, initialData });
+
+        let finalHtml = template.replace(`<!--app-html-->`, appHtml.html);
+
+        // Inject Helmet head tags
         const { helmet } = appHtml.helmetContext;
-
-        let finalHtml = html;
 
         if (helmet) {
             const helmetHead = `
@@ -35,11 +52,17 @@ const routesToPrerender = await getRoutes();
             ${helmet.link.toString()}
             ${helmet.script.toString()}
         `;
-            finalHtml = finalHtml.replace('<meta name="helmet-placeholder" />', helmetHead);
+            finalHtml = finalHtml.replace('<!--head-tags-->', helmetHead);
         }
 
         // Inject the app content
         finalHtml = finalHtml.replace(`<div id="root"></div>`, `<div id="root">${appHtml.html}</div>`);
+
+        // Inject initial data for client-side hydration
+        if (initialData) {
+            const scriptTag = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
+            finalHtml = finalHtml.replace('</body>', `${scriptTag}</body>`);
+        }
 
         const filePath = `dist${url === '/' ? '/index.html' : `${url}/index.html`}`;
         const dir = path.dirname(filePath);

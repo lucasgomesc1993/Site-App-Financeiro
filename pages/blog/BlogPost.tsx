@@ -11,20 +11,27 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Calendar } from 'lucide-react';
 
+import { useServerData } from '../../context/ServerContext';
+
 export const BlogPost: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
-    const [post, setPost] = useState<Post | null>(null);
-    const [loading, setLoading] = useState(true);
+    const serverData = useServerData();
+
+    // Initialize with server data if available and matches current slug
+    const [post, setPost] = useState<Post | null>(
+        (serverData && serverData.slug === slug) ? serverData : null
+    );
+    const [loading, setLoading] = useState(!post);
 
     useEffect(() => {
         const fetchPost = async () => {
-            if (!slug) return;
+            if (!slug || post) return; // Skip if we already have the post
             const data = await blogService.getPostBySlug(slug);
             setPost(data);
             setLoading(false);
         };
         fetchPost();
-    }, [slug]);
+    }, [slug, post]);
 
     if (loading) {
         return (
