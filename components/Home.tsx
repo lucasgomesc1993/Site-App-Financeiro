@@ -7,6 +7,7 @@ import { Certificate } from './Certificate';
 import { Community } from './Community';
 import { Testimonials } from './Testimonials';
 import { Price } from './Price';
+import { RecentStories } from './RecentStories';
 import { FAQ } from './FAQ';
 
 export const Home: React.FC = () => {
@@ -35,6 +36,7 @@ export const Home: React.FC = () => {
             <Community />
             <Testimonials />
             <Price />
+            <RecentStories />
             <FAQ />
         </>
     );

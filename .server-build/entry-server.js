@@ -9,7 +9,7 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ChevronUp, ChevronDown, ArrowRight, Home as Home$1, ChevronRight, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
+import { Wallet, X, Menu, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, ChevronRight, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { QRCodeSVG } from "qrcode.react";
@@ -1139,6 +1139,7 @@ const Footer = () => {
         /* @__PURE__ */ jsx(Link, { to: "/terms", className: "hover:text-gray-300", children: "Termos de Uso" }),
         /* @__PURE__ */ jsx(Link, { to: "/privacy", className: "hover:text-gray-300", children: "Privacidade" }),
         /* @__PURE__ */ jsx(Link, { to: "/blog", className: "hover:text-gray-300", children: "Blog" }),
+        /* @__PURE__ */ jsx(Link, { to: "/stories", className: "hover:text-gray-300", children: "Web Stories" }),
         /* @__PURE__ */ jsx(Link, { to: "/ferramentas", className: "hover:text-gray-300", children: "Ferramentas" }),
         /* @__PURE__ */ jsx(Link, { to: "/calculadoras", className: "hover:text-gray-300", children: "Calculadoras" }),
         /* @__PURE__ */ jsx(Link, { to: "/support", className: "hover:text-gray-300", children: "Suporte" })
@@ -1875,6 +1876,117 @@ const Price = () => {
     ] })
   ] }) }) });
 };
+const storiesData = [
+  {
+    slug: "5-erros-fgts",
+    title: "5 Erros que Comem seu FGTS",
+    publisher: "FinZap",
+    publisherLogo: "https://finzap.io/favicon.ico",
+    posterPortrait: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080",
+    slides: [
+      {
+        id: "capa",
+        media: {
+          type: "image",
+          url: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080"
+        },
+        text: "Você está perdendo dinheiro no FGTS sem saber?",
+        animation: "fly-in-bottom"
+      },
+      {
+        id: "erro-1",
+        media: {
+          type: "image",
+          url: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1080"
+        },
+        text: "Erro #1: Deixar o dinheiro parado na conta inativa rendendo menos que a inflação.",
+        animation: "fade-in"
+      },
+      {
+        id: "cta",
+        media: {
+          type: "image",
+          url: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?q=80&w=1080"
+        },
+        text: "Não perca mais tempo. Simule seu saldo agora.",
+        cta: {
+          label: "Simular FGTS",
+          url: "https://finzap.io/calculadoras/fgts"
+        }
+      }
+    ]
+  }
+];
+const RecentStories = () => {
+  const recentStories = storiesData.slice(0, 4);
+  if (recentStories.length === 0) return null;
+  return /* @__PURE__ */ jsx("section", { className: "py-24 px-4 bg-surface/30 border-t border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-12 gap-6", children: [
+      /* @__PURE__ */ jsxs("div", { children: [
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm",
+            children: [
+              /* @__PURE__ */ jsx(Zap, { className: "w-4 h-4 text-yellow-400" }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Dicas Rápidas" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-bold text-white mb-4", children: [
+          "Web Stories ",
+          /* @__PURE__ */ jsx("span", { className: "text-primary", children: "FinZap" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 max-w-xl", children: "Conteúdo visual e direto ao ponto para você aprender sobre finanças em poucos segundos." })
+      ] }),
+      /* @__PURE__ */ jsxs(
+        Link,
+        {
+          to: "/stories",
+          className: "flex items-center gap-2 text-primary font-medium hover:text-primary/80 transition-colors group",
+          children: [
+            "Ver todas as stories",
+            /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 transition-transform group-hover:translate-x-1" })
+          ]
+        }
+      )
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-6", children: recentStories.map((story, index) => /* @__PURE__ */ jsxs(
+      motion.a,
+      {
+        href: `/stories/${story.slug}.html`,
+        initial: { opacity: 0, y: 20 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true },
+        transition: { delay: index * 0.1 },
+        className: "group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900",
+        children: [
+          /* @__PURE__ */ jsx(
+            "img",
+            {
+              src: story.posterPortrait,
+              alt: story.title,
+              className: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100",
+              loading: "lazy"
+            }
+          ),
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" }),
+          /* @__PURE__ */ jsxs("div", { className: "absolute bottom-0 left-0 right-0 p-4", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-primary text-[10px] font-bold uppercase tracking-wider mb-2", children: [
+              /* @__PURE__ */ jsx(Play, { className: "w-3 h-3 fill-current" }),
+              "Web Story"
+            ] }),
+            /* @__PURE__ */ jsx("h3", { className: "text-white font-bold text-sm leading-tight mb-2 group-hover:text-primary transition-colors line-clamp-2", children: story.title })
+          ] })
+        ]
+      },
+      story.slug
+    )) })
+  ] }) });
+};
 const FAQ = ({ items, title = "Dúvidas frequentes", className = "py-24 md:py-32", showSocialProof = true }) => {
   const [openIndex, setOpenIndex] = useState(0);
   const data = items || FAQS;
@@ -1960,6 +2072,7 @@ const Home = () => {
     /* @__PURE__ */ jsx(Community, {}),
     /* @__PURE__ */ jsx(Testimonials, {}),
     /* @__PURE__ */ jsx(Price, {}),
+    /* @__PURE__ */ jsx(RecentStories, {}),
     /* @__PURE__ */ jsx(FAQ, {})
   ] });
 };
@@ -10969,47 +11082,6 @@ const PixGeneratorPage = () => {
     ] })
   ] });
 };
-const storiesData = [
-  {
-    slug: "5-erros-fgts",
-    title: "5 Erros que Comem seu FGTS",
-    publisher: "FinZap",
-    publisherLogo: "https://finzap.io/favicon.ico",
-    posterPortrait: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080",
-    slides: [
-      {
-        id: "capa",
-        media: {
-          type: "image",
-          url: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080"
-        },
-        text: "Você está perdendo dinheiro no FGTS sem saber?",
-        animation: "fly-in-bottom"
-      },
-      {
-        id: "erro-1",
-        media: {
-          type: "image",
-          url: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1080"
-        },
-        text: "Erro #1: Deixar o dinheiro parado na conta inativa rendendo menos que a inflação.",
-        animation: "fade-in"
-      },
-      {
-        id: "cta",
-        media: {
-          type: "image",
-          url: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?q=80&w=1080"
-        },
-        text: "Não perca mais tempo. Simule seu saldo agora.",
-        cta: {
-          label: "Simular FGTS",
-          url: "https://finzap.io/calculadoras/fgts"
-        }
-      }
-    ]
-  }
-];
 const WebStoryPage = () => {
   const { storyId } = useParams();
   const navigate = useNavigate();
@@ -11166,6 +11238,78 @@ const WebStoryPage = () => {
         },
         currentSlide == null ? void 0 : currentSlide.id
       ) })
+    ] })
+  ] });
+};
+const StoriesGallery = () => {
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Web Stories Financeiras - Dicas Rápidas | FinZap",
+        description: "Confira nossas Web Stories com dicas rápidas de finanças, FGTS, investimentos e economia em formato visual e direto ao ponto.",
+        canonical: "/stories"
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsx("div", { className: "mb-8", children: /* @__PURE__ */ jsx(Breadcrumb, { items: [
+        { label: "Home", href: "/" },
+        { label: "Stories", href: "/stories" }
+      ] }) }),
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm",
+            children: [
+              /* @__PURE__ */ jsx(Zap, { className: "w-4 h-4 text-yellow-400" }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Conteúdo Rápido" })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6", children: [
+          "FinZap ",
+          /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Stories" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Dicas financeiras, tutoriais e novidades em formato de tela cheia. Rápido de ler, fácil de entender." })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6", children: storiesData.map((story, index) => /* @__PURE__ */ jsxs(
+        motion.a,
+        {
+          href: `/stories/${story.slug}.html`,
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { delay: index * 0.1 },
+          className: "group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900",
+          children: [
+            /* @__PURE__ */ jsx(
+              "img",
+              {
+                src: story.posterPortrait,
+                alt: story.title,
+                className: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-80 group-hover:opacity-100",
+                loading: "lazy"
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" }),
+            /* @__PURE__ */ jsxs("div", { className: "absolute bottom-0 left-0 right-0 p-5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-primary text-xs font-bold uppercase tracking-wider mb-2", children: [
+                /* @__PURE__ */ jsx(Play, { className: "w-3 h-3 fill-current" }),
+                "Web Story"
+              ] }),
+              /* @__PURE__ */ jsx("h3", { className: "text-white font-bold text-lg leading-tight mb-2 group-hover:text-primary transition-colors", children: story.title }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 text-gray-400 text-sm font-medium group-hover:text-white transition-colors", children: [
+                "Ver agora ",
+                /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+              ] })
+            ] })
+          ]
+        },
+        story.slug
+      )) })
     ] })
   ] });
 };
@@ -11529,6 +11673,7 @@ function App() {
         /* @__PURE__ */ jsx(Route, { path: "/blog/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/blog/categoria/:categorySlug", element: /* @__PURE__ */ jsx(CategoryPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/stories/:storyId", element: /* @__PURE__ */ jsx(WebStoryPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/stories", element: /* @__PURE__ */ jsx(StoriesGallery, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/terms", element: /* @__PURE__ */ jsx(Terms, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/privacy", element: /* @__PURE__ */ jsx(Privacy, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/support", element: /* @__PURE__ */ jsx(Support, {}) })

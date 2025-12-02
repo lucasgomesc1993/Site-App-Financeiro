@@ -37,6 +37,7 @@ import { FirstMillionPage } from './components/tools/FirstMillionPage';
 import { CurrencyConverterPage } from './components/tools/CurrencyConverterPage';
 import { PixGeneratorPage } from './components/tools/PixGeneratorPage';
 import { WebStoryPage } from './components/tools/WebStoryPage';
+import { StoriesGallery } from './components/StoriesGallery';
 import { BlogIndex } from './pages/blog/BlogIndex';
 import { CategoryPage } from './pages/blog/CategoryPage';
 import { BlogPost } from './pages/blog/BlogPost';
@@ -78,6 +79,7 @@ function App() {
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/blog/categoria/:categorySlug" element={<CategoryPage />} />
               <Route path="/stories/:storyId" element={<WebStoryPage />} />
+              <Route path="/stories" element={<StoriesGallery />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/support" element={<Support />} />

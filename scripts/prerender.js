@@ -22,6 +22,11 @@ const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SU
 
     // pre-render each route...
     for (const url of routesToPrerender) {
+        // Skip static HTML files (like stories)
+        if (url.endsWith('.html')) {
+            continue;
+        }
+
         let initialData = null;
 
         // If it's a blog post route (but not a category page), fetch the post data
@@ -52,7 +57,7 @@ const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SU
             ${helmet.link.toString()}
             ${helmet.script.toString()}
         `;
-            finalHtml = finalHtml.replace('<!--head-tags-->', helmetHead);
+            finalHtml = finalHtml.replace('<meta name="helmet-placeholder" />', helmetHead);
         }
 
         // Inject the app content

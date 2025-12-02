@@ -30,6 +30,7 @@ export const Footer: React.FC = () => {
                         <Link to="/terms" className="hover:text-gray-300">Termos de Uso</Link>
                         <Link to="/privacy" className="hover:text-gray-300">Privacidade</Link>
                         <Link to="/blog" className="hover:text-gray-300">Blog</Link>
+                        <Link to="/stories" className="hover:text-gray-300">Web Stories</Link>
                         <Link to="/ferramentas" className="hover:text-gray-300">Ferramentas</Link>
                         <Link to="/calculadoras" className="hover:text-gray-300">Calculadoras</Link>
                         <Link to="/support" className="hover:text-gray-300">Suporte</Link>

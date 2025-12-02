@@ -146,6 +146,16 @@
     <priority>0.3</priority>
   </url>
   <url>
+    <loc>https://finzap.io/stories</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://finzap.io/stories/5-erros-fgts.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://finzap.io/support</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

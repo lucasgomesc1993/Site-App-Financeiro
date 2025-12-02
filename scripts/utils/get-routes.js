@@ -32,6 +32,14 @@ export async function getRoutes() {
     const blogRoutes = await getBlogRoutes();
     routes.push(...blogRoutes);
 
+    // Add Story Routes
+    const storiesDir = path.resolve(__dirname, '../../public/stories');
+    if (fs.existsSync(storiesDir)) {
+        const storyFiles = fs.readdirSync(storiesDir).filter(file => file.endsWith('.html'));
+        const storyRoutes = storyFiles.map(file => `/stories/${file}`);
+        routes.push(...storyRoutes);
+    }
+
     // Sort routes: Home first, then alphabetical
     routes.sort((a, b) => {
         if (a === '/') return -1;
