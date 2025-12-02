@@ -4,6 +4,7 @@ import { StaticRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ServerDataProvider } from './context/ServerContext';
 import App from './App';
+import { ServerAppRoutes } from './ServerAppRoutes';
 import './index.css';
 
 interface RenderOptions {
@@ -20,7 +21,9 @@ export function render({ path, context = {}, initialData = null }: RenderOptions
             <StaticRouter location={path}>
                 <HelmetProvider context={helmetContext}>
                     <ServerDataProvider value={initialData}>
-                        <App />
+                        <App>
+                            <ServerAppRoutes />
+                        </App>
                     </ServerDataProvider>
                 </HelmetProvider>
             </StaticRouter>

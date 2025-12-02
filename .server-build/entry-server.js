@@ -9,8 +9,8 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ChevronUp, ChevronDown, ArrowRight, Home as Home$1, ChevronRight, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
-import { motion, AnimatePresence, useAnimation } from "framer-motion";
+import { Wallet, X, Menu, Instagram, Youtube, Linkedin, Zap, ArrowRight, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ChevronUp, ChevronDown, Shield, FileText, CheckCircle, Lock, Eye, Share2, HelpCircle, Mail, Home as Home$1, ChevronRight, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
+import { useAnimation, AnimatePresence, motion } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { QRCodeSVG } from "qrcode.react";
 import { format } from "date-fns";
@@ -1146,6 +1146,105 @@ const Footer = () => {
     ] })
   ] }) });
 };
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant"
+    });
+  }, [pathname]);
+  return null;
+};
+const PromoPopup = () => {
+  const location = useLocation();
+  const [isVisible, setIsVisible] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+  const buttonControls = useAnimation();
+  useEffect(() => {
+    if (location.pathname.startsWith("/calculadoras") && !isDismissed) {
+      const timer = setTimeout(() => setIsVisible(true), 2e3);
+      return () => clearTimeout(timer);
+    } else {
+      setIsVisible(false);
+    }
+  }, [location, isDismissed]);
+  useEffect(() => {
+    if (isVisible) {
+      const sequence = async () => {
+        while (true) {
+          await new Promise((resolve) => setTimeout(resolve, 1e4));
+          await buttonControls.start({
+            y: [0, -6, 0],
+            transition: { duration: 0.5, ease: "easeInOut" }
+          });
+        }
+      };
+      sequence();
+    }
+  }, [isVisible, buttonControls]);
+  const handleDismiss = () => {
+    setIsVisible(false);
+    setIsDismissed(true);
+  };
+  return /* @__PURE__ */ jsx(AnimatePresence, { children: isVisible && /* @__PURE__ */ jsx(
+    motion.div,
+    {
+      initial: { opacity: 0, y: 50, scale: 0.9 },
+      animate: { opacity: 1, y: 0, scale: 1 },
+      exit: { opacity: 0, y: 50, scale: 0.9 },
+      transition: { type: "spring", damping: 20, stiffness: 300 },
+      className: "fixed z-50 \r\n                        bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 \r\n                        md:w-[380px] w-auto",
+      children: /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d]/90 backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] p-5", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none" }),
+        /* @__PURE__ */ jsx(
+          "button",
+          {
+            onClick: handleDismiss,
+            "aria-label": "Fechar popup",
+            className: "absolute top-3 right-3 text-gray-500 hover:text-white transition-colors",
+            children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4" })
+          }
+        ),
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0", children: /* @__PURE__ */ jsx(Zap, { className: "w-5 h-5 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-base font-bold text-white leading-tight mb-1", children: "Controle Financeiro Inteligente" }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 leading-relaxed", children: "Organize suas finanças automaticamente pelo WhatsApp com nossa IA." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs(
+            motion.a,
+            {
+              href: "https://finzap.io/criar-conta",
+              target: "_blank",
+              rel: "noopener noreferrer",
+              animate: buttonControls,
+              className: "flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap",
+              children: [
+                "Testar Grátis Agora",
+                /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5" })
+              ]
+            }
+          )
+        ] })
+      ] })
+    }
+  ) });
+};
+function App({ children }) {
+  return /* @__PURE__ */ jsxs(Fragment, { children: [
+    /* @__PURE__ */ jsx(ScrollToTop, {}),
+    /* @__PURE__ */ jsxs("div", { className: "bg-background min-h-screen text-white font-sans selection:bg-primary/30 selection:text-primary", children: [
+      /* @__PURE__ */ jsx(Header, {}),
+      /* @__PURE__ */ jsx("main", { children }),
+      /* @__PURE__ */ jsx(Footer, {}),
+      /* @__PURE__ */ jsx(PromoPopup, {})
+    ] })
+  ] });
+}
 const Hero = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 md:pt-48 md:pb-32 px-4 overflow-hidden", children: [
     /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
@@ -1963,93 +2062,299 @@ const Home = () => {
     /* @__PURE__ */ jsx(FAQ, {})
   ] });
 };
-const ScrollToTop = () => {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant"
-    });
-  }, [pathname]);
-  return null;
-};
-const PromoPopup = () => {
-  const location = useLocation();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
-  const buttonControls = useAnimation();
-  useEffect(() => {
-    if (location.pathname.startsWith("/calculadoras") && !isDismissed) {
-      const timer = setTimeout(() => setIsVisible(true), 2e3);
-      return () => clearTimeout(timer);
-    } else {
-      setIsVisible(false);
-    }
-  }, [location, isDismissed]);
-  useEffect(() => {
-    if (isVisible) {
-      const sequence = async () => {
-        while (true) {
-          await new Promise((resolve) => setTimeout(resolve, 1e4));
-          await buttonControls.start({
-            y: [0, -6, 0],
-            transition: { duration: 0.5, ease: "easeInOut" }
-          });
+const Terms = () => {
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Termos de Uso - FinZap",
+        description: "Leia os Termos de Uso do FinZap e entenda as regras e diretrizes que regem o uso da nossa plataforma.",
+        canonical: "/terms"
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6 },
+          className: "text-center mb-16",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+              /* @__PURE__ */ jsx(Shield, { className: "w-4 h-4 text-primary" }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Jurídico" })
+            ] }),
+            /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+              "Termos de ",
+              /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Uso" })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Entenda as regras e diretrizes que regem o uso da nossa plataforma de inteligência financeira." })
+          ]
         }
-      };
-      sequence();
-    }
-  }, [isVisible, buttonControls]);
-  const handleDismiss = () => {
-    setIsVisible(false);
-    setIsDismissed(true);
-  };
-  return /* @__PURE__ */ jsx(AnimatePresence, { children: isVisible && /* @__PURE__ */ jsx(
-    motion.div,
-    {
-      initial: { opacity: 0, y: 50, scale: 0.9 },
-      animate: { opacity: 1, y: 0, scale: 1 },
-      exit: { opacity: 0, y: 50, scale: 0.9 },
-      transition: { type: "spring", damping: 20, stiffness: 300 },
-      className: "fixed z-50 \r\n                        bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 \r\n                        md:w-[380px] w-auto",
-      children: /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d]/90 backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] p-5", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none" }),
-        /* @__PURE__ */ jsx(
-          "button",
+      ),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-8 pb-8 border-b border-white/5", children: [
+              /* @__PURE__ */ jsx(FileText, { className: "w-6 h-6 text-primary" }),
+              /* @__PURE__ */ jsxs("span", { className: "text-sm text-gray-400", children: [
+                "Última atualização: ",
+                (/* @__PURE__ */ new Date()).getFullYear()
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("span", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm font-bold", children: "1" }),
+                  "Aceitação dos Termos"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-11", children: "Ao acessar e usar o FinZap, você concorda em cumprir e ficar vinculado a estes Termos de Uso. Se você não concordar com qualquer parte destes termos, você não deve usar nosso serviço. O uso continuado da plataforma constitui aceitação de quaisquer alterações feitas nestes termos." })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("span", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm font-bold", children: "2" }),
+                  "Descrição do Serviço"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-11 mb-4", children: "O FinZap é uma ferramenta de gestão financeira baseada em inteligência artificial que opera através do WhatsApp. O serviço permite que os usuários:" }),
+                /* @__PURE__ */ jsx("ul", { className: "space-y-3 pl-11", children: [
+                  "Registrem despesas e receitas via texto ou áudio",
+                  "Recebam relatórios automáticos de gastos",
+                  "Categorizem transações automaticamente via IA",
+                  "Consultem saldos e extratos em tempo real"
+                ].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                  /* @__PURE__ */ jsx(CheckCircle, { className: "w-5 h-5 text-primary/50 shrink-0 mt-0.5" }),
+                  /* @__PURE__ */ jsx("span", { children: item })
+                ] }, i)) })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("span", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm font-bold", children: "3" }),
+                  "Uso do Serviço"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-11", children: "Você concorda em usar o serviço apenas para fins legais e de acordo com estes termos. Você é responsável por manter a confidencialidade de sua conta e por todas as atividades que ocorrem sob ela. É proibido usar o serviço para qualquer atividade fraudulenta ou ilegal." })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("span", { className: "w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-sm font-bold", children: "4" }),
+                  "Planos e Pagamentos"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-11", children: "O FinZap oferece planos gratuitos e pagos. Os detalhes dos preços e recursos estão disponíveis em nossa página principal. Reservamo-nos o direito de alterar os preços a qualquer momento, com aviso prévio aos usuários ativos. O cancelamento pode ser feito a qualquer momento sem multa." })
+              ] })
+            ] })
+          ]
+        }
+      )
+    ] })
+  ] });
+};
+const Privacy = () => {
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Política de Privacidade - FinZap",
+        description: "Saiba como o FinZap coleta, usa e protege seus dados pessoais. Sua privacidade é nossa prioridade.",
+        canonical: "/privacy"
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6 },
+          className: "text-center mb-16",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+              /* @__PURE__ */ jsx(Lock, { className: "w-4 h-4 text-primary" }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Segurança" })
+            ] }),
+            /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+              "Política de ",
+              /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Privacidade" })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Sua privacidade é nossa prioridade. Saiba como protegemos e utilizamos seus dados." })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-8 pb-8 border-b border-white/5", children: [
+              /* @__PURE__ */ jsx(FileText, { className: "w-6 h-6 text-primary" }),
+              /* @__PURE__ */ jsxs("span", { className: "text-sm text-gray-400", children: [
+                "Última atualização: ",
+                (/* @__PURE__ */ new Date()).getFullYear()
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-12", children: [
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20", children: /* @__PURE__ */ jsx(Eye, { className: "w-5 h-5 text-primary" }) }),
+                  "Coleta de Dados"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-[52px]", children: "Coletamos as informações que você nos fornece diretamente, como seu número de telefone, nome e os dados financeiros que você envia através do WhatsApp para processamento pela nossa IA. Também coletamos dados técnicos de acesso para melhoria contínua da plataforma." })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20", children: /* @__PURE__ */ jsx(ShieldCheck, { className: "w-5 h-5 text-primary" }) }),
+                  "Uso das Informações"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-[52px]", children: "Usamos suas informações para:" }),
+                /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside space-y-2 pl-[52px] mt-3 text-gray-400", children: [
+                  /* @__PURE__ */ jsx("li", { children: "Fornecer, manter e melhorar nossos serviços" }),
+                  /* @__PURE__ */ jsx("li", { children: "Processar suas transações financeiras via IA" }),
+                  /* @__PURE__ */ jsx("li", { children: "Enviar relatórios e insights personalizados" }),
+                  /* @__PURE__ */ jsx("li", { children: "Detectar e prevenir fraudes" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20", children: /* @__PURE__ */ jsx(Lock, { className: "w-5 h-5 text-primary" }) }),
+                  "Segurança"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-[52px]", children: "Implementamos medidas de segurança técnicas e organizacionais de nível bancário para proteger seus dados pessoais. Utilizamos criptografia de ponta a ponta (E2EE) para todas as comunicações e armazenamento seguro em nuvem com redundância." })
+              ] }),
+              /* @__PURE__ */ jsxs("section", { children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20", children: /* @__PURE__ */ jsx(Share2, { className: "w-5 h-5 text-primary" }) }),
+                  "Compartilhamento"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 leading-relaxed pl-[52px]", children: "Não vendemos nem alugamos suas informações pessoais para terceiros. Compartilhamos dados apenas quando estritamente necessário para a prestação do serviço (ex: processadores de pagamento) ou quando exigido por lei." })
+              ] })
+            ] })
+          ]
+        }
+      )
+    ] })
+  ] });
+};
+const Support = () => {
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Central de Ajuda - Suporte FinZap",
+        description: "Precisa de ajuda? Entre em contato com o suporte do FinZap via WhatsApp ou E-mail, ou consulte nossas perguntas frequentes.",
+        canonical: "/support"
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-6xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6 },
+          className: "text-center mb-16",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+              /* @__PURE__ */ jsx(HelpCircle, { className: "w-4 h-4 text-primary" }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Central de Ajuda" })
+            ] }),
+            /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+              "Como podemos ",
+              /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "ajudar você?" })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Escolha um dos canais abaixo para falar com nossa equipe ou tire suas dúvidas na nossa seção de perguntas frequentes." })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 mb-20", children: [
+        /* @__PURE__ */ jsxs(
+          motion.div,
           {
-            onClick: handleDismiss,
-            "aria-label": "Fechar popup",
-            className: "absolute top-3 right-3 text-gray-500 hover:text-white transition-colors",
-            children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4" })
+            initial: { opacity: 0, x: -20 },
+            animate: { opacity: 1, x: 0 },
+            transition: { duration: 0.6, delay: 0.2 },
+            className: "group relative bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30",
+            children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-primary/20", children: /* @__PURE__ */ jsx(MessageCircle, { className: "text-primary w-7 h-7" }) }),
+                /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-2", children: "WhatsApp" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Fale diretamente com nosso suporte técnico pelo WhatsApp. Ideal para dúvidas rápidas e suporte em tempo real." }),
+                /* @__PURE__ */ jsxs("a", { href: "#", className: "inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all", children: [
+                  "Iniciar conversa ",
+                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+                ] })
+              ] })
+            ]
           }
         ),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0", children: /* @__PURE__ */ jsx(Zap, { className: "w-5 h-5 text-primary" }) }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-base font-bold text-white leading-tight mb-1", children: "Controle Financeiro Inteligente" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 leading-relaxed", children: "Organize suas finanças automaticamente pelo WhatsApp com nossa IA." })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs(
-            motion.a,
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, x: 20 },
+            animate: { opacity: 1, x: 0 },
+            transition: { duration: 0.6, delay: 0.3 },
+            className: "group relative bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30",
+            children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-primary/20", children: /* @__PURE__ */ jsx(Mail, { className: "text-primary w-7 h-7" }) }),
+                /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-2", children: "E-mail" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Para assuntos mais complexos, parcerias ou feedback detalhado. Respondemos em até 24 horas úteis." }),
+                /* @__PURE__ */ jsxs("a", { href: "mailto:suporte@finzap.ai", className: "inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all", children: [
+                  "Enviar e-mail ",
+                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+                ] })
+              ] })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.4 },
+          className: "w-full",
+          children: /* @__PURE__ */ jsx(FAQ, { items: [
             {
-              href: "https://finzap.io/criar-conta",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              animate: buttonControls,
-              className: "flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap",
-              children: [
-                "Testar Grátis Agora",
-                /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5" })
-              ]
+              question: "Como entro em contato com o suporte técnico?",
+              answer: "Você pode nos contatar via WhatsApp para respostas rápidas ou por e-mail para questões mais complexas. Nossos canais estão listados acima."
+            },
+            {
+              question: "Esqueci minha senha, como recupero?",
+              answer: "Na tela de login, clique em 'Esqueci minha senha'. Enviaremos um link de redefinição para o seu e-mail cadastrado."
+            },
+            {
+              question: "Como funciona o reembolso?",
+              answer: "Se você não estiver satisfeito nos primeiros 7 dias, devolvemos 100% do seu dinheiro. Basta solicitar pelo suporte."
+            },
+            {
+              question: "Posso alterar meu plano a qualquer momento?",
+              answer: "Sim, você pode fazer upgrade ou downgrade do seu plano diretamente nas configurações da sua conta."
+            },
+            {
+              question: "Onde encontro minhas notas fiscais?",
+              answer: "Todas as notas fiscais de pagamento da assinatura são enviadas para seu e-mail e também ficam disponíveis no painel do usuário."
             }
-          )
-        ] })
-      ] })
-    }
-  ) });
+          ] })
+        }
+      )
+    ] })
+  ] });
 };
 const Breadcrumb = ({ items }) => {
   const jsonLd = {
@@ -11492,61 +11797,48 @@ const BlogPost = () => {
     ] }) }) })
   ] });
 };
-const Terms = lazy(() => import("./assets/Terms-Cvv8ygiZ.js").then((module) => ({ default: module.Terms })));
-const Privacy = lazy(() => import("./assets/Privacy-CG0AJmRf.js").then((module) => ({ default: module.Privacy })));
-const Support = lazy(() => import("./assets/Support-BSIJ6Hig.js").then((module) => ({ default: module.Support })));
-function App() {
-  return /* @__PURE__ */ jsxs(Fragment, { children: [
-    /* @__PURE__ */ jsx(ScrollToTop, {}),
-    /* @__PURE__ */ jsxs("div", { className: "bg-background min-h-screen text-white font-sans selection:bg-primary/30 selection:text-primary", children: [
-      /* @__PURE__ */ jsx(Header, {}),
-      /* @__PURE__ */ jsx("main", { children: /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "min-h-screen flex items-center justify-center", children: /* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" }) }), children: /* @__PURE__ */ jsxs(Routes, { children: [
-        /* @__PURE__ */ jsx(Route, { path: "/", element: /* @__PURE__ */ jsx(Home, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras", element: /* @__PURE__ */ jsx(Calculators, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/ferramentas", element: /* @__PURE__ */ jsx(Tools, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/investimentos", element: /* @__PURE__ */ jsx(InvestmentPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/ferias", element: /* @__PURE__ */ jsx(VacationPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/energia", element: /* @__PURE__ */ jsx(EnergyPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/combustivel", element: /* @__PURE__ */ jsx(FuelPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/rescisao", element: /* @__PURE__ */ jsx(TerminationPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/inss", element: /* @__PURE__ */ jsx(INSSPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/salario-liquido", element: /* @__PURE__ */ jsx(NetSalaryPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/decimo-terceiro", element: /* @__PURE__ */ jsx(ThirteenthSalaryPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/horas-extras", element: /* @__PURE__ */ jsx(OvertimePage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/seguro-desemprego", element: /* @__PURE__ */ jsx(UnemploymentInsurancePage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/adicional-noturno", element: /* @__PURE__ */ jsx(NightShiftPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fgts", element: /* @__PURE__ */ jsx(FGTSPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-funcionario", element: /* @__PURE__ */ jsx(EmployeeCostPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/plr", element: /* @__PURE__ */ jsx(PLRPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fire", element: /* @__PURE__ */ jsx(FIREPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/juros-compostos", element: /* @__PURE__ */ jsx(CompoundInterestPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/alugar-ou-financiar", element: /* @__PURE__ */ jsx(RentVsBuyPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/uber-ou-carro", element: /* @__PURE__ */ jsx(UberVsCarPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/primeiro-milhao", element: /* @__PURE__ */ jsx(FirstMillionPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-moedas", element: /* @__PURE__ */ jsx(CurrencyConverterPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/ferramentas/gerador-pix", element: /* @__PURE__ */ jsx(PixGeneratorPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/blog", element: /* @__PURE__ */ jsx(BlogIndex, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/blog/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/blog/categoria/:categorySlug", element: /* @__PURE__ */ jsx(CategoryPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/stories/:storyId", element: /* @__PURE__ */ jsx(WebStoryPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/terms", element: /* @__PURE__ */ jsx(Terms, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/privacy", element: /* @__PURE__ */ jsx(Privacy, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/support", element: /* @__PURE__ */ jsx(Support, {}) })
-      ] }) }) }),
-      /* @__PURE__ */ jsx(Footer, {}),
-      /* @__PURE__ */ jsx(PromoPopup, {})
-    ] })
+const ServerAppRoutes = () => {
+  return /* @__PURE__ */ jsxs(Routes, { children: [
+    /* @__PURE__ */ jsx(Route, { path: "/", element: /* @__PURE__ */ jsx(Home, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras", element: /* @__PURE__ */ jsx(Calculators, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/ferramentas", element: /* @__PURE__ */ jsx(Tools, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/investimentos", element: /* @__PURE__ */ jsx(InvestmentPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/ferias", element: /* @__PURE__ */ jsx(VacationPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/energia", element: /* @__PURE__ */ jsx(EnergyPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/combustivel", element: /* @__PURE__ */ jsx(FuelPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/rescisao", element: /* @__PURE__ */ jsx(TerminationPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/inss", element: /* @__PURE__ */ jsx(INSSPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/salario-liquido", element: /* @__PURE__ */ jsx(NetSalaryPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/decimo-terceiro", element: /* @__PURE__ */ jsx(ThirteenthSalaryPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/horas-extras", element: /* @__PURE__ */ jsx(OvertimePage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/seguro-desemprego", element: /* @__PURE__ */ jsx(UnemploymentInsurancePage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/adicional-noturno", element: /* @__PURE__ */ jsx(NightShiftPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fgts", element: /* @__PURE__ */ jsx(FGTSPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-funcionario", element: /* @__PURE__ */ jsx(EmployeeCostPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/plr", element: /* @__PURE__ */ jsx(PLRPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fire", element: /* @__PURE__ */ jsx(FIREPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/juros-compostos", element: /* @__PURE__ */ jsx(CompoundInterestPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/alugar-ou-financiar", element: /* @__PURE__ */ jsx(RentVsBuyPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/uber-ou-carro", element: /* @__PURE__ */ jsx(UberVsCarPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/primeiro-milhao", element: /* @__PURE__ */ jsx(FirstMillionPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-moedas", element: /* @__PURE__ */ jsx(CurrencyConverterPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/ferramentas/gerador-pix", element: /* @__PURE__ */ jsx(PixGeneratorPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/blog", element: /* @__PURE__ */ jsx(BlogIndex, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/blog/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/blog/categoria/:categorySlug", element: /* @__PURE__ */ jsx(CategoryPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/stories/:storyId", element: /* @__PURE__ */ jsx(WebStoryPage, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/terms", element: /* @__PURE__ */ jsx(Terms, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/privacy", element: /* @__PURE__ */ jsx(Privacy, {}) }),
+    /* @__PURE__ */ jsx(Route, { path: "/support", element: /* @__PURE__ */ jsx(Support, {}) })
   ] });
-}
+};
 function render({ path, context = {}, initialData = null }) {
   const helmetContext = {};
   const html = ReactDOMServer.renderToString(
-    /* @__PURE__ */ jsx(React3.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) })
+    /* @__PURE__ */ jsx(React3.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, { children: /* @__PURE__ */ jsx(ServerAppRoutes, {}) }) }) }) }) })
   );
   return { html, helmetContext };
 }
 export {
-  FAQ as F,
-  SEO as S,
   render
 };

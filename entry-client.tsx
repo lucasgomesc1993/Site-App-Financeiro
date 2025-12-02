@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ServerDataProvider } from './context/ServerContext';
 import App from './App';
+import { ClientAppRoutes } from './ClientAppRoutes';
 import './index.css';
 
 // Get initial data injected by prerender
@@ -15,7 +16,9 @@ ReactDOM.hydrateRoot(
         <BrowserRouter>
             <HelmetProvider>
                 <ServerDataProvider value={initialData}>
-                    <App />
+                    <App>
+                        <ClientAppRoutes />
+                    </App>
                 </ServerDataProvider>
             </HelmetProvider>
         </BrowserRouter>
