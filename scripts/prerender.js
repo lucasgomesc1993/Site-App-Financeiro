@@ -18,7 +18,7 @@ const routesToPrerender = getRoutes();
         const context = {};
         const appHtml = render({ path: url, context });
 
-        const html = template.replace(`<!--app-html-->`, appHtml.html).replace(`<!--head-meta-->`, ``);
+        const html = template.replace(`<!--app-html-->`, appHtml.html);
         // Note: You might want to inject helmet data here if you extracted it in render()
         // For now, let's assume Helmet handles it client-side or we need to extract it.
         // The render function returns { html, helmetContext }.
@@ -35,7 +35,7 @@ const routesToPrerender = getRoutes();
             ${helmet.link.toString()}
             ${helmet.script.toString()}
         `;
-            finalHtml = finalHtml.replace('<!--head-meta-->', helmetHead);
+            finalHtml = finalHtml.replace('<meta name="helmet-placeholder" />', helmetHead);
         }
 
         // Inject the app content
