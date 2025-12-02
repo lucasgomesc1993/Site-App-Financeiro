@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+
 import { Play, ArrowRight, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import storiesData from '../data/stories.json';
@@ -15,15 +15,10 @@ export const RecentStories: React.FC = () => {
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
                     <div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm"
-                        >
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                             <Zap className="w-4 h-4 text-yellow-400" />
                             <span className="text-sm text-gray-300">Dicas Rápidas</span>
-                        </motion.div>
+                        </div>
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
                             Web Stories <span className="text-primary">FinZap</span>
                         </h2>
@@ -43,13 +38,9 @@ export const RecentStories: React.FC = () => {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                     {recentStories.map((story, index) => (
-                        <motion.a
+                        <a
                             key={story.slug}
                             href={`/stories/${story.slug}.html`}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
                             className="group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900"
                         >
                             <img
@@ -68,7 +59,7 @@ export const RecentStories: React.FC = () => {
                                     {story.title}
                                 </h3>
                             </div>
-                        </motion.a>
+                        </a>
                     ))}
                 </div>
             </div>

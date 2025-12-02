@@ -1213,7 +1213,7 @@ const Hero = () => {
       /* @__PURE__ */ jsxs(
         motion.div,
         {
-          initial: { opacity: 0, y: 50 },
+          initial: { y: 50 },
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.8 },
           className: "w-24 h-24 md:w-28 md:h-28 mb-4 relative flex items-center justify-center",
@@ -1241,7 +1241,7 @@ const Hero = () => {
       /* @__PURE__ */ jsxs(
         motion.div,
         {
-          initial: { opacity: 0, y: 30 },
+          initial: { y: 30 },
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.8, delay: 0.4 },
           className: "text-lg md:text-xl text-muted max-w-2xl font-light",
@@ -1254,7 +1254,7 @@ const Hero = () => {
       /* @__PURE__ */ jsx(
         motion.div,
         {
-          initial: { opacity: 0, y: 30 },
+          initial: { y: 30 },
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.8, delay: 0.6 },
           children: /* @__PURE__ */ jsx(
@@ -1613,7 +1613,7 @@ const Modules = () => {
       /* @__PURE__ */ jsxs(
         motion.h3,
         {
-          initial: { opacity: 0, y: 20 },
+          initial: { y: 20 },
           whileInView: { opacity: 1, y: 0 },
           viewport: { once: true },
           className: "text-4xl md:text-6xl font-medium text-white mb-6",
@@ -1630,7 +1630,7 @@ const Modules = () => {
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: MODULES.map((module, idx) => /* @__PURE__ */ jsx(
       motion.div,
       {
-        initial: { opacity: 0, y: 30 },
+        initial: { y: 30 },
         whileInView: { opacity: 1, y: 0 },
         viewport: { once: true },
         transition: { delay: idx * 0.1, duration: 0.6 },
@@ -1848,7 +1848,7 @@ const Testimonials = () => {
     /* @__PURE__ */ jsx("div", { className: "max-w-7xl mx-auto px-4 mb-20 text-center relative z-10", children: /* @__PURE__ */ jsxs(
       motion.div,
       {
-        initial: { opacity: 0, y: 20 },
+        initial: { y: 20 },
         whileInView: { opacity: 1, y: 0 },
         viewport: { once: true },
         children: [
@@ -1981,19 +1981,10 @@ const RecentStories = () => {
   return /* @__PURE__ */ jsx("section", { className: "py-24 px-4 bg-surface/30 border-t border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto", children: [
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row justify-between items-end mb-12 gap-6", children: [
       /* @__PURE__ */ jsxs("div", { children: [
-        /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            whileInView: { opacity: 1, y: 0 },
-            viewport: { once: true },
-            className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm",
-            children: [
-              /* @__PURE__ */ jsx(Zap, { className: "w-4 h-4 text-yellow-400" }),
-              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Dicas Rápidas" })
-            ]
-          }
-        ),
+        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+          /* @__PURE__ */ jsx(Zap, { className: "w-4 h-4 text-yellow-400" }),
+          /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Dicas Rápidas" })
+        ] }),
         /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-bold text-white mb-4", children: [
           "Web Stories ",
           /* @__PURE__ */ jsx("span", { className: "text-primary", children: "FinZap" })
@@ -2013,13 +2004,9 @@ const RecentStories = () => {
       )
     ] }),
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-6", children: recentStories.map((story, index) => /* @__PURE__ */ jsxs(
-      motion.a,
+      "a",
       {
         href: `/stories/${story.slug}.html`,
-        initial: { opacity: 0, y: 20 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { delay: index * 0.1 },
         className: "group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900",
         children: [
           /* @__PURE__ */ jsx(
@@ -2337,426 +2324,246 @@ const Calculators = () => {
         /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Utilize nossas calculadoras gratuitas para planejar seus investimentos, calcular suas férias e organizar sua vida financeira." })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-6", children: [
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/investimentos", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.2 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(TrendingUp, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Simulador de Investimentos" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Compare CDB, LCI, LCA e Tesouro Direto. Descubra quanto seu dinheiro pode render com juros compostos." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/ferias", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.3 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Plane, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Férias" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Calcule o valor exato das suas férias, incluindo 1/3 constitucional, abono pecuniário e descontos de INSS/IRRF." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/energia", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.4 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Zap, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Consumo de Energia" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra quanto seus aparelhos consomem e economize na conta de luz." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/combustivel", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.5 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Fuel, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Álcool ou Gasolina" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra qual combustível compensa mais para abastecer seu veículo e economize no posto." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/rescisao", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.6 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Calculator, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Rescisão Trabalhista" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule sua rescisão CLT. Calcule saldo de salário, férias, 13º, aviso prévio e multa do FGTS." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/inss", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.7 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Calculator, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de INSS" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule o desconto do INSS 2025. Tabela progressiva atualizada para CLT, Autônomos e Pro-labore." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/salario-liquido", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.8 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(DollarSign, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Salário Líquido 2025" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra quanto vai cair na conta. Cálculo exato com descontos de INSS e IRRF 2025." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/decimo-terceiro", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 0.9 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Calendar, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Décimo Terceiro" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Antecipe seu planejamento. Simule o valor exato da 1ª e 2ª parcela do seu 13º salário." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/horas-extras", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Clock, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Horas Extras" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Estendeu a jornada? Simule o valor exato com adicionais de 50%, 100% e reflexo no DSR." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/seguro-desemprego", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.1 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Briefcase, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Seguro-Desemprego" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Foi demitido? Simule o valor exato e a quantidade de parcelas que você tem direito." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/adicional-noturno", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.2 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Moon, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Adicional Noturno" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Trabalha a noite? Descubra o valor real com acréscimo de 20% e hora reduzida." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/fgts", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.3 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(PiggyBank, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "FGTS (Saldo Futuro)" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule o rendimento do seu FGTS com depósitos mensais e juros." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/custo-funcionario", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.4 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Building2, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Custo de Funcionário" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Vai contratar? Descubra o custo real de um funcionário para a empresa." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/plr", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.5 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Award, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "PLR e IRRF" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Vai receber a bolada? Simule o desconto do IR sobre a sua PLR." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/fire", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.6 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Flame, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "FIRE" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Independência Financeira: Quanto preciso juntar para parar de trabalhar?" }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/juros-compostos", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.7 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(BarChart3, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Juros Compostos" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule o crescimento exponencial do seu patrimônio com a força dos juros sobre juros." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/alugar-ou-financiar", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.8 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Home$1, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Alugar ou Financiar?" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "A dúvida de milhões. Descubra matematicamente se vale mais a pena comprar ou alugar." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/uber-ou-carro", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 1.9 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Car, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Uber ou Carro?" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Será que vale a pena manter um carro na garagem? Descubra se é mais barato dirigir ou usar apps." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/primeiro-milhao", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 2 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Gem, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Primeiro Milhão" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O sonho é possível. Simule quanto você precisa investir por mês para conquistar o seu primeiro milhão." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) }),
-        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/conversor-moedas", className: "group", children: /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            transition: { duration: 0.6, delay: 2.1 },
-            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
-            children: [
-              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
-              /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
-                /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Globe, { className: "text-primary w-6 h-6" }) }),
-                /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Conversor de Moedas" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Converta valores entre Real, Dólar e Euro com a cotação atualizada em tempo real." }),
-                /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
-                  "Acessar ferramenta ",
-                  /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-                ] })
-              ] })
-            ]
-          }
-        ) })
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/investimentos", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(TrendingUp, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Simulador de Investimentos" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Compare CDB, LCI, LCA e Tesouro Direto. Descubra quanto seu dinheiro pode render com juros compostos." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/ferias", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Plane, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Férias" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Calcule o valor exato das suas férias, incluindo 1/3 constitucional, abono pecuniário e descontos de INSS/IRRF." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/energia", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Zap, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Consumo de Energia" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra quanto seus aparelhos consomem e economize na conta de luz." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/combustivel", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Fuel, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Álcool ou Gasolina" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra qual combustível compensa mais para abastecer seu veículo e economize no posto." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/rescisao", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Calculator, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Rescisão Trabalhista" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule sua rescisão CLT. Calcule saldo de salário, férias, 13º, aviso prévio e multa do FGTS." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/inss", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Calculator, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de INSS" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule o desconto do INSS 2025. Tabela progressiva atualizada para CLT, Autônomos e Pro-labore." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/salario-liquido", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(DollarSign, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Salário Líquido 2025" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra quanto vai cair na conta. Cálculo exato com descontos de INSS e IRRF 2025." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/decimo-terceiro", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Calendar, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Décimo Terceiro" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Antecipe seu planejamento. Simule o valor exato da 1ª e 2ª parcela do seu 13º salário." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/horas-extras", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Clock, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Horas Extras" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Estendeu a jornada? Simule o valor exato com adicionais de 50%, 100% e reflexo no DSR." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/seguro-desemprego", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Briefcase, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Seguro-Desemprego" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Foi demitido? Simule o valor exato e a quantidade de parcelas que você tem direito." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/adicional-noturno", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Moon, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Adicional Noturno" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Trabalha a noite? Descubra o valor real com acréscimo de 20% e hora reduzida." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/fgts", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(PiggyBank, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "FGTS (Saldo Futuro)" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule o rendimento do seu FGTS com depósitos mensais e juros." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/custo-funcionario", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Building2, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Custo de Funcionário" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Vai contratar? Descubra o custo real de um funcionário para a empresa." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/plr", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Award, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "PLR e IRRF" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Vai receber a bolada? Simule o desconto do IR sobre a sua PLR." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/fire", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Flame, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "FIRE" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Independência Financeira: Quanto preciso juntar para parar de trabalhar?" }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/juros-compostos", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(BarChart3, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Juros Compostos" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule o crescimento exponencial do seu patrimônio com a força dos juros sobre juros." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/alugar-ou-financiar", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Home$1, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Alugar ou Financiar?" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "A dúvida de milhões. Descubra matematicamente se vale mais a pena comprar ou alugar." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/uber-ou-carro", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Car, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Uber ou Carro?" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Será que vale a pena manter um carro na garagem? Descubra se é mais barato dirigir ou usar apps." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/primeiro-milhao", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Gem, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Primeiro Milhão" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O sonho é possível. Simule quanto você precisa investir por mês para conquistar o seu primeiro milhão." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/conversor-moedas", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Globe, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Conversor de Moedas" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Converta valores entre Real, Dólar e Euro com a cotação atualizada em tempo real." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto space-y-16", children: [
         /* @__PURE__ */ jsxs("section", { className: "text-center", children: [
@@ -2911,7 +2718,7 @@ const Tools = () => {
       /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 lg:grid-cols-3 gap-6", children: /* @__PURE__ */ jsx(Link, { to: "/ferramentas/gerador-pix", className: "group", children: /* @__PURE__ */ jsxs(
         motion.div,
         {
-          initial: { opacity: 0, y: 20 },
+          initial: { y: 20 },
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.6, delay: 0.2 },
           className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden",
@@ -3131,7 +2938,7 @@ const AppPromoBanner$1 = () => {
   return /* @__PURE__ */ jsx(
     motion.div,
     {
-      initial: { opacity: 0, y: 20 },
+      initial: { y: 20 },
       whileInView: { opacity: 1, y: 0 },
       viewport: { once: true },
       transition: { duration: 0.6 },
@@ -3294,120 +3101,111 @@ const InvestmentPage = () => {
           children: /* @__PURE__ */ jsx(InvestmentSimulator, {})
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Simulador de Investimentos: Calcule seus rendimentos" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quer saber quanto seu dinheiro vai render? Utilize o Simulador de Investimentos do FinZap para projetar seus ganhos em aplicações de Renda Fixa como CDB, LCI, LCA e Tesouro Direto." }),
-              /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como funciona o simulador de investimentos gratuito?" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Esta calculadora de investimentos foi desenvolvida para comparação de diferentes tipos de títulos de renda fixa. O simulador de investimento calcula de forma simples e descomplicada qual será o retorno do seu dinheiro após uma aplicação a uma determinada taxa e período." }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Ademais, o cálculo leva em conta possíveis aportes durante o tempo (investimento mensal), além do valor inicialmente aplicado. Com este simulador, será possível saber quanto conseguirá acumular no final de uma determinada quantidade de meses investindo seu dinheiro na aplicação de sua escolha." }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Contudo, é importante lembrar que o tipo de investimento escolhido é importante, porque existem títulos com tributação diferente. Dessa forma, o Simulador de Investimentos vai poder entregar o retorno líquido (já descontado o imposto) mais exato." }),
-              /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Tipos de Rentabilidade" }),
-              /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
-                /* @__PURE__ */ jsxs("li", { children: [
-                  /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Prefixada:" }),
-                  " o rendimento já é conhecido na data da aplicação e não varia no decorrer do tempo;"
-                ] }),
-                /* @__PURE__ */ jsxs("li", { children: [
-                  /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Pós-fixada:" }),
-                  " o retorno varia de acordo com um índice de referência, como o CDI; e"
-                ] }),
-                /* @__PURE__ */ jsxs("li", { children: [
-                  /* @__PURE__ */ jsx("strong", { className: "text-white", children: "IPCA (híbrida):" }),
-                  " o rendimento é a variação da inflação mais uma taxa prefixada."
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Simulador de Investimentos: Calcule seus rendimentos" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quer saber quanto seu dinheiro vai render? Utilize o Simulador de Investimentos do FinZap para projetar seus ganhos em aplicações de Renda Fixa como CDB, LCI, LCA e Tesouro Direto." }),
+          /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como funciona o simulador de investimentos gratuito?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Esta calculadora de investimentos foi desenvolvida para comparação de diferentes tipos de títulos de renda fixa. O simulador de investimento calcula de forma simples e descomplicada qual será o retorno do seu dinheiro após uma aplicação a uma determinada taxa e período." }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Ademais, o cálculo leva em conta possíveis aportes durante o tempo (investimento mensal), além do valor inicialmente aplicado. Com este simulador, será possível saber quanto conseguirá acumular no final de uma determinada quantidade de meses investindo seu dinheiro na aplicação de sua escolha." }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Contudo, é importante lembrar que o tipo de investimento escolhido é importante, porque existem títulos com tributação diferente. Dessa forma, o Simulador de Investimentos vai poder entregar o retorno líquido (já descontado o imposto) mais exato." }),
+          /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Tipos de Rentabilidade" }),
+          /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
+            /* @__PURE__ */ jsxs("li", { children: [
+              /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Prefixada:" }),
+              " o rendimento já é conhecido na data da aplicação e não varia no decorrer do tempo;"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { children: [
+              /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Pós-fixada:" }),
+              " o retorno varia de acordo com um índice de referência, como o CDI; e"
+            ] }),
+            /* @__PURE__ */ jsxs("li", { children: [
+              /* @__PURE__ */ jsx("strong", { className: "text-white", children: "IPCA (híbrida):" }),
+              " o rendimento é a variação da inflação mais uma taxa prefixada."
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "O que é o rendimento real nos investimentos?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O rendimento real nos investimentos é a taxa de retorno obtida após a dedução da inflação. É um indicador importante porque leva em consideração o impacto da inflação no poder de compra do investidor." }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-2xl border border-white/5 mb-8", children: [
+            /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-4", children: "Por que considerar o rendimento real?" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-bold flex-shrink-0", children: "1" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-gray-400", children: [
+                  /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Preservação do poder de compra:" }),
+                  " reflete o quanto seu dinheiro realmente cresce após descontar a inflação."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-bold flex-shrink-0", children: "2" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-gray-400", children: [
+                  /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Comparação precisa:" }),
+                  " permite comparar diferentes opções levando em conta o efeito da inflação."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-bold flex-shrink-0", children: "3" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-gray-400", children: [
+                  /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Metas financeiras:" }),
+                  " ajuda a estabelecer metas realistas para o futuro."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "O que é o rendimento real nos investimentos?" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O rendimento real nos investimentos é a taxa de retorno obtida após a dedução da inflação. É um indicador importante porque leva em consideração o impacto da inflação no poder de compra do investidor." }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-2xl border border-white/5 mb-8", children: [
-                /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-4", children: "Por que considerar o rendimento real?" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-bold flex-shrink-0", children: "1" }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-gray-400", children: [
-                      /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Preservação do poder de compra:" }),
-                      " reflete o quanto seu dinheiro realmente cresce após descontar a inflação."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-bold flex-shrink-0", children: "2" }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-gray-400", children: [
-                      /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Comparação precisa:" }),
-                      " permite comparar diferentes opções levando em conta o efeito da inflação."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("div", { className: "w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-bold flex-shrink-0", children: "3" }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-gray-400", children: [
-                      /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Metas financeiras:" }),
-                      " ajuda a estabelecer metas realistas para o futuro."
-                    ] })
-                  ] })
-                ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-6", children: "Entenda os tipos de investimento" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-primary", children: "Tesouro Direto" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Programa do Tesouro Nacional para venda de títulos públicos. Considerado o investimento mais seguro do país." }),
+              /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
+                /* @__PURE__ */ jsx("li", { children: "• Tesouro Selic (Liquidez diária)" }),
+                /* @__PURE__ */ jsx("li", { children: "• Tesouro IPCA+ (Proteção contra inflação)" }),
+                /* @__PURE__ */ jsx("li", { children: "• Tesouro Prefixado (Rentabilidade fixa)" })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-6", children: "Entenda os tipos de investimento" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-primary", children: "Tesouro Direto" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Programa do Tesouro Nacional para venda de títulos públicos. Considerado o investimento mais seguro do país." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
-                    /* @__PURE__ */ jsx("li", { children: "• Tesouro Selic (Liquidez diária)" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Tesouro IPCA+ (Proteção contra inflação)" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Tesouro Prefixado (Rentabilidade fixa)" })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-primary", children: "CDB" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Certificado de Depósito Bancário. Você empresta dinheiro para o banco em troca de juros." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
-                    /* @__PURE__ */ jsx("li", { children: "• Garantia do FGC" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Rentabilidade geralmente atrelada ao CDI" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Opções com liquidez diária" })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-emerald-400", children: "LCI e LCA" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Letras de Crédito Imobiliário e do Agronegócio. Isentas de Imposto de Renda para pessoa física." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
-                    /* @__PURE__ */ jsx("li", { children: "• Isenção de IR" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Garantia do FGC" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Foco em setores específicos (Imóveis/Agro)" })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-primary", children: "Debêntures" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Títulos de dívida emitidos por empresas. Geralmente oferecem retornos maiores que títulos bancários." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
-                    /* @__PURE__ */ jsx("li", { children: "• Risco de crédito da empresa" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Prazos geralmente mais longos" }),
-                    /* @__PURE__ */ jsx("li", { children: "• Algumas são isentas de IR (Incentivadas)" })
-                  ] })
-                ] })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-primary", children: "CDB" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Certificado de Depósito Bancário. Você empresta dinheiro para o banco em troca de juros." }),
+              /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
+                /* @__PURE__ */ jsx("li", { children: "• Garantia do FGC" }),
+                /* @__PURE__ */ jsx("li", { children: "• Rentabilidade geralmente atrelada ao CDI" }),
+                /* @__PURE__ */ jsx("li", { children: "• Opções com liquidez diária" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: INVESTMENT_FAQS,
-                title: "Dúvidas Frequentes sobre Investimentos",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-emerald-400", children: "LCI e LCA" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Letras de Crédito Imobiliário e do Agronegócio. Isentas de Imposto de Renda para pessoa física." }),
+              /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
+                /* @__PURE__ */ jsx("li", { children: "• Isenção de IR" }),
+                /* @__PURE__ */ jsx("li", { children: "• Garantia do FGC" }),
+                /* @__PURE__ */ jsx("li", { children: "• Foco em setores específicos (Imóveis/Agro)" })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2 text-primary", children: "Debêntures" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Títulos de dívida emitidos por empresas. Geralmente oferecem retornos maiores que títulos bancários." }),
+              /* @__PURE__ */ jsxs("ul", { className: "text-xs text-gray-300 space-y-1", children: [
+                /* @__PURE__ */ jsx("li", { children: "• Risco de crédito da empresa" }),
+                /* @__PURE__ */ jsx("li", { children: "• Prazos geralmente mais longos" }),
+                /* @__PURE__ */ jsx("li", { children: "• Algumas são isentas de IR (Incentivadas)" })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: INVESTMENT_FAQS,
+            title: "Dúvidas Frequentes sobre Investimentos",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -3689,43 +3487,34 @@ const VacationPage = () => {
           children: /* @__PURE__ */ jsx(VacationCalculator, {})
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de Férias: Saiba quanto você vai receber" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Planejando seu descanso? Utilize a Calculadora de Férias do FinZap para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais." }),
-            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "O que compõe o cálculo de férias?" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O cálculo de férias envolve diversas variáveis que podem confundir o trabalhador. Nossa ferramenta simplifica tudo isso, considerando:" }),
-            /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Salário Bruto:" }),
-                " A base de cálculo, incluindo médias de horas extras e comissões."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "1/3 Constitucional:" }),
-                " Adicional de 33,33% sobre o valor das férias garantido por lei."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Abono Pecuniário:" }),
-                ' A famosa "venda de férias". É possível vender até 10 dias.'
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Descontos (INSS e IRRF):" }),
-                " Impostos que incidem sobre o valor total e reduzem o valor líquido."
-              ] })
-            ] }),
-            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como usar a calculadora?" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Basta inserir seu salário bruto, a quantidade de dias que pretende tirar de férias, se possui dependentes (para cálculo do IRRF) e se deseja vender dias (abono). O FinZap faz todo o cálculo complexo das alíquotas progressivas de INSS e Imposto de Renda automaticamente." }),
-            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Planeje suas finanças com o FinZap" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Saber o valor exato das suas férias ajuda a planejar melhor sua viagem ou seus gastos no período de descanso. Use nossa ferramenta gratuita quantas vezes precisar e tenha total controle sobre seu dinheiro." })
-          ]
-        }
-      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de Férias: Saiba quanto você vai receber" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Planejando seu descanso? Utilize a Calculadora de Férias do FinZap para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais." }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "O que compõe o cálculo de férias?" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O cálculo de férias envolve diversas variáveis que podem confundir o trabalhador. Nossa ferramenta simplifica tudo isso, considerando:" }),
+        /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Salário Bruto:" }),
+            " A base de cálculo, incluindo médias de horas extras e comissões."
+          ] }),
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "1/3 Constitucional:" }),
+            " Adicional de 33,33% sobre o valor das férias garantido por lei."
+          ] }),
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Abono Pecuniário:" }),
+            ' A famosa "venda de férias". É possível vender até 10 dias.'
+          ] }),
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Descontos (INSS e IRRF):" }),
+            " Impostos que incidem sobre o valor total e reduzem o valor líquido."
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como usar a calculadora?" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Basta inserir seu salário bruto, a quantidade de dias que pretende tirar de férias, se possui dependentes (para cálculo do IRRF) e se deseja vender dias (abono). O FinZap faz todo o cálculo complexo das alíquotas progressivas de INSS e Imposto de Renda automaticamente." }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Planeje suas finanças com o FinZap" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Saber o valor exato das suas férias ajuda a planejar melhor sua viagem ou seus gastos no período de descanso. Use nossa ferramenta gratuita quantas vezes precisar e tenha total controle sobre seu dinheiro." })
+      ] }),
       /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "h-96 w-full flex items-center justify-center text-gray-500", children: "Carregando oferta..." }), children: /* @__PURE__ */ jsx(AppPromoBanner, {}) })
     ] })
   ] });
@@ -3938,65 +3727,56 @@ const EnergyPage = () => {
           children: /* @__PURE__ */ jsx(EnergyCalculator, {})
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de Consumo de Energia: economize na conta de luz" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quanto de energia seus aparelhos domésticos consomem? Descubra com a prática e fácil Calculadora de Consumo de Energia FinZap." }),
-            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Campos da Calculadora" }),
-            /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Potência do Aparelho:" }),
-                " Potência do Aparelho em Watts (W)."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Tempo de uso diário (H):" }),
-                " Tempo de uso por dia em horas."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Dias de uso:" }),
-                " Número de dias de uso que deseja calcular."
-              ] }),
-              /* @__PURE__ */ jsxs("li", { children: [
-                /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Preço KWH:" }),
-                " Preço do consumo Quilowatt-hora (R$)."
-              ] })
-            ] }),
-            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como utilizar a Calculadora de Consumo de Energia FinZap" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Para utilizar a Calculadora de Consumo de Energia FinZap, siga os passos abaixo:" }),
-            /* @__PURE__ */ jsxs("ol", { className: "list-decimal pl-6 space-y-2 text-gray-400 mb-8", children: [
-              /* @__PURE__ */ jsx("li", { children: "Informe a potência do seu aparelho;" }),
-              /* @__PURE__ */ jsx("li", { children: "Preencha com o tempo de uso diário em horas;" }),
-              /* @__PURE__ */ jsx("li", { children: "Complemente com a quantidade de dias de uso;" }),
-              /* @__PURE__ */ jsx("li", { children: "Informe o valor do quilowatt-hora (KWH) em sua região;" }),
-              /* @__PURE__ */ jsx("li", { children: "Por fim, o cálculo é feito automaticamente." })
-            ] }),
-            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como calcular seu consumo de energia" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Veja como utilizar a calculadora de energia FinZap para descobrir o consumo dos seus aparelhos nos tópicos abaixo." }),
-            /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Descubra qual é a potência do seu aparelho" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'Essa informação geralmente pode ser encontrada na caixa ou na etiqueta de consumo afixada no próprio produto. Caso não encontre a caixa ou a etiqueta, também é possível encontrar a potência do seu aparelho em uma rápida pesquisa em sites buscadores como o Google. Para isso, basta informar o modelo do aparelho com a palavra "potência" na barra de busca.' }),
-            /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Preencha o valor do kWh em sua região" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Em seguida, pesquise em sua conta de energia ou no site da sua operadora o valor do quilowatt-hora (KWH) em sua região. Quilowatt-hora é uma unidade de faturamento comum utilizada pelas concessionárias de energia elétrica para cobrar pelo fornecimento da energia." }),
-            /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Informe os seus dados de consumo de energia do aparelho" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Agora, basta preencher a Calculadora de Energia FinZap com os dados que você obteve e o seu tempo de consumo. O resultado aparecerá instantaneamente para você saber exatamente quanto vai gastar em um mês." }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 rounded-2xl p-8 mb-12", children: [
-              /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-4", children: "Veja o exemplo:" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Digamos que você esteja pensando em comprar um aspirador de pó vertical, mas antes deseja saber o quanto o aparelho vai gastar por mês." }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Sabendo que a potência do aparelho é de 1100W e que o preço do kWh, conforme informações da prestadora local, é de R$ 1,80, é hora de preencher os dados na calculadora. Nesse exemplo, consideramos que o tempo de uso do aparelho seria de uma hora por dia e uma vez por semana, ou seja, quatro dias de uso por mês." }),
-              /* @__PURE__ */ jsx("p", { className: "text-emerald-400 font-bold", children: "Resultado: Nesse caso, o custo mensal de energia para utilizar o aparelho será de R$ 7,92." })
-            ] }),
-            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Qual é a importância de saber calcular o consumo de energia dos eletrodomésticos?" }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Saber quanto um aparelho gasta de energia todo mês pode ser a chave para fazer melhores escolhas e desenvolver bons hábitos. Pode ser a sua geladeira, computador de trabalho ou mesmo o seu aspirador de pó. Cada aparelho é responsável por uma parcela específica do seu cálculo de consumo de energia." }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Pensando nisso, o FinZap desenvolveu uma Calculadora de Consumo de Energia para você descobrir de forma automática o quanto aquele seu eletrodoméstico vai gastar, além do preço médio que irá pagar por mês." }),
-            /* @__PURE__ */ jsx(FAQ, { items: ENERGY_FAQS, title: "Perguntas frequentes sobre consumo de energia", className: "py-12", showSocialProof: false })
-          ]
-        }
-      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de Consumo de Energia: economize na conta de luz" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quanto de energia seus aparelhos domésticos consomem? Descubra com a prática e fácil Calculadora de Consumo de Energia FinZap." }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Campos da Calculadora" }),
+        /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Potência do Aparelho:" }),
+            " Potência do Aparelho em Watts (W)."
+          ] }),
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Tempo de uso diário (H):" }),
+            " Tempo de uso por dia em horas."
+          ] }),
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Dias de uso:" }),
+            " Número de dias de uso que deseja calcular."
+          ] }),
+          /* @__PURE__ */ jsxs("li", { children: [
+            /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Preço KWH:" }),
+            " Preço do consumo Quilowatt-hora (R$)."
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como utilizar a Calculadora de Consumo de Energia FinZap" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Para utilizar a Calculadora de Consumo de Energia FinZap, siga os passos abaixo:" }),
+        /* @__PURE__ */ jsxs("ol", { className: "list-decimal pl-6 space-y-2 text-gray-400 mb-8", children: [
+          /* @__PURE__ */ jsx("li", { children: "Informe a potência do seu aparelho;" }),
+          /* @__PURE__ */ jsx("li", { children: "Preencha com o tempo de uso diário em horas;" }),
+          /* @__PURE__ */ jsx("li", { children: "Complemente com a quantidade de dias de uso;" }),
+          /* @__PURE__ */ jsx("li", { children: "Informe o valor do quilowatt-hora (KWH) em sua região;" }),
+          /* @__PURE__ */ jsx("li", { children: "Por fim, o cálculo é feito automaticamente." })
+        ] }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como calcular seu consumo de energia" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Veja como utilizar a calculadora de energia FinZap para descobrir o consumo dos seus aparelhos nos tópicos abaixo." }),
+        /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Descubra qual é a potência do seu aparelho" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'Essa informação geralmente pode ser encontrada na caixa ou na etiqueta de consumo afixada no próprio produto. Caso não encontre a caixa ou a etiqueta, também é possível encontrar a potência do seu aparelho em uma rápida pesquisa em sites buscadores como o Google. Para isso, basta informar o modelo do aparelho com a palavra "potência" na barra de busca.' }),
+        /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Preencha o valor do kWh em sua região" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Em seguida, pesquise em sua conta de energia ou no site da sua operadora o valor do quilowatt-hora (KWH) em sua região. Quilowatt-hora é uma unidade de faturamento comum utilizada pelas concessionárias de energia elétrica para cobrar pelo fornecimento da energia." }),
+        /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Informe os seus dados de consumo de energia do aparelho" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Agora, basta preencher a Calculadora de Energia FinZap com os dados que você obteve e o seu tempo de consumo. O resultado aparecerá instantaneamente para você saber exatamente quanto vai gastar em um mês." }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 rounded-2xl p-8 mb-12", children: [
+          /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-4", children: "Veja o exemplo:" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Digamos que você esteja pensando em comprar um aspirador de pó vertical, mas antes deseja saber o quanto o aparelho vai gastar por mês." }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Sabendo que a potência do aparelho é de 1100W e que o preço do kWh, conforme informações da prestadora local, é de R$ 1,80, é hora de preencher os dados na calculadora. Nesse exemplo, consideramos que o tempo de uso do aparelho seria de uma hora por dia e uma vez por semana, ou seja, quatro dias de uso por mês." }),
+          /* @__PURE__ */ jsx("p", { className: "text-emerald-400 font-bold", children: "Resultado: Nesse caso, o custo mensal de energia para utilizar o aparelho será de R$ 7,92." })
+        ] }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Qual é a importância de saber calcular o consumo de energia dos eletrodomésticos?" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Saber quanto um aparelho gasta de energia todo mês pode ser a chave para fazer melhores escolhas e desenvolver bons hábitos. Pode ser a sua geladeira, computador de trabalho ou mesmo o seu aspirador de pó. Cada aparelho é responsável por uma parcela específica do seu cálculo de consumo de energia." }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Pensando nisso, o FinZap desenvolveu uma Calculadora de Consumo de Energia para você descobrir de forma automática o quanto aquele seu eletrodoméstico vai gastar, além do preço médio que irá pagar por mês." }),
+        /* @__PURE__ */ jsx(FAQ, { items: ENERGY_FAQS, title: "Perguntas frequentes sobre consumo de energia", className: "py-12", showSocialProof: false })
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -4183,76 +3963,67 @@ const FuelPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Álcool ou gasolina: quando um compensa mais que o outro?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
-                  "Para entender quando um tipo de combustível compensa mais financeiramente do que o outro, basta checar a proporção entre o preço de cada um. A regra de ouro é a ",
-                  /* @__PURE__ */ jsx("strong", { children: "proporção de 70%" }),
-                  "."
-                ] }),
-                /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
-                  "Abastecer com ",
-                  /* @__PURE__ */ jsx("strong", { children: "álcool (etanol)" }),
-                  " é recomendado quando o preço for até 70% do valor da gasolina. Caso ultrapasse os 70%, compensa mais abastecer com ",
-                  /* @__PURE__ */ jsx("strong", { children: "gasolina" }),
-                  "."
-                ] }),
-                /* @__PURE__ */ jsx("p", { children: "Isso acontece porque o etanol tem um poder calorífico menor, ou seja, rende cerca de 30% a menos que a gasolina. Portanto, para que seja vantajoso financeiramente, ele precisa custar no máximo 70% do preço da gasolina." })
-              ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Álcool ou gasolina: quando um compensa mais que o outro?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
+              "Para entender quando um tipo de combustível compensa mais financeiramente do que o outro, basta checar a proporção entre o preço de cada um. A regra de ouro é a ",
+              /* @__PURE__ */ jsx("strong", { children: "proporção de 70%" }),
+              "."
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "grid md:grid-cols-2 gap-8 mb-16", children: [
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-2xl border border-white/5", children: [
-                /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold", children: "1" }),
-                  "Exemplo: Álcool Vantajoso"
-                ] }),
-                /* @__PURE__ */ jsxs("p", { className: "text-gray-400 mb-4", children: [
-                  "Posto com Álcool a ",
-                  /* @__PURE__ */ jsx("strong", { children: "R$ 4,00" }),
-                  " e Gasolina a ",
-                  /* @__PURE__ */ jsx("strong", { children: "R$ 6,00" }),
-                  "."
-                ] }),
-                /* @__PURE__ */ jsx("div", { className: "bg-black/30 p-4 rounded-xl font-mono text-sm text-gray-300", children: "4,00 ÷ 6,00 = 0,66 (66%)" }),
-                /* @__PURE__ */ jsx("p", { className: "text-green-400 mt-4 text-sm font-medium", children: "Resultado menor que 0,7. Compensa abastecer com Álcool." })
-              ] }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-2xl border border-white/5", children: [
-                /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
-                  /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-500 font-bold", children: "2" }),
-                  "Exemplo: Gasolina Vantajosa"
-                ] }),
-                /* @__PURE__ */ jsxs("p", { className: "text-gray-400 mb-4", children: [
-                  "Posto com Álcool a ",
-                  /* @__PURE__ */ jsx("strong", { children: "R$ 4,29" }),
-                  " e Gasolina a ",
-                  /* @__PURE__ */ jsx("strong", { children: "R$ 5,50" }),
-                  "."
-                ] }),
-                /* @__PURE__ */ jsx("div", { className: "bg-black/30 p-4 rounded-xl font-mono text-sm text-gray-300", children: "4,29 ÷ 5,50 = 0,78 (78%)" }),
-                /* @__PURE__ */ jsx("p", { className: "text-emerald-400 mt-4 text-sm font-medium", children: "Resultado maior que 0,7. Compensa abastecer com Gasolina." })
-              ] })
+            /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
+              "Abastecer com ",
+              /* @__PURE__ */ jsx("strong", { children: "álcool (etanol)" }),
+              " é recomendado quando o preço for até 70% do valor da gasolina. Caso ultrapasse os 70%, compensa mais abastecer com ",
+              /* @__PURE__ */ jsx("strong", { children: "gasolina" }),
+              "."
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: FUEL_FAQS,
-                title: "Dúvidas Frequentes sobre Combustível",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsx("p", { children: "Isso acontece porque o etanol tem um poder calorífico menor, ou seja, rende cerca de 30% a menos que a gasolina. Portanto, para que seja vantajoso financeiramente, ele precisa custar no máximo 70% do preço da gasolina." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "grid md:grid-cols-2 gap-8 mb-16", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-2xl border border-white/5", children: [
+            /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold", children: "1" }),
+              "Exemplo: Álcool Vantajoso"
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "text-gray-400 mb-4", children: [
+              "Posto com Álcool a ",
+              /* @__PURE__ */ jsx("strong", { children: "R$ 4,00" }),
+              " e Gasolina a ",
+              /* @__PURE__ */ jsx("strong", { children: "R$ 6,00" }),
+              "."
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "bg-black/30 p-4 rounded-xl font-mono text-sm text-gray-300", children: "4,00 ÷ 6,00 = 0,66 (66%)" }),
+            /* @__PURE__ */ jsx("p", { className: "text-green-400 mt-4 text-sm font-medium", children: "Resultado menor que 0,7. Compensa abastecer com Álcool." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-2xl border border-white/5", children: [
+            /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center text-emerald-500 font-bold", children: "2" }),
+              "Exemplo: Gasolina Vantajosa"
+            ] }),
+            /* @__PURE__ */ jsxs("p", { className: "text-gray-400 mb-4", children: [
+              "Posto com Álcool a ",
+              /* @__PURE__ */ jsx("strong", { children: "R$ 4,29" }),
+              " e Gasolina a ",
+              /* @__PURE__ */ jsx("strong", { children: "R$ 5,50" }),
+              "."
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "bg-black/30 p-4 rounded-xl font-mono text-sm text-gray-300", children: "4,29 ÷ 5,50 = 0,78 (78%)" }),
+            /* @__PURE__ */ jsx("p", { className: "text-emerald-400 mt-4 text-sm font-medium", children: "Resultado maior que 0,7. Compensa abastecer com Gasolina." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: FUEL_FAQS,
+            title: "Dúvidas Frequentes sobre Combustível",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -4631,105 +4402,96 @@ const TerminationPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Que é a Rescisão Trabalhista?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A rescisão trabalhista ocorre quando há o encerramento do vínculo empregatício entre o empregado e o empregador. Esse processo pode acontecer por diferentes motivos, como demissão sem justa causa, pedido de demissão, acordo entre as partes ou término de contrato." }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Durante a rescisão, é necessário calcular corretamente os valores devidos ao trabalhador, que incluem direitos como saldo de salário, férias proporcionais, 13º salário proporcional, entre outros benefícios garantidos pela CLT." }),
-                /* @__PURE__ */ jsx("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-4 my-6", children: /* @__PURE__ */ jsxs("p", { className: "text-yellow-200 text-sm m-0", children: [
-                  /* @__PURE__ */ jsx("strong", { children: "Nota legal:" }),
-                  " A calculadora de rescisão disponibilizada nesta página tem fins meramente informativos e não substitui o cálculo oficial ou suporte jurídico. Sempre consulte um especialista para confirmar os valores em situações específicas."
-                ] }) })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Que é a Rescisão Trabalhista?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A rescisão trabalhista ocorre quando há o encerramento do vínculo empregatício entre o empregado e o empregador. Esse processo pode acontecer por diferentes motivos, como demissão sem justa causa, pedido de demissão, acordo entre as partes ou término de contrato." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Durante a rescisão, é necessário calcular corretamente os valores devidos ao trabalhador, que incluem direitos como saldo de salário, férias proporcionais, 13º salário proporcional, entre outros benefícios garantidos pela CLT." }),
+            /* @__PURE__ */ jsx("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-4 my-6", children: /* @__PURE__ */ jsxs("p", { className: "text-yellow-200 text-sm m-0", children: [
+              /* @__PURE__ */ jsx("strong", { children: "Nota legal:" }),
+              " A calculadora de rescisão disponibilizada nesta página tem fins meramente informativos e não substitui o cálculo oficial ou suporte jurídico. Sempre consulte um especialista para confirmar os valores em situações específicas."
+            ] }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Tipos de Rescisão e Como Afetam o Cálculo" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Demissão sem Justa Causa" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "O tipo mais vantajoso para o trabalhador." }),
+              /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
+                /* @__PURE__ */ jsx("li", { children: "Saldo de salário" }),
+                /* @__PURE__ */ jsx("li", { children: "Férias vencidas e proporcionais + 1/3" }),
+                /* @__PURE__ */ jsx("li", { children: "13º salário proporcional" }),
+                /* @__PURE__ */ jsx("li", { children: "Multa de 40% do FGTS" }),
+                /* @__PURE__ */ jsx("li", { children: "Saque do FGTS e Seguro-Desemprego" })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Tipos de Rescisão e Como Afetam o Cálculo" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Demissão sem Justa Causa" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "O tipo mais vantajoso para o trabalhador." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
-                    /* @__PURE__ */ jsx("li", { children: "Saldo de salário" }),
-                    /* @__PURE__ */ jsx("li", { children: "Férias vencidas e proporcionais + 1/3" }),
-                    /* @__PURE__ */ jsx("li", { children: "13º salário proporcional" }),
-                    /* @__PURE__ */ jsx("li", { children: "Multa de 40% do FGTS" }),
-                    /* @__PURE__ */ jsx("li", { children: "Saque do FGTS e Seguro-Desemprego" })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-blue-400", children: "Pedido de Demissão" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Iniciativa do trabalhador." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
-                    /* @__PURE__ */ jsx("li", { children: "Saldo de salário" }),
-                    /* @__PURE__ */ jsx("li", { children: "Férias vencidas e proporcionais + 1/3" }),
-                    /* @__PURE__ */ jsx("li", { children: "13º salário proporcional" }),
-                    /* @__PURE__ */ jsx("li", { children: "Sem multa do FGTS e sem saque" }),
-                    /* @__PURE__ */ jsx("li", { children: "Sem Seguro-Desemprego" })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-red-400", children: "Demissão por Justa Causa" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Falta grave cometida pelo empregado." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
-                    /* @__PURE__ */ jsx("li", { children: "Saldo de salário" }),
-                    /* @__PURE__ */ jsx("li", { children: "Férias vencidas + 1/3 (apenas)" }),
-                    /* @__PURE__ */ jsx("li", { children: "Sem 13º e sem férias proporcionais" }),
-                    /* @__PURE__ */ jsx("li", { children: "Sem FGTS e sem Seguro" })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-purple-400", children: "Acordo (Reforma Trabalhista)" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Consensual entre as partes." }),
-                  /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
-                    /* @__PURE__ */ jsx("li", { children: "Verbas trabalhistas integrais" }),
-                    /* @__PURE__ */ jsx("li", { children: "Metade do aviso prévio (se indenizado)" }),
-                    /* @__PURE__ */ jsx("li", { children: "Multa de 20% do FGTS" }),
-                    /* @__PURE__ */ jsx("li", { children: "Saque de 80% do FGTS" })
-                  ] })
-                ] })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-blue-400", children: "Pedido de Demissão" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Iniciativa do trabalhador." }),
+              /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
+                /* @__PURE__ */ jsx("li", { children: "Saldo de salário" }),
+                /* @__PURE__ */ jsx("li", { children: "Férias vencidas e proporcionais + 1/3" }),
+                /* @__PURE__ */ jsx("li", { children: "13º salário proporcional" }),
+                /* @__PURE__ */ jsx("li", { children: "Sem multa do FGTS e sem saque" }),
+                /* @__PURE__ */ jsx("li", { children: "Sem Seguro-Desemprego" })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Itens do Cálculo" }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-6 text-gray-400", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Aviso Prévio" }),
-                  /* @__PURE__ */ jsx("p", { children: "Pode ser trabalhado (recebe salário normal) ou indenizado (recebe sem trabalhar). O período varia de 30 a 90 dias, dependendo do tempo de casa (3 dias a mais por ano)." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Férias e 1/3" }),
-                  /* @__PURE__ */ jsx("p", { children: "Inclui férias vencidas (não tiradas) e proporcionais (meses trabalhados no ano atual), sempre com o acréscimo de 1/3 constitucional." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "13º Salário Proporcional" }),
-                  /* @__PURE__ */ jsx("p", { children: "Calculado com base nos meses trabalhados no ano (fração de 1/12 por mês com mais de 14 dias trabalhados)." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Multa do FGTS" }),
-                  /* @__PURE__ */ jsx("p", { children: "40% sobre o saldo total depositado pela empresa durante o contrato (em demissão sem justa causa)." })
-                ] })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-red-400", children: "Demissão por Justa Causa" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Falta grave cometida pelo empregado." }),
+              /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
+                /* @__PURE__ */ jsx("li", { children: "Saldo de salário" }),
+                /* @__PURE__ */ jsx("li", { children: "Férias vencidas + 1/3 (apenas)" }),
+                /* @__PURE__ */ jsx("li", { children: "Sem 13º e sem férias proporcionais" }),
+                /* @__PURE__ */ jsx("li", { children: "Sem FGTS e sem Seguro" })
               ] })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: TERMINATION_FAQS,
-                title: "Dúvidas Frequentes sobre Rescisão",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-purple-400", children: "Acordo (Reforma Trabalhista)" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-4", children: "Consensual entre as partes." }),
+              /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-gray-400 text-sm space-y-2", children: [
+                /* @__PURE__ */ jsx("li", { children: "Verbas trabalhistas integrais" }),
+                /* @__PURE__ */ jsx("li", { children: "Metade do aviso prévio (se indenizado)" }),
+                /* @__PURE__ */ jsx("li", { children: "Multa de 20% do FGTS" }),
+                /* @__PURE__ */ jsx("li", { children: "Saque de 80% do FGTS" })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Itens do Cálculo" }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-6 text-gray-400", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Aviso Prévio" }),
+              /* @__PURE__ */ jsx("p", { children: "Pode ser trabalhado (recebe salário normal) ou indenizado (recebe sem trabalhar). O período varia de 30 a 90 dias, dependendo do tempo de casa (3 dias a mais por ano)." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Férias e 1/3" }),
+              /* @__PURE__ */ jsx("p", { children: "Inclui férias vencidas (não tiradas) e proporcionais (meses trabalhados no ano atual), sempre com o acréscimo de 1/3 constitucional." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "13º Salário Proporcional" }),
+              /* @__PURE__ */ jsx("p", { children: "Calculado com base nos meses trabalhados no ano (fração de 1/12 por mês com mais de 14 dias trabalhados)." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Multa do FGTS" }),
+              /* @__PURE__ */ jsx("p", { children: "40% sobre o saldo total depositado pela empresa durante o contrato (em demissão sem justa causa)." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: TERMINATION_FAQS,
+            title: "Dúvidas Frequentes sobre Rescisão",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -4989,117 +4751,108 @@ const INSSPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de INSS 2025: Simule seu Desconto" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Se você quer saber quanto será descontado do seu salário para o INSS em 2025, ou precisa simular a contribuição mensal como CLT, autônomo ou contribuinte individual, esta página foi feita para você." }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Com a nossa calculadora de INSS gratuita e online, você descobre em segundos o valor exato da contribuição, com base no salário bruto e no tipo de contribuinte escolhido. Os cálculos seguem rigorosamente as novas faixas e alíquotas da Previdência Social em 2025, garantindo resultados confiáveis." })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como Funciona o Cálculo do INSS em 2025" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "O cálculo do INSS em 2025 segue a lógica da tabela progressiva por faixas salariais. Ou seja, o desconto não é uma porcentagem única sobre todo o salário, mas sim uma aplicação de alíquotas diferentes para cada faixa de valor — semelhante ao Imposto de Renda." }),
-                /* @__PURE__ */ jsx("p", { className: "mb-6", children: "A tabela é atualizada todos os anos pelo Governo Federal com base no salário mínimo e na inflação, e está vigente desde janeiro de 2025." }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5 mb-8", children: [
-                  /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
-                    /* @__PURE__ */ jsx(AlertCircle, { className: "w-5 h-5 text-primary" }),
-                    "Tabela de Alíquotas do INSS 2025"
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de INSS 2025: Simule seu Desconto" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Se você quer saber quanto será descontado do seu salário para o INSS em 2025, ou precisa simular a contribuição mensal como CLT, autônomo ou contribuinte individual, esta página foi feita para você." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Com a nossa calculadora de INSS gratuita e online, você descobre em segundos o valor exato da contribuição, com base no salário bruto e no tipo de contribuinte escolhido. Os cálculos seguem rigorosamente as novas faixas e alíquotas da Previdência Social em 2025, garantindo resultados confiáveis." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como Funciona o Cálculo do INSS em 2025" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "O cálculo do INSS em 2025 segue a lógica da tabela progressiva por faixas salariais. Ou seja, o desconto não é uma porcentagem única sobre todo o salário, mas sim uma aplicação de alíquotas diferentes para cada faixa de valor — semelhante ao Imposto de Renda." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-6", children: "A tabela é atualizada todos os anos pelo Governo Federal com base no salário mínimo e na inflação, e está vigente desde janeiro de 2025." }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5 mb-8", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-5 h-5 text-primary" }),
+                "Tabela de Alíquotas do INSS 2025"
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left text-sm text-gray-300", children: [
+                /* @__PURE__ */ jsx("thead", { className: "text-xs text-gray-200 uppercase bg-white/5", children: /* @__PURE__ */ jsxs("tr", { children: [
+                  /* @__PURE__ */ jsx("th", { className: "px-4 py-3 rounded-l-lg", children: "Faixa Salarial (R$)" }),
+                  /* @__PURE__ */ jsx("th", { className: "px-4 py-3 rounded-r-lg", children: "Alíquota Aplicada" })
+                ] }) }),
+                /* @__PURE__ */ jsxs("tbody", { className: "divide-y divide-white/5", children: [
+                  /* @__PURE__ */ jsxs("tr", { children: [
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "Até R$ 1.412,00" }),
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "7,5%" })
                   ] }),
-                  /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left text-sm text-gray-300", children: [
-                    /* @__PURE__ */ jsx("thead", { className: "text-xs text-gray-200 uppercase bg-white/5", children: /* @__PURE__ */ jsxs("tr", { children: [
-                      /* @__PURE__ */ jsx("th", { className: "px-4 py-3 rounded-l-lg", children: "Faixa Salarial (R$)" }),
-                      /* @__PURE__ */ jsx("th", { className: "px-4 py-3 rounded-r-lg", children: "Alíquota Aplicada" })
-                    ] }) }),
-                    /* @__PURE__ */ jsxs("tbody", { className: "divide-y divide-white/5", children: [
-                      /* @__PURE__ */ jsxs("tr", { children: [
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "Até R$ 1.412,00" }),
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "7,5%" })
-                      ] }),
-                      /* @__PURE__ */ jsxs("tr", { children: [
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "De R$ 1.412,01 até R$ 2.666,68" }),
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "9%" })
-                      ] }),
-                      /* @__PURE__ */ jsxs("tr", { children: [
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "De R$ 2.666,69 até R$ 4.000,03" }),
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "12%" })
-                      ] }),
-                      /* @__PURE__ */ jsxs("tr", { children: [
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "De R$ 4.000,04 até R$ 7.786,02" }),
-                        /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "14%" })
-                      ] })
-                    ] })
-                  ] }) }),
-                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mt-4", children: "*O valor máximo de contribuição (teto) é limitado ao salário de contribuição de R$ 7.786,02." })
-                ] }),
-                /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Exemplo Prático de Cálculo" }),
-                /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
-                  "Para um salário bruto de ",
-                  /* @__PURE__ */ jsx("strong", { children: "R$ 4.500,00" }),
-                  ", o cálculo é fatiado:"
-                ] }),
-                /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside space-y-2 mb-6 text-gray-400", children: [
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "1ª Faixa:" }),
-                    " 7,5% sobre R$ 1.412,00"
+                  /* @__PURE__ */ jsxs("tr", { children: [
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "De R$ 1.412,01 até R$ 2.666,68" }),
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "9%" })
                   ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "2ª Faixa:" }),
-                    " 9% sobre a diferença entre R$ 2.666,68 e R$ 1.412,00"
+                  /* @__PURE__ */ jsxs("tr", { children: [
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "De R$ 2.666,69 até R$ 4.000,03" }),
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "12%" })
                   ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "3ª Faixa:" }),
-                    " 12% sobre a diferença entre R$ 4.000,03 e R$ 2.666,68"
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "4ª Faixa:" }),
-                    " 14% sobre o restante (R$ 4.500,00 - R$ 4.000,03)"
+                  /* @__PURE__ */ jsxs("tr", { children: [
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3", children: "De R$ 4.000,04 até R$ 7.786,02" }),
+                    /* @__PURE__ */ jsx("td", { className: "px-4 py-3 text-primary font-bold", children: "14%" })
                   ] })
-                ] }),
-                /* @__PURE__ */ jsx("p", { children: "A soma dessas parcelas resulta no desconto final. Esse método garante que quem ganha menos pague proporcionalmente menos." })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quem Precisa Contribuir?" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Trabalhadores CLT" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "A contribuição é automática, descontada diretamente da folha de pagamento. A empresa recolhe e repassa ao INSS. Nossa calculadora ajuda a conferir se o valor no holerite está correto." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-blue-400", children: "Autônomos e Individuais" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Se você trabalha por conta própria, precisa gerar e pagar a guia GPS (ou DAS para MEI). A calculadora para autônomo aplica a alíquota de 20% (plano normal) ou 11% (plano simplificado)." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-purple-400", children: "Pro-labore" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Sócios de empresas que recebem pro-labore contribuem obrigatoriamente com 11% sobre o valor declarado, respeitando o teto da previdência." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-emerald-400", children: "Facultativo" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Estudantes, donas de casa e desempregados podem contribuir para manter a qualidade de segurado, escolhendo entre 5%, 11% ou 20%." })
                 ] })
+              ] }) }),
+              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mt-4", children: "*O valor máximo de contribuição (teto) é limitado ao salário de contribuição de R$ 7.786,02." })
+            ] }),
+            /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Exemplo Prático de Cálculo" }),
+            /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
+              "Para um salário bruto de ",
+              /* @__PURE__ */ jsx("strong", { children: "R$ 4.500,00" }),
+              ", o cálculo é fatiado:"
+            ] }),
+            /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside space-y-2 mb-6 text-gray-400", children: [
+              /* @__PURE__ */ jsxs("li", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "1ª Faixa:" }),
+                " 7,5% sobre R$ 1.412,00"
+              ] }),
+              /* @__PURE__ */ jsxs("li", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "2ª Faixa:" }),
+                " 9% sobre a diferença entre R$ 2.666,68 e R$ 1.412,00"
+              ] }),
+              /* @__PURE__ */ jsxs("li", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "3ª Faixa:" }),
+                " 12% sobre a diferença entre R$ 4.000,03 e R$ 2.666,68"
+              ] }),
+              /* @__PURE__ */ jsxs("li", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "4ª Faixa:" }),
+                " 14% sobre o restante (R$ 4.500,00 - R$ 4.000,03)"
               ] })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: INSS_FAQS,
-                title: "Dúvidas Frequentes sobre INSS",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsx("p", { children: "A soma dessas parcelas resulta no desconto final. Esse método garante que quem ganha menos pague proporcionalmente menos." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quem Precisa Contribuir?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Trabalhadores CLT" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "A contribuição é automática, descontada diretamente da folha de pagamento. A empresa recolhe e repassa ao INSS. Nossa calculadora ajuda a conferir se o valor no holerite está correto." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-blue-400", children: "Autônomos e Individuais" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Se você trabalha por conta própria, precisa gerar e pagar a guia GPS (ou DAS para MEI). A calculadora para autônomo aplica a alíquota de 20% (plano normal) ou 11% (plano simplificado)." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-purple-400", children: "Pro-labore" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Sócios de empresas que recebem pro-labore contribuem obrigatoriamente com 11% sobre o valor declarado, respeitando o teto da previdência." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-emerald-400", children: "Facultativo" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Estudantes, donas de casa e desempregados podem contribuir para manter a qualidade de segurado, escolhendo entre 5%, 11% ou 20%." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: INSS_FAQS,
+            title: "Dúvidas Frequentes sobre INSS",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -5400,86 +5153,77 @@ const NetSalaryPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como calcular o Salário Líquido em 2025?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Muitos trabalhadores se surpreendem quando o valor depositado na conta é menor que o contratado na carteira. Isso acontece porque o Salário Líquido é o resultado do Salário Bruto menos os descontos obrigatórios por lei." }),
-                /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. INSS" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Primeiro desconto aplicado. Varia de 7,5% a 14% de acordo com a tabela progressiva. Financia sua aposentadoria e benefícios." })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. IRRF" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Calculado sobre o valor que sobrou após o INSS. Possui isenção para faixas menores e deduções por dependentes." })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Outros" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Podem incluir vale-transporte (até 6%), coparticipação em plano de saúde, pensão alimentícia e empréstimos consignados." })
-                  ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como calcular o Salário Líquido em 2025?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Muitos trabalhadores se surpreendem quando o valor depositado na conta é menor que o contratado na carteira. Isso acontece porque o Salário Líquido é o resultado do Salário Bruto menos os descontos obrigatórios por lei." }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. INSS" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Primeiro desconto aplicado. Varia de 7,5% a 14% de acordo com a tabela progressiva. Financia sua aposentadoria e benefícios." })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. IRRF" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Calculado sobre o valor que sobrou após o INSS. Possui isenção para faixas menores e deduções por dependentes." })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Outros" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Podem incluir vale-transporte (até 6%), coparticipação em plano de saúde, pensão alimentícia e empréstimos consignados." })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo do Cálculo" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Para chegar ao valor exato, a nossa calculadora segue a ordem oficial da Receita Federal:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Cálculo do INSS:" }),
+                  " Aplica-se a tabela progressiva de 2025 sobre o salário bruto."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Base do IRRF:" }),
+                  " Do salário bruto, subtrai-se o valor do INSS calculado e R$ 189,59 por cada dependente."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Cálculo do IRRF:" }),
+                  " Sobre essa nova base, aplica-se a alíquota do Imposto de Renda correspondente (7,5% a 27,5%) e subtrai-se a parcela dedutível."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "4" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Resultado Final:" }),
+                  " Salário Bruto - INSS - IRRF = Salário Líquido."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo do Cálculo" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Para chegar ao valor exato, a nossa calculadora segue a ordem oficial da Receita Federal:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Cálculo do INSS:" }),
-                      " Aplica-se a tabela progressiva de 2025 sobre o salário bruto."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Base do IRRF:" }),
-                      " Do salário bruto, subtrai-se o valor do INSS calculado e R$ 189,59 por cada dependente."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Cálculo do IRRF:" }),
-                      " Sobre essa nova base, aplica-se a alíquota do Imposto de Renda correspondente (7,5% a 27,5%) e subtrai-se a parcela dedutível."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "4" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Resultado Final:" }),
-                      " Salário Bruto - INSS - IRRF = Salário Líquido."
-                    ] })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-r from-primary/10 to-transparent border-l-4 border-primary p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 Você sabia?" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Em 2025, quem ganha até 2 salários mínimos pode ter isenção ou desconto simplificado no Imposto de Renda. Nossa calculadora verifica automaticamente qual opção é mais vantajosa para você (Dedução Legal ou Desconto Simplificado), garantindo o menor imposto possível." })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: NET_SALARY_FAQS,
-                title: "Dúvidas Frequentes sobre Salário Líquido",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-r from-primary/10 to-transparent border-l-4 border-primary p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 Você sabia?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Em 2025, quem ganha até 2 salários mínimos pode ter isenção ou desconto simplificado no Imposto de Renda. Nossa calculadora verifica automaticamente qual opção é mais vantajosa para você (Dedução Legal ou Desconto Simplificado), garantindo o menor imposto possível." })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: NET_SALARY_FAQS,
+            title: "Dúvidas Frequentes sobre Salário Líquido",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -5798,89 +5542,80 @@ const ThirteenthSalaryPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Entenda o Pagamento do 13º Salário" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Conhecido como Gratificação de Natal, o Décimo Terceiro Salário é um direito garantido pela CLT que injeta um salário extra na economia ao final do ano. O pagamento é feito em duas etapas, e entender a diferença entre elas é crucial para não se frustrar com o valor líquido final." }),
-                /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1ª Parcela (Adiantamento)" }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm mb-2", children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Prazo:" }),
-                      " Até 30 de novembro."
-                    ] }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Valor:" }),
-                      ' É a melhor parte! Corresponde a exatamente 50% do salário bruto do mês anterior, sem nenhum desconto. O dinheiro entra "cheio" na conta.'
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2ª Parcela (Acerto)" }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm mb-2", children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Prazo:" }),
-                      " Até 20 de dezembro."
-                    ] }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Valor:" }),
-                      " Aqui acontece o acerto de contas. Calcula-se o 13º integral, descontam-se o INSS e o IRRF (sobre o valor total) e subtrai-se o valor já pago na 1ª parcela. Por isso, essa parcela é sempre menor que a primeira."
-                    ] })
-                  ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Entenda o Pagamento do 13º Salário" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Conhecido como Gratificação de Natal, o Décimo Terceiro Salário é um direito garantido pela CLT que injeta um salário extra na economia ao final do ano. O pagamento é feito em duas etapas, e entender a diferença entre elas é crucial para não se frustrar com o valor líquido final." }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1ª Parcela (Adiantamento)" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm mb-2", children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Prazo:" }),
+                  " Até 30 de novembro."
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Valor:" }),
+                  ' É a melhor parte! Corresponde a exatamente 50% do salário bruto do mês anterior, sem nenhum desconto. O dinheiro entra "cheio" na conta.'
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2ª Parcela (Acerto)" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm mb-2", children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Prazo:" }),
+                  " Até 20 de dezembro."
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Valor:" }),
+                  " Aqui acontece o acerto de contas. Calcula-se o 13º integral, descontam-se o INSS e o IRRF (sobre o valor total) e subtrai-se o valor já pago na 1ª parcela. Por isso, essa parcela é sempre menor que a primeira."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como o valor é calculado?" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O cálculo base considera o seu salário dividido por 12 meses. Você recebe 1/12 avos para cada mês em que trabalhou pelo menos 15 dias." }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Salário Integral:" }),
-                      " Se trabalhou o ano todo (janeiro a dezembro), recebe um salário extra completo."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Salário Proporcional:" }),
-                      " Se foi contratado no meio do ano, recebe proporcionalmente aos meses trabalhados."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Médias:" }),
-                      " Se você recebe horas extras, comissões ou adicional noturno, é feita uma média desses valores que é somada ao salário fixo."
-                    ] })
-                  ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como o valor é calculado?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O cálculo base considera o seu salário dividido por 12 meses. Você recebe 1/12 avos para cada mês em que trabalhou pelo menos 15 dias." }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Salário Integral:" }),
+                  " Se trabalhou o ano todo (janeiro a dezembro), recebe um salário extra completo."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Salário Proporcional:" }),
+                  " Se foi contratado no meio do ano, recebe proporcionalmente aos meses trabalhados."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Médias:" }),
+                  " Se você recebe horas extras, comissões ou adicional noturno, é feita uma média desses valores que é somada ao salário fixo."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "⚠️ Atenção aos Descontos!" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Muitas pessoas se esquecem que o desconto do INSS e do Imposto de Renda incide sobre o valor total do 13º, mas é cobrado de uma vez só na segunda parcela. Isso faz com que o depósito de dezembro seja significativamente menor que o de novembro. Use nossa calculadora para se preparar e não contar com um dinheiro que não virá!" })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: THIRTEENTH_FAQS,
-                title: "Perguntas Frequentes sobre 13º",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "⚠️ Atenção aos Descontos!" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Muitas pessoas se esquecem que o desconto do INSS e do Imposto de Renda incide sobre o valor total do 13º, mas é cobrado de uma vez só na segunda parcela. Isso faz com que o depósito de dezembro seja significativamente menor que o de novembro. Use nossa calculadora para se preparar e não contar com um dinheiro que não virá!" })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: THIRTEENTH_FAQS,
+            title: "Perguntas Frequentes sobre 13º",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -6197,93 +5932,84 @@ const OvertimePage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona o cálculo da Hora Extra?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A Hora Extra é um direito garantido pela Constituição para todo trabalhador que excede sua jornada contratual. O cálculo envolve descobrir quanto vale sua hora de trabalho normal e aplicar o percentual de acréscimo definido por lei ou convenção coletiva." }),
-                /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Valor da Hora" }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
-                      "Divide-se o salário mensal pela jornada (geralmente 220h). Exemplo: R$ 2.200 ÷ 220 = ",
-                      /* @__PURE__ */ jsx("strong", { children: "R$ 10,00/hora" }),
-                      "."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Adicional" }),
-                    /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
-                      "Soma-se a porcentagem extra ao valor da hora.",
-                      /* @__PURE__ */ jsx("br", {}),
-                      "50% (Dias Úteis): R$ 10,00 + 50% = ",
-                      /* @__PURE__ */ jsx("strong", { children: "R$ 15,00" }),
-                      ".",
-                      /* @__PURE__ */ jsx("br", {}),
-                      "100% (Domingos): R$ 10,00 + 100% = ",
-                      /* @__PURE__ */ jsx("strong", { children: "R$ 20,00" }),
-                      "."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Quantidade" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Multiplica-se o valor da hora extra encontrada pelo número de horas a mais que você trabalhou no mês." })
-                  ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona o cálculo da Hora Extra?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A Hora Extra é um direito garantido pela Constituição para todo trabalhador que excede sua jornada contratual. O cálculo envolve descobrir quanto vale sua hora de trabalho normal e aplicar o percentual de acréscimo definido por lei ou convenção coletiva." }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Valor da Hora" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
+                  "Divide-se o salário mensal pela jornada (geralmente 220h). Exemplo: R$ 2.200 ÷ 220 = ",
+                  /* @__PURE__ */ jsx("strong", { children: "R$ 10,00/hora" }),
+                  "."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Adicional" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
+                  "Soma-se a porcentagem extra ao valor da hora.",
+                  /* @__PURE__ */ jsx("br", {}),
+                  "50% (Dias Úteis): R$ 10,00 + 50% = ",
+                  /* @__PURE__ */ jsx("strong", { children: "R$ 15,00" }),
+                  ".",
+                  /* @__PURE__ */ jsx("br", {}),
+                  "100% (Domingos): R$ 10,00 + 100% = ",
+                  /* @__PURE__ */ jsx("strong", { children: "R$ 20,00" }),
+                  "."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Quantidade" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Multiplica-se o valor da hora extra encontrada pelo número de horas a mais que você trabalhou no mês." })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Tipos de Hora Extra" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O percentual de acréscimo varia de acordo com o dia e horário em que o trabalho extra foi realizado:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Hora Extra 50%:" }),
+                  " A mais comum. Aplica-se para horas excedentes trabalhadas em dias úteis (segunda a sábado). O valor da hora recebe um acréscimo de, no mínimo, 50%."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Hora Extra 100%:" }),
+                  " Aplica-se para trabalho em domingos e feriados civis ou religiosos não compensados. O valor da hora dobra (acréscimo de 100%)."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Adicional Noturno:" }),
+                  " Se a hora extra for feita entre 22h e 5h, além do acréscimo de hora extra, deve-se somar mais 20% de adicional noturno sobre a hora."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Tipos de Hora Extra" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O percentual de acréscimo varia de acordo com o dia e horário em que o trabalho extra foi realizado:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Hora Extra 50%:" }),
-                      " A mais comum. Aplica-se para horas excedentes trabalhadas em dias úteis (segunda a sábado). O valor da hora recebe um acréscimo de, no mínimo, 50%."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Hora Extra 100%:" }),
-                      " Aplica-se para trabalho em domingos e feriados civis ou religiosos não compensados. O valor da hora dobra (acréscimo de 100%)."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Adicional Noturno:" }),
-                      " Se a hora extra for feita entre 22h e 5h, além do acréscimo de hora extra, deve-se somar mais 20% de adicional noturno sobre a hora."
-                    ] })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "⚠️ Não esqueça do DSR!" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: 'As horas extras habituais geram um "efeito colateral" positivo no seu salário: o reflexo no Descanso Semanal Remunerado (DSR). Como você trabalhou mais durante a semana, seu dia de folga remunerada também passa a valer proporcionalmente mais. É um dinheiro extra que muitos esquecem de cobrar!' })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: OVERTIME_FAQS,
-                title: "Perguntas Frequentes sobre Horas Extras",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "⚠️ Não esqueça do DSR!" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: 'As horas extras habituais geram um "efeito colateral" positivo no seu salário: o reflexo no Descanso Semanal Remunerado (DSR). Como você trabalhou mais durante a semana, seu dia de folga remunerada também passa a valer proporcionalmente mais. É um dinheiro extra que muitos esquecem de cobrar!' })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: OVERTIME_FAQS,
+            title: "Perguntas Frequentes sobre Horas Extras",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -6587,108 +6313,99 @@ const UnemploymentInsurancePage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona o Seguro-Desemprego em 2025?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "O Seguro-Desemprego é um dos benefícios mais importantes da Seguridade Social, oferecendo assistência financeira temporária ao trabalhador dispensado sem justa causa. O valor não é fixo: ele depende da média dos seus últimos salários e segue uma tabela reajustada anualmente pelo governo." }),
-                /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "O Cálculo do Valor" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-sm mb-2", children: "Para chegar ao valor da parcela, calcula-se a média dos salários dos últimos 3 meses anteriores à dispensa." }),
-                    /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-sm text-gray-400", children: [
-                      /* @__PURE__ */ jsxs("li", { children: [
-                        /* @__PURE__ */ jsx("strong", { children: "Até o teto:" }),
-                        " O valor da parcela não pode ser inferior ao salário mínimo vigente."
-                      ] }),
-                      /* @__PURE__ */ jsxs("li", { children: [
-                        /* @__PURE__ */ jsx("strong", { children: "Acima do teto:" }),
-                        " Existe um limite máximo (teto) pago pelo governo."
-                      ] })
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "A Quantidade de Parcelas" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Você pode receber entre 3 e 5 parcelas, dependendo de quanto tempo você trabalhou com carteira assinada nos últimos meses e de quantas vezes já solicitou o benefício anteriormente." })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Regras de Parcelas (Tempo de Trabalho)" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "A quantidade de dinheiro que você vai receber depende do seu histórico de trabalho. Confira a regra geral:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Parcelas:" }),
-                      " Para quem trabalhou de 6 a 11 meses no período de referência."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "4" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Parcelas:" }),
-                      " Para quem trabalhou de 12 a 23 meses."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "5" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Parcelas:" }),
-                      " Para quem trabalhou 24 meses ou mais."
-                    ] })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo para Calcular" }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400", children: [
-                /* @__PURE__ */ jsx("p", { children: "Nossa calculadora faz a conta complexa da Tabela do FAT (Fundo de Amparo ao Trabalhador) para você. O processo manual seria:" }),
-                /* @__PURE__ */ jsxs("ol", { className: "list-decimal list-inside space-y-2 ml-4", children: [
-                  /* @__PURE__ */ jsx("li", { children: "Some os salários brutos dos últimos 3 meses antes da demissão." }),
-                  /* @__PURE__ */ jsx("li", { children: "Divida o total por 3 para encontrar a média salarial." }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona o Seguro-Desemprego em 2025?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "O Seguro-Desemprego é um dos benefícios mais importantes da Seguridade Social, oferecendo assistência financeira temporária ao trabalhador dispensado sem justa causa. O valor não é fixo: ele depende da média dos seus últimos salários e segue uma tabela reajustada anualmente pelo governo." }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "O Cálculo do Valor" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm mb-2", children: "Para chegar ao valor da parcela, calcula-se a média dos salários dos últimos 3 meses anteriores à dispensa." }),
+                /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside text-sm text-gray-400", children: [
                   /* @__PURE__ */ jsxs("li", { children: [
-                    "Aplique a média na faixa da tabela vigente:",
-                    /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside ml-6 mt-2 space-y-1", children: [
-                      /* @__PURE__ */ jsxs("li", { children: [
-                        /* @__PURE__ */ jsx("strong", { children: "Faixa 1:" }),
-                        " Multiplica-se a média por 0,8 (80%)."
-                      ] }),
-                      /* @__PURE__ */ jsxs("li", { children: [
-                        /* @__PURE__ */ jsx("strong", { children: "Faixa 2:" }),
-                        " O que exceder a Faixa 1 é multiplicado por 0,5 (50%) e somado a um valor fixo."
-                      ] }),
-                      /* @__PURE__ */ jsxs("li", { children: [
-                        /* @__PURE__ */ jsx("strong", { children: "Faixa 3:" }),
-                        " Valor fixo do teto (para médias salariais altas)."
-                      ] })
-                    ] })
+                    /* @__PURE__ */ jsx("strong", { children: "Até o teto:" }),
+                    " O valor da parcela não pode ser inferior ao salário mínimo vigente."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Acima do teto:" }),
+                    " Existe um limite máximo (teto) pago pelo governo."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "A Quantidade de Parcelas" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm", children: "Você pode receber entre 3 e 5 parcelas, dependendo de quanto tempo você trabalhou com carteira assinada nos últimos meses e de quantas vezes já solicitou o benefício anteriormente." })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Regras de Parcelas (Tempo de Trabalho)" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "A quantidade de dinheiro que você vai receber depende do seu histórico de trabalho. Confira a regra geral:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Parcelas:" }),
+                  " Para quem trabalhou de 6 a 11 meses no período de referência."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "4" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Parcelas:" }),
+                  " Para quem trabalhou de 12 a 23 meses."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "5" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Parcelas:" }),
+                  " Para quem trabalhou 24 meses ou mais."
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo para Calcular" }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400", children: [
+            /* @__PURE__ */ jsx("p", { children: "Nossa calculadora faz a conta complexa da Tabela do FAT (Fundo de Amparo ao Trabalhador) para você. O processo manual seria:" }),
+            /* @__PURE__ */ jsxs("ol", { className: "list-decimal list-inside space-y-2 ml-4", children: [
+              /* @__PURE__ */ jsx("li", { children: "Some os salários brutos dos últimos 3 meses antes da demissão." }),
+              /* @__PURE__ */ jsx("li", { children: "Divida o total por 3 para encontrar a média salarial." }),
+              /* @__PURE__ */ jsxs("li", { children: [
+                "Aplique a média na faixa da tabela vigente:",
+                /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside ml-6 mt-2 space-y-1", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Faixa 1:" }),
+                    " Multiplica-se a média por 0,8 (80%)."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Faixa 2:" }),
+                    " O que exceder a Faixa 1 é multiplicado por 0,5 (50%) e somado a um valor fixo."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Faixa 3:" }),
+                    " Valor fixo do teto (para médias salariais altas)."
                   ] })
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: UNEMPLOYMENT_FAQS,
-                title: "Dúvidas Frequentes sobre Seguro-Desemprego",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: UNEMPLOYMENT_FAQS,
+            title: "Dúvidas Frequentes sobre Seguro-Desemprego",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -6997,88 +6714,79 @@ const NightShiftPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que é o Adicional Noturno?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'O trabalho noturno exige mais do corpo e da saúde do trabalhador do que o diurno. Por isso, a CLT (Consolidação das Leis do Trabalho) obriga as empresas a pagarem um "bônus" compensatório: o Adicional Noturno.' }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Para trabalhadores urbanos, esse direito é garantido para qualquer atividade realizada entre 22h de um dia e 5h da manhã do dia seguinte. Além de receber um valor maior por hora, a contagem do tempo também é diferente (a hora passa "mais rápido" para fins de pagamento).' })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que é o Adicional Noturno?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'O trabalho noturno exige mais do corpo e da saúde do trabalhador do que o diurno. Por isso, a CLT (Consolidação das Leis do Trabalho) obriga as empresas a pagarem um "bônus" compensatório: o Adicional Noturno.' }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Para trabalhadores urbanos, esse direito é garantido para qualquer atividade realizada entre 22h de um dia e 5h da manhã do dia seguinte. Além de receber um valor maior por hora, a contagem do tempo também é diferente (a hora passa "mais rápido" para fins de pagamento).' })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona o Cálculo? (Regras de 2025)" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. O Acréscimo de 20%" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm mb-2", children: "A hora noturna deve ser paga com um acréscimo de, no mínimo, 20% sobre o valor da hora diurna." }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsx("strong", { children: "Exemplo:" }),
+                " Se sua hora normal vale R$ 10,00, a hora noturna vale R$ 12,00."
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona o Cálculo? (Regras de 2025)" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. O Acréscimo de 20%" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm mb-2", children: "A hora noturna deve ser paga com um acréscimo de, no mínimo, 20% sobre o valor da hora diurna." }),
-                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsx("strong", { children: "Exemplo:" }),
-                    " Se sua hora normal vale R$ 10,00, a hora noturna vale R$ 12,00."
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. A Hora Reduzida (Hora Ficta)" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm mb-2", children: 'Aqui está o "pulo do gato" que muita gente esquece. Entre 22h e 5h, a hora de trabalho não tem 60 minutos, mas sim 52 minutos e 30 segundos.' }),
-                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
-                    "Na prática, cada hora de relógio trabalhada à noite equivale a ",
-                    /* @__PURE__ */ jsx("strong", { children: "1,1428 horas" }),
-                    " para fins de pagamento."
-                  ] })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. A Hora Reduzida (Hora Ficta)" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm mb-2", children: 'Aqui está o "pulo do gato" que muita gente esquece. Entre 22h e 5h, a hora de trabalho não tem 60 minutos, mas sim 52 minutos e 30 segundos.' }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                "Na prática, cada hora de relógio trabalhada à noite equivale a ",
+                /* @__PURE__ */ jsx("strong", { children: "1,1428 horas" }),
+                " para fins de pagamento."
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo para Calcular" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Nossa calculadora faz a conversão automática, mas a lógica manual é a seguinte:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Descubra o valor da hora normal:" }),
+                  " Divida o salário mensal pela jornada (ex: R$ 2.200 ÷ 220 = R$ 10,00)."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Aplique os 20%:" }),
+                  " Multiplique o valor da hora por 0,20 para achar o valor do adicional (R$ 10,00 × 0,20 = R$ 2,00 de adicional)."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Considere a Hora Reduzida:" }),
+                  " Se você trabalhou a noite toda (22h às 5h), multiplique o número de horas pelo fator de redução ou considere 8 horas pagas para cada 7 trabalhadas."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo para Calcular" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Nossa calculadora faz a conversão automática, mas a lógica manual é a seguinte:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Descubra o valor da hora normal:" }),
-                      " Divida o salário mensal pela jornada (ex: R$ 2.200 ÷ 220 = R$ 10,00)."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Aplique os 20%:" }),
-                      " Multiplique o valor da hora por 0,20 para achar o valor do adicional (R$ 10,00 × 0,20 = R$ 2,00 de adicional)."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Considere a Hora Reduzida:" }),
-                      " Se você trabalhou a noite toda (22h às 5h), multiplique o número de horas pelo fator de redução ou considere 8 horas pagas para cada 7 trabalhadas."
-                    ] })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 border-l-4 border-blue-500 p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 E se o turno passar das 5h da manhã?" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Se você cumpriu jornada noturna integral e continuou trabalhando após as 5h (hora extra ou continuação de turno), a lei entende que o cansaço continua. Por isso, o adicional noturno também deve ser pago sobre as horas trabalhadas após as 5h da manhã (Súmula 60 do TST)." })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: NIGHT_SHIFT_FAQS,
-                title: "Dúvidas Frequentes sobre Adicional Noturno",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 border-l-4 border-blue-500 p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 E se o turno passar das 5h da manhã?" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Se você cumpriu jornada noturna integral e continuou trabalhando após as 5h (hora extra ou continuação de turno), a lei entende que o cansaço continua. Por isso, o adicional noturno também deve ser pago sobre as horas trabalhadas após as 5h da manhã (Súmula 60 do TST)." })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: NIGHT_SHIFT_FAQS,
+            title: "Dúvidas Frequentes sobre Adicional Noturno",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -7357,103 +7065,94 @@ const FGTSPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como o seu FGTS cresce?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'O Fundo de Garantia do Tempo de Serviço (FGTS) funciona como uma "poupança forçada" e cumulativa. Todo mês, a empresa deposita uma porcentagem do seu salário em uma conta na Caixa Econômica Federal. Esse dinheiro não fica parado: ele rende juros mensais e recebe distribuição de lucros anual.' }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Nossa calculadora projeta o Saldo Futuro considerando os dois fatores principais de crescimento:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside space-y-2 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "Os Depósitos Mensais:" }),
-                    " O valor que a empresa coloca todo mês."
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "A Rentabilidade:" }),
-                    " Os juros compostos que fazem o dinheiro render ao longo do tempo."
-                  ] })
-                ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como o seu FGTS cresce?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'O Fundo de Garantia do Tempo de Serviço (FGTS) funciona como uma "poupança forçada" e cumulativa. Todo mês, a empresa deposita uma porcentagem do seu salário em uma conta na Caixa Econômica Federal. Esse dinheiro não fica parado: ele rende juros mensais e recebe distribuição de lucros anual.' }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Nossa calculadora projeta o Saldo Futuro considerando os dois fatores principais de crescimento:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "list-disc list-inside space-y-2 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "Os Depósitos Mensais:" }),
+                " O valor que a empresa coloca todo mês."
+              ] }),
+              /* @__PURE__ */ jsxs("li", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "A Rentabilidade:" }),
+                " Os juros compostos que fazem o dinheiro render ao longo do tempo."
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Regras de Depósito e Rendimento" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Valor do Depósito" }),
-                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Trabalhador Padrão (CLT):" }),
-                      " 8% do salário bruto."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Jovem Aprendiz:" }),
-                      " 2% do salário."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Trabalhador Doméstico:" }),
-                      " 11,2% (8% + 3,2%)."
-                    ] })
-                  ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Regras de Depósito e Rendimento" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Valor do Depósito" }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Trabalhador Padrão (CLT):" }),
+                  " 8% do salário bruto."
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Rendimento (Juros + TR)" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-2", children: "O dinheiro na conta do FGTS rende 3% ao ano mais a TR (Taxa Referencial)." }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Além disso, anualmente o governo realiza a Distribuição de Lucros do FGTS." })
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Jovem Aprendiz:" }),
+                  " 2% do salário."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Trabalhador Doméstico:" }),
+                  " 11,2% (8% + 3,2%)."
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo do Cálculo" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "A conta manual de juros compostos com aportes mensais é complexa, mas a lógica é esta:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Aporte Mensal:" }),
-                      " Calcula-se 8% do seu Salário Bruto."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Acúmulo:" }),
-                      " Multiplica-se esse valor pelo número de meses trabalhados."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Juros sobre Saldo:" }),
-                      " Todo dia 10, o saldo total da conta recebe a correção monetária (JAM)."
-                    ] })
-                  ] })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Rendimento (Juros + TR)" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-2", children: "O dinheiro na conta do FGTS rende 3% ao ano mais a TR (Taxa Referencial)." }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Além disso, anualmente o governo realiza a Distribuição de Lucros do FGTS." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo do Cálculo" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "A conta manual de juros compostos com aportes mensais é complexa, mas a lógica é esta:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Aporte Mensal:" }),
+                  " Calcula-se 8% do seu Salário Bruto."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Acúmulo:" }),
+                  " Multiplica-se esse valor pelo número de meses trabalhados."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Juros sobre Saldo:" }),
+                  " Todo dia 10, o saldo total da conta recebe a correção monetária (JAM)."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 Dica de Ouro" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "O FGTS não é descontado do seu salário! Ele é uma obrigação do empregador. Se no seu holerite aparecer desconto de FGTS, a empresa está agindo ilegalmente. O único desconto permitido é o de INSS." })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: FGTS_FAQS,
-                title: "Dúvidas Frequentes sobre FGTS",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 Dica de Ouro" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "O FGTS não é descontado do seu salário! Ele é uma obrigação do empregador. Se no seu holerite aparecer desconto de FGTS, a empresa está agindo ilegalmente. O único desconto permitido é o de INSS." })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: FGTS_FAQS,
+            title: "Dúvidas Frequentes sobre FGTS",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -7807,111 +7506,102 @@ const EmployeeCostPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quanto custa um funcionário de verdade?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Muitos empreendedores cometem o erro de olhar apenas para o salário bruto na hora de contratar. A realidade é que, no Brasil, um funcionário CLT pode custar para a empresa quase o dobro do salário registrado em carteira." }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Nossa calculadora revela os "custos invisíveis" da contratação, considerando impostos, benefícios obrigatórios e as provisões que você precisa guardar todo mês para não ser pego de surpresa.' })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Que Compõe o Custo?" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Salário e Benefícios" }),
-                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Salário Bruto:" }),
-                      " O valor contratado."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Vale-Transporte:" }),
-                      " A empresa paga o que exceder 6% do salário."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Vale-Refeição:" }),
-                      " Valor definido pela empresa."
-                    ] })
-                  ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quanto custa um funcionário de verdade?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Muitos empreendedores cometem o erro de olhar apenas para o salário bruto na hora de contratar. A realidade é que, no Brasil, um funcionário CLT pode custar para a empresa quase o dobro do salário registrado em carteira." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Nossa calculadora revela os "custos invisíveis" da contratação, considerando impostos, benefícios obrigatórios e as provisões que você precisa guardar todo mês para não ser pego de surpresa.' })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Que Compõe o Custo?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Salário e Benefícios" }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Salário Bruto:" }),
+                  " O valor contratado."
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Encargos Sociais" }),
-                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "FGTS:" }),
-                      " 8% do salário bruto."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "INSS Patronal:" }),
-                      " Até 20% (Lucro Presumido/Real)."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Sistema S:" }),
-                      " Taxas adicionais (exceto Simples)."
-                    ] })
-                  ] })
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Vale-Transporte:" }),
+                  " A empresa paga o que exceder 6% do salário."
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Provisões" }),
-                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Férias + 1/3:" }),
-                      " 1/12 + 1/3 por mês."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "13º Salário:" }),
-                      " 1/12 do salário por mês."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Multa FGTS:" }),
-                      " Provisão de 4% mensal."
-                    ] })
-                  ] })
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Vale-Refeição:" }),
+                  " Valor definido pela empresa."
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "A Diferença do Regime Tributário" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O custo muda drasticamente dependendo do enquadramento da sua empresa:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Simples Nacional:" }),
-                      " Geralmente é mais barato. A maioria das empresas do Anexo I, II e III são isentas do INSS Patronal (os 20%), pagando apenas FGTS e provisões."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Lucro Presumido / Real:" }),
-                      " O custo é mais alto. Além do FGTS, a empresa paga 20% de INSS Patronal + Alíquotas de Terceiros (Sistema S) e Seguro de Acidente de Trabalho (RAT)."
-                    ] })
-                  ] })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Encargos Sociais" }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "FGTS:" }),
+                  " 8% do salário bruto."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "INSS Patronal:" }),
+                  " Até 20% (Lucro Presumido/Real)."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Sistema S:" }),
+                  " Taxas adicionais (exceto Simples)."
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: EMPLOYEE_COST_FAQS,
-                title: "Dúvidas Frequentes sobre Custo de Funcionário",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Provisões" }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Férias + 1/3:" }),
+                  " 1/12 + 1/3 por mês."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "13º Salário:" }),
+                  " 1/12 do salário por mês."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Multa FGTS:" }),
+                  " Provisão de 4% mensal."
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "A Diferença do Regime Tributário" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O custo muda drasticamente dependendo do enquadramento da sua empresa:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Simples Nacional:" }),
+                  " Geralmente é mais barato. A maioria das empresas do Anexo I, II e III são isentas do INSS Patronal (os 20%), pagando apenas FGTS e provisões."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Lucro Presumido / Real:" }),
+                  " O custo é mais alto. Além do FGTS, a empresa paga 20% de INSS Patronal + Alíquotas de Terceiros (Sistema S) e Seguro de Acidente de Trabalho (RAT)."
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: EMPLOYEE_COST_FAQS,
+            title: "Dúvidas Frequentes sobre Custo de Funcionário",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -8209,82 +7899,73 @@ const PLRPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que é a PLR e como ela é tributada?" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A Participação nos Lucros e Resultados (PLR) é um dos benefícios mais aguardados pelos trabalhadores CLT. Diferente do salário mensal, a PLR possui uma tributação exclusiva. Isso significa que ela não se soma aos seus outros rendimentos para o cálculo do Imposto de Renda anual, o que geralmente resulta em um desconto menor." }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'O "Leão" morde uma parte, mas a tabela usada é específica e mais vantajosa, com faixas de isenção mais altas do que as aplicadas aos salários normais.' })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Tabela de IR sobre PLR (Regras 2025)" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "As faixas de valores são reajustadas anualmente pelo governo. Confira a lógica:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Faixa 1 (Isenção):" }),
-                      ' Valores de PLR até R$ 7.640,80 estão totalmente isentos de imposto. O valor entra "limpo" na sua conta.'
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Faixas seguintes:" }),
-                      ' Acima da isenção, aplicam-se alíquotas de 7,5%, 15%, 22,5% e 27,5%, sempre com uma "parcela a deduzir" para suavizar o imposto.'
-                    ] })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-4", children: "*Nota: Os valores das faixas podem sofrer reajustes. Nossa calculadora utiliza sempre a tabela oficial vigente." })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo do Cálculo" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Como calcular?" }),
-                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "1. Identifique a Faixa:" }),
-                      " Veja em qual linha da tabela o valor total da sua PLR se encaixa."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "2. Aplique a Alíquota:" }),
-                      " Multiplique o valor total da PLR pela porcentagem correspondente."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "3. Subtraia a Dedução:" }),
-                      ' Do resultado anterior, subtraia o valor da "Parcela a Deduzir".'
-                    ] })
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-yellow-500", children: "⚠️ Atenção a Parcelas!" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Se a sua empresa paga a PLR em duas parcelas no mesmo ano, o imposto é recalculado no segundo pagamento considerando a soma total recebida. Isso pode fazer com que o desconto na segunda parcela pareça muito maior." })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que é a PLR e como ela é tributada?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A Participação nos Lucros e Resultados (PLR) é um dos benefícios mais aguardados pelos trabalhadores CLT. Diferente do salário mensal, a PLR possui uma tributação exclusiva. Isso significa que ela não se soma aos seus outros rendimentos para o cálculo do Imposto de Renda anual, o que geralmente resulta em um desconto menor." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'O "Leão" morde uma parte, mas a tabela usada é específica e mais vantajosa, com faixas de isenção mais altas do que as aplicadas aos salários normais.' })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Tabela de IR sobre PLR (Regras 2025)" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "As faixas de valores são reajustadas anualmente pelo governo. Confira a lógica:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Faixa 1 (Isenção):" }),
+                  ' Valores de PLR até R$ 7.640,80 estão totalmente isentos de imposto. O valor entra "limpo" na sua conta.'
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Faixas seguintes:" }),
+                  ' Acima da isenção, aplicam-se alíquotas de 7,5%, 15%, 22,5% e 27,5%, sempre com uma "parcela a deduzir" para suavizar o imposto.'
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: PLR_FAQS,
-                title: "Dúvidas Frequentes sobre PLR",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-4", children: "*Nota: Os valores das faixas podem sofrer reajustes. Nossa calculadora utiliza sempre a tabela oficial vigente." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Passo a Passo do Cálculo" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Como calcular?" }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "1. Identifique a Faixa:" }),
+                  " Veja em qual linha da tabela o valor total da sua PLR se encaixa."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "2. Aplique a Alíquota:" }),
+                  " Multiplique o valor total da PLR pela porcentagem correspondente."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "3. Subtraia a Dedução:" }),
+                  ' Do resultado anterior, subtraia o valor da "Parcela a Deduzir".'
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-yellow-500", children: "⚠️ Atenção a Parcelas!" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Se a sua empresa paga a PLR em duas parcelas no mesmo ano, o imposto é recalculado no segundo pagamento considerando a soma total recebida. Isso pode fazer com que o desconto na segunda parcela pareça muito maior." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: PLR_FAQS,
+            title: "Dúvidas Frequentes sobre PLR",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -8578,88 +8259,79 @@ const FIREPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que é o Movimento FIRE?" }),
-              /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: /* @__PURE__ */ jsx("p", { className: "mb-4", children: "FIRE (Financial Independence, Retire Early) não é apenas sobre dinheiro, é sobre tempo. A filosofia se baseia em acumular ativos suficientes para que o rendimento passivo cubra todas as suas despesas de vida, permitindo que você se aposente décadas antes do previsto." }) })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que é o Movimento FIRE?" }),
+          /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: /* @__PURE__ */ jsx("p", { className: "mb-4", children: "FIRE (Financial Independence, Retire Early) não é apenas sobre dinheiro, é sobre tempo. A filosofia se baseia em acumular ativos suficientes para que o rendimento passivo cubra todas as suas despesas de vida, permitindo que você se aposente décadas antes do previsto." }) })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Conceitos Fundamentais" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. O Número FIRE" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                'É o valor "mágico" que você precisa acumular. A regra básica é simples: ',
+                /* @__PURE__ */ jsx("strong", { children: "Custo de Vida Anual × 25" }),
+                "."
+              ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Conceitos Fundamentais" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. O Número FIRE" }),
-                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
-                    'É o valor "mágico" que você precisa acumular. A regra básica é simples: ',
-                    /* @__PURE__ */ jsx("strong", { children: "Custo de Vida Anual × 25" }),
-                    "."
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. A Regra dos 4%" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Afirma que se você sacar 4% do seu patrimônio investido anualmente, historicamente seu dinheiro não acabará por pelo menos 30 anos." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Aceleração" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Quanto maior a porcentagem da sua renda que você investe (taxa de poupança), menos tempo leva para atingir a liberdade." })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. A Regra dos 4%" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Afirma que se você sacar 4% do seu patrimônio investido anualmente, historicamente seu dinheiro não acabará por pelo menos 30 anos." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Aceleração" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Quanto maior a porcentagem da sua renda que você investe (taxa de poupança), menos tempo leva para atingir a liberdade." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como usar a calculadora?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Para descobrir quando você será livre, nossa ferramenta cruza três dados fundamentais:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Custo de Vida Mensal:" }),
+                  " Quanto você precisa para viver confortavelmente hoje? (Seja realista, inclua lazer e saúde)."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Patrimônio Atual:" }),
+                  " Quanto você já tem investido em ativos geradores de renda?"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Aporte Mensal:" }),
+                  " Quanto você consegue poupar e investir rigorosamente todo mês?"
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como usar a calculadora?" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Para descobrir quando você será livre, nossa ferramenta cruza três dados fundamentais:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Custo de Vida Mensal:" }),
-                      " Quanto você precisa para viver confortavelmente hoje? (Seja realista, inclua lazer e saúde)."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Patrimônio Atual:" }),
-                      " Quanto você já tem investido em ativos geradores de renda?"
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Aporte Mensal:" }),
-                      " Quanto você consegue poupar e investir rigorosamente todo mês?"
-                    ] })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "⚠️ Atenção à Inflação!" }),
-              /* @__PURE__ */ jsxs("p", { className: "text-gray-300", children: [
-                "Muitas calculadoras na internet ignoram a inflação e mostram resultados ilusórios. O FinZap utiliza a ",
-                /* @__PURE__ */ jsx("strong", { children: "Taxa Real" }),
-                " (Rentabilidade Nominal - Inflação) para garantir que o valor projetado mantenha o poder de compra. Se o seu investimento rende 10% e a inflação é 4%, seu ganho real para fins de liberdade financeira é de apenas 6%."
-              ] })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: FIRE_FAQS,
-                title: "Dúvidas Frequentes sobre FIRE",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "⚠️ Atenção à Inflação!" }),
+          /* @__PURE__ */ jsxs("p", { className: "text-gray-300", children: [
+            "Muitas calculadoras na internet ignoram a inflação e mostram resultados ilusórios. O FinZap utiliza a ",
+            /* @__PURE__ */ jsx("strong", { children: "Taxa Real" }),
+            " (Rentabilidade Nominal - Inflação) para garantir que o valor projetado mantenha o poder de compra. Se o seu investimento rende 10% e a inflação é 4%, seu ganho real para fins de liberdade financeira é de apenas 6%."
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: FIRE_FAQS,
+            title: "Dúvidas Frequentes sobre FIRE",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -8767,7 +8439,7 @@ const CompoundInterestPage = () => {
         /* @__PURE__ */ jsxs(
           motion.div,
           {
-            initial: { opacity: 0, y: 20 },
+            initial: { y: 20 },
             animate: { opacity: 1, y: 0 },
             transition: { duration: 0.6 },
             className: "text-center mb-12",
@@ -8788,7 +8460,7 @@ const CompoundInterestPage = () => {
       /* @__PURE__ */ jsxs(
         motion.div,
         {
-          initial: { opacity: 0, y: 30 },
+          initial: { y: 30 },
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.6, delay: 0.2 },
           className: "grid lg:grid-cols-12 gap-8 mb-24",
@@ -8924,7 +8596,7 @@ const CompoundInterestPage = () => {
               /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
                 motion.div,
                 {
-                  initial: { opacity: 0, scale: 0.9 },
+                  initial: { scale: 0.9 },
                   animate: { opacity: 1, scale: 1 },
                   transition: { type: "spring", stiffness: 200, damping: 20 },
                   className: "space-y-6",
@@ -9007,8 +8679,8 @@ const CompoundInterestPage = () => {
       /* @__PURE__ */ jsxs(
         motion.div,
         {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
+          initial: { y: 20 },
+          animate: { opacity: 1, y: 0 },
           transition: { duration: 0.8, delay: 0.4 },
           className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
           children: [
@@ -9416,79 +9088,70 @@ const RentVsBuyPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: 'O Dilema: "Aluguel é dinheiro jogado fora?"' }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Crescemos ouvindo que pagar aluguel é rasgar dinheiro e que "quem compra terra não erra". Mas, financeiramente, essa nem sempre é a verdade.' }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Ao financiar um imóvel, você paga juros ao banco que, muitas vezes, somam o valor de dois ou três imóveis ao final de 30 anos. Por outro lado, o dinheiro que você daria de entrada poderia estar rendendo juros compostos em uma aplicação segura." })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: 'O Dilema: "Aluguel é dinheiro jogado fora?"' }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Crescemos ouvindo que pagar aluguel é rasgar dinheiro e que "quem compra terra não erra". Mas, financeiramente, essa nem sempre é a verdade.' }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Ao financiar um imóvel, você paga juros ao banco que, muitas vezes, somam o valor de dois ou três imóveis ao final de 30 anos. Por outro lado, o dinheiro que você daria de entrada poderia estar rendendo juros compostos em uma aplicação segura." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona a comparação?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-blue-400", children: "Cenário A: O Comprador" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Você usa suas economias para dar a entrada, assume uma dívida de longo prazo e paga as parcelas do financiamento. No final, você tem um imóvel (que pode ter valorizado) e zero dívida." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Cenário B: O Inquilino Investidor" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Você pega o dinheiro que daria de entrada e investe. Você paga o aluguel mensalmente. Se o aluguel for mais barato que a parcela do financiamento, você também investe essa diferença todos os meses." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Variáveis Importantes" }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+            /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+              /* @__PURE__ */ jsxs("span", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "Taxa de Juros do Financiamento:" }),
+                " Quanto mais altos os juros (Selic alta), mais caro fica financiar, favorecendo o aluguel."
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona a comparação?" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-blue-400", children: "Cenário A: O Comprador" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Você usa suas economias para dar a entrada, assume uma dívida de longo prazo e paga as parcelas do financiamento. No final, você tem um imóvel (que pode ter valorizado) e zero dívida." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "Cenário B: O Inquilino Investidor" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Você pega o dinheiro que daria de entrada e investe. Você paga o aluguel mensalmente. Se o aluguel for mais barato que a parcela do financiamento, você também investe essa diferença todos os meses." })
-                ] })
+            /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+              /* @__PURE__ */ jsxs("span", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "Rendimento da Aplicação:" }),
+                " Se você consegue investir bem o dinheiro da entrada (acima da inflação), o aluguel tende a valer mais a pena."
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Variáveis Importantes" }),
-              /* @__PURE__ */ jsx("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                  /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "Taxa de Juros do Financiamento:" }),
-                    " Quanto mais altos os juros (Selic alta), mais caro fica financiar, favorecendo o aluguel."
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                  /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "Rendimento da Aplicação:" }),
-                    " Se você consegue investir bem o dinheiro da entrada (acima da inflação), o aluguel tende a valer mais a pena."
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                  /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "Valorização do Imóvel:" }),
-                    " Se o imóvel dobrar de preço rapidamente, a compra se torna vantajosa."
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                  /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "4" }),
-                  /* @__PURE__ */ jsxs("span", { children: [
-                    /* @__PURE__ */ jsx("strong", { children: "Valor do Aluguel:" }),
-                    " A regra de bolso diz que se o aluguel anual custar menos de 4% a 5% do valor do imóvel, compensa alugar."
-                  ] })
-                ] })
-              ] }) })
+            /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+              /* @__PURE__ */ jsxs("span", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "Valorização do Imóvel:" }),
+                " Se o imóvel dobrar de preço rapidamente, a compra se torna vantajosa."
+              ] })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: RENT_VS_BUY_FAQS,
-                title: "Dúvidas Frequentes",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+              /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "4" }),
+              /* @__PURE__ */ jsxs("span", { children: [
+                /* @__PURE__ */ jsx("strong", { children: "Valor do Aluguel:" }),
+                " A regra de bolso diz que se o aluguel anual custar menos de 4% a 5% do valor do imóvel, compensa alugar."
+              ] })
+            ] })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: RENT_VS_BUY_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -9879,89 +9542,80 @@ const UberVsCarPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Dilema: Conforto vs. Custo" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Ter um carro próprio já foi sinônimo de status e liberdade. Hoje, com a alta dos combustíveis e a facilidade dos aplicativos (Uber, 99), muitos motoristas estão fazendo a conta: será que o carro não virou um passivo que drena seu dinheiro?" }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Muitas pessoas cometem o erro de comparar apenas o gasto com gasolina versus o preço da corrida. Mas a conta real é muito mais profunda. Um carro parado na garagem gera custos fixos (IPVA, Seguro, Depreciação) que você paga mesmo sem rodar um quilômetro sequer." })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Que Você Paga (e nem percebe)" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: '1. Custos Fixos (O "Custo de Ter")' }),
-                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Depreciação:" }),
-                      " Seu carro perde cerca de 10% a 15% do valor todo ano."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Custo de Oportunidade:" }),
-                      " O rendimento que você perde ao não investir o dinheiro do carro."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "IPVA e Licenciamento:" }),
-                      " Impostos anuais obrigatórios."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Seguro:" }),
-                      " Proteção essencial que pesa no bolso."
-                    ] })
-                  ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Dilema: Conforto vs. Custo" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Ter um carro próprio já foi sinônimo de status e liberdade. Hoje, com a alta dos combustíveis e a facilidade dos aplicativos (Uber, 99), muitos motoristas estão fazendo a conta: será que o carro não virou um passivo que drena seu dinheiro?" }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Muitas pessoas cometem o erro de comparar apenas o gasto com gasolina versus o preço da corrida. Mas a conta real é muito mais profunda. Um carro parado na garagem gera custos fixos (IPVA, Seguro, Depreciação) que você paga mesmo sem rodar um quilômetro sequer." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Que Você Paga (e nem percebe)" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: '1. Custos Fixos (O "Custo de Ter")' }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Depreciação:" }),
+                  " Seu carro perde cerca de 10% a 15% do valor todo ano."
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: '2. Custos Variáveis (O "Custo de Rodar")' }),
-                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Combustível:" }),
-                      " Gasolina, Etanol ou GNV."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Manutenção:" }),
-                      " Revisões, pneus, óleo e desgastes naturais."
-                    ] }),
-                    /* @__PURE__ */ jsxs("li", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Estacionamento/Limpeza:" }),
-                      " Mensalidades, Zona Azul e lavagens."
-                    ] })
-                  ] })
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Custo de Oportunidade:" }),
+                  " O rendimento que você perde ao não investir o dinheiro do carro."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "IPVA e Licenciamento:" }),
+                  " Impostos anuais obrigatórios."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Seguro:" }),
+                  " Proteção essencial que pesa no bolso."
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quando o App vale a pena?" }),
-              /* @__PURE__ */ jsx("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2", children: "Pouco Uso (Até 15km/dia)" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: 'Geralmente o Uber/App vence. Os custos fixos do carro (seguro, IPVA) diluídos em poucos quilômetros tornam o "custo por km" do carro próprio altíssimo.' })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: '2. Custos Variáveis (O "Custo de Rodar")' }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Combustível:" }),
+                  " Gasolina, Etanol ou GNV."
                 ] }),
-                /* @__PURE__ */ jsxs("div", { children: [
-                  /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2", children: "Uso Intenso (Mais de 40km/dia)" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "O Carro Próprio tende a vencer. Para quem roda muito, o custo variável do app (tarifa dinâmica + taxa da plataforma) acaba superando os custos de manutenção do veículo particular." })
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Manutenção:" }),
+                  " Revisões, pneus, óleo e desgastes naturais."
+                ] }),
+                /* @__PURE__ */ jsxs("li", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Estacionamento/Limpeza:" }),
+                  " Mensalidades, Zona Azul e lavagens."
                 ] })
-              ] }) })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quando o App vale a pena?" }),
+          /* @__PURE__ */ jsx("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2", children: "Pouco Uso (Até 15km/dia)" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: 'Geralmente o Uber/App vence. Os custos fixos do carro (seguro, IPVA) diluídos em poucos quilômetros tornam o "custo por km" do carro próprio altíssimo.' })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: UBER_VS_CAR_FAQS,
-                title: "Dúvidas Frequentes",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2", children: "Uso Intenso (Mais de 40km/dia)" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "O Carro Próprio tende a vencer. Para quem roda muito, o custo variável do app (tarifa dinâmica + taxa da plataforma) acaba superando os custos de manutenção do veículo particular." })
+            ] })
+          ] }) })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: UBER_VS_CAR_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -10282,76 +9936,67 @@ const FirstMillionPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Primeiro Milhão é o mais difícil" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'No mundo dos investimentos, existe um ditado famoso: "O primeiro milhão é o mais difícil, o segundo é inevitável". Isso acontece por causa do efeito exponencial dos Juros Compostos.' }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "No começo, o esforço vem quase todo do seu bolso (seu trabalho). Mas, conforme o patrimônio cresce, os rendimentos mensais começam a superar os seus próprios aportes. Nossa calculadora mostra exatamente essa trajetória." })
-              ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Primeiro Milhão é o mais difícil" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'No mundo dos investimentos, existe um ditado famoso: "O primeiro milhão é o mais difícil, o segundo é inevitável". Isso acontece por causa do efeito exponencial dos Juros Compostos.' }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "No começo, o esforço vem quase todo do seu bolso (seu trabalho). Mas, conforme o patrimônio cresce, os rendimentos mensais começam a superar os seus próprios aportes. Nossa calculadora mostra exatamente essa trajetória." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como chegar lá mais rápido?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Tempo" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Quanto mais cedo você começar, menos esforço terá que fazer. O tempo é o melhor amigo dos juros compostos." })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como chegar lá mais rápido?" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Tempo" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Quanto mais cedo você começar, menos esforço terá que fazer. O tempo é o melhor amigo dos juros compostos." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Aporte" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Aumentar sua renda e seus aportes mensais é a forma mais eficaz de encurtar o caminho." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Rentabilidade" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Buscar investimentos que rendam acima da inflação (como Ações, FIIs ou Tesouro IPCA+) faz seu dinheiro trabalhar mais forte." })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Aporte" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Aumentar sua renda e seus aportes mensais é a forma mais eficaz de encurtar o caminho." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Rentabilidade" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Buscar investimentos que rendam acima da inflação (como Ações, FIIs ou Tesouro IPCA+) faz seu dinheiro trabalhar mais forte." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como usar a calculadora?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Nossa ferramenta faz a projeção reversa ou direta para você:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Quero saber o valor mensal:" }),
+                  " Insira em quantos anos você quer chegar lá, e nós diremos quanto investir por mês."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Quero saber o tempo:" }),
+                  " Insira quanto você pode investir por mês, e nós diremos em que data você será milionário."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como usar a calculadora?" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Nossa ferramenta faz a projeção reversa ou direta para você:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Quero saber o valor mensal:" }),
-                      " Insira em quantos anos você quer chegar lá, e nós diremos quanto investir por mês."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Quero saber o tempo:" }),
-                      " Insira quanto você pode investir por mês, e nós diremos em que data você será milionário."
-                    ] })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-primary/10 border-l-4 border-primary p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 O Efeito Bola de Neve" }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Você vai perceber que os primeiros R$ 100 mil demoram muito para juntar. Os segundos R$ 100 mil são mais rápidos. Os últimos R$ 100 mil (para chegar ao milhão) acontecem numa velocidade impressionante. Isso é o juro composto em ação!" })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: FIRST_MILLION_FAQS,
-                title: "Dúvidas Frequentes",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-primary/10 border-l-4 border-primary p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "💡 O Efeito Bola de Neve" }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Você vai perceber que os primeiros R$ 100 mil demoram muito para juntar. Os segundos R$ 100 mil são mais rápidos. Os últimos R$ 100 mil (para chegar ao milhão) acontecem numa velocidade impressionante. Isso é o juro composto em ação!" })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: FIRST_MILLION_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -10660,76 +10305,67 @@ const CurrencyConverterPage = () => {
           ]
         }
       ),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Entendendo o Câmbio: Por que o valor muda tanto?" }),
-              /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A taxa de câmbio é o preço de uma moeda estrangeira medido em reais. Esse valor oscila a cada segundo durante o horário comercial, influenciado por fatores como Economia Global, Cenário Interno e a Lei da Oferta e Procura." }) })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Entendendo o Câmbio: Por que o valor muda tanto?" }),
+          /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: /* @__PURE__ */ jsx("p", { className: "mb-4", children: "A taxa de câmbio é o preço de uma moeda estrangeira medido em reais. Esse valor oscila a cada segundo durante o horário comercial, influenciado por fatores como Economia Global, Cenário Interno e a Lei da Oferta e Procura." }) })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Dólar Comercial x Dólar Turismo: Qual a diferença?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Dólar Comercial" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "É a cotação utilizada por grandes empresas e bancos para transações de importação, exportação e transferências financeiras. É o valor que você vê nos jornais e notícias." })
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Dólar Comercial x Dólar Turismo: Qual a diferença?" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "1. Dólar Comercial" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "É a cotação utilizada por grandes empresas e bancos para transações de importação, exportação e transferências financeiras. É o valor que você vê nos jornais e notícias." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Dólar Turismo" }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "É a cotação para pessoas físicas que vão viajar. Ele é mais caro (em média 3% a 5% acima do comercial) porque inclui custos de logística, segurança e impostos." })
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "2. Dólar Turismo" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "É a cotação para pessoas físicas que vão viajar. Ele é mais caro (em média 3% a 5% acima do comercial) porque inclui custos de logística, segurança e impostos." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-primary/10 border-l-4 border-primary p-6 rounded-r-xl", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "💡 Dica FinZap" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-300 text-sm", children: "Ao usar nosso conversor, lembre-se que ele mostra a taxa de mercado (comercial). Para saber quanto você vai pagar na casa de câmbio, adicione mentalmente cerca de 4% a 6% sobre o valor convertido." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Fantasma do IOF" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Não basta converter a moeda; você precisa considerar o imposto do governo brasileiro sobre operações de câmbio:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(Plane, { className: "flex-shrink-0 w-5 h-5 text-primary" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Dinheiro em Espécie (Papel):" }),
+                  " IOF de 1,1%. É a opção mais barata em termos de imposto, mas menos segura."
                 ] })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-primary/10 border-l-4 border-primary p-6 rounded-r-xl", children: [
-                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "💡 Dica FinZap" }),
-                /* @__PURE__ */ jsx("p", { className: "text-gray-300 text-sm", children: "Ao usar nosso conversor, lembre-se que ele mostra a taxa de mercado (comercial). Para saber quanto você vai pagar na casa de câmbio, adicione mentalmente cerca de 4% a 6% sobre o valor convertido." })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Fantasma do IOF" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Não basta converter a moeda; você precisa considerar o imposto do governo brasileiro sobre operações de câmbio:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx(Plane, { className: "flex-shrink-0 w-5 h-5 text-primary" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Dinheiro em Espécie (Papel):" }),
-                      " IOF de 1,1%. É a opção mais barata em termos de imposto, mas menos segura."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx(Plane, { className: "flex-shrink-0 w-5 h-5 text-primary" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Cartão de Crédito/Débito Internacional:" }),
-                      " IOF de 4,38% (em 2024/2025)."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx(Plane, { className: "flex-shrink-0 w-5 h-5 text-primary" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Conta Internacional (Nomad, Wise):" }),
-                      " IOF de 1,1% (mesma alíquota do papel moeda). Essa tem sido a opção favorita dos viajantes."
-                    ] })
-                  ] })
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(Plane, { className: "flex-shrink-0 w-5 h-5 text-primary" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Cartão de Crédito/Débito Internacional:" }),
+                  " IOF de 4,38% (em 2024/2025)."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(Plane, { className: "flex-shrink-0 w-5 h-5 text-primary" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Conta Internacional (Nomad, Wise):" }),
+                  " IOF de 1,1% (mesma alíquota do papel moeda). Essa tem sido a opção favorita dos viajantes."
                 ] })
               ] })
-            ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: CURRENCY_FAQS,
-                title: "Dúvidas Frequentes sobre Câmbio",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: CURRENCY_FAQS,
+            title: "Dúvidas Frequentes sobre Câmbio",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -11043,99 +10679,90 @@ const PixGeneratorPage = () => {
           /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg", children: "Preencha os dados para gerar seu Pix" })
         ] }) }) })
       ] }),
-      /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0 },
-          animate: { opacity: 1 },
-          transition: { duration: 0.8, delay: 0.4 },
-          className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg",
-          children: [
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Crie seu QR Code Pix Gratuito em Segundos" }),
-              /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
-                /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
-                  "Precisa receber um pagamento rápido e sem taxas? O ",
-                  /* @__PURE__ */ jsx("strong", { children: "Gerador de Pix FinZap" }),
-                  " é a ferramenta ideal para autônomos, lojistas e prestadores de serviço. Com ele, você cria um código oficial do Banco Central (padrão BR Code) na hora, pronto para ser lido por qualquer aplicativo de banco."
-                ] }),
-                /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Esqueça a necessidade de imprimir folhas A4 com seus dados bancários ou ficar ditando CPF e CNPJ por mensagem. Gere um QR Code profissional, passe credibilidade para seus clientes e receba o dinheiro na hora." })
-              ] })
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Crie seu QR Code Pix Gratuito em Segundos" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
+              "Precisa receber um pagamento rápido e sem taxas? O ",
+              /* @__PURE__ */ jsx("strong", { children: "Gerador de Pix FinZap" }),
+              " é a ferramenta ideal para autônomos, lojistas e prestadores de serviço. Com ele, você cria um código oficial do Banco Central (padrão BR Code) na hora, pronto para ser lido por qualquer aplicativo de banco."
             ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como Funciona o Gerador de Pix?" }),
-              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-3 text-primary flex items-center gap-2", children: [
-                    /* @__PURE__ */ jsx(User, { className: "w-5 h-5" }),
-                    " 1. Seus Dados"
-                  ] }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Insira sua Chave Pix (CPF, CNPJ, Celular, E-mail ou Chave Aleatória), seu nome e cidade. Esses dados são obrigatórios pelo Banco Central." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-3 text-primary flex items-center gap-2", children: [
-                    /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5" }),
-                    " 2. O Valor"
-                  ] }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Defina um valor fixo para a cobrança ou deixe em branco (0,00) para que o cliente digite o quanto quer pagar na hora." })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-                  /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-3 text-primary flex items-center gap-2", children: [
-                    /* @__PURE__ */ jsx(Zap, { className: "w-5 h-5" }),
-                    " 3. Pronto!"
-                  ] }),
-                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'O sistema gera um QR Code visual e um código "Copia e Cola". Você pode baixar a imagem ou enviar o código por WhatsApp.' })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
-              /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Por que usar o QR Code Estático?" }),
-              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
-                /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O Pix possui dois tipos de QR Code: o Dinâmico (usado em grandes e-commerces, que muda a cada venda) e o Estático (que geramos aqui). Veja as vantagens do Estático:" }),
-                /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Não Expira:" }),
-                      " Você pode imprimir e usar o mesmo código para sempre."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Sem Integração:" }),
-                      " Não precisa de API, sistema complexo ou maquininha de cartão. É só gerar e usar."
-                    ] })
-                  ] }),
-                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
-                    /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
-                    /* @__PURE__ */ jsxs("span", { children: [
-                      /* @__PURE__ */ jsx("strong", { children: "Multiuso:" }),
-                      " Serve para balcão de loja, recebimento de aluguel, doações em lives, vaquinhas e vendas diretas."
-                    ] })
-                  ] })
-                ] })
-              ] })
-            ] }),
-            /* @__PURE__ */ jsxs("div", { className: "bg-emerald-500/10 border-l-4 border-emerald-500 p-6 rounded-r-xl mb-16", children: [
-              /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-2 flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Smartphone, { className: "w-5 h-5" }),
-                "Dica para Lojistas"
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Esqueça a necessidade de imprimir folhas A4 com seus dados bancários ou ficar ditando CPF e CNPJ por mensagem. Gere um QR Code profissional, passe credibilidade para seus clientes e receba o dinheiro na hora." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como Funciona o Gerador de Pix?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6 my-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-3 text-primary flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(User, { className: "w-5 h-5" }),
+                " 1. Seus Dados"
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Imprima o QR Code gerado e plastifique. Coloque no balcão visível para o cliente. Isso agiliza o pagamento, evita erros de digitação da chave e reduz as filas. E o melhor: o dinheiro cai na hora, inclusive feriados e fins de semana." })
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Insira sua Chave Pix (CPF, CNPJ, Celular, E-mail ou Chave Aleatória), seu nome e cidade. Esses dados são obrigatórios pelo Banco Central." })
             ] }),
-            /* @__PURE__ */ jsx(
-              FAQ,
-              {
-                items: PIX_FAQS,
-                title: "Dúvidas Frequentes sobre Pix",
-                className: "py-12",
-                showSocialProof: false
-              }
-            )
-          ]
-        }
-      ),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-3 text-primary flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5" }),
+                " 2. O Valor"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Defina um valor fixo para a cobrança ou deixe em branco (0,00) para que o cliente digite o quanto quer pagar na hora." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-3 text-primary flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Zap, { className: "w-5 h-5" }),
+                " 3. Pronto!"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'O sistema gera um QR Code visual e um código "Copia e Cola". Você pode baixar a imagem ou enviar o código por WhatsApp.' })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Por que usar o QR Code Estático?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O Pix possui dois tipos de QR Code: o Dinâmico (usado em grandes e-commerces, que muda a cada venda) e o Estático (que geramos aqui). Veja as vantagens do Estático:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "1" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Não Expira:" }),
+                  " Você pode imprimir e usar o mesmo código para sempre."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "2" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Sem Integração:" }),
+                  " Não precisa de API, sistema complexo ou maquininha de cartão. É só gerar e usar."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx("span", { className: "flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 text-primary text-sm flex items-center justify-center font-bold", children: "3" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Multiuso:" }),
+                  " Serve para balcão de loja, recebimento de aluguel, doações em lives, vaquinhas e vendas diretas."
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("div", { className: "bg-emerald-500/10 border-l-4 border-emerald-500 p-6 rounded-r-xl mb-16", children: [
+          /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-2 flex items-center gap-2", children: [
+            /* @__PURE__ */ jsx(Smartphone, { className: "w-5 h-5" }),
+            "Dica para Lojistas"
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-300", children: "Imprima o QR Code gerado e plastifique. Coloque no balcão visível para o cliente. Isso agiliza o pagamento, evita erros de digitação da chave e reduz as filas. E o melhor: o dinheiro cai na hora, inclusive feriados e fins de semana." })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: PIX_FAQS,
+            title: "Dúvidas Frequentes sobre Pix",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
     ] })
   ] });
@@ -11316,18 +10943,10 @@ const StoriesGallery = () => {
         { label: "Stories", href: "/stories" }
       ] }) }),
       /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
-        /* @__PURE__ */ jsxs(
-          motion.div,
-          {
-            initial: { opacity: 0, y: 20 },
-            animate: { opacity: 1, y: 0 },
-            className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm",
-            children: [
-              /* @__PURE__ */ jsx(Zap, { className: "w-4 h-4 text-yellow-400" }),
-              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Conteúdo Rápido" })
-            ]
-          }
-        ),
+        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+          /* @__PURE__ */ jsx(Zap, { className: "w-4 h-4 text-yellow-400" }),
+          /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Conteúdo Rápido" })
+        ] }),
         /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6", children: [
           "FinZap ",
           /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Stories" })
@@ -11335,12 +10954,9 @@ const StoriesGallery = () => {
         /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Dicas financeiras, tutoriais e novidades em formato de tela cheia. Rápido de ler, fácil de entender." })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6", children: storiesData.map((story, index) => /* @__PURE__ */ jsxs(
-        motion.a,
+        "a",
         {
           href: `/stories/${story.slug}.html`,
-          initial: { opacity: 0, y: 20 },
-          animate: { opacity: 1, y: 0 },
-          transition: { delay: index * 0.1 },
           className: "group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900",
           children: [
             /* @__PURE__ */ jsx(
@@ -11491,7 +11107,10 @@ const BlogIndex = () => {
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Dicas práticas para você dominar suas finanças e alcançar seus objetivos." })
       ] }),
-      loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3, 4, 5, 6].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) }),
+      loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3, 4, 5, 6].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : /* @__PURE__ */ jsxs(Fragment, { children: [
+        /* @__PURE__ */ jsx("h2", { className: "sr-only", children: "Últimas postagens" }),
+        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) })
+      ] }),
       /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
       /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
         /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
@@ -11679,9 +11298,19 @@ const BlogPost = () => {
       /* @__PURE__ */ jsx("div", { className: "mb-12 rounded-2xl overflow-hidden border border-white/5 shadow-2xl", children: /* @__PURE__ */ jsx(
         "img",
         {
-          src: post.cover_image,
+          src: `${post.cover_image}?width=1200&quality=80&format=webp`,
+          srcSet: `
+                                ${post.cover_image}?width=600&quality=80&format=webp 600w,
+                                ${post.cover_image}?width=900&quality=80&format=webp 900w,
+                                ${post.cover_image}?width=1200&quality=80&format=webp 1200w
+                            `,
+          sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px",
           alt: post.cover_image_alt,
-          className: "w-full h-auto"
+          className: "w-full h-auto",
+          width: 1200,
+          height: 630,
+          loading: "eager",
+          decoding: "async"
         }
       ) }),
       /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto", children: /* @__PURE__ */ jsx(PostContent, { content: post.content }) })
@@ -11694,9 +11323,9 @@ const BlogPost = () => {
     ] }) }) })
   ] });
 };
-const Terms = lazy(() => import("./assets/Terms-Cvv8ygiZ.js").then((module) => ({ default: module.Terms })));
-const Privacy = lazy(() => import("./assets/Privacy-CG0AJmRf.js").then((module) => ({ default: module.Privacy })));
-const Support = lazy(() => import("./assets/Support-BSIJ6Hig.js").then((module) => ({ default: module.Support })));
+const Terms = lazy(() => import("./assets/Terms-CDyn76Yz.js").then((module) => ({ default: module.Terms })));
+const Privacy = lazy(() => import("./assets/Privacy-B7FvWn7w.js").then((module) => ({ default: module.Privacy })));
+const Support = lazy(() => import("./assets/Support-DnVolkSr.js").then((module) => ({ default: module.Support })));
 function App() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(ScrollToTop, {}),

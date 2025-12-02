@@ -116,12 +116,7 @@ export const InvestmentPage: React.FC = () => {
 
                 {/* SEO Content */}
                 {/* SEO Content */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg"
-                >
+                <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
                     <section className="mb-16">
                         <h2 className="text-3xl font-bold text-white mb-6">Simulador de Investimentos: Calcule seus rendimentos</h2>
                         <p className="text-gray-400 mb-8">
@@ -233,7 +228,7 @@ export const InvestmentPage: React.FC = () => {
                         className="py-12"
                         showSocialProof={false}
                     />
-                </motion.div>
+                </div>
 
                 <AppPromoBanner />
             </div>

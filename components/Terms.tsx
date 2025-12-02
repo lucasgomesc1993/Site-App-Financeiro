@@ -16,12 +16,7 @@ export const Terms: React.FC = () => {
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-4xl mx-auto relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
+                <div className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                         <Shield className="w-4 h-4 text-primary" />
                         <span className="text-sm text-gray-300">Jurídico</span>
@@ -32,14 +27,9 @@ export const Terms: React.FC = () => {
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Entenda as regras e diretrizes que regem o uso da nossa plataforma de inteligência financeira.
                     </p>
-                </motion.div>
+                </div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl"
-                >
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl">
                     <div className="flex items-center gap-3 mb-8 pb-8 border-b border-white/5">
                         <FileText className="w-6 h-6 text-primary" />
                         <span className="text-sm text-gray-400">Última atualização: {new Date().getFullYear()}</span>
@@ -106,7 +96,7 @@ export const Terms: React.FC = () => {
                             </p>
                         </section>
                     </div>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

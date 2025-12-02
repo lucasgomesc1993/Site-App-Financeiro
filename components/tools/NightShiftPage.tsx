@@ -334,12 +334,7 @@ export const NightShiftPage: React.FC = () => {
                 </motion.div>
 
                 {/* SEO Content */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg"
-                >
+                <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
                     <section className="mb-16">
                         <h2 className="text-3xl font-bold text-white mb-6">O que é o Adicional Noturno?</h2>
                         <div className="prose prose-invert max-w-none text-gray-400 leading-relaxed">
@@ -402,7 +397,7 @@ export const NightShiftPage: React.FC = () => {
                         className="py-12"
                         showSocialProof={false}
                     />
-                </motion.div>
+                </div>
 
                 {/* App Promo Banner */}
                 <AppPromoBanner />

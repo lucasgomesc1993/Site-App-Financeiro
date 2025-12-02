@@ -129,7 +129,7 @@ export const CompoundInterestPage: React.FC = () => {
 
                     {/* Header */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6 }}
                         className="text-center mb-12"
@@ -149,7 +149,7 @@ export const CompoundInterestPage: React.FC = () => {
 
                 {/* Calculator Section */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="grid lg:grid-cols-12 gap-8 mb-24"
@@ -273,7 +273,7 @@ export const CompoundInterestPage: React.FC = () => {
                             <div className="relative z-10">
                                 {result ? (
                                     <motion.div
-                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        initial={{ scale: 0.9 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ type: "spring", stiffness: 200, damping: 20 }}
                                         className="space-y-6"
@@ -344,8 +344,8 @@ export const CompoundInterestPage: React.FC = () => {
 
                 {/* SEO Content */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
+                    initial={{ y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.4 }}
                     className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg"
                 >

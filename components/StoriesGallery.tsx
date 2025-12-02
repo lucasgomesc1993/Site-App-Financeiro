@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+
 import { Play, ArrowRight, Zap } from 'lucide-react';
 import { SEO } from './SEO';
 import { Breadcrumb } from './Breadcrumb';
@@ -27,14 +27,10 @@ export const StoriesGallery: React.FC = () => {
                 </div>
 
                 <div className="text-center mb-16">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm"
-                    >
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                         <Zap className="w-4 h-4 text-yellow-400" />
                         <span className="text-sm text-gray-300">Conteúdo Rápido</span>
-                    </motion.div>
+                    </div>
 
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
                         FinZap <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Stories</span>
@@ -47,12 +43,9 @@ export const StoriesGallery: React.FC = () => {
                 {/* Grid de Stories */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {storiesData.map((story, index) => (
-                        <motion.a
+                        <a
                             key={story.slug}
                             href={`/stories/${story.slug}.html`} // Link direto para o HTML estático gerado
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1 }}
                             className="group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900"
                         >
                             {/* Imagem de Capa */}
@@ -79,7 +72,7 @@ export const StoriesGallery: React.FC = () => {
                                     Ver agora <ArrowRight className="w-4 h-4" />
                                 </div>
                             </div>
-                        </motion.a>
+                        </a>
                     ))}
                 </div>
             </div>

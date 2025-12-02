@@ -72,12 +72,7 @@ export const VacationPage: React.FC = () => {
                 </motion.div>
 
                 {/* SEO Content */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg"
-                >
+                <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
                     <h2 className="text-3xl font-bold text-white mb-6">Calculadora de Férias: Saiba quanto você vai receber</h2>
                     <p className="text-gray-400 mb-8">
                         Planejando seu descanso? Utilize a Calculadora de Férias do FinZap para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais.
@@ -104,7 +99,7 @@ export const VacationPage: React.FC = () => {
                     <p className="text-gray-400 mb-8">
                         Saber o valor exato das suas férias ajuda a planejar melhor sua viagem ou seus gastos no período de descanso. Use nossa ferramenta gratuita quantas vezes precisar e tenha total controle sobre seu dinheiro.
                     </p>
-                </motion.div>
+                </div>
 
                 <Suspense fallback={<div className="h-96 w-full flex items-center justify-center text-gray-500">Carregando oferta...</div>}>
                     <AppPromoBanner />

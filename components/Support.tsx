@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+
 import { Mail, MessageCircle, HelpCircle, ArrowRight } from 'lucide-react';
 import { FAQ } from './FAQ';
 import { SEO } from './SEO';
@@ -17,12 +17,7 @@ export const Support: React.FC = () => {
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-6xl mx-auto relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
+                <div className="text-center mb-16">
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                         <HelpCircle className="w-4 h-4 text-primary" />
                         <span className="text-sm text-gray-300">Central de Ajuda</span>
@@ -33,15 +28,10 @@ export const Support: React.FC = () => {
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Escolha um dos canais abaixo para falar com nossa equipe ou tire suas dúvidas na nossa seção de perguntas frequentes.
                     </p>
-                </motion.div>
+                </div>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-20">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="group relative bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30"
-                    >
+                    <div className="group relative bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                         <div className="relative z-10">
                             <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-primary/20">
@@ -55,14 +45,9 @@ export const Support: React.FC = () => {
                                 Iniciar conversa <ArrowRight className="w-4 h-4" />
                             </a>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                        className="group relative bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30"
-                    >
+                    <div className="group relative bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30">
                         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                         <div className="relative z-10">
                             <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-primary/20">
@@ -76,15 +61,10 @@ export const Support: React.FC = () => {
                                 Enviar e-mail <ArrowRight className="w-4 h-4" />
                             </a>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="w-full"
-                >
+                <div className="w-full">
                     <FAQ items={[
                         {
                             question: "Como entro em contato com o suporte técnico?",
@@ -107,7 +87,7 @@ export const Support: React.FC = () => {
                             answer: "Todas as notas fiscais de pagamento da assinatura são enviadas para seu e-mail e também ficam disponíveis no painel do usuário."
                         }
                     ]} />
-                </motion.div>
+                </div>
             </div>
         </section>
     );

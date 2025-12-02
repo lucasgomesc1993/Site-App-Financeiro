@@ -15,7 +15,7 @@ export const Hero: React.FC = () => {
 
         {/* Floating Icon/Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="w-24 h-24 md:w-28 md:h-28 mb-4 relative flex items-center justify-center"
@@ -39,7 +39,7 @@ export const Hero: React.FC = () => {
 
         {/* Subheadline */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-muted max-w-2xl font-light"
@@ -49,7 +49,7 @@ export const Hero: React.FC = () => {
 
         {/* CTA Button */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >

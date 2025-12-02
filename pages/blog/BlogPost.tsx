@@ -168,9 +168,19 @@ export const BlogPost: React.FC = () => {
 
                     <div className="mb-12 rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
                         <img
-                            src={post.cover_image}
+                            src={`${post.cover_image}?width=1200&quality=80&format=webp`}
+                            srcSet={`
+                                ${post.cover_image}?width=600&quality=80&format=webp 600w,
+                                ${post.cover_image}?width=900&quality=80&format=webp 900w,
+                                ${post.cover_image}?width=1200&quality=80&format=webp 1200w
+                            `}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
                             alt={post.cover_image_alt}
                             className="w-full h-auto"
+                            width={1200}
+                            height={630}
+                            loading="eager"
+                            decoding="async"
                         />
                     </div>
 

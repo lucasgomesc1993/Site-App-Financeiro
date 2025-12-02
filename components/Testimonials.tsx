@@ -48,7 +48,7 @@ export const Testimonials: React.FC = () => {
 
             <div className="max-w-7xl mx-auto px-4 mb-20 text-center relative z-10">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                 >
