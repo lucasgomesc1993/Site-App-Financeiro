@@ -188,7 +188,7 @@ export const WebStoryPage: React.FC = () => {
                         ) : (
                             <img
                                 src={currentSlide?.media.url}
-                                alt="Story background"
+                                alt={currentSlide?.text || story.title}
                                 className="w-full h-full object-cover"
                             />
                         )}
