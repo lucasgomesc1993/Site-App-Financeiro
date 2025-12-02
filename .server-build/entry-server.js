@@ -9,10 +9,14 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ChevronUp, ChevronDown, ArrowRight, Home as Home$1, ChevronRight, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2 } from "lucide-react";
+import { Wallet, X, Menu, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ChevronUp, ChevronDown, ArrowRight, Home as Home$1, ChevronRight, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
 import { motion, AnimatePresence, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { QRCodeSVG } from "qrcode.react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { createClient } from "@supabase/supabase-js";
+import ReactMarkdown from "react-markdown";
 var TAG_NAMES = /* @__PURE__ */ ((TAG_NAMES2) => {
   TAG_NAMES2["BASE"] = "base";
   TAG_NAMES2["BODY"] = "body";
@@ -1127,6 +1131,8 @@ const Footer = () => {
       /* @__PURE__ */ jsxs("div", { className: "flex gap-6 text-sm text-gray-400", children: [
         /* @__PURE__ */ jsx(Link, { to: "/terms", className: "hover:text-gray-300", children: "Termos de Uso" }),
         /* @__PURE__ */ jsx(Link, { to: "/privacy", className: "hover:text-gray-300", children: "Privacidade" }),
+        /* @__PURE__ */ jsx(Link, { to: "/blog", className: "hover:text-gray-300", children: "Blog" }),
+        /* @__PURE__ */ jsx(Link, { to: "/ferramentas", className: "hover:text-gray-300", children: "Ferramentas" }),
         /* @__PURE__ */ jsx(Link, { to: "/calculadoras", className: "hover:text-gray-300", children: "Calculadoras" }),
         /* @__PURE__ */ jsx(Link, { to: "/support", className: "hover:text-gray-300", children: "Suporte" })
       ] })
@@ -11161,9 +11167,329 @@ const WebStoryPage = () => {
     ] })
   ] });
 };
-const Terms = lazy(() => import("./assets/Terms-W00vEsib.js").then((module) => ({ default: module.Terms })));
-const Privacy = lazy(() => import("./assets/Privacy-C6TYnD-S.js").then((module) => ({ default: module.Privacy })));
-const Support = lazy(() => import("./assets/Support-6Jjy7PYa.js").then((module) => ({ default: module.Support })));
+const CategoryBadge = ({ category, className = "" }) => {
+  return /* @__PURE__ */ jsx(
+    Link,
+    {
+      to: `/blog/categoria/${category.slug}`,
+      className: `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 ${className}`,
+      children: category.name
+    }
+  );
+};
+const PostCard = ({ post }) => {
+  var _a2, _b2;
+  return /* @__PURE__ */ jsxs("article", { className: "group relative flex flex-col h-full bg-[#0d0d0d] rounded-2xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(71,255,183,0.1)]", children: [
+    /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}`, className: "block overflow-hidden aspect-video", children: /* @__PURE__ */ jsx(
+      "img",
+      {
+        src: post.cover_image,
+        alt: post.cover_image_alt,
+        className: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105",
+        loading: "lazy"
+      }
+    ) }),
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col flex-1 p-6", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+        post.category && /* @__PURE__ */ jsx(CategoryBadge, { category: post.category }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center text-xs text-gray-400 gap-1", children: [
+          /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
+          /* @__PURE__ */ jsx("time", { dateTime: post.published_at, children: format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR }) })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}`, children: post.title }) }),
+      /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-6 line-clamp-3 flex-1", children: post.excerpt }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mt-auto pt-4 border-t border-white/5", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+          ((_a2 = post.author) == null ? void 0 : _a2.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-6 h-6 rounded-full" }),
+          /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: (_b2 = post.author) == null ? void 0 : _b2.name })
+        ] }),
+        /* @__PURE__ */ jsxs(Link, { to: `/blog/${post.slug}`, className: "text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all", children: [
+          "Ler artigo ",
+          /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+        ] })
+      ] })
+    ] })
+  ] });
+};
+const supabaseUrl = "https://cfbwntkyygkqbottkktc.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmYndudGt5eWdrcWJvdHRra3RjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4MDExOTAsImV4cCI6MjA3NDM3NzE5MH0.08-1PNyvfi6YsG8z3EpAkoLLYzRMcZg8jAJSKkYVfzM";
+const supabase = createClient(
+  supabaseUrl,
+  supabaseAnonKey
+);
+const blogService = {
+  async getPosts() {
+    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories(*)").eq("published", true).order("published_at", { ascending: false });
+    if (error) {
+      console.error("Error fetching posts:", error);
+      return [];
+    }
+    return data;
+  },
+  async getPostBySlug(slug) {
+    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories(*)").eq("slug", slug).eq("published", true).single();
+    if (error) {
+      console.error(`Error fetching post with slug ${slug}:`, error);
+      return null;
+    }
+    return data;
+  },
+  async getPostsByCategory(categorySlug) {
+    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories!inner(*)").eq("category.slug", categorySlug).eq("published", true).order("published_at", { ascending: false });
+    if (error) {
+      console.error(`Error fetching posts for category ${categorySlug}:`, error);
+      return [];
+    }
+    return data;
+  },
+  async getAllCategories() {
+    const { data, error } = await supabase.from("categories").select("*").order("name");
+    if (error) {
+      console.error("Error fetching categories:", error);
+      return [];
+    }
+    return data;
+  }
+};
+const BlogIndex = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const data = await blogService.getPosts();
+      setPosts(data);
+      setLoading(false);
+    };
+    fetchPosts();
+  }, []);
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Blog FinZap - Dicas de Finanças e Controle de Gastos",
+        description: "Aprenda a controlar seus gastos, economizar dinheiro e organizar suas finanças com as dicas do blog FinZap.",
+        canonical: "https://finzap.io/blog"
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsx(Breadcrumb, { items: [{ label: "Blog", href: "/blog" }] }),
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+          /* @__PURE__ */ jsx(BookOpen, { className: "w-4 h-4 text-primary" }),
+          /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Conteúdo Educativo" })
+        ] }),
+        /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+          "Blog ",
+          /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "FinZap" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Dicas práticas para você dominar suas finanças e alcançar seus objetivos." })
+      ] }),
+      loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3, 4, 5, 6].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) }),
+      /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
+      /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+        /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
+        " O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais. Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos. Consulte sempre um profissional para orientações específicas ao seu caso."
+      ] }) })
+    ] })
+  ] });
+};
+const CategoryPage = () => {
+  const { categorySlug } = useParams();
+  const [posts, setPosts] = useState([]);
+  const [category, setCategory] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!categorySlug) return;
+      setLoading(true);
+      const postsData = await blogService.getPostsByCategory(categorySlug);
+      setPosts(postsData);
+      const categories = await blogService.getAllCategories();
+      const currentCategory = categories.find((c) => c.slug === categorySlug);
+      setCategory(currentCategory || null);
+      setLoading(false);
+    };
+    fetchData();
+  }, [categorySlug]);
+  if (!category && !loading) {
+    return /* @__PURE__ */ jsx("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 text-center py-20", children: /* @__PURE__ */ jsx("h1", { className: "text-2xl text-white", children: "Categoria não encontrada" }) }) });
+  }
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: `${(category == null ? void 0 : category.name) || "Categoria"} - Blog FinZap`,
+        description: `Artigos sobre ${(category == null ? void 0 : category.name) || "finanças"} no blog FinZap.`,
+        canonical: `https://finzap.io/blog/categoria/${categorySlug}`
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsx(Breadcrumb, { items: [
+        { label: "Blog", href: "/blog" },
+        { label: (category == null ? void 0 : category.name) || "Categoria", href: `/blog/categoria/${categorySlug}` }
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
+        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+          /* @__PURE__ */ jsx(BookOpen, { className: "w-4 h-4 text-primary" }),
+          /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Categoria" })
+        ] }),
+        /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-4", children: category == null ? void 0 : category.name }),
+        (category == null ? void 0 : category.description) && /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-400 max-w-2xl mx-auto", children: category.description })
+      ] }),
+      loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) }),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24", children: [
+        /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
+        /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+          /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
+          " O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais. Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos. Consulte sempre um profissional para orientações específicas ao seu caso."
+        ] }) })
+      ] })
+    ] })
+  ] });
+};
+const PostContent = ({ content }) => {
+  return /* @__PURE__ */ jsx("div", { className: "prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-300 prose-a:text-primary prose-strong:text-white prose-code:text-primary prose-pre:bg-[#1a1a1a] prose-pre:border prose-pre:border-white/10", children: /* @__PURE__ */ jsx(ReactMarkdown, { children: content }) });
+};
+const BlogPost = () => {
+  var _a2, _b2, _c, _d, _e, _f, _g;
+  const { slug } = useParams();
+  const [post, setPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (!slug) return;
+      const data = await blogService.getPostBySlug(slug);
+      setPost(data);
+      setLoading(false);
+    };
+    fetchPost();
+  }, [slug]);
+  if (loading) {
+    return /* @__PURE__ */ jsx("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 py-20", children: /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto space-y-8 animate-pulse", children: [
+      /* @__PURE__ */ jsx("div", { className: "h-8 bg-white/5 rounded w-3/4" }),
+      /* @__PURE__ */ jsx("div", { className: "h-64 bg-white/5 rounded-2xl" }),
+      /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ jsx("div", { className: "h-4 bg-white/5 rounded" }),
+        /* @__PURE__ */ jsx("div", { className: "h-4 bg-white/5 rounded" }),
+        /* @__PURE__ */ jsx("div", { className: "h-4 bg-white/5 rounded w-5/6" })
+      ] })
+    ] }) }) });
+  }
+  if (!post) {
+    return /* @__PURE__ */ jsx("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 text-center py-20", children: /* @__PURE__ */ jsx("h1", { className: "text-2xl text-white", children: "Post não encontrado" }) }) });
+  }
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "image": post.cover_image,
+    "datePublished": post.published_at,
+    "dateModified": post.updated_at || post.published_at,
+    "author": {
+      "@type": "Person",
+      "name": ((_a2 = post.author) == null ? void 0 : _a2.name) || "FinZap Team",
+      "url": (_b2 = post.author) == null ? void 0 : _b2.linkedin_url,
+      "jobTitle": (_c = post.author) == null ? void 0 : _c.role
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "FinZap",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://finzap.io/logo.png"
+      }
+    },
+    "description": post.meta_description || post.excerpt
+  };
+  const faqSchema = post.faq && post.faq.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": post.faq.map((item) => ({
+      "@type": "Question",
+      "name": item.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": item.answer
+      }
+    }))
+  } : null;
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: post.meta_title || post.title,
+        description: post.meta_description || post.excerpt,
+        canonical: `https://finzap.io/blog/${post.slug}`,
+        image: post.cover_image
+      }
+    ),
+    /* @__PURE__ */ jsx(
+      "script",
+      {
+        type: "application/ld+json",
+        dangerouslySetInnerHTML: { __html: JSON.stringify(blogPostingSchema) }
+      }
+    ),
+    faqSchema && /* @__PURE__ */ jsx(
+      "script",
+      {
+        type: "application/ld+json",
+        dangerouslySetInnerHTML: { __html: JSON.stringify(faqSchema) }
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("article", { className: "max-w-7xl mx-auto relative z-10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto", children: [
+      /* @__PURE__ */ jsx(Breadcrumb, { items: [
+        { label: "Blog", href: "/blog" },
+        ...post.category ? [{ label: post.category.name, href: `/blog/categoria/${post.category.slug}` }] : [],
+        { label: post.title, href: `/blog/${post.slug}` }
+      ] }),
+      /* @__PURE__ */ jsxs("header", { className: "mb-12 text-center", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-4 text-sm text-gray-400 mb-6", children: [
+          post.category && /* @__PURE__ */ jsx("span", { className: "px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20", children: post.category.name }),
+          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4" }),
+            format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("h1", { className: "text-3xl md:text-5xl font-bold text-white mb-6 leading-tight", children: post.title }),
+        /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed", children: post.excerpt }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-3 mt-8", children: [
+          ((_d = post.author) == null ? void 0 : _d.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-10 h-10 rounded-full border border-white/10" }),
+          /* @__PURE__ */ jsxs("div", { className: "text-left", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-white font-medium", children: (_e = post.author) == null ? void 0 : _e.name }),
+            ((_f = post.author) == null ? void 0 : _f.role) && /* @__PURE__ */ jsx("p", { className: "text-xs text-primary mb-0.5", children: post.author.role }),
+            ((_g = post.author) == null ? void 0 : _g.bio) && /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: post.author.bio })
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("div", { className: "mb-12 rounded-2xl overflow-hidden border border-white/5 shadow-2xl", children: /* @__PURE__ */ jsx(
+        "img",
+        {
+          src: post.cover_image,
+          alt: post.cover_image_alt,
+          className: "w-full h-auto"
+        }
+      ) }),
+      /* @__PURE__ */ jsx("div", { className: "max-w-3xl mx-auto", children: /* @__PURE__ */ jsx(PostContent, { content: post.content }) })
+    ] }) }),
+    post.faq && post.faq.length > 0 && /* @__PURE__ */ jsx("div", { className: "mt-20 relative z-10", children: /* @__PURE__ */ jsx(FAQ, { items: post.faq, title: "Perguntas Frequentes", showSocialProof: false }) }),
+    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 relative z-10 mt-16", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
+    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 relative z-10", children: /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+      /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
+      " O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais. Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos. Consulte sempre um profissional para orientações específicas ao seu caso."
+    ] }) }) })
+  ] });
+};
+const Terms = lazy(() => import("./assets/Terms-Cvv8ygiZ.js").then((module) => ({ default: module.Terms })));
+const Privacy = lazy(() => import("./assets/Privacy-CG0AJmRf.js").then((module) => ({ default: module.Privacy })));
+const Support = lazy(() => import("./assets/Support-BSIJ6Hig.js").then((module) => ({ default: module.Support })));
 function App() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(ScrollToTop, {}),
@@ -11194,6 +11520,9 @@ function App() {
         /* @__PURE__ */ jsx(Route, { path: "/calculadoras/primeiro-milhao", element: /* @__PURE__ */ jsx(FirstMillionPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-moedas", element: /* @__PURE__ */ jsx(CurrencyConverterPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/ferramentas/gerador-pix", element: /* @__PURE__ */ jsx(PixGeneratorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/blog", element: /* @__PURE__ */ jsx(BlogIndex, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/blog/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/blog/categoria/:categorySlug", element: /* @__PURE__ */ jsx(CategoryPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/stories/:storyId", element: /* @__PURE__ */ jsx(WebStoryPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/terms", element: /* @__PURE__ */ jsx(Terms, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/privacy", element: /* @__PURE__ */ jsx(Privacy, {}) }),

@@ -29,6 +29,8 @@ export const Footer: React.FC = () => {
                     <div className="flex gap-6 text-sm text-gray-400">
                         <Link to="/terms" className="hover:text-gray-300">Termos de Uso</Link>
                         <Link to="/privacy" className="hover:text-gray-300">Privacidade</Link>
+                        <Link to="/blog" className="hover:text-gray-300">Blog</Link>
+                        <Link to="/ferramentas" className="hover:text-gray-300">Ferramentas</Link>
                         <Link to="/calculadoras" className="hover:text-gray-300">Calculadoras</Link>
                         <Link to="/support" className="hover:text-gray-300">Suporte</Link>
                     </div>

@@ -37,6 +37,9 @@ import { FirstMillionPage } from './components/tools/FirstMillionPage';
 import { CurrencyConverterPage } from './components/tools/CurrencyConverterPage';
 import { PixGeneratorPage } from './components/tools/PixGeneratorPage';
 import { WebStoryPage } from './components/tools/WebStoryPage';
+import { BlogIndex } from './pages/blog/BlogIndex';
+import { CategoryPage } from './pages/blog/CategoryPage';
+import { BlogPost } from './pages/blog/BlogPost';
 
 function App() {
   return (
@@ -71,6 +74,9 @@ function App() {
               <Route path="/calculadoras/primeiro-milhao" element={<FirstMillionPage />} />
               <Route path="/calculadoras/conversor-moedas" element={<CurrencyConverterPage />} />
               <Route path="/ferramentas/gerador-pix" element={<PixGeneratorPage />} />
+              <Route path="/blog" element={<BlogIndex />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/blog/categoria/:categorySlug" element={<CategoryPage />} />
               <Route path="/stories/:storyId" element={<WebStoryPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />

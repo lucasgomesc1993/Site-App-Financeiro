@@ -1,12 +1,12 @@
-
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { getBlogRoutes } from './get-blog-data.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export function getRoutes() {
+export async function getRoutes() {
     const appPath = path.resolve(__dirname, '../../App.tsx');
     const appContent = fs.readFileSync(appPath, 'utf-8');
 
@@ -27,6 +27,10 @@ export function getRoutes() {
 
         routes.push(routePath);
     }
+
+    // Add Blog Routes
+    const blogRoutes = await getBlogRoutes();
+    routes.push(...blogRoutes);
 
     // Sort routes: Home first, then alphabetical
     routes.sort((a, b) => {

@@ -22,8 +22,8 @@ function getChangeFreq(routePath) {
     return 'monthly';
 }
 
-const generateSitemap = () => {
-    const routePaths = getRoutes();
+const generateSitemap = async () => {
+    const routePaths = await getRoutes();
 
     const routes = routePaths.map(routePath => ({
         path: routePath,

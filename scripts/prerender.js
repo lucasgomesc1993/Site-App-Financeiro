@@ -10,7 +10,7 @@ const toAbsolute = (p) => path.resolve(__dirname, '..', p);
 const template = fs.readFileSync(toAbsolute('dist/index.html'), 'utf-8');
 const { render } = await import(pathToFileURL(toAbsolute('.server-build/entry-server.js')).href);
 
-const routesToPrerender = getRoutes();
+const routesToPrerender = await getRoutes();
 
 (async () => {
     // pre-render each route...

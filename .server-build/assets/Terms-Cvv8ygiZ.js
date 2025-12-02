@@ -10,6 +10,10 @@ import "invariant";
 import "shallowequal";
 import "@google/genai";
 import "qrcode.react";
+import "date-fns";
+import "date-fns/locale";
+import "@supabase/supabase-js";
+import "react-markdown";
 const Terms = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
