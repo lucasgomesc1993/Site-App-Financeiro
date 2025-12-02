@@ -41,7 +41,7 @@ export const Testimonials: React.FC = () => {
     const secondRow = TESTIMONIALS.slice(5, 10);
 
     return (
-        <section id="depoimentos" className="py-24 md:py-32 relative bg-[#0d0d0d] overflow-hidden">
+        <section id="depoimentos" className="py-24 md:py-32 relative bg-[#0d0d0d] overflow-hidden max-w-[100vw]">
             {/* Background Accents */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-primary/10 to-transparent"></div>
             <div className="absolute top-20 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>

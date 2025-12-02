@@ -26,7 +26,7 @@ export const Footer: React.FC = () => {
                         <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="Youtube"><Youtube /></a>
                         <a href="#" className="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn"><Linkedin /></a>
                     </div>
-                    <div className="flex gap-6 text-sm text-gray-400">
+                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-gray-400">
                         <Link to="/terms" className="hover:text-gray-300">Termos de Uso</Link>
                         <Link to="/privacy" className="hover:text-gray-300">Privacidade</Link>
                         <Link to="/blog" className="hover:text-gray-300">Blog</Link>
