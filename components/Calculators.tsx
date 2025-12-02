@@ -1,6 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe, QrCode } from 'lucide-react';
+import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
 import { SEO } from './SEO';
@@ -551,28 +551,6 @@ export const Calculators: React.FC = () => {
                         </motion.div>
                     </Link>
 
-                    <Link to="/ferramentas/gerador-pix" className="group">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 2.2 }}
-                            className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-colors duration-300 hover:border-primary/30 h-full relative overflow-hidden"
-                        >
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <div className="relative z-10">
-                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
-                                    <QrCode className="text-primary w-6 h-6" />
-                                </div>
-                                <h2 className="text-2xl font-bold text-white mb-3">Gerador de Pix</h2>
-                                <p className="text-gray-400 mb-6">
-                                    Crie QR Codes Pix personalizados gratuitamente. Gere códigos Copia e Cola instantâneos.
-                                </p>
-                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
-                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
-                                </span>
-                            </div>
-                        </motion.div>
-                    </Link>
                 </div>
 
                 {/* SEO Content Section */}

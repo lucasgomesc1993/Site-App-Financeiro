@@ -12,6 +12,7 @@ const Terms = lazy(() => import('./components/Terms').then(module => ({ default:
 const Privacy = lazy(() => import('./components/Privacy').then(module => ({ default: module.Privacy })));
 const Support = lazy(() => import('./components/Support').then(module => ({ default: module.Support })));
 const Calculators = lazy(() => import('./components/Calculators').then(module => ({ default: module.Calculators })));
+const Tools = lazy(() => import('./components/Tools').then(module => ({ default: module.Tools })));
 const InvestmentPage = lazy(() => import('./components/tools/InvestmentPage').then(module => ({ default: module.InvestmentPage })));
 const VacationPage = lazy(() => import('./components/tools/VacationPage').then(module => ({ default: module.VacationPage })));
 const EnergyPage = lazy(() => import('./components/tools/EnergyPage').then(module => ({ default: module.EnergyPage })));
@@ -33,6 +34,7 @@ const UberVsCarPage = lazy(() => import('./components/tools/UberVsCarPage').then
 const FirstMillionPage = lazy(() => import('./components/tools/FirstMillionPage').then(module => ({ default: module.FirstMillionPage })));
 const CurrencyConverterPage = lazy(() => import('./components/tools/CurrencyConverterPage').then(module => ({ default: module.CurrencyConverterPage })));
 const PixGeneratorPage = lazy(() => import('./components/tools/PixGeneratorPage').then(module => ({ default: module.PixGeneratorPage })));
+const WebStoryPage = lazy(() => import('./components/tools/WebStoryPage').then(module => ({ default: module.WebStoryPage })));
 
 function App() {
   return (
@@ -45,6 +47,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/calculadoras" element={<Calculators />} />
+              <Route path="/ferramentas" element={<Tools />} />
               <Route path="/calculadoras/investimentos" element={<InvestmentPage />} />
               <Route path="/calculadoras/ferias" element={<VacationPage />} />
               <Route path="/calculadoras/energia" element={<EnergyPage />} />
@@ -66,6 +69,7 @@ function App() {
               <Route path="/calculadoras/primeiro-milhao" element={<FirstMillionPage />} />
               <Route path="/calculadoras/conversor-moedas" element={<CurrencyConverterPage />} />
               <Route path="/ferramentas/gerador-pix" element={<PixGeneratorPage />} />
+              <Route path="/stories/:storyId" element={<WebStoryPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/support" element={<Support />} />
