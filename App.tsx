@@ -32,6 +32,7 @@ const RentVsBuyPage = lazy(() => import('./components/tools/RentVsBuyPage').then
 const UberVsCarPage = lazy(() => import('./components/tools/UberVsCarPage').then(module => ({ default: module.UberVsCarPage })));
 const FirstMillionPage = lazy(() => import('./components/tools/FirstMillionPage').then(module => ({ default: module.FirstMillionPage })));
 const CurrencyConverterPage = lazy(() => import('./components/tools/CurrencyConverterPage').then(module => ({ default: module.CurrencyConverterPage })));
+const PixGeneratorPage = lazy(() => import('./components/tools/PixGeneratorPage').then(module => ({ default: module.PixGeneratorPage })));
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
               <Route path="/calculadoras/uber-ou-carro" element={<UberVsCarPage />} />
               <Route path="/calculadoras/primeiro-milhao" element={<FirstMillionPage />} />
               <Route path="/calculadoras/conversor-moedas" element={<CurrencyConverterPage />} />
+              <Route path="/ferramentas/gerador-pix" element={<PixGeneratorPage />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/support" element={<Support />} />
