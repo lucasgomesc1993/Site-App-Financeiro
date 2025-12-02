@@ -74,7 +74,7 @@ export const Hero: React.FC = () => {
           <div className="flex -space-x-3">
             {[1, 2, 3, 4].map(i => (
               <div key={i} className="w-10 h-10 rounded-full border-2 border-background overflow-hidden">
-                <img src={`https://picsum.photos/50/50?random=${i + 40}`} alt="User" className="w-full h-full object-cover" />
+                <img src={`https://picsum.photos/50/50?random=${i + 40}`} alt="User" width={40} height={40} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>

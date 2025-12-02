@@ -20,21 +20,48 @@ async function optimize() {
 
         console.log('Optimizing hero.jpg...');
 
-        await sharp(inputFile)
-            .resize(1200, null, { // Resize to 1200px width, auto height
-                withoutEnlargement: true
+        // Define sizes
+        const sizes = [
+            { name: 'hero.webp', width: 1200, height: 563 },
+            { name: 'hero-medium.webp', width: 900 }, // Height will be auto-calculated to maintain aspect ratio
+            { name: 'hero-mobile.webp', width: 600 }
+        ];
+
+        // Process main image first to establish aspect ratio
+        const mainImageBuffer = await sharp(inputFile)
+            .resize(1200, 563, {
+                fit: 'cover', // Force crop to exact dimensions
+                position: 'center'
             })
             .webp({ quality: 80 })
-            .toFile(outputFile);
+            .toBuffer();
 
-        console.log('Successfully created hero.webp');
+        // Save main image
+        fs.writeFileSync(outputFile, mainImageBuffer);
+        console.log('Created hero.webp (1200x563)');
+
+        // Generate variants from the processed buffer (to ensure consistent crop)
+        for (const size of sizes) {
+            if (size.name === 'hero.webp') continue; // Already done
+
+            const variantPath = path.join(publicDir, size.name);
+
+            await sharp(mainImageBuffer)
+                .resize(size.width, null, {
+                    withoutEnlargement: true
+                })
+                .webp({ quality: 80 })
+                .toFile(variantPath);
+
+            console.log(`Created ${size.name} (${size.width}w)`);
+        }
 
         // Get file sizes for comparison
         const originalStats = fs.statSync(inputFile);
         const newStats = fs.statSync(outputFile);
 
         console.log(`Original size: ${(originalStats.size / 1024 / 1024).toFixed(2)} MB`);
-        console.log(`New size: ${(newStats.size / 1024 / 1024).toFixed(2)} MB`);
+        console.log(`New main image size: ${(newStats.size / 1024 / 1024).toFixed(2)} MB`);
         console.log(`Reduction: ${((1 - newStats.size / originalStats.size) * 100).toFixed(2)}%`);
 
     } catch (error) {
