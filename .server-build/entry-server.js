@@ -2005,7 +2005,7 @@ const RecentStories = () => {
     /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-6", children: recentStories.map((story, index) => /* @__PURE__ */ jsxs(
       "a",
       {
-        href: `/stories/${story.slug}.html`,
+        href: `/stories/${story.slug}`,
         className: "group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900",
         children: [
           /* @__PURE__ */ jsx(
@@ -10978,7 +10978,7 @@ const StoriesGallery = () => {
       /* @__PURE__ */ jsx("div", { className: "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6", children: storiesData.map((story, index) => /* @__PURE__ */ jsxs(
         "a",
         {
-          href: `/stories/${story.slug}.html`,
+          href: `/stories/${story.slug}`,
           className: "group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900",
           children: [
             /* @__PURE__ */ jsx(
@@ -11092,7 +11092,7 @@ const StoryList = ({ stories }) => {
     /* @__PURE__ */ jsx("div", { className: "flex gap-4 overflow-x-auto pb-4 snap-x scrollbar-hide", children: stories.map((story) => /* @__PURE__ */ jsxs(
       "a",
       {
-        href: `/stories/${story.slug}.html`,
+        href: `/stories/${story.slug}`,
         className: "flex-none w-[140px] md:w-[160px] aspect-[9/16] relative rounded-xl overflow-hidden group cursor-pointer snap-start border border-white/10",
         children: [
           /* @__PURE__ */ jsx(

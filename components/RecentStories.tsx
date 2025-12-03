@@ -40,7 +40,7 @@ export const RecentStories: React.FC = () => {
                     {recentStories.map((story, index) => (
                         <a
                             key={story.slug}
-                            href={`/stories/${story.slug}.html`}
+                            href={`/stories/${story.slug}`}
                             className="group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900"
                         >
                             <img

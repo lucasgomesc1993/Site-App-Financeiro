@@ -44,7 +44,7 @@ export const StoriesGallery: React.FC = () => {
                     {storiesData.map((story, index) => (
                         <a
                             key={story.slug}
-                            href={`/stories/${story.slug}.html`} // Link direto para o HTML estático gerado
+                            href={`/stories/${story.slug}`} // Link para a rota SPA (React)
                             className="group relative aspect-[9/16] rounded-2xl overflow-hidden cursor-pointer border border-white/10 bg-gray-900"
                         >
                             {/* Imagem de Capa */}
