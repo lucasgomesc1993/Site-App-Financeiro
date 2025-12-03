@@ -133,32 +133,34 @@ export const BlogPost: React.FC = () => {
                         { label: post.title, href: `/blog/${post.category?.slug || 'geral'}/${post.slug}` }
                     ]} />
 
-                    <header className="mb-12 text-center">
-                        <div className="flex items-center justify-center gap-4 text-sm text-gray-400 mb-6">
+                    <header className="mb-12 text-left">
+                        <div className="flex flex-col md:flex-row items-start justify-start gap-4 text-sm text-gray-400 mb-6">
                             {post.category && (
                                 <span className="px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
                                     {post.category.name}
                                 </span>
                             )}
-                            <span className="flex items-center gap-1">
-                                <Calendar className="w-4 h-4" />
-                                {format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })}
-                            </span>
-                            <span className="flex items-center gap-1">
-                                <BookOpen className="w-4 h-4" />
-                                {post.reading_time || 5} min de leitura
-                            </span>
+                            <div className="flex items-center gap-4">
+                                <span className="flex items-center gap-1">
+                                    <Calendar className="w-4 h-4" />
+                                    {format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })}
+                                </span>
+                                <span className="flex items-center gap-1">
+                                    <BookOpen className="w-4 h-4" />
+                                    {post.reading_time || 5} min de leitura
+                                </span>
+                            </div>
                         </div>
 
                         <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
                             {post.title}
                         </h1>
 
-                        <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-xl text-gray-300 max-w-2xl mr-auto leading-relaxed">
                             {post.excerpt}
                         </p>
 
-                        <div className="flex items-center justify-center md:justify-start gap-3 mt-8">
+                        <div className="flex items-center justify-start gap-3 mt-8">
                             {post.author?.avatar_url && (
                                 <img src={post.author.avatar_url} alt={post.author.name} className="w-10 h-10 rounded-full border border-white/10" />
                             )}

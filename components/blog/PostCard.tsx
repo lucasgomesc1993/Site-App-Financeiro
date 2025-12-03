@@ -60,6 +60,6 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                     </Link>
                 </div>
             </div>
-        </article>
+        </article >
     );
 };
