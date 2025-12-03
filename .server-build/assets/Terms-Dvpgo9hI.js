@@ -91,3 +91,4 @@ const Terms = () => {
 export {
   Terms
 };
+//# sourceMappingURL=Terms-Dvpgo9hI.js.map

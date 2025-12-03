@@ -88,3 +88,4 @@ const Privacy = () => {
 export {
   Privacy
 };
+//# sourceMappingURL=Privacy-BFMibbHw.js.map

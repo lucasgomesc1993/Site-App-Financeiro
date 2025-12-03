@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
+      sourcemap: true,
       cssCodeSplit: true,
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
