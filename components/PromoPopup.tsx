@@ -11,7 +11,7 @@ export const PromoPopup: React.FC = () => {
 
     useEffect(() => {
         // Show popup only on calculator pages and if not dismissed
-        if (location.pathname.startsWith('/calculadoras') && !isDismissed) {
+        if ((location.pathname.startsWith('/calculadoras') || location.pathname.startsWith('/blog')) && !isDismissed) {
             const timer = setTimeout(() => setIsVisible(true), 2000); // Delay for better UX
             return () => clearTimeout(timer);
         } else {

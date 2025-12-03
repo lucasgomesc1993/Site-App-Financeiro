@@ -2137,7 +2137,7 @@ const PromoPopup = () => {
   const [isDismissed, setIsDismissed] = useState(false);
   const buttonControls = useAnimation();
   useEffect(() => {
-    if (location.pathname.startsWith("/calculadoras") && !isDismissed) {
+    if ((location.pathname.startsWith("/calculadoras") || location.pathname.startsWith("/blog")) && !isDismissed) {
       const timer = setTimeout(() => setIsVisible(true), 2e3);
       return () => clearTimeout(timer);
     } else {
@@ -2641,7 +2641,7 @@ const Calculators = () => {
         }
       ) }),
       /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "h-96 flex items-center justify-center", children: /* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" }) }), children: /* @__PURE__ */ jsx(AppPromoBanner$4, {}) }),
-      /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+      /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
         /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
         " As ferramentas disponibilizadas neste site são apenas para fins informativos e educacionais. Embora busquemos manter os cálculos e fórmulas atualizados, não nos responsabilizamos por eventuais divergências, perdas ou decisões tomadas com base nos resultados obtidos. Consulte sempre um profissional para orientações específicas ao seu caso."
       ] }) })
@@ -2744,7 +2744,7 @@ const Tools = () => {
         }
       ) }),
       /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "h-96 flex items-center justify-center", children: /* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" }) }), children: /* @__PURE__ */ jsx(AppPromoBanner$3, {}) }),
-      /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+      /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
         /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
         " As ferramentas disponibilizadas neste site são apenas para fins informativos e de utilidade. Não nos responsabilizamos pelo uso indevido das mesmas."
       ] }) })
@@ -11093,8 +11093,6 @@ const StoryList = ({ stories }) => {
       "a",
       {
         href: `/stories/${story.slug}.html`,
-        target: "_blank",
-        rel: "noopener noreferrer",
         className: "flex-none w-[140px] md:w-[160px] aspect-[9/16] relative rounded-xl overflow-hidden group cursor-pointer snap-start border border-white/10",
         children: [
           /* @__PURE__ */ jsx(
@@ -11223,7 +11221,7 @@ const BlogIndex = () => {
       ] }),
       !searchTerm && /* @__PURE__ */ jsx(StoryList, { stories: storiesData }),
       /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
-      /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+      /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
         /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
         " O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais. Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos. Consulte sempre um profissional para orientações específicas ao seu caso."
       ] }) })
@@ -11281,7 +11279,7 @@ const CategoryPage = () => {
       loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) }),
       /* @__PURE__ */ jsxs("div", { className: "mt-24", children: [
         /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
-        /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+        /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
           /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
           " O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais. Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos. Consulte sempre um profissional para orientações específicas ao seu caso."
         ] }) })
@@ -11442,7 +11440,7 @@ const BlogPost = () => {
     ] }) }),
     post.faq && post.faq.length > 0 && /* @__PURE__ */ jsx("div", { className: "mt-20 relative z-10", children: /* @__PURE__ */ jsx(FAQ, { items: post.faq, title: "Perguntas Frequentes", showSocialProof: false }) }),
     /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 relative z-10 mt-16", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
-    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 relative z-10", children: /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+    /* @__PURE__ */ jsx("div", { className: "container mx-auto px-4 relative z-10", children: /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
       /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
       " O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais. Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos. Consulte sempre um profissional para orientações específicas ao seu caso."
     ] }) }) })

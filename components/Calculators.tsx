@@ -536,7 +536,7 @@ export const Calculators: React.FC = () => {
 
                 {/* Disclaimer */}
                 <div className="mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-400">
                         <strong>Aviso legal:</strong> As ferramentas disponibilizadas neste site são apenas para fins informativos e educacionais.
                         Embora busquemos manter os cálculos e fórmulas atualizados, não nos responsabilizamos por eventuais divergências, perdas ou decisões tomadas com base nos resultados obtidos.
                         Consulte sempre um profissional para orientações específicas ao seu caso.

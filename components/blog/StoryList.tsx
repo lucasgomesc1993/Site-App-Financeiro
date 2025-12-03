@@ -21,8 +21,6 @@ export const StoryList: React.FC<StoryListProps> = ({ stories }) => {
                     <a
                         key={story.slug}
                         href={`/stories/${story.slug}.html`}
-                        target="_blank"
-                        rel="noopener noreferrer"
                         className="flex-none w-[140px] md:w-[160px] aspect-[9/16] relative rounded-xl overflow-hidden group cursor-pointer snap-start border border-white/10"
                     >
                         <img

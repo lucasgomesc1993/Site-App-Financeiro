@@ -104,7 +104,7 @@ export const CategoryPage: React.FC = () => {
 
                     {/* Disclaimer */}
                     <div className="mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12">
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-400">
                             <strong>Aviso legal:</strong> O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais.
                             Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos.
                             Consulte sempre um profissional para orientações específicas ao seu caso.

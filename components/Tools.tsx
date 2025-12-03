@@ -121,7 +121,7 @@ export const Tools: React.FC = () => {
 
                 {/* Disclaimer */}
                 <div className="mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-gray-400">
                         <strong>Aviso legal:</strong> As ferramentas disponibilizadas neste site são apenas para fins informativos e de utilidade.
                         Não nos responsabilizamos pelo uso indevido das mesmas.
                     </p>
