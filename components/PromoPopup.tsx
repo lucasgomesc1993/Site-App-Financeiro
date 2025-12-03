@@ -80,7 +80,7 @@ export const PromoPopup: React.FC = () => {
                             </div>
 
                             <motion.a
-                                href="https://finzap.io/criar-conta"
+                                href="https://junny.com.br/criar-conta"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 animate={buttonControls}

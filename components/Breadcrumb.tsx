@@ -21,13 +21,13 @@ export const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Home",
-                "item": "https://finzap.io/" // Replace with actual domain if known, or use relative
+                "item": "https://junny.com.br/" // Replace with actual domain if known, or use relative
             },
             ...items.map((item, index) => ({
                 "@type": "ListItem",
                 "position": index + 2,
                 "name": item.label,
-                "item": `https://finzap.io${item.href}`
+                "item": `https://junny.com.br${item.href}`
             }))
         ]
     };

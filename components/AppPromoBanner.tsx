@@ -31,7 +31,7 @@ export const AppPromoBanner: React.FC = () => {
                         </h3>
 
                         <p className="text-gray-400 text-lg">
-                            Chega de planilhas complicadas. Com o FinZap, você controla seus gastos enviando áudios ou mensagens de texto no WhatsApp. Simples, rápido e com Inteligência Artificial.
+                            Chega de planilhas complicadas. Com a Junny, você controla seus gastos enviando áudios ou mensagens de texto no WhatsApp. Simples, rápido e com Inteligência Artificial.
                         </p>
 
                         <ul className="space-y-3">
@@ -45,7 +45,7 @@ export const AppPromoBanner: React.FC = () => {
 
                         <div className="pt-4">
                             <a
-                                href="https://finzap.io/criar-conta"
+                                href="https://junny.com.br/criar-conta"
                                 className="inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-[#008c69] to-[#008c69] hover:brightness-110 text-white font-bold text-base md:text-lg rounded-full transition-all shadow-[0_0_30px_rgba(71,255,183,0.2)] hover:shadow-[0_0_50px_rgba(71,255,183,0.4)] text-center uppercase tracking-wide transform hover:scale-[1.02] whitespace-nowrap"
                             >
                                 Testar Grátis Agora <ArrowRight className="w-5 h-5" />
@@ -60,7 +60,7 @@ export const AppPromoBanner: React.FC = () => {
                             <img
                                 src="/hero.webp"
                                 srcSet="/hero-mobile.webp 600w, /hero-medium.webp 900w, /hero.webp 1200w"
-                                alt="FinZap App Dashboard"
+                                alt="Junny App Dashboard"
                                 width={1200}
                                 height={563}
                                 loading="lazy"

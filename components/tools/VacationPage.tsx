@@ -11,7 +11,7 @@ export const VacationPage: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Férias FinZap",
+        "name": "Calculadora de Férias Junny",
         "description": "Calcule o valor exato das suas férias com 1/3 constitucional e descontos.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
@@ -75,7 +75,7 @@ export const VacationPage: React.FC = () => {
                 <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
                     <h2 className="text-3xl font-bold text-white mb-6">Calculadora de Férias: Saiba quanto você vai receber</h2>
                     <p className="text-gray-400 mb-8">
-                        Planejando seu descanso? Utilize a Calculadora de Férias do FinZap para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais.
+                        Planejando seu descanso? Utilize a Calculadora de Férias da Junny para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais.
                     </p>
 
                     <h3 className="text-2xl font-bold text-white mb-4">O que compõe o cálculo de férias?</h3>
@@ -92,10 +92,10 @@ export const VacationPage: React.FC = () => {
 
                     <h3 className="text-2xl font-bold text-white mb-4">Como usar a calculadora?</h3>
                     <p className="text-gray-400 mb-8">
-                        Basta inserir seu salário bruto, a quantidade de dias que pretende tirar de férias, se possui dependentes (para cálculo do IRRF) e se deseja vender dias (abono). O FinZap faz todo o cálculo complexo das alíquotas progressivas de INSS e Imposto de Renda automaticamente.
+                        Basta inserir seu salário bruto, a quantidade de dias que pretende tirar de férias, se possui dependentes (para cálculo do IRRF) e se deseja vender dias (abono). A Junny faz todo o cálculo complexo das alíquotas progressivas de INSS e Imposto de Renda automaticamente.
                     </p>
 
-                    <h3 className="text-2xl font-bold text-white mb-4">Planeje suas finanças com o FinZap</h3>
+                    <h3 className="text-2xl font-bold text-white mb-4">Planeje suas finanças com a Junny</h3>
                     <p className="text-gray-400 mb-8">
                         Saber o valor exato das suas férias ajuda a planejar melhor sua viagem ou seus gastos no período de descanso. Use nossa ferramenta gratuita quantas vezes precisar e tenha total controle sobre seu dinheiro.
                     </p>

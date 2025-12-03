@@ -45,7 +45,7 @@ export const Price: React.FC = () => {
                             <span className="text-gray-400 text-sm uppercase tracking-wide font-medium">Plano Anual: 2 meses grátis</span>
 
                             <a
-                                href="https://finzap.io/criar-conta"
+                                href="https://junny.com.br/criar-conta"
                                 className="mt-8 w-full px-8 py-5 bg-gradient-to-r from-[#008c69] to-[#008c69] hover:brightness-110 text-white font-bold text-lg rounded-full transition-all shadow-[0_0_30px_rgba(71,255,183,0.2)] hover:shadow-[0_0_50px_rgba(71,255,183,0.4)] text-center uppercase tracking-wide transform hover:scale-[1.02]"
                             >
                                 Assinar Agora

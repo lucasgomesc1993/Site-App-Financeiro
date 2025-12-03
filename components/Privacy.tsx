@@ -7,8 +7,8 @@ export const Privacy: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Política de Privacidade - FinZap"
-                description="Saiba como o FinZap coleta, usa e protege seus dados pessoais. Sua privacidade é nossa prioridade."
+                title="Política de Privacidade - Junny"
+                description="Saiba como a Junny coleta, usa e protege seus dados pessoais. Sua privacidade é nossa prioridade."
                 canonical="/privacy"
             />
             {/* Background Orbs */}

@@ -7,8 +7,8 @@ export const Terms: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Termos de Uso - FinZap"
-                description="Leia os Termos de Uso do FinZap e entenda as regras e diretrizes que regem o uso da nossa plataforma."
+                title="Termos de Uso - Junny"
+                description="Leia os Termos de Uso da Junny e entenda as regras e diretrizes que regem o uso da nossa plataforma."
                 canonical="/terms"
             />
             {/* Background Orbs */}
@@ -42,7 +42,7 @@ export const Terms: React.FC = () => {
                                 Aceitação dos Termos
                             </h2>
                             <p className="text-gray-400 leading-relaxed pl-11">
-                                Ao acessar e usar o FinZap, você concorda em cumprir e ficar vinculado a estes Termos de Uso.
+                                Ao acessar e usar a Junny, você concorda em cumprir e ficar vinculado a estes Termos de Uso.
                                 Se você não concordar com qualquer parte destes termos, você não deve usar nosso serviço.
                                 O uso continuado da plataforma constitui aceitação de quaisquer alterações feitas nestes termos.
                             </p>
@@ -54,7 +54,7 @@ export const Terms: React.FC = () => {
                                 Descrição do Serviço
                             </h2>
                             <p className="text-gray-400 leading-relaxed pl-11 mb-4">
-                                O FinZap é uma ferramenta de gestão financeira baseada em inteligência artificial que opera através do WhatsApp.
+                                A Junny é uma ferramenta de gestão financeira baseada em inteligência artificial que opera através do WhatsApp.
                                 O serviço permite que os usuários:
                             </p>
                             <ul className="space-y-3 pl-11">
@@ -90,7 +90,7 @@ export const Terms: React.FC = () => {
                                 Planos e Pagamentos
                             </h2>
                             <p className="text-gray-400 leading-relaxed pl-11">
-                                O FinZap oferece planos gratuitos e pagos. Os detalhes dos preços e recursos estão disponíveis em nossa página principal.
+                                A Junny oferece planos gratuitos e pagos. Os detalhes dos preços e recursos estão disponíveis em nossa página principal.
                                 Reservamo-nos o direito de alterar os preços a qualquer momento, com aviso prévio aos usuários ativos.
                                 O cancelamento pode ser feito a qualquer momento sem multa.
                             </p>

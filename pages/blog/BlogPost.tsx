@@ -71,16 +71,16 @@ export const BlogPost: React.FC = () => {
         "dateModified": post.updated_at || post.published_at,
         "author": {
             "@type": "Person",
-            "name": post.author?.name || "FinZap Team",
+            "name": post.author?.name || "Junny Team",
             "url": post.author?.linkedin_url,
             "jobTitle": post.author?.role
         },
         "publisher": {
             "@type": "Organization",
-            "name": "FinZap",
+            "name": "Junny",
             "logo": {
                 "@type": "ImageObject",
-                "url": "https://finzap.io/logo.png"
+                "url": "https://junny.com.br/logo.png"
             }
         },
         "description": post.meta_description || post.excerpt
@@ -105,7 +105,7 @@ export const BlogPost: React.FC = () => {
             <SEO
                 title={post.meta_title || post.title}
                 description={post.meta_description || post.excerpt}
-                canonical={`https://finzap.io/blog/${post.category?.slug || 'geral'}/${post.slug}`}
+                canonical={`https://junny.com.br/blog/${post.category?.slug || 'geral'}/${post.slug}`}
                 image={post.cover_image}
             />
 

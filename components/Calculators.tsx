@@ -34,7 +34,7 @@ export const Calculators: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadoras Financeiras FinZap",
+        "name": "Calculadoras Financeiras Junny",
         "description": "Ferramentas gratuitas para cálculo de férias, décimo terceiro, salário líquido e mais.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
@@ -459,7 +459,7 @@ export const Calculators: React.FC = () => {
                     <section className="text-center">
                         <h2 className="text-3xl font-bold text-white mb-6">Calculadoras Online: Ferramentas para Decisões Financeiras</h2>
                         <p className="text-gray-400 text-lg leading-relaxed">
-                            As calculadoras online do FinZap são ferramentas digitais desenvolvidas para facilitar o cálculo de diferentes tipos de informações de forma automatizada.
+                            As calculadoras online da Junny são ferramentas digitais desenvolvidas para facilitar o cálculo de diferentes tipos de informações de forma automatizada.
                             Elas funcionam diretamente no navegador, sem necessidade de instalação, e oferecem resultados imediatos com base nos dados fornecidos.
                             Seja para resolver questões financeiras, trabalhistas ou de planejamento, nossas ferramentas ajudam você a economizar tempo, evitar erros manuais e tomar decisões mais conscientes.
                         </p>

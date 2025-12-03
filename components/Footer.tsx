@@ -12,12 +12,12 @@ export const Footer: React.FC = () => {
                         <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20">
                             <Wallet className="text-primary w-5 h-5" />
                         </div>
-                        <span className="text-xl font-bold text-white tracking-tight">FinZap.ai</span>
+                        <span className="text-xl font-bold text-white tracking-tight">Junny.ai</span>
                     </div>
                     <p className="text-sm text-gray-400 max-w-xs text-center md:text-left">
                         Inteligência artificial aplicada à liberdade financeira. Simples, seguro e direto no seu WhatsApp.
                     </p>
-                    <span className="text-xs text-gray-400">© 2025 FinZap AI. Todos os direitos reservados.</span>
+                    <span className="text-xs text-gray-400">© 2025 Junny AI. Todos os direitos reservados.</span>
                 </div>
 
                 <div className="flex flex-col items-center md:items-end gap-6">

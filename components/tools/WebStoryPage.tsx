@@ -110,7 +110,7 @@ export const WebStoryPage: React.FC = () => {
             <Helmet>
                 <title>{story.title} | Web Stories</title>
                 <meta name="theme-color" content="#000000" />
-                <link rel="amphtml" href={`https://finzap.io/stories/${story.slug}.html`} />
+                <link rel="amphtml" href={`https://junny.com.br/stories/${story.slug}.html`} />
                 <script type="application/ld+json">
                     {JSON.stringify({
                         "@context": "https://schema.org",
@@ -128,10 +128,10 @@ export const WebStoryPage: React.FC = () => {
                         },
                         "publisher": {
                             "@type": "Organization",
-                            "name": "FinZap",
+                            "name": "Junny",
                             "logo": {
                                 "@type": "ImageObject",
-                                "url": "https://finzap.io/favicon.ico"
+                                "url": "https://junny.com.br/favicon.ico"
                             }
                         }
                     })}

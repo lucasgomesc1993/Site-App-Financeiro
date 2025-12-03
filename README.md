@@ -1,7 +1,7 @@
 <div align="center">
-  <img width="1200" height="475" alt="FinZap Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+  <img width="1200" height="475" alt="Junny Banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 
-  # FinZap - Ferramentas e Calculadoras Financeiras
+  # Junny - Ferramentas e Calculadoras Financeiras
   
   **Sua central completa para cálculos trabalhistas, investimentos e planejamento financeiro.**
 </div>
@@ -10,13 +10,13 @@
 
 ## 📋 Sobre o Projeto
 
-O **FinZap** é uma aplicação web moderna desenvolvida para oferecer uma ampla gama de calculadoras e ferramentas financeiras gratuitas. O objetivo é simplificar a vida financeira dos usuários, permitindo simulações precisas de rescisão, férias, investimentos, financiamentos e muito mais.
+O **Junny** é uma aplicação web moderna desenvolvida para oferecer uma ampla gama de calculadoras e ferramentas financeiras gratuitas. O objetivo é simplificar a vida financeira dos usuários, permitindo simulações precisas de rescisão, férias, investimentos, financiamentos e muito mais.
 
 O projeto foi construído com foco em **performance**, **SEO** (Search Engine Optimization) e **experiência do usuário (UX)**, utilizando as mais recentes tecnologias de desenvolvimento web.
 
 ## ✨ Funcionalidades Principais
 
-O FinZap oferece diversas calculadoras divididas em categorias:
+O Junny oferece diversas calculadoras divididas em categorias:
 
 ### 🏢 Trabalhista
 - **Rescisão CLT:** Calcule o valor exato da sua rescisão.

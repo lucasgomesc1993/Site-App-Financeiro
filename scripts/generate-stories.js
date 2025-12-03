@@ -10,25 +10,25 @@ const storiesDataPath = path.join(__dirname, '../data/stories.json');
 const outputDir = path.join(__dirname, '../public/stories');
 
 if (!fs.existsSync(storiesDataPath)) {
-    console.error('❌ Arquivo data/stories.json não encontrado.');
-    process.exit(1);
+  console.error('❌ Arquivo data/stories.json não encontrado.');
+  process.exit(1);
 }
 
 const stories = JSON.parse(fs.readFileSync(storiesDataPath, 'utf-8'));
 
 if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+  fs.mkdirSync(outputDir, { recursive: true });
 }
 
 // Template HTML AMP Base
 const generateAMPHTML = (story) => {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html amp lang="pt-BR">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <title>${story.title}</title>
-    <link rel="canonical" href="https://finzap.io/stories/${story.slug}.html">
+    <link rel="canonical" href="https://junny.com.br/stories/${story.slug}.html">
     
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     
@@ -50,7 +50,7 @@ const generateAMPHTML = (story) => {
         right: 0;
       }
       .cta-button {
-        background: #00E676; /* FinZap Primary Green */
+        background: #00E676; /* Junny Primary Green */
         color: #000;
         text-decoration: none;
         padding: 12px 24px;
@@ -111,8 +111,8 @@ const generateAMPHTML = (story) => {
 
 // Gera os arquivos
 stories.forEach(story => {
-    const html = generateAMPHTML(story);
-    const filePath = path.join(outputDir, `${story.slug}.html`);
-    fs.writeFileSync(filePath, html);
-    console.log(`✅ Web Story gerado: public/stories/${story.slug}.html`);
+  const html = generateAMPHTML(story);
+  const filePath = path.join(outputDir, `${story.slug}.html`);
+  fs.writeFileSync(filePath, html);
+  console.log(`✅ Web Story gerado: public/stories/${story.slug}.html`);
 });

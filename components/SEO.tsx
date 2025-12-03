@@ -14,7 +14,7 @@ export function SEO({ title, description, canonical, image }: SEOProps) {
 
     return (
         <Helmet>
-            <title>{title} | FinZap</title>
+            <title>{title} | Junny</title>
             <meta name="description" content={description} />
             {fullCanonical && <link rel="canonical" href={fullCanonical} />}
 

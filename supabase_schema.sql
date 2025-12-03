@@ -105,4 +105,4 @@ insert into categories (name, slug, description) values
 ('FGTS', 'fgts', 'Tudo sobre Saque-Aniversário e Rescisão');
 
 insert into authors (name, role, bio) values
-('Equipe FinZap', 'Redação', 'Especialistas em finanças e tecnologia.');
+('Equipe Junny', 'Redação', 'Especialistas em finanças e tecnologia.');

@@ -2,8 +2,8 @@
     {
         "slug": "5-erros-fgts",
         "title": "5 Erros que Comem seu FGTS",
-        "publisher": "FinZap",
-        "publisherLogo": "https://finzap.io/favicon.ico",
+        "publisher": "Junny",
+        "publisherLogo": "https://junny.com.br/favicon.ico",
         "posterPortrait": "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080",
         "slides": [
             {
@@ -33,7 +33,7 @@
                 "text": "Não perca mais tempo. Simule seu saldo agora.",
                 "cta": {
                     "label": "Simular FGTS",
-                    "url": "https://finzap.io/calculadoras/fgts"
+                    "url": "https://junny.com.br/calculadoras/fgts"
                 }
             }
         ]

@@ -55,7 +55,7 @@ export const FuelPage: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora Álcool ou Gasolina FinZap",
+        "name": "Calculadora Álcool ou Gasolina Junny",
         "description": "Descubra qual combustível vale mais a pena para o seu carro.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",

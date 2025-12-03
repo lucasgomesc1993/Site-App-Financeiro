@@ -41,7 +41,7 @@ const PIX_FAQS: FAQItem[] = [
     },
     {
         question: "Tem taxas para receber pelo QR Code?",
-        answer: "O FinZap não cobra nenhuma taxa. Porém, dependendo do seu banco e tipo de conta (PJ), a instituição financeira pode cobrar tarifas por recebimento via Pix. Para pessoas físicas (PF), o recebimento costuma ser gratuito na maioria dos bancos."
+        answer: "A Junny não cobra nenhuma taxa. Porém, dependendo do seu banco e tipo de conta (PJ), a instituição financeira pode cobrar tarifas por recebimento via Pix. Para pessoas físicas (PF), o recebimento costuma ser gratuito na maioria dos bancos."
     },
     {
         question: "Posso colocar um valor fixo no QR Code?",
@@ -350,7 +350,7 @@ export const PixGeneratorPage: React.FC = () => {
                         <h2 className="text-3xl font-bold text-white mb-6">Crie seu QR Code Pix Gratuito em Segundos</h2>
                         <div className="prose prose-invert max-w-none text-gray-400 leading-relaxed">
                             <p className="mb-4">
-                                Precisa receber um pagamento rápido e sem taxas? O <strong>Gerador de Pix FinZap</strong> é a ferramenta ideal para autônomos, lojistas e prestadores de serviço. Com ele, você cria um código oficial do Banco Central (padrão BR Code) na hora, pronto para ser lido por qualquer aplicativo de banco.
+                                Precisa receber um pagamento rápido e sem taxas? O <strong>Gerador de Pix Junny</strong> é a ferramenta ideal para autônomos, lojistas e prestadores de serviço. Com ele, você cria um código oficial do Banco Central (padrão BR Code) na hora, pronto para ser lido por qualquer aplicativo de banco.
                             </p>
                             <p className="mb-4">
                                 Esqueça a necessidade de imprimir folhas A4 com seus dados bancários ou ficar ditando CPF e CNPJ por mensagem. Gere um QR Code profissional, passe credibilidade para seus clientes e receba o dinheiro na hora.

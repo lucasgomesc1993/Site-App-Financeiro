@@ -158,7 +158,7 @@ export const TerminationPage: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Rescisão Trabalhista FinZap",
+        "name": "Calculadora de Rescisão Trabalhista Junny",
         "description": "Simule o valor da sua rescisão trabalhista CLT. Calcule saldo de salário, férias, 13º, aviso prévio e multa do FGTS.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",

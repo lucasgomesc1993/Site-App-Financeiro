@@ -380,7 +380,7 @@ export const FIREPage: React.FC = () => {
                     <div className="bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16">
                         <h3 className="text-xl font-bold text-white mb-2">⚠️ Atenção à Inflação!</h3>
                         <p className="text-gray-300">
-                            Muitas calculadoras na internet ignoram a inflação e mostram resultados ilusórios. O FinZap utiliza a <strong>Taxa Real</strong> (Rentabilidade Nominal - Inflação) para garantir que o valor projetado mantenha o poder de compra. Se o seu investimento rende 10% e a inflação é 4%, seu ganho real para fins de liberdade financeira é de apenas 6%.
+                            Muitas calculadoras na internet ignoram a inflação e mostram resultados ilusórios. A Junny utiliza a <strong>Taxa Real</strong> (Rentabilidade Nominal - Inflação) para garantir que o valor projetado mantenha o poder de compra. Se o seu investimento rende 10% e a inflação é 4%, seu ganho real para fins de liberdade financeira é de apenas 6%.
                         </p>
                     </div>
 

@@ -41,9 +41,9 @@ export const BlogIndex: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Blog FinZap - Educação Financeira Descomplicada"
+                title="Blog Junny - Educação Financeira Descomplicada"
                 description="Dicas práticas de economia, investimentos e planejamento financeiro para você dominar seu dinheiro."
-                canonical="https://finzap.io/blog"
+                canonical="https://junny.com.br/blog"
             />
 
             {/* Background Orbs */}
@@ -56,7 +56,7 @@ export const BlogIndex: React.FC = () => {
                 {/* Hero Section */}
                 <div className="text-center mb-16">
                     <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-                        Blog <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">FinZap</span>
+                        Blog <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Junny</span>
                     </h1>
                     <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
                         Domine suas finanças com conteúdos práticos e diretos ao ponto.

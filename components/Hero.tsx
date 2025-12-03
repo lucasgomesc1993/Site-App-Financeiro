@@ -54,7 +54,7 @@ export const Hero: React.FC = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <a
-            href="https://finzap.io/criar-conta"
+            href="https://junny.com.br/criar-conta"
             className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#008c69] to-[#008c69] hover:brightness-110 text-white font-bold text-lg rounded-full transition-all shadow-[0_0_30px_rgba(71,255,183,0.2)] hover:shadow-[0_0_50px_rgba(71,255,183,0.4)] text-center uppercase tracking-wide transform hover:scale-[1.02]"
           >
             Testar Grátis Agora
@@ -71,7 +71,7 @@ export const Hero: React.FC = () => {
           <div className="flex -space-x-3">
             {[1, 2, 3, 4].map(i => (
               <div key={i} className="w-10 h-10 rounded-full border-2 border-background overflow-hidden">
-                <img src={`https://picsum.photos/50/50?random=${i + 40}`} alt="Foto de perfil de cliente satisfeito do FinZap" width={40} height={40} className="w-full h-full object-cover" />
+                <img src={`https://picsum.photos/50/50?random=${i + 40}`} alt="Foto de perfil de cliente satisfeito da Junny" width={40} height={40} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
@@ -96,7 +96,7 @@ export const Hero: React.FC = () => {
             src="/hero.webp"
             srcSet="/hero-mobile.webp 600w, /hero-medium.webp 900w, /hero.webp 1200w"
             sizes="(max-width: 768px) 100vw, 1200px"
-            alt="FinZap Dashboard"
+            alt="Junny Dashboard"
             width={1200}
             height={563}
             decoding="async"

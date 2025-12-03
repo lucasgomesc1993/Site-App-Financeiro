@@ -23,7 +23,7 @@ const ENERGY_FAQS = [
     },
     {
         question: "Como se calcula o valor da energia elétrica?",
-        answer: "Para calcular o valor de energia elétrica de forma prática e precisa, basta utilizar a Calculadora de Consumo de Energia FinZap."
+        answer: "Para calcular o valor de energia elétrica de forma prática e precisa, basta utilizar a Calculadora de Consumo de Energia Junny."
     }
 ];
 
@@ -31,7 +31,7 @@ export const EnergyPage: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Consumo de Energia FinZap",
+        "name": "Calculadora de Consumo de Energia Junny",
         "description": "Simule o consumo de energia dos seus eletrodomésticos e economize na conta de luz.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
@@ -46,7 +46,7 @@ export const EnergyPage: React.FC = () => {
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
                 title="Calculadora de Consumo de Energia - Economize Luz"
-                description="Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora do FinZap."
+                description="Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora da Junny."
                 canonical="/calculadoras/energia"
             />
             <script type="application/ld+json">
@@ -92,7 +92,7 @@ export const EnergyPage: React.FC = () => {
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Consumo de Energia</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora do FinZap.
+                            Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora da Junny.
                         </p>
                     </motion.div>
                 </div>
@@ -109,7 +109,7 @@ export const EnergyPage: React.FC = () => {
                 <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
                     <h2 className="text-3xl font-bold text-white mb-6">Calculadora de Consumo de Energia: economize na conta de luz</h2>
                     <p className="text-gray-400 mb-8">
-                        Quanto de energia seus aparelhos domésticos consomem? Descubra com a prática e fácil Calculadora de Consumo de Energia FinZap.
+                        Quanto de energia seus aparelhos domésticos consomem? Descubra com a prática e fácil Calculadora de Consumo de Energia Junny.
                     </p>
 
                     <h3 className="text-2xl font-bold text-white mb-4">Campos da Calculadora</h3>
@@ -120,8 +120,8 @@ export const EnergyPage: React.FC = () => {
                         <li><strong className="text-white">Preço KWH:</strong> Preço do consumo Quilowatt-hora (R$).</li>
                     </ul>
 
-                    <h3 className="text-2xl font-bold text-white mb-4">Como utilizar a Calculadora de Consumo de Energia FinZap</h3>
-                    <p className="text-gray-400 mb-4">Para utilizar a Calculadora de Consumo de Energia FinZap, siga os passos abaixo:</p>
+                    <h3 className="text-2xl font-bold text-white mb-4">Como utilizar a Calculadora de Consumo de Energia Junny</h3>
+                    <p className="text-gray-400 mb-4">Para utilizar a Calculadora de Consumo de Energia Junny, siga os passos abaixo:</p>
                     <ol className="list-decimal pl-6 space-y-2 text-gray-400 mb-8">
                         <li>Informe a potência do seu aparelho;</li>
                         <li>Preencha com o tempo de uso diário em horas;</li>
@@ -132,7 +132,7 @@ export const EnergyPage: React.FC = () => {
 
                     <h3 className="text-2xl font-bold text-white mb-4">Como calcular seu consumo de energia</h3>
                     <p className="text-gray-400 mb-6">
-                        Veja como utilizar a calculadora de energia FinZap para descobrir o consumo dos seus aparelhos nos tópicos abaixo.
+                        Veja como utilizar a calculadora de energia Junny para descobrir o consumo dos seus aparelhos nos tópicos abaixo.
                     </p>
 
                     <h4 className="text-xl font-bold text-white mb-3">Descubra qual é a potência do seu aparelho</h4>
@@ -147,7 +147,7 @@ export const EnergyPage: React.FC = () => {
 
                     <h4 className="text-xl font-bold text-white mb-3">Informe os seus dados de consumo de energia do aparelho</h4>
                     <p className="text-gray-400 mb-8">
-                        Agora, basta preencher a Calculadora de Energia FinZap com os dados que você obteve e o seu tempo de consumo. O resultado aparecerá instantaneamente para você saber exatamente quanto vai gastar em um mês.
+                        Agora, basta preencher a Calculadora de Energia Junny com os dados que você obteve e o seu tempo de consumo. O resultado aparecerá instantaneamente para você saber exatamente quanto vai gastar em um mês.
                     </p>
 
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-8 mb-12">
@@ -168,7 +168,7 @@ export const EnergyPage: React.FC = () => {
                         Saber quanto um aparelho gasta de energia todo mês pode ser a chave para fazer melhores escolhas e desenvolver bons hábitos. Pode ser a sua geladeira, computador de trabalho ou mesmo o seu aspirador de pó. Cada aparelho é responsável por uma parcela específica do seu cálculo de consumo de energia.
                     </p>
                     <p className="text-gray-400 mb-8">
-                        Pensando nisso, o FinZap desenvolveu uma Calculadora de Consumo de Energia para você descobrir de forma automática o quanto aquele seu eletrodoméstico vai gastar, além do preço médio que irá pagar por mês.
+                        Pensando nisso, a Junny desenvolveu uma Calculadora de Consumo de Energia para você descobrir de forma automática o quanto aquele seu eletrodoméstico vai gastar, além do preço médio que irá pagar por mês.
                     </p>
 
                     <FAQ items={ENERGY_FAQS} title="Perguntas frequentes sobre consumo de energia" className="py-12" showSocialProof={false} />

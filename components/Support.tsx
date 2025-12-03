@@ -8,8 +8,8 @@ export const Support: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Central de Ajuda - Suporte FinZap"
-                description="Precisa de ajuda? Entre em contato com o suporte do FinZap via WhatsApp ou E-mail, ou consulte nossas perguntas frequentes."
+                title="Central de Ajuda - Suporte Junny"
+                description="Precisa de ajuda? Entre em contato com o suporte da Junny via WhatsApp ou E-mail, ou consulte nossas perguntas frequentes."
                 canonical="/support"
             />
             {/* Background Orbs */}
@@ -57,7 +57,7 @@ export const Support: React.FC = () => {
                             <p className="text-gray-400 mb-6">
                                 Para assuntos mais complexos, parcerias ou feedback detalhado. Respondemos em até 24 horas úteis.
                             </p>
-                            <a href="mailto:suporte@finzap.ai" className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
+                            <a href="mailto:suporte@junny.com.br" className="inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
                                 Enviar e-mail <ArrowRight className="w-4 h-4" />
                             </a>
                         </div>

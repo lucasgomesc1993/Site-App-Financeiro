@@ -100,7 +100,7 @@ export const INSSPage: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de INSS 2025 FinZap",
+        "name": "Calculadora de INSS 2025 Junny",
         "description": "Simule o desconto do INSS com base no salário e tipo de contribuinte. Resultado rápido e atualizado com as faixas de contribuição de 2025.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",

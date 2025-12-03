@@ -16,7 +16,7 @@ export const TESTIMONIALS: Testimonial[] = [
     id: 1,
     name: "Carlos Mendes",
     handle: "@carlos_dev",
-    text: "Eu nunca conseguia manter uma planilha atualizada. Com o FinZap, eu só mando um áudio 'Gastei 50 no almoço' e pronto. O dashboard se atualiza sozinho. Mágico!",
+    text: "Eu nunca conseguia manter uma planilha atualizada. Com a Junny, eu só mando um áudio 'Gastei 50 no almoço' e pronto. O dashboard se atualiza sozinho. Mágico!",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=60"
   },
   {
@@ -65,7 +65,7 @@ export const TESTIMONIALS: Testimonial[] = [
     id: 8,
     name: "Sofia R.",
     handle: "@sofia_med",
-    text: "Não tenho tempo pra organizar finanças. O FinZap faz o trabalho sujo enquanto eu trabalho. Vale cada centavo.",
+    text: "Não tenho tempo pra organizar finanças. A Junny faz o trabalho sujo enquanto eu trabalho. Vale cada centavo.",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=60"
   },
   {
@@ -109,7 +109,7 @@ export const MODULES: Module[] = [
   {
     id: 4,
     title: "Metas Inteligentes",
-    description: "Defina quanto quer gastar por categoria. O FinZap te avisa no WhatsApp se você estiver perto do limite.",
+    description: "Defina quanto quer gastar por categoria. A Junny te avisa no WhatsApp se você estiver perto do limite.",
     image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=60&w=400&auto=format&fit=crop",
     cols: 1
   },
@@ -132,7 +132,7 @@ export const MODULES: Module[] = [
 export const FAQS: FAQItem[] = [
   {
     question: "Preciso conectar minha conta bancária?",
-    answer: "Não! O FinZap funciona com base no que você envia pelo WhatsApp. Isso garante total segurança e privacidade, pois não precisamos de acesso direto ao seu banco."
+    answer: "Não! A Junny funciona com base no que você envia pelo WhatsApp. Isso garante total segurança e privacidade, pois não precisamos de acesso direto ao seu banco."
   },
   {
     question: "A IA entende áudios longos?",

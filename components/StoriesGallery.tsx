@@ -10,7 +10,7 @@ export const StoriesGallery: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Web Stories Financeiras - Dicas Rápidas | FinZap"
+                title="Web Stories Financeiras - Dicas Rápidas | Junny"
                 description="Confira nossas Web Stories com dicas rápidas de finanças, FGTS, investimentos e economia em formato visual e direto ao ponto."
                 canonical="/stories"
             />
@@ -32,7 +32,7 @@ export const StoriesGallery: React.FC = () => {
                     </div>
 
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                        FinZap <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Stories</span>
+                        Junny <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Stories</span>
                     </h1>
                     <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                         Dicas financeiras, tutoriais e novidades em formato de tela cheia. Rápido de ler, fácil de entender.

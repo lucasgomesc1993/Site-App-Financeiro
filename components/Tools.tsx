@@ -27,7 +27,7 @@ export const Tools: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Ferramentas FinZap",
+        "name": "Ferramentas Junny",
         "description": "Ferramentas úteis para o seu dia a dia financeiro, como Gerador de Pix e mais.",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "Any",

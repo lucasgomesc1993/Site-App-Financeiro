@@ -12,7 +12,7 @@ import { SEO } from '../SEO';
 const INVESTMENT_FAQS: FAQItem[] = [
     {
         question: "Qual é o melhor simulador de investimentos?",
-        answer: "O melhor simulador de investimentos é o do FinZap, pois ele fornece as principais informações sobre sua aplicação, como: Resultado bruto e líquido, Valor pago em imposto, Valor do rendimento recebido e muito mais! Além disso, é possível fazer várias simulações de forma 100% gratuita."
+        answer: "O melhor simulador de investimentos é o da Junny, pois ele fornece as principais informações sobre sua aplicação, como: Resultado bruto e líquido, Valor pago em imposto, Valor do rendimento recebido e muito mais! Além disso, é possível fazer várias simulações de forma 100% gratuita."
     },
     {
         question: "O que é um Certificado de Depósito Bancário (CDB)?",
@@ -40,7 +40,7 @@ export const InvestmentPage: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Simulador de Investimentos FinZap",
+        "name": "Simulador de Investimentos Junny",
         "description": "Compare CDB, LCI, LCA e Tesouro Direto. Calcule o rendimento dos seus investimentos.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
@@ -120,7 +120,7 @@ export const InvestmentPage: React.FC = () => {
                     <section className="mb-16">
                         <h2 className="text-3xl font-bold text-white mb-6">Simulador de Investimentos: Calcule seus rendimentos</h2>
                         <p className="text-gray-400 mb-8">
-                            Quer saber quanto seu dinheiro vai render? Utilize o Simulador de Investimentos do FinZap para projetar seus ganhos em aplicações de Renda Fixa como CDB, LCI, LCA e Tesouro Direto.
+                            Quer saber quanto seu dinheiro vai render? Utilize o Simulador de Investimentos da Junny para projetar seus ganhos em aplicações de Renda Fixa como CDB, LCI, LCA e Tesouro Direto.
                         </p>
 
                         <h3 className="text-2xl font-bold text-white mb-4">Como funciona o simulador de investimentos gratuito?</h3>

@@ -178,10 +178,10 @@ export const Hook: React.FC = () => {
                                     <ChevronLeft size={24} className="text-white" />
                                 </div>
                                 <div className="w-9 h-9 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold border border-primary/20 mr-2 overflow-hidden">
-                                    <img src="https://ui-avatars.com/api/?name=FinZap&background=00a884&color=fff" alt="Profile" className="w-full h-full object-cover" />
+                                    <img src="https://ui-avatars.com/api/?name=Junny&background=00a884&color=fff" alt="Profile" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="flex-1 flex flex-col justify-center">
-                                    <span className="text-white font-medium text-base leading-tight">FinZap <span className="text-[#00a884] ml-1">✔</span></span>
+                                    <span className="text-white font-medium text-base leading-tight">Junny <span className="text-[#00a884] ml-1">✔</span></span>
                                     <span className="text-xs text-white/60">online</span>
                                 </div>
                                 <div className="flex items-center gap-4 text-white mr-2">
@@ -224,7 +224,7 @@ export const Hook: React.FC = () => {
                                     {/* Static Message 2 (Bot/Other) */}
                                     <div className="self-start max-w-[85%] relative z-10 mt-1">
                                         <div className="bg-[#202c33] text-white p-2 pl-3 pr-2 rounded-lg rounded-tl-none shadow-sm text-[14.2px] leading-[19px]">
-                                            <p className="font-bold text-[#00a884] text-xs mb-1">FinZap AI</p>
+                                            <p className="font-bold text-[#00a884] text-xs mb-1">Junny AI</p>
                                             <div className="bg-black/20 rounded-md p-2 mb-2 border-l-4 border-[#00a884]">
                                                 <div className="flex justify-between items-center mb-1">
                                                     <span className="text-xs text-white/80 capitalize flex items-center gap-1">
@@ -271,7 +271,7 @@ export const Hook: React.FC = () => {
                                                     <div className="bg-[#202c33] text-white p-2 pl-3 pr-2 rounded-lg rounded-tl-none shadow-sm text-[14.2px] leading-[19px]">
                                                         {typeof msg.content !== 'string' && (
                                                             <>
-                                                                <p className="font-bold text-[#00a884] text-xs mb-1">FinZap AI</p>
+                                                                <p className="font-bold text-[#00a884] text-xs mb-1">Junny AI</p>
                                                                 <div className="bg-black/20 rounded-md p-2 mb-2 border-l-4 border-[#00a884]">
                                                                     <div className="flex justify-between items-center">
                                                                         <span className="text-xs text-white/80 capitalize flex items-center gap-1">
@@ -398,7 +398,7 @@ export const Hook: React.FC = () => {
                                         <p className="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-1 flex items-center gap-2">
                                             A Solução Definitiva
                                         </p>
-                                        <p className="text-white font-bold text-xl md:text-2xl leading-tight">Com FinZap, é tão fácil quanto mandar um "oi".</p>
+                                        <p className="text-white font-bold text-xl md:text-2xl leading-tight">Com a Junny, é tão fácil quanto mandar um "oi".</p>
                                     </div>
                                 </div>
                             </div>

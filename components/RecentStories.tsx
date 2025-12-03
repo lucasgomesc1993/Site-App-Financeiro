@@ -20,7 +20,7 @@ export const RecentStories: React.FC = () => {
                             <span className="text-sm text-gray-300">Dicas Rápidas</span>
                         </div>
                         <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                            Web Stories <span className="text-primary">FinZap</span>
+                            Web Stories <span className="text-primary">Junny</span>
                         </h2>
                         <p className="text-gray-400 max-w-xl">
                             Conteúdo visual e direto ao ponto para você aprender sobre finanças em poucos segundos.

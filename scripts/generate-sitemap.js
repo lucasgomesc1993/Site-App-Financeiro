@@ -6,7 +6,7 @@ import { getRoutes } from './utils/get-routes.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const BASE_URL = 'https://finzap.io';
+const BASE_URL = 'https://junny.com.br';
 
 function getPriority(routePath) {
     if (routePath === '/') return '1.0';

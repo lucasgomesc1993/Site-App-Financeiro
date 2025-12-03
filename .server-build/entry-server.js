@@ -839,7 +839,7 @@ const TESTIMONIALS = [
     id: 1,
     name: "Carlos Mendes",
     handle: "@carlos_dev",
-    text: "Eu nunca conseguia manter uma planilha atualizada. Com o FinZap, eu só mando um áudio 'Gastei 50 no almoço' e pronto. O dashboard se atualiza sozinho. Mágico!",
+    text: "Eu nunca conseguia manter uma planilha atualizada. Com a Junny, eu só mando um áudio 'Gastei 50 no almoço' e pronto. O dashboard se atualiza sozinho. Mágico!",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&auto=format&fit=crop&q=60"
   },
   {
@@ -888,7 +888,7 @@ const TESTIMONIALS = [
     id: 8,
     name: "Sofia R.",
     handle: "@sofia_med",
-    text: "Não tenho tempo pra organizar finanças. O FinZap faz o trabalho sujo enquanto eu trabalho. Vale cada centavo.",
+    text: "Não tenho tempo pra organizar finanças. A Junny faz o trabalho sujo enquanto eu trabalho. Vale cada centavo.",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&auto=format&fit=crop&q=60"
   },
   {
@@ -931,7 +931,7 @@ const MODULES = [
   {
     id: 4,
     title: "Metas Inteligentes",
-    description: "Defina quanto quer gastar por categoria. O FinZap te avisa no WhatsApp se você estiver perto do limite.",
+    description: "Defina quanto quer gastar por categoria. A Junny te avisa no WhatsApp se você estiver perto do limite.",
     image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=60&w=400&auto=format&fit=crop",
     cols: 1
   },
@@ -953,7 +953,7 @@ const MODULES = [
 const FAQS = [
   {
     question: "Preciso conectar minha conta bancária?",
-    answer: "Não! O FinZap funciona com base no que você envia pelo WhatsApp. Isso garante total segurança e privacidade, pois não precisamos de acesso direto ao seu banco."
+    answer: "Não! A Junny funciona com base no que você envia pelo WhatsApp. Isso garante total segurança e privacidade, pois não precisamos de acesso direto ao seu banco."
   },
   {
     question: "A IA entende áudios longos?",
@@ -1090,7 +1090,7 @@ const Header = () => {
           /* @__PURE__ */ jsxs(Link, { to: "/", className: "flex items-center gap-2 relative shrink-0 group z-50", onClick: () => setIsMobileMenuOpen(false), children: [
             /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 group-hover:border-primary/50 transition-colors", children: /* @__PURE__ */ jsx(Wallet, { className: "text-primary w-6 h-6" }) }),
             /* @__PURE__ */ jsxs("span", { className: "text-2xl font-bold text-white tracking-tight", children: [
-              "FinZap",
+              "Junny",
               /* @__PURE__ */ jsx("span", { className: "text-primary", children: ".ai" })
             ] })
           ] }),
@@ -1114,7 +1114,7 @@ const Header = () => {
           /* @__PURE__ */ jsx("div", { className: "hidden lg:flex items-center gap-3 shrink-0", children: /* @__PURE__ */ jsx(
             "a",
             {
-              href: "https://finzap.io/criar-conta",
+              href: "https://junny.com.br/criar-conta",
               className: "px-7 py-3 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 hover:scale-105 transition-all duration-300 text-white font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)]",
               children: "Começar Grátis"
             }
@@ -1158,13 +1158,13 @@ const Header = () => {
                 /* @__PURE__ */ jsx(motion.div, { variants: itemVariants, className: "mt-8", children: /* @__PURE__ */ jsx(
                   "a",
                   {
-                    href: "https://finzap.io/criar-conta",
+                    href: "https://junny.com.br/criar-conta",
                     className: "flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]",
                     children: "Começar Grátis"
                   }
                 ) }),
                 /* @__PURE__ */ jsx(motion.div, { variants: itemVariants, className: "mt-auto pt-10 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-gray-500 text-sm", children: [
-                  "© 2025 FinZap AI. ",
+                  "© 2025 Junny AI. ",
                   /* @__PURE__ */ jsx("br", {}),
                   " Todos os direitos reservados."
                 ] }) })
@@ -1181,10 +1181,10 @@ const Footer = () => {
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center md:items-start gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
         /* @__PURE__ */ jsx("div", { className: "w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center border border-primary/20", children: /* @__PURE__ */ jsx(Wallet, { className: "text-primary w-5 h-5" }) }),
-        /* @__PURE__ */ jsx("span", { className: "text-xl font-bold text-white tracking-tight", children: "FinZap.ai" })
+        /* @__PURE__ */ jsx("span", { className: "text-xl font-bold text-white tracking-tight", children: "Junny.ai" })
       ] }),
       /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 max-w-xs text-center md:text-left", children: "Inteligência artificial aplicada à liberdade financeira. Simples, seguro e direto no seu WhatsApp." }),
-      /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "© 2025 FinZap AI. Todos os direitos reservados." })
+      /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "© 2025 Junny AI. Todos os direitos reservados." })
     ] }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center md:items-end gap-6", children: [
       /* @__PURE__ */ jsxs("div", { className: "flex gap-6", children: [
@@ -1259,7 +1259,7 @@ const Hero = () => {
           children: /* @__PURE__ */ jsx(
             "a",
             {
-              href: "https://finzap.io/criar-conta",
+              href: "https://junny.com.br/criar-conta",
               className: "inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-[#008c69] to-[#008c69] hover:brightness-110 text-white font-bold text-lg rounded-full transition-all shadow-[0_0_30px_rgba(71,255,183,0.2)] hover:shadow-[0_0_50px_rgba(71,255,183,0.4)] text-center uppercase tracking-wide transform hover:scale-[1.02]",
               children: "Testar Grátis Agora"
             }
@@ -1274,7 +1274,7 @@ const Hero = () => {
           transition: { duration: 1, delay: 1 },
           className: "flex items-center gap-4 mt-8",
           children: [
-            /* @__PURE__ */ jsx("div", { className: "flex -space-x-3", children: [1, 2, 3, 4].map((i) => /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background overflow-hidden", children: /* @__PURE__ */ jsx("img", { src: `https://picsum.photos/50/50?random=${i + 40}`, alt: "Foto de perfil de cliente satisfeito do FinZap", width: 40, height: 40, className: "w-full h-full object-cover" }) }, i)) }),
+            /* @__PURE__ */ jsx("div", { className: "flex -space-x-3", children: [1, 2, 3, 4].map((i) => /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full border-2 border-background overflow-hidden", children: /* @__PURE__ */ jsx("img", { src: `https://picsum.photos/50/50?random=${i + 40}`, alt: "Foto de perfil de cliente satisfeito da Junny", width: 40, height: 40, className: "w-full h-full object-cover" }) }, i)) }),
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start", children: [
               /* @__PURE__ */ jsx("div", { className: "flex text-yellow-400 text-xs gap-0.5", children: "★★★★★".split("").map((star, i) => /* @__PURE__ */ jsx("span", { children: star }, i)) }),
               /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-gray-300", children: "15mil + usuários" })
@@ -1296,7 +1296,7 @@ const Hero = () => {
               src: "/hero.webp",
               srcSet: "/hero-mobile.webp 600w, /hero-medium.webp 900w, /hero.webp 1200w",
               sizes: "(max-width: 768px) 100vw, 1200px",
-              alt: "FinZap Dashboard",
+              alt: "Junny Dashboard",
               width: 1200,
               height: 563,
               decoding: "async",
@@ -1316,7 +1316,7 @@ function SEO({ title, description, canonical, image }) {
   return /* @__PURE__ */ jsxs(Helmet, { children: [
     /* @__PURE__ */ jsxs("title", { children: [
       title,
-      " | FinZap"
+      " | Junny"
     ] }),
     /* @__PURE__ */ jsx("meta", { name: "description", content: description }),
     fullCanonical && /* @__PURE__ */ jsx("link", { rel: "canonical", href: fullCanonical }),
@@ -1426,10 +1426,10 @@ const Hook = () => {
             /* @__PURE__ */ jsx("div", { className: "relative w-full aspect-[9/19] max-w-sm mx-auto rounded-[3rem] overflow-hidden border-[8px] border-[#1a1a1a] shadow-2xl bg-[#111]", children: /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 flex flex-col h-full bg-black", children: [
               /* @__PURE__ */ jsxs("div", { className: "bg-[#202c33] px-2 py-3 flex items-center gap-1 z-10 shadow-sm", children: [
                 /* @__PURE__ */ jsx("div", { className: "flex items-center gap-1 text-[#00a884]", children: /* @__PURE__ */ jsx(ChevronLeft, { size: 24, className: "text-white" }) }),
-                /* @__PURE__ */ jsx("div", { className: "w-9 h-9 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold border border-primary/20 mr-2 overflow-hidden", children: /* @__PURE__ */ jsx("img", { src: "https://ui-avatars.com/api/?name=FinZap&background=00a884&color=fff", alt: "Profile", className: "w-full h-full object-cover" }) }),
+                /* @__PURE__ */ jsx("div", { className: "w-9 h-9 bg-primary/20 rounded-full flex items-center justify-center text-primary font-bold border border-primary/20 mr-2 overflow-hidden", children: /* @__PURE__ */ jsx("img", { src: "https://ui-avatars.com/api/?name=Junny&background=00a884&color=fff", alt: "Profile", className: "w-full h-full object-cover" }) }),
                 /* @__PURE__ */ jsxs("div", { className: "flex-1 flex flex-col justify-center", children: [
                   /* @__PURE__ */ jsxs("span", { className: "text-white font-medium text-base leading-tight", children: [
-                    "FinZap ",
+                    "Junny ",
                     /* @__PURE__ */ jsx("span", { className: "text-[#00a884] ml-1", children: "✔" })
                   ] }),
                   /* @__PURE__ */ jsx("span", { className: "text-xs text-white/60", children: "online" })
@@ -1461,7 +1461,7 @@ const Hook = () => {
                       ] }),
                       /* @__PURE__ */ jsxs("div", { className: "self-start max-w-[85%] relative z-10 mt-1", children: [
                         /* @__PURE__ */ jsxs("div", { className: "bg-[#202c33] text-white p-2 pl-3 pr-2 rounded-lg rounded-tl-none shadow-sm text-[14.2px] leading-[19px]", children: [
-                          /* @__PURE__ */ jsx("p", { className: "font-bold text-[#00a884] text-xs mb-1", children: "FinZap AI" }),
+                          /* @__PURE__ */ jsx("p", { className: "font-bold text-[#00a884] text-xs mb-1", children: "Junny AI" }),
                           /* @__PURE__ */ jsxs("div", { className: "bg-black/20 rounded-md p-2 mb-2 border-l-4 border-[#00a884]", children: [
                             /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center mb-1", children: [
                               /* @__PURE__ */ jsx("span", { className: "text-xs text-white/80 capitalize flex items-center gap-1", children: "🛒 Mercado" }),
@@ -1489,7 +1489,7 @@ const Hook = () => {
                       ] }) : /* @__PURE__ */ jsxs("div", { className: "relative max-w-[85%]", children: [
                         /* @__PURE__ */ jsxs("div", { className: "bg-[#202c33] text-white p-2 pl-3 pr-2 rounded-lg rounded-tl-none shadow-sm text-[14.2px] leading-[19px]", children: [
                           typeof msg.content !== "string" && /* @__PURE__ */ jsxs(Fragment, { children: [
-                            /* @__PURE__ */ jsx("p", { className: "font-bold text-[#00a884] text-xs mb-1", children: "FinZap AI" }),
+                            /* @__PURE__ */ jsx("p", { className: "font-bold text-[#00a884] text-xs mb-1", children: "Junny AI" }),
                             /* @__PURE__ */ jsx("div", { className: "bg-black/20 rounded-md p-2 mb-2 border-l-4 border-[#00a884]", children: /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
                               /* @__PURE__ */ jsxs("span", { className: "text-xs text-white/80 capitalize flex items-center gap-1", children: [
                                 (() => {
@@ -1595,7 +1595,7 @@ const Hook = () => {
                   /* @__PURE__ */ jsx("div", { className: "w-14 h-14 rounded-full bg-gradient-to-br from-primary to-[#00cc99] flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(71,255,183,0.3)] group-hover:scale-110 transition-transform duration-300", children: /* @__PURE__ */ jsx(Check, { size: 28, className: "text-black stroke-[3]" }) }),
                   /* @__PURE__ */ jsxs("div", { children: [
                     /* @__PURE__ */ jsx("p", { className: "text-primary text-xs font-bold uppercase tracking-[0.2em] mb-1 flex items-center gap-2", children: "A Solução Definitiva" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-white font-bold text-xl md:text-2xl leading-tight", children: 'Com FinZap, é tão fácil quanto mandar um "oi".' })
+                    /* @__PURE__ */ jsx("p", { className: "text-white font-bold text-xl md:text-2xl leading-tight", children: 'Com a Junny, é tão fácil quanto mandar um "oi".' })
                   ] })
                 ] })
               ] }) })
@@ -1701,7 +1701,7 @@ const Certificate = () => {
               /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-red-500/50" }),
               /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-yellow-500/50" }),
               /* @__PURE__ */ jsx("div", { className: "w-3 h-3 rounded-full bg-green-500/50" }),
-              /* @__PURE__ */ jsx("div", { className: "ml-4 bg-[#111] px-4 py-1 rounded text-xs text-gray-500 font-mono w-64", children: "finzap.ai/reports/january" })
+              /* @__PURE__ */ jsx("div", { className: "ml-4 bg-[#111] px-4 py-1 rounded text-xs text-gray-500 font-mono w-64", children: "junny.com.br/reports/january" })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "flex-1 bg-[#111] p-8 flex gap-8", children: [
               /* @__PURE__ */ jsxs("div", { className: "w-1/3 bg-white/5 rounded-xl p-6 flex flex-col gap-4", children: [
@@ -1920,7 +1920,7 @@ const Price = () => {
         /* @__PURE__ */ jsx(
           "a",
           {
-            href: "https://finzap.io/criar-conta",
+            href: "https://junny.com.br/criar-conta",
             className: "mt-8 w-full px-8 py-5 bg-gradient-to-r from-[#008c69] to-[#008c69] hover:brightness-110 text-white font-bold text-lg rounded-full transition-all shadow-[0_0_30px_rgba(71,255,183,0.2)] hover:shadow-[0_0_50px_rgba(71,255,183,0.4)] text-center uppercase tracking-wide transform hover:scale-[1.02]",
             children: "Assinar Agora"
           }
@@ -1937,8 +1937,8 @@ const storiesData = [
   {
     slug: "5-erros-fgts",
     title: "5 Erros que Comem seu FGTS",
-    publisher: "FinZap",
-    publisherLogo: "https://finzap.io/favicon.ico",
+    publisher: "Junny",
+    publisherLogo: "https://junny.com.br/favicon.ico",
     posterPortrait: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080",
     slides: [
       {
@@ -1968,7 +1968,7 @@ const storiesData = [
         text: "Não perca mais tempo. Simule seu saldo agora.",
         cta: {
           label: "Simular FGTS",
-          url: "https://finzap.io/calculadoras/fgts"
+          url: "https://junny.com.br/calculadoras/fgts"
         }
       }
     ]
@@ -1986,7 +1986,7 @@ const RecentStories = () => {
         ] }),
         /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-bold text-white mb-4", children: [
           "Web Stories ",
-          /* @__PURE__ */ jsx("span", { className: "text-primary", children: "FinZap" })
+          /* @__PURE__ */ jsx("span", { className: "text-primary", children: "Junny" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-400 max-w-xl", children: "Conteúdo visual e direto ao ponto para você aprender sobre finanças em poucos segundos." })
       ] }),
@@ -2095,18 +2095,18 @@ const Home = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "FinZap - Controle Financeiro Inteligente",
-        description: "Gerencie suas finanças, calcule férias, rescisão e investimentos com as ferramentas gratuitas do FinZap.",
+        title: "Junny - Controle Financeiro Inteligente",
+        description: "Gerencie suas finanças, calcule férias, rescisão e investimentos com as ferramentas gratuitas da Junny.",
         canonical: "/"
       }
     ),
     /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "FinZap",
-      "url": "https://finzap.io",
-      "logo": "https://finzap.io/favicon.ico",
-      "description": "Organize suas finanças sem sair do chat. O FinZap é a maneira mais simples e rápida de controlar seus gastos usando Inteligência Artificial no WhatsApp.",
+      "name": "Junny",
+      "url": "https://junny.com.br",
+      "logo": "https://junny.com.br/favicon.ico",
+      "description": "Organize suas finanças sem sair do chat. A Junny é a maneira mais simples e rápida de controlar seus gastos usando Inteligência Artificial no WhatsApp.",
       "sameAs": []
     }) }),
     /* @__PURE__ */ jsx(Hero, {}),
@@ -2192,7 +2192,7 @@ const PromoPopup = () => {
           /* @__PURE__ */ jsxs(
             motion.a,
             {
-              href: "https://finzap.io/criar-conta",
+              href: "https://junny.com.br/criar-conta",
               target: "_blank",
               rel: "noopener noreferrer",
               animate: buttonControls,
@@ -2217,14 +2217,14 @@ const Breadcrumb = ({ items }) => {
         "@type": "ListItem",
         "position": 1,
         "name": "Home",
-        "item": "https://finzap.io/"
+        "item": "https://junny.com.br/"
         // Replace with actual domain if known, or use relative
       },
       ...items.map((item, index) => ({
         "@type": "ListItem",
         "position": index + 2,
         "name": item.label,
-        "item": `https://finzap.io${item.href}`
+        "item": `https://junny.com.br${item.href}`
       }))
     ]
   };
@@ -2275,7 +2275,7 @@ const Calculators = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadoras Financeiras FinZap",
+    "name": "Calculadoras Financeiras Junny",
     "description": "Ferramentas gratuitas para cálculo de férias, décimo terceiro, salário líquido e mais.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -2567,7 +2567,7 @@ const Calculators = () => {
       /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto space-y-16", children: [
         /* @__PURE__ */ jsxs("section", { className: "text-center", children: [
           /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadoras Online: Ferramentas para Decisões Financeiras" }),
-          /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg leading-relaxed", children: "As calculadoras online do FinZap são ferramentas digitais desenvolvidas para facilitar o cálculo de diferentes tipos de informações de forma automatizada. Elas funcionam diretamente no navegador, sem necessidade de instalação, e oferecem resultados imediatos com base nos dados fornecidos. Seja para resolver questões financeiras, trabalhistas ou de planejamento, nossas ferramentas ajudam você a economizar tempo, evitar erros manuais e tomar decisões mais conscientes." })
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg leading-relaxed", children: "As calculadoras online da Junny são ferramentas digitais desenvolvidas para facilitar o cálculo de diferentes tipos de informações de forma automatizada. Elas funcionam diretamente no navegador, sem necessidade de instalação, e oferecem resultados imediatos com base nos dados fornecidos. Seja para resolver questões financeiras, trabalhistas ou de planejamento, nossas ferramentas ajudam você a economizar tempo, evitar erros manuais e tomar decisões mais conscientes." })
         ] }),
         /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12", children: [
           /* @__PURE__ */ jsxs("section", { className: "bg-white/5 rounded-3xl p-8 border border-white/10", children: [
@@ -2667,7 +2667,7 @@ const Tools = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Ferramentas FinZap",
+    "name": "Ferramentas Junny",
     "description": "Ferramentas úteis para o seu dia a dia financeiro, como Gerador de Pix e mais.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Any",
@@ -2956,7 +2956,7 @@ const AppPromoBanner$1 = () => {
               /* @__PURE__ */ jsx("br", {}),
               /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "sem sair do chat" })
             ] }),
-            /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg", children: "Chega de planilhas complicadas. Com o FinZap, você controla seus gastos enviando áudios ou mensagens de texto no WhatsApp. Simples, rápido e com Inteligência Artificial." }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg", children: "Chega de planilhas complicadas. Com a Junny, você controla seus gastos enviando áudios ou mensagens de texto no WhatsApp. Simples, rápido e com Inteligência Artificial." }),
             /* @__PURE__ */ jsx("ul", { className: "space-y-3", children: ["Registro automático de gastos", "Relatórios mensais inteligentes", "Dicas de economia personalizadas"].map((item, i) => /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-3 text-gray-300", children: [
               /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary" }),
               item
@@ -2964,7 +2964,7 @@ const AppPromoBanner$1 = () => {
             /* @__PURE__ */ jsx("div", { className: "pt-4", children: /* @__PURE__ */ jsxs(
               "a",
               {
-                href: "https://finzap.io/criar-conta",
+                href: "https://junny.com.br/criar-conta",
                 className: "inline-flex items-center justify-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-[#008c69] to-[#008c69] hover:brightness-110 text-white font-bold text-base md:text-lg rounded-full transition-all shadow-[0_0_30px_rgba(71,255,183,0.2)] hover:shadow-[0_0_50px_rgba(71,255,183,0.4)] text-center uppercase tracking-wide transform hover:scale-[1.02] whitespace-nowrap",
                 children: [
                   "Testar Grátis Agora ",
@@ -2981,7 +2981,7 @@ const AppPromoBanner$1 = () => {
               {
                 src: "/hero.webp",
                 srcSet: "/hero-mobile.webp 600w, /hero-medium.webp 900w, /hero.webp 1200w",
-                alt: "FinZap App Dashboard",
+                alt: "Junny App Dashboard",
                 width: 1200,
                 height: 563,
                 loading: "lazy",
@@ -3003,7 +3003,7 @@ const AppPromoBanner$2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 const INVESTMENT_FAQS = [
   {
     question: "Qual é o melhor simulador de investimentos?",
-    answer: "O melhor simulador de investimentos é o do FinZap, pois ele fornece as principais informações sobre sua aplicação, como: Resultado bruto e líquido, Valor pago em imposto, Valor do rendimento recebido e muito mais! Além disso, é possível fazer várias simulações de forma 100% gratuita."
+    answer: "O melhor simulador de investimentos é o da Junny, pois ele fornece as principais informações sobre sua aplicação, como: Resultado bruto e líquido, Valor pago em imposto, Valor do rendimento recebido e muito mais! Além disso, é possível fazer várias simulações de forma 100% gratuita."
   },
   {
     question: "O que é um Certificado de Depósito Bancário (CDB)?",
@@ -3030,7 +3030,7 @@ const InvestmentPage = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Simulador de Investimentos FinZap",
+    "name": "Simulador de Investimentos Junny",
     "description": "Compare CDB, LCI, LCA e Tesouro Direto. Calcule o rendimento dos seus investimentos.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -3103,7 +3103,7 @@ const InvestmentPage = () => {
       /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
         /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
           /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Simulador de Investimentos: Calcule seus rendimentos" }),
-          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quer saber quanto seu dinheiro vai render? Utilize o Simulador de Investimentos do FinZap para projetar seus ganhos em aplicações de Renda Fixa como CDB, LCI, LCA e Tesouro Direto." }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quer saber quanto seu dinheiro vai render? Utilize o Simulador de Investimentos da Junny para projetar seus ganhos em aplicações de Renda Fixa como CDB, LCI, LCA e Tesouro Direto." }),
           /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como funciona o simulador de investimentos gratuito?" }),
           /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Esta calculadora de investimentos foi desenvolvida para comparação de diferentes tipos de títulos de renda fixa. O simulador de investimento calcula de forma simples e descomplicada qual será o retorno do seu dinheiro após uma aplicação a uma determinada taxa e período." }),
           /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Ademais, o cálculo leva em conta possíveis aportes durante o tempo (investimento mensal), além do valor inicialmente aplicado. Com este simulador, será possível saber quanto conseguirá acumular no final de uma determinada quantidade de meses investindo seu dinheiro na aplicação de sua escolha." }),
@@ -3428,7 +3428,7 @@ const VacationPage = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadora de Férias FinZap",
+    "name": "Calculadora de Férias Junny",
     "description": "Calcule o valor exato das suas férias com 1/3 constitucional e descontos.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -3488,7 +3488,7 @@ const VacationPage = () => {
       ),
       /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
         /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de Férias: Saiba quanto você vai receber" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Planejando seu descanso? Utilize a Calculadora de Férias do FinZap para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais." }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Planejando seu descanso? Utilize a Calculadora de Férias da Junny para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais." }),
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "O que compõe o cálculo de férias?" }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O cálculo de férias envolve diversas variáveis que podem confundir o trabalhador. Nossa ferramenta simplifica tudo isso, considerando:" }),
         /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
@@ -3510,8 +3510,8 @@ const VacationPage = () => {
           ] })
         ] }),
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como usar a calculadora?" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Basta inserir seu salário bruto, a quantidade de dias que pretende tirar de férias, se possui dependentes (para cálculo do IRRF) e se deseja vender dias (abono). O FinZap faz todo o cálculo complexo das alíquotas progressivas de INSS e Imposto de Renda automaticamente." }),
-        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Planeje suas finanças com o FinZap" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Basta inserir seu salário bruto, a quantidade de dias que pretende tirar de férias, se possui dependentes (para cálculo do IRRF) e se deseja vender dias (abono). A Junny faz todo o cálculo complexo das alíquotas progressivas de INSS e Imposto de Renda automaticamente." }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Planeje suas finanças com a Junny" }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Saber o valor exato das suas férias ajuda a planejar melhor sua viagem ou seus gastos no período de descanso. Use nossa ferramenta gratuita quantas vezes precisar e tenha total controle sobre seu dinheiro." })
       ] }),
       /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "h-96 w-full flex items-center justify-center text-gray-500", children: "Carregando oferta..." }), children: /* @__PURE__ */ jsx(AppPromoBanner, {}) })
@@ -3649,14 +3649,14 @@ const ENERGY_FAQS = [
   },
   {
     question: "Como se calcula o valor da energia elétrica?",
-    answer: "Para calcular o valor de energia elétrica de forma prática e precisa, basta utilizar a Calculadora de Consumo de Energia FinZap."
+    answer: "Para calcular o valor de energia elétrica de forma prática e precisa, basta utilizar a Calculadora de Consumo de Energia Junny."
   }
 ];
 const EnergyPage = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadora de Consumo de Energia FinZap",
+    "name": "Calculadora de Consumo de Energia Junny",
     "description": "Simule o consumo de energia dos seus eletrodomésticos e economize na conta de luz.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -3671,7 +3671,7 @@ const EnergyPage = () => {
       SEO,
       {
         title: "Calculadora de Consumo de Energia - Economize Luz",
-        description: "Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora do FinZap.",
+        description: "Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora da Junny.",
         canonical: "/calculadoras/energia"
       }
     ),
@@ -3712,7 +3712,7 @@ const EnergyPage = () => {
                 "Calculadora de ",
                 /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Consumo de Energia" })
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora do FinZap." })
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora da Junny." })
             ]
           }
         )
@@ -3728,7 +3728,7 @@ const EnergyPage = () => {
       ),
       /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
         /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Calculadora de Consumo de Energia: economize na conta de luz" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quanto de energia seus aparelhos domésticos consomem? Descubra com a prática e fácil Calculadora de Consumo de Energia FinZap." }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Quanto de energia seus aparelhos domésticos consomem? Descubra com a prática e fácil Calculadora de Consumo de Energia Junny." }),
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Campos da Calculadora" }),
         /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-6 space-y-2 text-gray-400 mb-8", children: [
           /* @__PURE__ */ jsxs("li", { children: [
@@ -3748,8 +3748,8 @@ const EnergyPage = () => {
             " Preço do consumo Quilowatt-hora (R$)."
           ] })
         ] }),
-        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como utilizar a Calculadora de Consumo de Energia FinZap" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Para utilizar a Calculadora de Consumo de Energia FinZap, siga os passos abaixo:" }),
+        /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como utilizar a Calculadora de Consumo de Energia Junny" }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Para utilizar a Calculadora de Consumo de Energia Junny, siga os passos abaixo:" }),
         /* @__PURE__ */ jsxs("ol", { className: "list-decimal pl-6 space-y-2 text-gray-400 mb-8", children: [
           /* @__PURE__ */ jsx("li", { children: "Informe a potência do seu aparelho;" }),
           /* @__PURE__ */ jsx("li", { children: "Preencha com o tempo de uso diário em horas;" }),
@@ -3758,13 +3758,13 @@ const EnergyPage = () => {
           /* @__PURE__ */ jsx("li", { children: "Por fim, o cálculo é feito automaticamente." })
         ] }),
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Como calcular seu consumo de energia" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Veja como utilizar a calculadora de energia FinZap para descobrir o consumo dos seus aparelhos nos tópicos abaixo." }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Veja como utilizar a calculadora de energia Junny para descobrir o consumo dos seus aparelhos nos tópicos abaixo." }),
         /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Descubra qual é a potência do seu aparelho" }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'Essa informação geralmente pode ser encontrada na caixa ou na etiqueta de consumo afixada no próprio produto. Caso não encontre a caixa ou a etiqueta, também é possível encontrar a potência do seu aparelho em uma rápida pesquisa em sites buscadores como o Google. Para isso, basta informar o modelo do aparelho com a palavra "potência" na barra de busca.' }),
         /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Preencha o valor do kWh em sua região" }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Em seguida, pesquise em sua conta de energia ou no site da sua operadora o valor do quilowatt-hora (KWH) em sua região. Quilowatt-hora é uma unidade de faturamento comum utilizada pelas concessionárias de energia elétrica para cobrar pelo fornecimento da energia." }),
         /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-3", children: "Informe os seus dados de consumo de energia do aparelho" }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Agora, basta preencher a Calculadora de Energia FinZap com os dados que você obteve e o seu tempo de consumo. O resultado aparecerá instantaneamente para você saber exatamente quanto vai gastar em um mês." }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Agora, basta preencher a Calculadora de Energia Junny com os dados que você obteve e o seu tempo de consumo. O resultado aparecerá instantaneamente para você saber exatamente quanto vai gastar em um mês." }),
         /* @__PURE__ */ jsxs("div", { className: "bg-white/5 border border-white/10 rounded-2xl p-8 mb-12", children: [
           /* @__PURE__ */ jsx("h4", { className: "text-xl font-bold text-white mb-4", children: "Veja o exemplo:" }),
           /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Digamos que você esteja pensando em comprar um aspirador de pó vertical, mas antes deseja saber o quanto o aparelho vai gastar por mês." }),
@@ -3773,7 +3773,7 @@ const EnergyPage = () => {
         ] }),
         /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-4", children: "Qual é a importância de saber calcular o consumo de energia dos eletrodomésticos?" }),
         /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Saber quanto um aparelho gasta de energia todo mês pode ser a chave para fazer melhores escolhas e desenvolver bons hábitos. Pode ser a sua geladeira, computador de trabalho ou mesmo o seu aspirador de pó. Cada aparelho é responsável por uma parcela específica do seu cálculo de consumo de energia." }),
-        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Pensando nisso, o FinZap desenvolveu uma Calculadora de Consumo de Energia para você descobrir de forma automática o quanto aquele seu eletrodoméstico vai gastar, além do preço médio que irá pagar por mês." }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-8", children: "Pensando nisso, a Junny desenvolveu uma Calculadora de Consumo de Energia para você descobrir de forma automática o quanto aquele seu eletrodoméstico vai gastar, além do preço médio que irá pagar por mês." }),
         /* @__PURE__ */ jsx(FAQ, { items: ENERGY_FAQS, title: "Perguntas frequentes sobre consumo de energia", className: "py-12", showSocialProof: false })
       ] }),
       /* @__PURE__ */ jsx(AppPromoBanner$1, {})
@@ -3819,7 +3819,7 @@ const FuelPage = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadora Álcool ou Gasolina FinZap",
+    "name": "Calculadora Álcool ou Gasolina Junny",
     "description": "Descubra qual combustível vale mais a pena para o seu carro.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -4144,7 +4144,7 @@ const TerminationPage = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadora de Rescisão Trabalhista FinZap",
+    "name": "Calculadora de Rescisão Trabalhista Junny",
     "description": "Simule o valor da sua rescisão trabalhista CLT. Calcule saldo de salário, férias, 13º, aviso prévio e multa do FGTS.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -4572,7 +4572,7 @@ const INSSPage = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadora de INSS 2025 FinZap",
+    "name": "Calculadora de INSS 2025 Junny",
     "description": "Simule o desconto do INSS com base no salário e tipo de contribuinte. Resultado rápido e atualizado com as faixas de contribuição de 2025.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -8316,7 +8316,7 @@ const FIREPage = () => {
         /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 border-l-4 border-yellow-500 p-6 rounded-r-xl mb-16", children: [
           /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "⚠️ Atenção à Inflação!" }),
           /* @__PURE__ */ jsxs("p", { className: "text-gray-300", children: [
-            "Muitas calculadoras na internet ignoram a inflação e mostram resultados ilusórios. O FinZap utiliza a ",
+            "Muitas calculadoras na internet ignoram a inflação e mostram resultados ilusórios. A Junny utiliza a ",
             /* @__PURE__ */ jsx("strong", { children: "Taxa Real" }),
             " (Rentabilidade Nominal - Inflação) para garantir que o valor projetado mantenha o poder de compra. Se o seu investimento rende 10% e a inflação é 4%, seu ganho real para fins de liberdade financeira é de apenas 6%."
           ] })
@@ -10079,7 +10079,7 @@ const CurrencyConverterPage = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Conversor de Moedas FinZap",
+    "name": "Conversor de Moedas Junny",
     "description": "Converta valores entre Real, Dólar e Euro com a cotação atualizada em tempo real.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
@@ -10322,7 +10322,7 @@ const CurrencyConverterPage = () => {
             ] })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "bg-primary/10 border-l-4 border-primary p-6 rounded-r-xl", children: [
-            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "💡 Dica FinZap" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "💡 Dica Junny" }),
             /* @__PURE__ */ jsx("p", { className: "text-gray-300 text-sm", children: "Ao usar nosso conversor, lembre-se que ele mostra a taxa de mercado (comercial). Para saber quanto você vai pagar na casa de câmbio, adicione mentalmente cerca de 4% a 6% sobre o valor convertido." })
           ] })
         ] }),
@@ -10398,7 +10398,7 @@ const PIX_FAQS = [
   },
   {
     question: "Tem taxas para receber pelo QR Code?",
-    answer: "O FinZap não cobra nenhuma taxa. Porém, dependendo do seu banco e tipo de conta (PJ), a instituição financeira pode cobrar tarifas por recebimento via Pix. Para pessoas físicas (PF), o recebimento costuma ser gratuito na maioria dos bancos."
+    answer: "A Junny não cobra nenhuma taxa. Porém, dependendo do seu banco e tipo de conta (PJ), a instituição financeira pode cobrar tarifas por recebimento via Pix. Para pessoas físicas (PF), o recebimento costuma ser gratuito na maioria dos bancos."
   },
   {
     question: "Posso colocar um valor fixo no QR Code?",
@@ -10684,7 +10684,7 @@ const PixGeneratorPage = () => {
           /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
             /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
               "Precisa receber um pagamento rápido e sem taxas? O ",
-              /* @__PURE__ */ jsx("strong", { children: "Gerador de Pix FinZap" }),
+              /* @__PURE__ */ jsx("strong", { children: "Gerador de Pix Junny" }),
               " é a ferramenta ideal para autônomos, lojistas e prestadores de serviço. Com ele, você cria um código oficial do Banco Central (padrão BR Code) na hora, pronto para ser lido por qualquer aplicativo de banco."
             ] }),
             /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Esqueça a necessidade de imprimir folhas A4 com seus dados bancários ou ficar ditando CPF e CNPJ por mensagem. Gere um QR Code profissional, passe credibilidade para seus clientes e receba o dinheiro na hora." })
@@ -10828,7 +10828,7 @@ const WebStoryPage = () => {
         " | Web Stories"
       ] }),
       /* @__PURE__ */ jsx("meta", { name: "theme-color", content: "#000000" }),
-      /* @__PURE__ */ jsx("link", { rel: "amphtml", href: `https://finzap.io/stories/${story.slug}.html` }),
+      /* @__PURE__ */ jsx("link", { rel: "amphtml", href: `https://junny.com.br/stories/${story.slug}.html` }),
       /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "CreativeWork",
@@ -10845,10 +10845,10 @@ const WebStoryPage = () => {
         },
         "publisher": {
           "@type": "Organization",
-          "name": "FinZap",
+          "name": "Junny",
           "logo": {
             "@type": "ImageObject",
-            "url": "https://finzap.io/favicon.ico"
+            "url": "https://junny.com.br/favicon.ico"
           }
         }
       }) })
@@ -10964,7 +10964,7 @@ const StoriesGallery = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Web Stories Financeiras - Dicas Rápidas | FinZap",
+        title: "Web Stories Financeiras - Dicas Rápidas | Junny",
         description: "Confira nossas Web Stories com dicas rápidas de finanças, FGTS, investimentos e economia em formato visual e direto ao ponto.",
         canonical: "/stories"
       }
@@ -10980,7 +10980,7 @@ const StoriesGallery = () => {
           /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Conteúdo Rápido" })
         ] }),
         /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6", children: [
-          "FinZap ",
+          "Junny ",
           /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Stories" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Dicas financeiras, tutoriais e novidades em formato de tela cheia. Rápido de ler, fácil de entender." })
@@ -11195,9 +11195,9 @@ const BlogIndex = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Blog FinZap - Educação Financeira Descomplicada",
+        title: "Blog Junny - Educação Financeira Descomplicada",
         description: "Dicas práticas de economia, investimentos e planejamento financeiro para você dominar seu dinheiro.",
-        canonical: "https://finzap.io/blog"
+        canonical: "https://junny.com.br/blog"
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
@@ -11207,7 +11207,7 @@ const BlogIndex = () => {
       /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
         /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight", children: [
           "Blog ",
-          /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "FinZap" })
+          /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Junny" })
         ] }),
         /* @__PURE__ */ jsx("p", { className: "text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10", children: "Domine suas finanças com conteúdos práticos e diretos ao ponto." }),
         /* @__PURE__ */ jsxs("div", { className: "max-w-xl mx-auto relative", children: [
@@ -11265,9 +11265,9 @@ const CategoryPage = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: `${(category == null ? void 0 : category.name) || "Categoria"} - Blog FinZap`,
-        description: `Artigos sobre ${(category == null ? void 0 : category.name) || "finanças"} no blog FinZap.`,
-        canonical: `https://finzap.io/blog/${categorySlug}`
+        title: `${(category == null ? void 0 : category.name) || "Categoria"} - Blog Junny`,
+        description: `Artigos sobre ${(category == null ? void 0 : category.name) || "finanças"} no blog Junny.`,
+        canonical: `https://junny.com.br/blog/${categorySlug}`
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
@@ -11359,16 +11359,16 @@ const BlogPost = () => {
     "dateModified": post.updated_at || post.published_at,
     "author": {
       "@type": "Person",
-      "name": ((_a2 = post.author) == null ? void 0 : _a2.name) || "FinZap Team",
+      "name": ((_a2 = post.author) == null ? void 0 : _a2.name) || "Junny Team",
       "url": (_b2 = post.author) == null ? void 0 : _b2.linkedin_url,
       "jobTitle": (_c = post.author) == null ? void 0 : _c.role
     },
     "publisher": {
       "@type": "Organization",
-      "name": "FinZap",
+      "name": "Junny",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://finzap.io/logo.png"
+        "url": "https://junny.com.br/logo.png"
       }
     },
     "description": post.meta_description || post.excerpt
@@ -11391,7 +11391,7 @@ const BlogPost = () => {
       {
         title: post.meta_title || post.title,
         description: post.meta_description || post.excerpt,
-        canonical: `https://finzap.io/blog/${((_d = post.category) == null ? void 0 : _d.slug) || "geral"}/${post.slug}`,
+        canonical: `https://junny.com.br/blog/${((_d = post.category) == null ? void 0 : _d.slug) || "geral"}/${post.slug}`,
         image: post.cover_image
       }
     ),
@@ -11474,9 +11474,9 @@ const NotFound = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Página não encontrada - FinZap",
+        title: "Página não encontrada - Junny",
         description: "A página que você está procurando não existe ou foi movida.",
-        canonical: "https://finzap.io/404"
+        canonical: "https://junny.com.br/404"
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
@@ -11515,9 +11515,9 @@ const NotFound = () => {
     ] })
   ] });
 };
-const Terms = lazy(() => import("./assets/Terms-Dvpgo9hI.js").then((module) => ({ default: module.Terms })));
-const Privacy = lazy(() => import("./assets/Privacy-BFMibbHw.js").then((module) => ({ default: module.Privacy })));
-const Support = lazy(() => import("./assets/Support-k08EF3Ty.js").then((module) => ({ default: module.Support })));
+const Terms = lazy(() => import("./assets/Terms-B2Uyhcmm.js").then((module) => ({ default: module.Terms })));
+const Privacy = lazy(() => import("./assets/Privacy-B8I55MW0.js").then((module) => ({ default: module.Privacy })));
+const Support = lazy(() => import("./assets/Support-CkPPx7wI.js").then((module) => ({ default: module.Support })));
 function App() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(ScrollToTop, {}),

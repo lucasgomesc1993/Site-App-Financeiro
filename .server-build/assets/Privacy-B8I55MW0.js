@@ -18,8 +18,8 @@ const Privacy = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Política de Privacidade - FinZap",
-        description: "Saiba como o FinZap coleta, usa e protege seus dados pessoais. Sua privacidade é nossa prioridade.",
+        title: "Política de Privacidade - Junny",
+        description: "Saiba como a Junny coleta, usa e protege seus dados pessoais. Sua privacidade é nossa prioridade.",
         canonical: "/privacy"
       }
     ),
@@ -88,4 +88,4 @@ const Privacy = () => {
 export {
   Privacy
 };
-//# sourceMappingURL=Privacy-BFMibbHw.js.map
+//# sourceMappingURL=Privacy-B8I55MW0.js.map

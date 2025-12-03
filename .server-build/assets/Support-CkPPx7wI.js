@@ -18,8 +18,8 @@ const Support = () => {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Central de Ajuda - Suporte FinZap",
-        description: "Precisa de ajuda? Entre em contato com o suporte do FinZap via WhatsApp ou E-mail, ou consulte nossas perguntas frequentes.",
+        title: "Central de Ajuda - Suporte Junny",
+        description: "Precisa de ajuda? Entre em contato com o suporte da Junny via WhatsApp ou E-mail, ou consulte nossas perguntas frequentes.",
         canonical: "/support"
       }
     ),
@@ -56,7 +56,7 @@ const Support = () => {
             /* @__PURE__ */ jsx("div", { className: "w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border border-primary/20", children: /* @__PURE__ */ jsx(Mail, { className: "text-primary w-7 h-7" }) }),
             /* @__PURE__ */ jsx("h3", { className: "text-2xl font-bold text-white mb-2", children: "E-mail" }),
             /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Para assuntos mais complexos, parcerias ou feedback detalhado. Respondemos em até 24 horas úteis." }),
-            /* @__PURE__ */ jsxs("a", { href: "mailto:suporte@finzap.ai", className: "inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all", children: [
+            /* @__PURE__ */ jsxs("a", { href: "mailto:suporte@junny.com.br", className: "inline-flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all", children: [
               "Enviar e-mail ",
               /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
             ] })
@@ -91,4 +91,4 @@ const Support = () => {
 export {
   Support
 };
-//# sourceMappingURL=Support-k08EF3Ty.js.map
+//# sourceMappingURL=Support-CkPPx7wI.js.map

@@ -135,7 +135,7 @@ export const Header: React.FC = () => {
           <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center border border-primary/20 group-hover:border-primary/50 transition-colors">
             <Wallet className="text-primary w-6 h-6" />
           </div>
-          <span className="text-2xl font-bold text-white tracking-tight">FinZap<span className="text-primary">.ai</span></span>
+          <span className="text-2xl font-bold text-white tracking-tight">Junny<span className="text-primary">.ai</span></span>
         </Link>
 
         {/* Desktop Nav - Centered Pill - Visible on LG+ */}
@@ -167,7 +167,7 @@ export const Header: React.FC = () => {
         {/* Desktop CTA - Visible on LG+ */}
         <div className="hidden lg:flex items-center gap-3 shrink-0">
           <a
-            href="https://finzap.io/criar-conta"
+            href="https://junny.com.br/criar-conta"
             className="px-7 py-3 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 hover:scale-105 transition-all duration-300 text-white font-bold text-xs uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)]"
           >
             Começar Grátis
@@ -217,7 +217,7 @@ export const Header: React.FC = () => {
 
               <motion.div variants={itemVariants} className="mt-8">
                 <a
-                  href="https://finzap.io/criar-conta"
+                  href="https://junny.com.br/criar-conta"
                   className="flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]"
                 >
                   Começar Grátis
@@ -226,7 +226,7 @@ export const Header: React.FC = () => {
 
               <motion.div variants={itemVariants} className="mt-auto pt-10 text-center">
                 <p className="text-gray-500 text-sm">
-                  © 2025 FinZap AI. <br /> Todos os direitos reservados.
+                  © 2025 Junny AI. <br /> Todos os direitos reservados.
                 </p>
               </motion.div>
             </div>

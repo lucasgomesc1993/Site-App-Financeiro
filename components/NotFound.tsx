@@ -7,9 +7,9 @@ export const NotFound: React.FC = () => {
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-4">
             <SEO
-                title="Página não encontrada - FinZap"
+                title="Página não encontrada - Junny"
                 description="A página que você está procurando não existe ou foi movida."
-                canonical="https://finzap.io/404"
+                canonical="https://junny.com.br/404"
             />
 
             {/* Background Orbs */}

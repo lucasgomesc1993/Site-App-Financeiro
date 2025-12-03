@@ -50,9 +50,9 @@ export const CategoryPage: React.FC = () => {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title={`${category?.name || 'Categoria'} - Blog FinZap`}
-                description={`Artigos sobre ${category?.name || 'finanças'} no blog FinZap.`}
-                canonical={`https://finzap.io/blog/${categorySlug}`}
+                title={`${category?.name || 'Categoria'} - Blog Junny`}
+                description={`Artigos sobre ${category?.name || 'finanças'} no blog Junny.`}
+                canonical={`https://junny.com.br/blog/${categorySlug}`}
             />
 
             {/* Background Orbs */}

@@ -114,7 +114,7 @@ export const CurrencyConverterPage: React.FC = () => {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Conversor de Moedas FinZap",
+        "name": "Conversor de Moedas Junny",
         "description": "Converta valores entre Real, Dólar e Euro com a cotação atualizada em tempo real.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
@@ -357,7 +357,7 @@ export const CurrencyConverterPage: React.FC = () => {
                             </div>
                         </div>
                         <div className="bg-primary/10 border-l-4 border-primary p-6 rounded-r-xl">
-                            <h3 className="text-lg font-bold text-white mb-2">💡 Dica FinZap</h3>
+                            <h3 className="text-lg font-bold text-white mb-2">💡 Dica Junny</h3>
                             <p className="text-gray-300 text-sm">
                                 Ao usar nosso conversor, lembre-se que ele mostra a taxa de mercado (comercial). Para saber quanto você vai pagar na casa de câmbio, adicione mentalmente cerca de 4% a 6% sobre o valor convertido.
                             </p>
