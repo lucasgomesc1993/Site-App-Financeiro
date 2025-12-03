@@ -12,28 +12,28 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finzap.io/blog/categoria/fgts</loc>
+    <loc>https://finzap.io/blog/fgts</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finzap.io/blog/categoria/financas-pessoais</loc>
+    <loc>https://finzap.io/blog/financas-pessoais</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://finzap.io/blog/categoria/investimentos</loc>
+    <loc>https://finzap.io/blog/financas-pessoais/vender-10-dias-ferias-vale-a-pena</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://finzap.io/blog/vender-10-dias-ferias-vale-a-pena</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-12-03T11:56:17.741Z</lastmod>
+    <lastmod>2025-12-03T12:47:01.042Z</lastmod>
     <image:image>
-      <image:loc>https://cfbwntkyygkqbottkktc.supabase.co/storage/v1/object/public/blog-images/u4mkri2hyjj_1764761807050.png</image:loc>
+      <image:loc>https://cfbwntkyygkqbottkktc.supabase.co/storage/v1/object/public/blog-images/2952pacbvtn_1764766003686.jpg</image:loc>
     </image:image>
+  </url>
+  <url>
+    <loc>https://finzap.io/blog/investimentos</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://finzap.io/calculadoras</loc>

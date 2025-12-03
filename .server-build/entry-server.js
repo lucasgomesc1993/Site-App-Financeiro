@@ -9,7 +9,7 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, Search, BookOpen } from "lucide-react";
+import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, Search, BookOpen, ArrowLeft } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { QRCodeSVG } from "qrcode.react";
@@ -11014,7 +11014,7 @@ const CategoryBadge = ({ category, className = "" }) => {
     Link,
     {
       to: `/blog/${category.slug}`,
-      className: `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 ${className}`,
+      className: `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 whitespace-nowrap ${className}`,
       children: category.name
     }
   );
@@ -11032,11 +11032,18 @@ const PostCard = ({ post }) => {
       }
     ) }),
     /* @__PURE__ */ jsxs("div", { className: "flex flex-col flex-1 p-6", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-4", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start gap-3 mb-4", children: [
         post.category && /* @__PURE__ */ jsx(CategoryBadge, { category: post.category }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center text-xs text-gray-400 gap-1", children: [
-          /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
-          /* @__PURE__ */ jsx("time", { dateTime: post.published_at, children: format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR }) })
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center text-xs text-gray-400 gap-2", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
+            /* @__PURE__ */ jsx("time", { dateTime: post.published_at, children: format(new Date(post.published_at), "d 'de' MMM, yyyy", { locale: ptBR }) })
+          ] }),
+          /* @__PURE__ */ jsx("span", { className: "w-1 h-1 rounded-full bg-gray-600" }),
+          /* @__PURE__ */ jsxs("span", { children: [
+            post.reading_time || 5,
+            " min de leitura"
+          ] })
         ] })
       ] }),
       /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${((_b2 = post.category) == null ? void 0 : _b2.slug) || "geral"}/${post.slug}`, children: post.title }) }),
@@ -11120,7 +11127,10 @@ const blogService = {
       console.error("Error fetching posts:", error);
       return [];
     }
-    return data;
+    return data.map((post) => ({
+      ...post,
+      reading_time: Math.ceil(post.content.split(" ").length / 200)
+    }));
   },
   async getPostBySlug(slug) {
     const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories(*)").eq("slug", slug).eq("published", true).single();
@@ -11128,7 +11138,10 @@ const blogService = {
       console.error(`Error fetching post with slug ${slug}:`, error);
       return null;
     }
-    return data;
+    return {
+      ...data,
+      reading_time: Math.ceil(data.content.split(" ").length / 200)
+    };
   },
   async getPostsByCategory(categorySlug) {
     const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories!inner(*)").eq("category.slug", categorySlug).eq("published", true).order("published_at", { ascending: false });
@@ -11136,7 +11149,10 @@ const blogService = {
       console.error(`Error fetching posts for category ${categorySlug}:`, error);
       return [];
     }
-    return data;
+    return data.map((post) => ({
+      ...post,
+      reading_time: Math.ceil(post.content.split(" ").length / 200)
+    }));
   },
   async getAllCategories() {
     const { data, error } = await supabase.from("categories").select("*").order("name");
@@ -11386,11 +11402,16 @@ const BlogPost = () => {
           /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
             /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4" }),
             format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })
+          ] }),
+          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsx(BookOpen, { className: "w-4 h-4" }),
+            post.reading_time || 5,
+            " min de leitura"
           ] })
         ] }),
         /* @__PURE__ */ jsx("h1", { className: "text-3xl md:text-5xl font-bold text-white mb-6 leading-tight", children: post.title }),
         /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed", children: post.excerpt }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-3 mt-8", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center md:justify-start gap-3 mt-8", children: [
           ((_f = post.author) == null ? void 0 : _f.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-10 h-10 rounded-full border border-white/10" }),
           /* @__PURE__ */ jsxs("div", { className: "text-left", children: [
             /* @__PURE__ */ jsx("p", { className: "text-white font-medium", children: (_g = post.author) == null ? void 0 : _g.name }),
@@ -11425,6 +11446,52 @@ const BlogPost = () => {
       /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
       " O conteúdo disponibilizado neste blog é apenas para fins informativos e educacionais. Embora busquemos manter as informações atualizadas, não nos responsabilizamos por eventuais divergências ou decisões tomadas com base nos artigos. Consulte sempre um profissional para orientações específicas ao seu caso."
     ] }) }) })
+  ] });
+};
+const NotFound = () => {
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen flex items-center justify-center overflow-hidden px-4", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Página não encontrada - FinZap",
+        description: "A página que você está procurando não existe ou foi movida.",
+        canonical: "https://finzap.io/404"
+      }
+    ),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "relative z-10 text-center max-w-2xl mx-auto", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8 relative inline-block", children: [
+        /* @__PURE__ */ jsx("h1", { className: "text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent opacity-20 select-none", children: "404" }),
+        /* @__PURE__ */ jsx("div", { className: "absolute inset-0 flex items-center justify-center", children: /* @__PURE__ */ jsx("span", { className: "text-4xl md:text-5xl font-bold text-white", children: "Ops!" }) })
+      ] }),
+      /* @__PURE__ */ jsx("h2", { className: "text-2xl md:text-3xl font-bold text-white mb-4", children: "Página não encontrada" }),
+      /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg mb-10 max-w-md mx-auto", children: "Parece que você se perdeu no mundo das finanças. A página que você procura não existe ou foi movida." }),
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col sm:flex-row items-center justify-center gap-4", children: [
+        /* @__PURE__ */ jsxs(
+          Link,
+          {
+            to: "/",
+            className: "flex items-center gap-2 px-8 py-3 rounded-full bg-primary text-background font-bold hover:bg-primary/90 transition-all hover:scale-105",
+            children: [
+              /* @__PURE__ */ jsx(Home$1, { className: "w-5 h-5" }),
+              "Voltar para o Início"
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          "button",
+          {
+            onClick: () => window.history.back(),
+            className: "flex items-center gap-2 px-8 py-3 rounded-full bg-white/5 text-white font-medium border border-white/10 hover:bg-white/10 transition-all",
+            children: [
+              /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5" }),
+              "Voltar página anterior"
+            ]
+          }
+        )
+      ] })
+    ] })
   ] });
 };
 const Terms = lazy(() => import("./assets/Terms-Dvpgo9hI.js").then((module) => ({ default: module.Terms })));
@@ -11467,7 +11534,8 @@ function App() {
         /* @__PURE__ */ jsx(Route, { path: "/stories", element: /* @__PURE__ */ jsx(StoriesGallery, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/terms", element: /* @__PURE__ */ jsx(Terms, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/privacy", element: /* @__PURE__ */ jsx(Privacy, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/support", element: /* @__PURE__ */ jsx(Support, {}) })
+        /* @__PURE__ */ jsx(Route, { path: "/support", element: /* @__PURE__ */ jsx(Support, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFound, {}) })
       ] }) }) }),
       /* @__PURE__ */ jsx(Footer, {}),
       /* @__PURE__ */ jsx(PromoPopup, {})

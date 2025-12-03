@@ -13,7 +13,11 @@ export const blogService = {
             console.error('Error fetching posts:', error);
             return [];
         }
-        return data as Post[];
+
+        return data.map((post: any) => ({
+            ...post,
+            reading_time: Math.ceil(post.content.split(' ').length / 200)
+        })) as Post[];
     },
 
     async getPostBySlug(slug: string): Promise<Post | null> {
@@ -28,7 +32,11 @@ export const blogService = {
             console.error(`Error fetching post with slug ${slug}:`, error);
             return null;
         }
-        return data as Post;
+
+        return {
+            ...data,
+            reading_time: Math.ceil(data.content.split(' ').length / 200)
+        } as Post;
     },
 
     async getPostsByCategory(categorySlug: string): Promise<Post[]> {
@@ -43,7 +51,11 @@ export const blogService = {
             console.error(`Error fetching posts for category ${categorySlug}:`, error);
             return [];
         }
-        return data as Post[];
+
+        return data.map((post: any) => ({
+            ...post,
+            reading_time: Math.ceil(post.content.split(' ').length / 200)
+        })) as Post[];
     },
 
     async getAllCategories(): Promise<Category[]> {

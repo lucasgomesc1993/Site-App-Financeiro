@@ -23,13 +23,17 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
             </Link>
 
             <div className="flex flex-col flex-1 p-6">
-                <div className="flex items-center gap-3 mb-4">
+                <div className="flex flex-col items-start gap-3 mb-4">
                     {post.category && <CategoryBadge category={post.category} />}
-                    <div className="flex items-center text-xs text-gray-400 gap-1">
-                        <Calendar className="w-3 h-3" />
-                        <time dateTime={post.published_at}>
-                            {format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })}
-                        </time>
+                    <div className="flex items-center text-xs text-gray-400 gap-2">
+                        <div className="flex items-center gap-1">
+                            <Calendar className="w-3 h-3" />
+                            <time dateTime={post.published_at}>
+                                {format(new Date(post.published_at), "d 'de' MMM, yyyy", { locale: ptBR })}
+                            </time>
+                        </div>
+                        <span className="w-1 h-1 rounded-full bg-gray-600" />
+                        <span>{post.reading_time || 5} min de leitura</span>
                     </div>
                 </div>
 

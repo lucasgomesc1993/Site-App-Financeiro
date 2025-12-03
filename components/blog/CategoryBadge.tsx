@@ -11,7 +11,7 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({ category, classNam
     return (
         <Link
             to={`/blog/${category.slug}`}
-            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 ${className}`}
+            className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 whitespace-nowrap ${className}`}
         >
             {category.name}
         </Link>

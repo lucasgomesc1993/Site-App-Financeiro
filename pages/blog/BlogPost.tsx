@@ -9,7 +9,7 @@ import { Post } from '../../types/blog';
 import { SEO } from '../../components/SEO';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import { Calendar } from 'lucide-react';
+import { Calendar, BookOpen } from 'lucide-react';
 
 import { useServerData } from '../../context/ServerContext';
 
@@ -144,6 +144,10 @@ export const BlogPost: React.FC = () => {
                                 <Calendar className="w-4 h-4" />
                                 {format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })}
                             </span>
+                            <span className="flex items-center gap-1">
+                                <BookOpen className="w-4 h-4" />
+                                {post.reading_time || 5} min de leitura
+                            </span>
                         </div>
 
                         <h1 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight">
@@ -154,7 +158,7 @@ export const BlogPost: React.FC = () => {
                             {post.excerpt}
                         </p>
 
-                        <div className="flex items-center justify-center gap-3 mt-8">
+                        <div className="flex items-center justify-center md:justify-start gap-3 mt-8">
                             {post.author?.avatar_url && (
                                 <img src={post.author.avatar_url} alt={post.author.name} className="w-10 h-10 rounded-full border border-white/10" />
                             )}

@@ -25,15 +25,16 @@ export async function getBlogRoutes() {
         // Get Posts
         const { data: posts, error: postsError } = await supabase
             .from('posts')
-            .select('slug, cover_image, updated_at, published_at')
+            .select('slug, cover_image, updated_at, published_at, category:categories(slug)')
             .eq('published', true);
 
         if (postsError) {
             console.error('Error fetching posts for SSG:', postsError);
         } else if (posts) {
             posts.forEach(post => {
+                const categorySlug = post.category?.slug || 'geral';
                 routes.push({
-                    path: `/blog/${post.slug}`,
+                    path: `/blog/${categorySlug}/${post.slug}`,
                     image: post.cover_image,
                     lastmod: post.updated_at || post.published_at
                 });
@@ -50,7 +51,7 @@ export async function getBlogRoutes() {
         } else if (categories) {
             categories.forEach(category => {
                 routes.push({
-                    path: `/blog/categoria/${category.slug}`
+                    path: `/blog/${category.slug}`
                 });
             });
         }

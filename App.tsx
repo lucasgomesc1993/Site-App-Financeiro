@@ -41,6 +41,7 @@ import { StoriesGallery } from './components/StoriesGallery';
 import { BlogIndex } from './pages/blog/BlogIndex';
 import { CategoryPage } from './pages/blog/CategoryPage';
 import { BlogPost } from './pages/blog/BlogPost';
+import { NotFound } from './components/NotFound';
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
               <Route path="/terms" element={<Terms />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/support" element={<Support />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </main>
