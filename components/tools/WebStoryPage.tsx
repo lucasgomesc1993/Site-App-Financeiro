@@ -82,7 +82,11 @@ export const WebStoryPage: React.FC = () => {
             setCurrentSlideIndex(prev => prev + 1);
         } else {
             // End of story
-            navigate('/');
+            if (window.history.length > 1) {
+                navigate(-1);
+            } else {
+                navigate('/');
+            }
         }
     };
 
@@ -165,7 +169,13 @@ export const WebStoryPage: React.FC = () => {
                     <button onClick={() => setIsMuted(!isMuted)}>
                         {isMuted ? <VolumeX className="w-6 h-6 drop-shadow-md" /> : <Volume2 className="w-6 h-6 drop-shadow-md" />}
                     </button>
-                    <button onClick={() => navigate('/')}>
+                    <button onClick={() => {
+                        if (window.history.length > 1) {
+                            navigate(-1);
+                        } else {
+                            navigate('/');
+                        }
+                    }}>
                         <X className="w-6 h-6 drop-shadow-md" />
                     </button>
                 </div>

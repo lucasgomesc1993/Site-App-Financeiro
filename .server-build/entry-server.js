@@ -3,7 +3,7 @@ var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { en
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 var _a, _b;
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
-import React3, { Component, createContext, useContext, useState, useEffect, useRef, lazy, Suspense } from "react";
+import React, { Component, createContext, useContext, useState, useEffect, useRef, lazy, Suspense } from "react";
 import ReactDOMServer from "react-dom/server";
 import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter } from "react-router-dom";
 import fastCompare from "react-fast-compare";
@@ -328,7 +328,7 @@ var generateTitleAsReactComponent = (_type, title, attributes) => {
     [HELMET_ATTRIBUTE]: true
   };
   const props = convertElementAttributesToReactProps(attributes, initProps);
-  return [React3.createElement("title", props, title)];
+  return [React.createElement("title", props, title)];
 };
 var generateTagsAsReactComponent = (type, tags) => tags.map((tag, i) => {
   const mappedTag = {
@@ -345,7 +345,7 @@ var generateTagsAsReactComponent = (type, tags) => tags.map((tag, i) => {
       mappedTag[mappedAttribute] = tag[attribute];
     }
   });
-  return React3.createElement(type, mappedTag);
+  return React.createElement(type, mappedTag);
 });
 var getMethodsForTag = (type, tags, encode = true) => {
   switch (type) {
@@ -469,7 +469,7 @@ var HelmetData = class {
   }
 };
 var defaultValue = {};
-var Context = React3.createContext(defaultValue);
+var Context = React.createContext(defaultValue);
 var HelmetProvider = (_a = class extends Component {
   constructor(props) {
     super(props);
@@ -477,7 +477,7 @@ var HelmetProvider = (_a = class extends Component {
     this.helmetData = new HelmetData(this.props.context || {}, _a.canUseDOM);
   }
   render() {
-    return /* @__PURE__ */ React3.createElement(Context.Provider, { value: this.helmetData.value }, this.props.children);
+    return /* @__PURE__ */ React.createElement(Context.Provider, { value: this.helmetData.value }, this.props.children);
   }
 }, __publicField(_a, "canUseDOM", isDocument), _a);
 var updateTags = (type, tags) => {
@@ -761,7 +761,7 @@ var Helmet = (_b = class extends Component {
   }
   mapChildrenToProps(children, newProps) {
     let arrayTypeChildren = {};
-    React3.Children.forEach(children, (child) => {
+    React.Children.forEach(children, (child) => {
       if (!child || !child.props) {
         return;
       }
@@ -811,7 +811,7 @@ var Helmet = (_b = class extends Component {
       helmetData = new HelmetData(data.context, true);
       delete newProps.helmetData;
     }
-    return helmetData ? /* @__PURE__ */ React3.createElement(HelmetDispatcher, { ...newProps, context: helmetData.value }) : /* @__PURE__ */ React3.createElement(Context.Consumer, null, (context) => /* @__PURE__ */ React3.createElement(HelmetDispatcher, { ...newProps, context }));
+    return helmetData ? /* @__PURE__ */ React.createElement(HelmetDispatcher, { ...newProps, context: helmetData.value }) : /* @__PURE__ */ React.createElement(Context.Consumer, null, (context) => /* @__PURE__ */ React.createElement(HelmetDispatcher, { ...newProps, context }));
   }
 }, __publicField(_b, "defaultProps", {
   defer: true,
@@ -10803,7 +10803,11 @@ const WebStoryPage = () => {
     if (story && currentSlideIndex < story.slides.length - 1) {
       setCurrentSlideIndex((prev) => prev + 1);
     } else {
-      navigate("/");
+      if (window.history.length > 1) {
+        navigate(-1);
+      } else {
+        navigate("/");
+      }
     }
   };
   const goPrev = () => {
@@ -10865,7 +10869,13 @@ const WebStoryPage = () => {
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "absolute top-8 right-4 flex gap-4 z-30 text-white", children: [
         /* @__PURE__ */ jsx("button", { onClick: () => setIsMuted(!isMuted), children: isMuted ? /* @__PURE__ */ jsx(VolumeX, { className: "w-6 h-6 drop-shadow-md" }) : /* @__PURE__ */ jsx(Volume2, { className: "w-6 h-6 drop-shadow-md" }) }),
-        /* @__PURE__ */ jsx("button", { onClick: () => navigate("/"), children: /* @__PURE__ */ jsx(X, { className: "w-6 h-6 drop-shadow-md" }) })
+        /* @__PURE__ */ jsx("button", { onClick: () => {
+          if (window.history.length > 1) {
+            navigate(-1);
+          } else {
+            navigate("/");
+          }
+        }, children: /* @__PURE__ */ jsx(X, { className: "w-6 h-6 drop-shadow-md" }) })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-20 flex", children: [
         /* @__PURE__ */ jsx(
@@ -11288,9 +11298,22 @@ const CategoryPage = () => {
   ] });
 };
 const PostContent = ({ content }) => {
+  const contentRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!contentRef.current) return;
+    const links = contentRef.current.getElementsByTagName("a");
+    for (let i = 0; i < links.length; i++) {
+      const link = links[i];
+      const href = link.getAttribute("href");
+      if (href && (href.startsWith("/") || href.startsWith(window.location.origin))) {
+        link.removeAttribute("target");
+      }
+    }
+  }, [content]);
   return /* @__PURE__ */ jsx(
     "div",
     {
+      ref: contentRef,
       className: "prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-300 prose-a:text-primary prose-strong:text-white prose-code:text-primary prose-pre:bg-[#1a1a1a] prose-pre:border prose-pre:border-white/10",
       dangerouslySetInnerHTML: { __html: content }
     }
@@ -11543,7 +11566,7 @@ function App() {
 function render({ path, context = {}, initialData = null }) {
   const helmetContext = {};
   const html = ReactDOMServer.renderToString(
-    /* @__PURE__ */ jsx(React3.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) })
+    /* @__PURE__ */ jsx(React.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) })
   );
   return { html, helmetContext };
 }
