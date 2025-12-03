@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { PostCard } from '../../components/blog/PostCard';
+import { CategoryList } from '../../components/blog/CategoryList';
 import { Breadcrumb } from '../../components/Breadcrumb';
 import { AppPromoBanner } from '../../components/AppPromoBanner';
 import { blogService } from '../../services/blogService';
@@ -12,6 +13,7 @@ export const CategoryPage: React.FC = () => {
     const { categorySlug } = useParams<{ categorySlug: string }>();
     const [posts, setPosts] = useState<Post[]>([]);
     const [category, setCategory] = useState<Category | null>(null);
+    const [categories, setCategories] = useState<Category[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -23,9 +25,11 @@ export const CategoryPage: React.FC = () => {
             const postsData = await blogService.getPostsByCategory(categorySlug);
             setPosts(postsData);
 
-            // Fetch all categories to find the current one
-            const categories = await blogService.getAllCategories();
-            const currentCategory = categories.find(c => c.slug === categorySlug);
+            // Fetch all categories to find the current one and display list
+            const categoriesData = await blogService.getAllCategories();
+            setCategories(categoriesData);
+
+            const currentCategory = categoriesData.find(c => c.slug === categorySlug);
             setCategory(currentCategory || null);
 
             setLoading(false);
@@ -48,7 +52,7 @@ export const CategoryPage: React.FC = () => {
             <SEO
                 title={`${category?.name || 'Categoria'} - Blog FinZap`}
                 description={`Artigos sobre ${category?.name || 'finanças'} no blog FinZap.`}
-                canonical={`https://finzap.io/blog/categoria/${categorySlug}`}
+                canonical={`https://finzap.io/blog/${categorySlug}`}
             />
 
             {/* Background Orbs */}
@@ -58,7 +62,7 @@ export const CategoryPage: React.FC = () => {
             <div className="max-w-7xl mx-auto relative z-10">
                 <Breadcrumb items={[
                     { label: 'Blog', href: '/blog' },
-                    { label: category?.name || 'Categoria', href: `/blog/categoria/${categorySlug}` }
+                    { label: category?.name || 'Categoria', href: `/blog/${categorySlug}` }
                 ]} />
 
                 <div className="text-center mb-16">
@@ -75,6 +79,9 @@ export const CategoryPage: React.FC = () => {
                         </p>
                     )}
                 </div>
+
+                {/* Categories List */}
+                <CategoryList categories={categories} />
 
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -9,14 +9,13 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, BookOpen } from "lucide-react";
+import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, Search, BookOpen } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { QRCodeSVG } from "qrcode.react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { createClient } from "@supabase/supabase-js";
-import ReactMarkdown from "react-markdown";
 var TAG_NAMES = /* @__PURE__ */ ((TAG_NAMES2) => {
   TAG_NAMES2["BASE"] = "base";
   TAG_NAMES2["BODY"] = "body";
@@ -11014,16 +11013,16 @@ const CategoryBadge = ({ category, className = "" }) => {
   return /* @__PURE__ */ jsx(
     Link,
     {
-      to: `/blog/categoria/${category.slug}`,
+      to: `/blog/${category.slug}`,
       className: `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 ${className}`,
       children: category.name
     }
   );
 };
 const PostCard = ({ post }) => {
-  var _a2, _b2;
+  var _a2, _b2, _c, _d, _e;
   return /* @__PURE__ */ jsxs("article", { className: "group relative flex flex-col h-full bg-[#0d0d0d] rounded-2xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(71,255,183,0.1)]", children: [
-    /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}`, className: "block overflow-hidden aspect-video", children: /* @__PURE__ */ jsx(
+    /* @__PURE__ */ jsx(Link, { to: `/blog/${((_a2 = post.category) == null ? void 0 : _a2.slug) || "geral"}/${post.slug}`, className: "block overflow-hidden aspect-video", children: /* @__PURE__ */ jsx(
       "img",
       {
         src: post.cover_image,
@@ -11040,19 +11039,72 @@ const PostCard = ({ post }) => {
           /* @__PURE__ */ jsx("time", { dateTime: post.published_at, children: format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR }) })
         ] })
       ] }),
-      /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${post.slug}`, children: post.title }) }),
+      /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${((_b2 = post.category) == null ? void 0 : _b2.slug) || "geral"}/${post.slug}`, children: post.title }) }),
       /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-6 line-clamp-3 flex-1", children: post.excerpt }),
       /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mt-auto pt-4 border-t border-white/5", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-          ((_a2 = post.author) == null ? void 0 : _a2.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-6 h-6 rounded-full" }),
-          /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: (_b2 = post.author) == null ? void 0 : _b2.name })
+          ((_c = post.author) == null ? void 0 : _c.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-6 h-6 rounded-full" }),
+          /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: (_d = post.author) == null ? void 0 : _d.name })
         ] }),
-        /* @__PURE__ */ jsxs(Link, { to: `/blog/${post.slug}`, className: "text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all", children: [
+        /* @__PURE__ */ jsxs(Link, { to: `/blog/${((_e = post.category) == null ? void 0 : _e.slug) || "geral"}/${post.slug}`, className: "text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all", children: [
           "Ler artigo ",
           /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
         ] })
       ] })
     ] })
+  ] });
+};
+const CategoryList = ({ categories }) => {
+  return /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap justify-center gap-3 mb-12", children: [
+    /* @__PURE__ */ jsx(
+      Link,
+      {
+        to: "/blog",
+        className: "px-4 py-2 rounded-full bg-primary text-background font-medium text-sm hover:bg-primary/90 transition-colors",
+        children: "Todos"
+      }
+    ),
+    categories.map((category) => /* @__PURE__ */ jsx(
+      Link,
+      {
+        to: `/blog/${category.slug}`,
+        className: "px-4 py-2 rounded-full bg-white/5 text-gray-300 border border-white/10 hover:bg-white/10 hover:border-primary/30 hover:text-white transition-all text-sm",
+        children: category.name
+      },
+      category.id
+    ))
+  ] });
+};
+const StoryList = ({ stories }) => {
+  if (stories.length === 0) return null;
+  return /* @__PURE__ */ jsxs("div", { className: "mb-20", children: [
+    /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-6", children: [
+      /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white", children: "Web Stories" }),
+      /* @__PURE__ */ jsx("span", { className: "text-sm text-primary", children: "Ver todos" })
+    ] }),
+    /* @__PURE__ */ jsx("div", { className: "flex gap-4 overflow-x-auto pb-4 snap-x scrollbar-hide", children: stories.map((story) => /* @__PURE__ */ jsxs(
+      "a",
+      {
+        href: `/stories/${story.slug}.html`,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        className: "flex-none w-[140px] md:w-[160px] aspect-[9/16] relative rounded-xl overflow-hidden group cursor-pointer snap-start border border-white/10",
+        children: [
+          /* @__PURE__ */ jsx(
+            "img",
+            {
+              src: story.posterPortrait,
+              alt: story.title,
+              className: "absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            }
+          ),
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/90" }),
+          /* @__PURE__ */ jsx("div", { className: "absolute top-3 right-3 w-8 h-8 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center border border-white/20", children: /* @__PURE__ */ jsx(Play, { className: "w-3 h-3 text-white fill-white" }) }),
+          /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 right-0 p-3", children: /* @__PURE__ */ jsx("p", { className: "text-white text-sm font-medium leading-tight line-clamp-3", children: story.title }) })
+        ]
+      },
+      story.slug
+    )) })
   ] });
 };
 const supabaseUrl = "https://cfbwntkyygkqbottkktc.supabase.co";
@@ -11097,21 +11149,30 @@ const blogService = {
 };
 const BlogIndex = () => {
   const [posts, setPosts] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
-    const fetchPosts = async () => {
-      const data = await blogService.getPosts();
-      setPosts(data);
+    const fetchData = async () => {
+      const [postsData, categoriesData] = await Promise.all([
+        blogService.getPosts(),
+        blogService.getAllCategories()
+      ]);
+      setPosts(postsData);
+      setCategories(categoriesData);
       setLoading(false);
     };
-    fetchPosts();
+    fetchData();
   }, []);
+  const filteredPosts = posts.filter(
+    (post) => post.title.toLowerCase().includes(searchTerm.toLowerCase()) || post.excerpt.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Blog FinZap - Dicas de Finanças e Controle de Gastos",
-        description: "Aprenda a controlar seus gastos, economizar dinheiro e organizar suas finanças com as dicas do blog FinZap.",
+        title: "Blog FinZap - Educação Financeira Descomplicada",
+        description: "Dicas práticas de economia, investimentos e planejamento financeiro para você dominar seu dinheiro.",
         canonical: "https://finzap.io/blog"
       }
     ),
@@ -11120,20 +11181,31 @@ const BlogIndex = () => {
     /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
       /* @__PURE__ */ jsx(Breadcrumb, { items: [{ label: "Blog", href: "/blog" }] }),
       /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
-        /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
-          /* @__PURE__ */ jsx(BookOpen, { className: "w-4 h-4 text-primary" }),
-          /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Conteúdo Educativo" })
-        ] }),
-        /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+        /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight", children: [
           "Blog ",
           /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "FinZap" })
         ] }),
-        /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Dicas práticas para você dominar suas finanças e alcançar seus objetivos." })
+        /* @__PURE__ */ jsx("p", { className: "text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10", children: "Domine suas finanças com conteúdos práticos e diretos ao ponto." }),
+        /* @__PURE__ */ jsxs("div", { className: "max-w-xl mx-auto relative", children: [
+          /* @__PURE__ */ jsx(
+            "input",
+            {
+              type: "text",
+              placeholder: "O que você quer aprender hoje?",
+              value: searchTerm,
+              onChange: (e) => setSearchTerm(e.target.value),
+              className: "w-full px-6 py-4 pl-14 rounded-2xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all backdrop-blur-sm"
+            }
+          ),
+          /* @__PURE__ */ jsx(Search, { className: "absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" })
+        ] })
       ] }),
-      loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3, 4, 5, 6].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : /* @__PURE__ */ jsxs(Fragment, { children: [
-        /* @__PURE__ */ jsx("h2", { className: "sr-only", children: "Últimas postagens" }),
-        /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) })
+      /* @__PURE__ */ jsx(CategoryList, { categories }),
+      /* @__PURE__ */ jsxs("div", { className: "mb-24", children: [
+        /* @__PURE__ */ jsx("div", { className: "flex items-center justify-between mb-8", children: /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white", children: searchTerm ? "Resultados da busca" : "Últimos Artigos" }) }),
+        loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : filteredPosts.length > 0 ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: filteredPosts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) }) : /* @__PURE__ */ jsx("div", { className: "text-center py-20 bg-white/5 rounded-3xl border border-white/5", children: /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg", children: "Nenhum artigo encontrado para sua busca." }) })
       ] }),
+      !searchTerm && /* @__PURE__ */ jsx(StoryList, { stories: storiesData }),
       /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
       /* @__PURE__ */ jsx("div", { className: "mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
         /* @__PURE__ */ jsx("strong", { children: "Aviso legal:" }),
@@ -11146,6 +11218,7 @@ const CategoryPage = () => {
   const { categorySlug } = useParams();
   const [posts, setPosts] = useState([]);
   const [category, setCategory] = useState(null);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
@@ -11153,8 +11226,9 @@ const CategoryPage = () => {
       setLoading(true);
       const postsData = await blogService.getPostsByCategory(categorySlug);
       setPosts(postsData);
-      const categories = await blogService.getAllCategories();
-      const currentCategory = categories.find((c) => c.slug === categorySlug);
+      const categoriesData = await blogService.getAllCategories();
+      setCategories(categoriesData);
+      const currentCategory = categoriesData.find((c) => c.slug === categorySlug);
       setCategory(currentCategory || null);
       setLoading(false);
     };
@@ -11169,7 +11243,7 @@ const CategoryPage = () => {
       {
         title: `${(category == null ? void 0 : category.name) || "Categoria"} - Blog FinZap`,
         description: `Artigos sobre ${(category == null ? void 0 : category.name) || "finanças"} no blog FinZap.`,
-        canonical: `https://finzap.io/blog/categoria/${categorySlug}`
+        canonical: `https://finzap.io/blog/${categorySlug}`
       }
     ),
     /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
@@ -11177,7 +11251,7 @@ const CategoryPage = () => {
     /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
       /* @__PURE__ */ jsx(Breadcrumb, { items: [
         { label: "Blog", href: "/blog" },
-        { label: (category == null ? void 0 : category.name) || "Categoria", href: `/blog/categoria/${categorySlug}` }
+        { label: (category == null ? void 0 : category.name) || "Categoria", href: `/blog/${categorySlug}` }
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "text-center mb-16", children: [
         /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
@@ -11187,6 +11261,7 @@ const CategoryPage = () => {
         /* @__PURE__ */ jsx("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-4", children: category == null ? void 0 : category.name }),
         (category == null ? void 0 : category.description) && /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-400 max-w-2xl mx-auto", children: category.description })
       ] }),
+      /* @__PURE__ */ jsx(CategoryList, { categories }),
       loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3].map((i) => /* @__PURE__ */ jsx("div", { className: "h-96 bg-white/5 rounded-2xl animate-pulse" }, i)) }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) }),
       /* @__PURE__ */ jsxs("div", { className: "mt-24", children: [
         /* @__PURE__ */ jsx("div", { className: "mt-24", children: /* @__PURE__ */ jsx(AppPromoBanner$1, {}) }),
@@ -11199,11 +11274,17 @@ const CategoryPage = () => {
   ] });
 };
 const PostContent = ({ content }) => {
-  return /* @__PURE__ */ jsx("div", { className: "prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-300 prose-a:text-primary prose-strong:text-white prose-code:text-primary prose-pre:bg-[#1a1a1a] prose-pre:border prose-pre:border-white/10", children: /* @__PURE__ */ jsx(ReactMarkdown, { children: content }) });
+  return /* @__PURE__ */ jsx(
+    "div",
+    {
+      className: "prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-300 prose-a:text-primary prose-strong:text-white prose-code:text-primary prose-pre:bg-[#1a1a1a] prose-pre:border prose-pre:border-white/10",
+      dangerouslySetInnerHTML: { __html: content }
+    }
+  );
 };
 const BlogPost = () => {
-  var _a2, _b2, _c, _d, _e, _f, _g;
-  const { slug } = useParams();
+  var _a2, _b2, _c, _d, _e, _f, _g, _h, _i;
+  const { category, slug } = useParams();
   const serverData = useServerData();
   const [post, setPost] = useState(
     serverData && serverData.slug === slug ? serverData : null
@@ -11273,7 +11354,7 @@ const BlogPost = () => {
       {
         title: post.meta_title || post.title,
         description: post.meta_description || post.excerpt,
-        canonical: `https://finzap.io/blog/${post.slug}`,
+        canonical: `https://finzap.io/blog/${((_d = post.category) == null ? void 0 : _d.slug) || "geral"}/${post.slug}`,
         image: post.cover_image
       }
     ),
@@ -11296,8 +11377,8 @@ const BlogPost = () => {
     /* @__PURE__ */ jsx("article", { className: "max-w-7xl mx-auto relative z-10", children: /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto", children: [
       /* @__PURE__ */ jsx(Breadcrumb, { items: [
         { label: "Blog", href: "/blog" },
-        ...post.category ? [{ label: post.category.name, href: `/blog/categoria/${post.category.slug}` }] : [],
-        { label: post.title, href: `/blog/${post.slug}` }
+        ...post.category ? [{ label: post.category.name, href: `/blog/${post.category.slug}` }] : [],
+        { label: post.title, href: `/blog/${((_e = post.category) == null ? void 0 : _e.slug) || "geral"}/${post.slug}` }
       ] }),
       /* @__PURE__ */ jsxs("header", { className: "mb-12 text-center", children: [
         /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-4 text-sm text-gray-400 mb-6", children: [
@@ -11310,11 +11391,11 @@ const BlogPost = () => {
         /* @__PURE__ */ jsx("h1", { className: "text-3xl md:text-5xl font-bold text-white mb-6 leading-tight", children: post.title }),
         /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed", children: post.excerpt }),
         /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-3 mt-8", children: [
-          ((_d = post.author) == null ? void 0 : _d.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-10 h-10 rounded-full border border-white/10" }),
+          ((_f = post.author) == null ? void 0 : _f.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-10 h-10 rounded-full border border-white/10" }),
           /* @__PURE__ */ jsxs("div", { className: "text-left", children: [
-            /* @__PURE__ */ jsx("p", { className: "text-white font-medium", children: (_e = post.author) == null ? void 0 : _e.name }),
-            ((_f = post.author) == null ? void 0 : _f.role) && /* @__PURE__ */ jsx("p", { className: "text-xs text-primary mb-0.5", children: post.author.role }),
-            ((_g = post.author) == null ? void 0 : _g.bio) && /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: post.author.bio })
+            /* @__PURE__ */ jsx("p", { className: "text-white font-medium", children: (_g = post.author) == null ? void 0 : _g.name }),
+            ((_h = post.author) == null ? void 0 : _h.role) && /* @__PURE__ */ jsx("p", { className: "text-xs text-primary mb-0.5", children: post.author.role }),
+            ((_i = post.author) == null ? void 0 : _i.bio) && /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: post.author.bio })
           ] })
         ] })
       ] }),
@@ -11346,9 +11427,9 @@ const BlogPost = () => {
     ] }) }) })
   ] });
 };
-const Terms = lazy(() => import("./assets/Terms-CDyn76Yz.js").then((module) => ({ default: module.Terms })));
-const Privacy = lazy(() => import("./assets/Privacy-B7FvWn7w.js").then((module) => ({ default: module.Privacy })));
-const Support = lazy(() => import("./assets/Support-DnVolkSr.js").then((module) => ({ default: module.Support })));
+const Terms = lazy(() => import("./assets/Terms-Dvpgo9hI.js").then((module) => ({ default: module.Terms })));
+const Privacy = lazy(() => import("./assets/Privacy-BFMibbHw.js").then((module) => ({ default: module.Privacy })));
+const Support = lazy(() => import("./assets/Support-k08EF3Ty.js").then((module) => ({ default: module.Support })));
 function App() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(ScrollToTop, {}),
@@ -11380,8 +11461,8 @@ function App() {
         /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-moedas", element: /* @__PURE__ */ jsx(CurrencyConverterPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/ferramentas/gerador-pix", element: /* @__PURE__ */ jsx(PixGeneratorPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/blog", element: /* @__PURE__ */ jsx(BlogIndex, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/blog/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/blog/categoria/:categorySlug", element: /* @__PURE__ */ jsx(CategoryPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/blog/:category/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/blog/:categorySlug", element: /* @__PURE__ */ jsx(CategoryPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/stories/:storyId", element: /* @__PURE__ */ jsx(WebStoryPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/stories", element: /* @__PURE__ */ jsx(StoriesGallery, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/terms", element: /* @__PURE__ */ jsx(Terms, {}) }),

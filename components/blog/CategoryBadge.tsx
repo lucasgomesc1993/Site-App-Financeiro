@@ -10,7 +10,7 @@ interface CategoryBadgeProps {
 export const CategoryBadge: React.FC<CategoryBadgeProps> = ({ category, className = '' }) => {
     return (
         <Link
-            to={`/blog/categoria/${category.slug}`}
+            to={`/blog/${category.slug}`}
             className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 ${className}`}
         >
             {category.name}

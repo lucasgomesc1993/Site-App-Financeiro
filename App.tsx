@@ -76,8 +76,8 @@ function App() {
               <Route path="/calculadoras/conversor-moedas" element={<CurrencyConverterPage />} />
               <Route path="/ferramentas/gerador-pix" element={<PixGeneratorPage />} />
               <Route path="/blog" element={<BlogIndex />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              <Route path="/blog/categoria/:categorySlug" element={<CategoryPage />} />
+              <Route path="/blog/:category/:slug" element={<BlogPost />} />
+              <Route path="/blog/:categorySlug" element={<CategoryPage />} />
               <Route path="/stories/:storyId" element={<WebStoryPage />} />
               <Route path="/stories" element={<StoriesGallery />} />
               <Route path="/terms" element={<Terms />} />

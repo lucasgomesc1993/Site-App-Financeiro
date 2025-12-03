@@ -14,7 +14,7 @@ import { Calendar } from 'lucide-react';
 import { useServerData } from '../../context/ServerContext';
 
 export const BlogPost: React.FC = () => {
-    const { slug } = useParams<{ slug: string }>();
+    const { category, slug } = useParams<{ category: string; slug: string }>();
     const serverData = useServerData();
 
     // Initialize with server data if available and matches current slug
@@ -105,7 +105,7 @@ export const BlogPost: React.FC = () => {
             <SEO
                 title={post.meta_title || post.title}
                 description={post.meta_description || post.excerpt}
-                canonical={`https://finzap.io/blog/${post.slug}`}
+                canonical={`https://finzap.io/blog/${post.category?.slug || 'geral'}/${post.slug}`}
                 image={post.cover_image}
             />
 
@@ -129,8 +129,8 @@ export const BlogPost: React.FC = () => {
                 <div className="max-w-4xl mx-auto">
                     <Breadcrumb items={[
                         { label: 'Blog', href: '/blog' },
-                        ...(post.category ? [{ label: post.category.name, href: `/blog/categoria/${post.category.slug}` }] : []),
-                        { label: post.title, href: `/blog/${post.slug}` }
+                        ...(post.category ? [{ label: post.category.name, href: `/blog/${post.category.slug}` }] : []),
+                        { label: post.title, href: `/blog/${post.category?.slug || 'geral'}/${post.slug}` }
                     ]} />
 
                     <header className="mb-12 text-center">

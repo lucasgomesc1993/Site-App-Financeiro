@@ -13,7 +13,7 @@ interface PostCardProps {
 export const PostCard: React.FC<PostCardProps> = ({ post }) => {
     return (
         <article className="group relative flex flex-col h-full bg-[#0d0d0d] rounded-2xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(71,255,183,0.1)]">
-            <Link to={`/blog/${post.slug}`} className="block overflow-hidden aspect-video">
+            <Link to={`/blog/${post.category?.slug || 'geral'}/${post.slug}`} className="block overflow-hidden aspect-video">
                 <img
                     src={post.cover_image}
                     alt={post.cover_image_alt}
@@ -34,7 +34,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                 </div>
 
                 <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                    <Link to={`/blog/${post.slug}`}>
+                    <Link to={`/blog/${post.category?.slug || 'geral'}/${post.slug}`}>
                         {post.title}
                     </Link>
                 </h3>
@@ -51,7 +51,7 @@ export const PostCard: React.FC<PostCardProps> = ({ post }) => {
                         <span className="text-xs text-gray-400">{post.author?.name}</span>
                     </div>
 
-                    <Link to={`/blog/${post.slug}`} className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
+                    <Link to={`/blog/${post.category?.slug || 'geral'}/${post.slug}`} className="text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all">
                         Ler artigo <ArrowRight className="w-4 h-4" />
                     </Link>
                 </div>

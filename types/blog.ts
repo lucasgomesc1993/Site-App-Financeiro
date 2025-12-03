@@ -36,3 +36,27 @@ export interface Post {
     reading_time?: number;
     featured?: boolean;
 }
+
+export interface StorySlide {
+    id: string;
+    media: {
+        type: 'image' | 'video';
+        url: string;
+        poster?: string;
+    };
+    text: string;
+    animation?: string;
+    cta?: {
+        label: string;
+        url: string;
+    };
+}
+
+export interface Story {
+    slug: string;
+    title: string;
+    publisher: string;
+    publisherLogo: string;
+    posterPortrait: string;
+    slides: StorySlide[];
+}
