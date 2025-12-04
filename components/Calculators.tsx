@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe, History, PieChart, CreditCard, FileText, Tag, Scale, Divide, Layers, MapPin, Users, Activity, Droplets, ChefHat, Baby, Gift } from 'lucide-react';
+import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe, History, PieChart, CreditCard, FileText, Tag, Scale, Divide, Layers, MapPin, Users, Activity, Droplets, ChefHat, Baby, Gift, Percent } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
 import { SEO } from './SEO';

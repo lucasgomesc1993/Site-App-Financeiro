@@ -9,7 +9,7 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, Calendar, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, PieChart, Tag, Scale, CreditCard, FileText, History, Divide, Layers, Activity, Droplets, ChefHat, Baby, Gift, QrCode, Percent as Percent$1, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, ShoppingCart, Coffee, TrendingDown, ArrowDownCircle, ArrowLeft, HelpCircle, Lightbulb, Utensils, Beer, CheckCircle, XCircle, Trash2, Plus, RotateCcw, Grid, Ruler, Info, MapPin, Timer, Beaker, Heart, Shuffle, EyeOff, Eye, Copy, Download, VolumeX, Volume2, Search, BookOpen } from "lucide-react";
+import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, Calendar, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, PieChart, Tag, Scale, CreditCard, FileText, History, Divide, Percent, Layers, Activity, Droplets, ChefHat, Baby, Gift, QrCode, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, ShoppingCart, Coffee, TrendingDown, ArrowDownCircle, ArrowLeft, HelpCircle, Lightbulb, Utensils, Beer, CheckCircle, XCircle, Trash2, Plus, RotateCcw, Grid, Ruler, Info, MapPin, Timer, Beaker, Heart, Shuffle, EyeOff, Eye, Copy, Download, VolumeX, Volume2, Search, BookOpen } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { createClient } from "@supabase/supabase-js";
@@ -3365,7 +3365,7 @@ const InvestmentSimulator = () => {
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("label", { htmlFor: "rate", className: "block text-sm text-gray-400 mb-2", children: "Taxa Anual (%)" }),
             /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-              /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+              /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
               /* @__PURE__ */ jsx(
                 "input",
                 {
@@ -9003,7 +9003,7 @@ const CompoundInterestPage = () => {
                   /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Taxa de Juros (%)" }),
                   /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
                     /* @__PURE__ */ jsxs("div", { className: "relative flex-1", children: [
-                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                       /* @__PURE__ */ jsx(
                         "input",
                         {
@@ -11637,7 +11637,7 @@ const VehicleFinancingPage = () => {
                     /* @__PURE__ */ jsxs("div", { children: [
                       /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Taxa de Juros (% a.m.)" }),
                       /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                         /* @__PURE__ */ jsx(
                           "input",
                           {
@@ -11711,7 +11711,7 @@ const VehicleFinancingPage = () => {
                       ] }),
                       /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-xl p-6 border border-white/5", children: [
                         /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2", children: [
-                          /* @__PURE__ */ jsx(Percent$1, { className: "w-5 h-5 text-red-400" }),
+                          /* @__PURE__ */ jsx(Percent, { className: "w-5 h-5 text-red-400" }),
                           /* @__PURE__ */ jsx("h3", { className: "font-bold text-white", children: "Total de Juros" })
                         ] }),
                         /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: formatCurrency(result.totalInterest) }),
@@ -11996,7 +11996,7 @@ const RealEstateFinancingPage = () => {
                     /* @__PURE__ */ jsxs("div", { children: [
                       /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Juros (% a.a.)" }),
                       /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                         /* @__PURE__ */ jsx(
                           "input",
                           {
@@ -12366,7 +12366,7 @@ const EarlyRepaymentPage = () => {
                   /* @__PURE__ */ jsxs("div", { children: [
                     /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Taxa de Juros (% a.m.)" }),
                     /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                       /* @__PURE__ */ jsx(
                         "input",
                         {
@@ -12500,7 +12500,7 @@ const EarlyRepaymentPage = () => {
           /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quando vale a pena antecipar?" }),
           /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
             /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
-              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Percent$1, { className: "w-5 h-5 text-red-400" }) }),
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Percent, { className: "w-5 h-5 text-red-400" }) }),
               /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Cenário A" }),
               /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
                 "Seu financiamento de carro cobra ",
@@ -12713,7 +12713,7 @@ const CETCalculatorPage = () => {
                     /* @__PURE__ */ jsxs("div", { children: [
                       /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Juros Nominais (% a.m.)" }),
                       /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                         /* @__PURE__ */ jsx(
                           "input",
                           {
@@ -12830,7 +12830,7 @@ const CETCalculatorPage = () => {
           /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
             /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
               /* @__PURE__ */ jsxs("h3", { className: "text-lg font-bold text-white mb-4 flex items-center gap-2", children: [
-                /* @__PURE__ */ jsx(Percent$1, { className: "w-5 h-5 text-primary" }),
+                /* @__PURE__ */ jsx(Percent, { className: "w-5 h-5 text-primary" }),
                 "Juros Nominais"
               ] }),
               /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "O lucro do banco (a taxa anunciada na propaganda)." })
@@ -13055,7 +13055,7 @@ const CreditCardDebtPage = () => {
                     /* @__PURE__ */ jsxs("div", { children: [
                       /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Juros Rotativo (% a.m.)" }),
                       /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                         /* @__PURE__ */ jsx(
                           "input",
                           {
@@ -13786,7 +13786,7 @@ const MarkupPage = () => {
                   /* @__PURE__ */ jsxs("div", { children: [
                     /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Despesas Fixas (%)" }),
                     /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                       /* @__PURE__ */ jsx(
                         "input",
                         {
@@ -13803,7 +13803,7 @@ const MarkupPage = () => {
                   /* @__PURE__ */ jsxs("div", { children: [
                     /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Despesas Variáveis (%)" }),
                     /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                       /* @__PURE__ */ jsx(
                         "input",
                         {
@@ -13819,7 +13819,7 @@ const MarkupPage = () => {
                   /* @__PURE__ */ jsxs("div", { children: [
                     /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Margem de Lucro Desejada (%)" }),
                     /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                       /* @__PURE__ */ jsx(
                         "input",
                         {
@@ -16037,7 +16037,7 @@ function PercentageCalculatorPage() {
         /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
         /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
           /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
-            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Percent$1, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Percent, { className: "w-8 h-8 text-primary" }) }),
             /* @__PURE__ */ jsxs("div", { children: [
               /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Porcentagem" }),
               /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Chega de dúvidas na hora da conta. Calcule descontos, aumentos e proporções." })
