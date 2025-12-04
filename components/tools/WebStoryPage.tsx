@@ -185,7 +185,7 @@ export const WebStoryPage: React.FC = () => {
                 </div>
 
                 {/* Área de Toque (Navegação) */}
-                <div className="absolute inset-0 z-20 flex">
+                <div className="absolute inset-0 z-10 flex">
                     <div
                         className="w-1/3 h-full"
                         onClick={goPrev}
@@ -212,7 +212,7 @@ export const WebStoryPage: React.FC = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.4 }}
-                        className="absolute inset-0 w-full h-full"
+                        className="absolute inset-0 w-full h-full z-20 pointer-events-none"
                     >
                         {/* Mídia de Fundo */}
                         {currentSlide?.media.type === 'video' ? (
@@ -251,8 +251,8 @@ export const WebStoryPage: React.FC = () => {
                                     transition={{ delay: 0.5 }}
                                 >
                                     <Link
-                                        to={currentSlide.cta.url}
-                                        className="bg-primary text-black font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-2"
+                                        to={currentSlide.cta.url.startsWith('https://junny.com.br') ? currentSlide.cta.url.replace('https://junny.com.br', '') : currentSlide.cta.url}
+                                        className="bg-primary text-black font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-2 pointer-events-auto"
                                     >
                                         {currentSlide.cta.label}
                                         <ChevronRight className="w-4 h-4" />

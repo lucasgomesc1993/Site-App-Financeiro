@@ -14396,7 +14396,7 @@ const WebStoryPage = () => {
               }
             }, children: /* @__PURE__ */ jsx(X, { className: "w-6 h-6 drop-shadow-md" }) })
           ] }),
-          /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-20 flex", children: [
+          /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-10 flex", children: [
             /* @__PURE__ */ jsx(
               "div",
               {
@@ -14427,7 +14427,7 @@ const WebStoryPage = () => {
               animate: { opacity: 1, scale: 1 },
               exit: { opacity: 0 },
               transition: { duration: 0.4 },
-              className: "absolute inset-0 w-full h-full",
+              className: "absolute inset-0 w-full h-full z-20 pointer-events-none",
               children: [
                 (currentSlide == null ? void 0 : currentSlide.media.type) === "video" ? /* @__PURE__ */ jsx(
                   "video",
@@ -14460,8 +14460,8 @@ const WebStoryPage = () => {
                       children: /* @__PURE__ */ jsxs(
                         Link,
                         {
-                          to: currentSlide.cta.url,
-                          className: "bg-primary text-black font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-2",
+                          to: currentSlide.cta.url.startsWith("https://junny.com.br") ? currentSlide.cta.url.replace("https://junny.com.br", "") : currentSlide.cta.url,
+                          className: "bg-primary text-black font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-2 pointer-events-auto",
                           children: [
                             currentSlide.cta.label,
                             /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4" })
