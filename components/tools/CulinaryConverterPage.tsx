@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ChefHat, ArrowLeft, HelpCircle, Scale, Beaker, Info, ArrowRightLeft } from 'lucide-react';
+import { ChefHat, ArrowRightLeft, HelpCircle, Scale, Beaker, Info, Utensils } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
+import { Breadcrumb } from '../Breadcrumb';
+import { FAQ } from '../FAQ';
+import { AppPromoBanner } from '../AppPromoBanner';
+import { FAQItem } from '../../types';
 
 type Ingredient = {
     id: string;
@@ -35,6 +40,25 @@ const UNITS: Unit[] = [
     { id: 'tsp', name: 'Colher de Chá (5ml)', ml: 5, type: 'volume' },
     { id: 'ml', name: 'Mililitros (ml)', ml: 1, type: 'volume' },
     { id: 'g', name: 'Gramas (g)', ml: 0, type: 'weight' }, // Special handling
+];
+
+const CULINARY_FAQS: FAQItem[] = [
+    {
+        question: "Quanto pesa 1 xícara de farinha?",
+        answer: "No padrão brasileiro (xícara de 240ml), a farinha de trigo pesa cerca de 120g. Se você compactar a farinha, pode chegar a 150g, o que estraga a receita."
+    },
+    {
+        question: "Posso usar qualquer xícara?",
+        answer: "Não! Xícaras de chá variam de 180ml a 300ml. Para confeitaria, use sempre medidores padronizados de 240ml."
+    },
+    {
+        question: "Colher de sopa é a de comer?",
+        answer: "Nem sempre. Os faqueiros modernos têm colheres de tamanhos variados. A medida padrão de colher de sopa é 15ml."
+    },
+    {
+        question: "ml e gramas são a mesma coisa?",
+        answer: "Apenas para água! 1ml de água pesa 1g. Para outros ingredientes, a densidade muda (ex: 1ml de óleo pesa menos que 1g, 1ml de mel pesa mais)."
+    }
 ];
 
 export function CulinaryConverterPage() {
@@ -93,182 +117,223 @@ export function CulinaryConverterPage() {
         setToUnitId(fromUnitId);
     };
 
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Conversor Culinário",
+        "description": "Converta medidas culinárias (xícaras, colheres, gramas e ml).",
+        "applicationCategory": "UtilityApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "BRL"
+        }
+    };
+
     return (
-        <div className="min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary">
+        <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
                 title="Conversor de Medidas Culinárias - Xícaras para Gramas e ML"
                 description="Não erre a receita! Converta xícaras, colheres de sopa e chá para gramas ou mililitros. Tabelas precisas para farinha, açúcar, manteiga e líquidos."
                 canonical="/calculadoras/conversor-culinario"
             />
+            <script type="application/ld+json">
+                {JSON.stringify(schema)}
+            </script>
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": CULINARY_FAQS.map(faq => ({
+                        "@type": "Question",
+                        "name": faq.question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": faq.answer
+                        }
+                    }))
+                })}
+            </script>
 
-            <div className="container mx-auto px-4 py-8 max-w-4xl">
-                <Link to="/calculadoras" className="inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group">
-                    <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
-                    Voltar para Calculadoras
-                </Link>
+            {/* Background Orbs */}
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
-                <div className="bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
+            <div className="max-w-7xl mx-auto relative z-10">
+                <div className="mb-8">
+                    <Breadcrumb items={[
+                        { label: 'Calculadoras', href: '/calculadoras' },
+                        { label: 'Conversor Culinário', href: '/calculadoras/conversor-culinario' }
+                    ]} />
 
-                    <div className="relative z-10">
-                        <div className="flex items-center gap-4 mb-2">
-                            <div className="p-3 bg-primary/10 rounded-2xl">
-                                <ChefHat className="w-8 h-8 text-primary" />
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-12"
+                    >
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
+                            <ChefHat className="w-4 h-4 text-primary" />
+                            <span className="text-sm text-gray-300">Culinária e Receitas</span>
+                        </div>
+                        <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
+                            Conversor <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Culinário</span>
+                        </h1>
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                            Xícaras para gramas, colheres para ml. Acerte o ponto da receita com precisão de chef.
+                        </p>
+                    </motion.div>
+                </div>
+
+                <div className="grid lg:grid-cols-12 gap-8 mb-24">
+                    {/* Calculator */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="lg:col-span-7"
+                    >
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <div className="space-y-4 mb-6">
+                                <div>
+                                    <label className="block text-xs text-gray-500 mb-1">Ingrediente</label>
+                                    <select
+                                        value={ingredientId}
+                                        onChange={(e) => setIngredientId(e.target.value)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all"
+                                    >
+                                        {INGREDIENTS.map(i => (
+                                            <option key={i.id} value={i.id}>{i.name}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="grid grid-cols-[1fr,auto,1fr] gap-2 items-end">
+                                    <div>
+                                        <label className="block text-xs text-gray-500 mb-1">De</label>
+                                        <select
+                                            value={fromUnitId}
+                                            onChange={(e) => setFromUnitId(e.target.value)}
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm"
+                                        >
+                                            {UNITS.map(u => (
+                                                <option key={u.id} value={u.id}>{u.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+                                    <button
+                                        onClick={handleSwap}
+                                        className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors mb-[1px]"
+                                        title="Inverter unidades"
+                                    >
+                                        <ArrowRightLeft className="w-4 h-4 text-primary" />
+                                    </button>
+
+                                    <div>
+                                        <label className="block text-xs text-gray-500 mb-1">Para</label>
+                                        <select
+                                            value={toUnitId}
+                                            onChange={(e) => setToUnitId(e.target.value)}
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm"
+                                        >
+                                            {UNITS.map(u => (
+                                                <option key={u.id} value={u.id}>{u.name}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-xs text-gray-500 mb-1">Quantidade</label>
+                                    <input
+                                        type="text"
+                                        value={amount}
+                                        onChange={(e) => setAmount(e.target.value)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg"
+                                        placeholder="Ex: 1"
+                                    />
+                                </div>
                             </div>
-                            <div>
-                                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                                    Conversor Culinário
-                                </h1>
-                                <p className="text-gray-400 mt-1">
-                                    Xícaras para gramas, colheres para ml. Precisão de chef.
+
+                            <div className="mt-8 pt-6 border-t border-white/5">
+                                <p className="text-center text-gray-400 mb-2">Resultado</p>
+                                <div className="text-5xl font-bold text-center text-primary mb-2">
+                                    {result} <span className="text-2xl text-gray-500">{UNITS.find(u => u.id === toUnitId)?.name.split('(')[0].trim()}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Sidebar Info */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                        className="lg:col-span-5 space-y-6"
+                    >
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
+                                <HelpCircle className="w-5 h-5 text-primary" />
+                                Peso vs. Volume
+                            </h3>
+                            <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
+                                <p>
+                                    Na cozinha, precisão é tudo. O maior erro é achar que "1 xícara" é sempre a mesma coisa.
+                                </p>
+                                <p>
+                                    Para sólidos, a densidade muda tudo: 1 xícara de farinha pesa muito menos que 1 xícara de açúcar. Se trocar sem converter, o bolo sola ou fica doce demais.
                                 </p>
                             </div>
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-12 mt-8">
-                            <div className="space-y-6">
-                                <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
+                        <div className="bg-yellow-500/10 p-6 rounded-3xl border border-yellow-500/20">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-yellow-400">
+                                <Info className="w-5 h-5" />
+                                Dica de Ouro
+                            </h3>
+                            <p className="text-sm text-gray-300">
+                                Ao medir farinha em xícaras, <strong>nunca compacte o pó</strong> batendo a xícara na mesa! Isso faz caber mais farinha do que a receita pede, deixando a massa pesada. O correto é encher soltinho e nivelar com uma faca.
+                            </p>
+                        </div>
 
-                                    <div className="space-y-4 mb-6">
-                                        <div>
-                                            <label className="block text-xs text-gray-500 mb-1">Ingrediente</label>
-                                            <select
-                                                value={ingredientId}
-                                                onChange={(e) => setIngredientId(e.target.value)}
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all"
-                                            >
-                                                {INGREDIENTS.map(i => (
-                                                    <option key={i.id} value={i.id}>{i.name}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-
-                                        <div className="grid grid-cols-[1fr,auto,1fr] gap-2 items-end">
-                                            <div>
-                                                <label className="block text-xs text-gray-500 mb-1">De</label>
-                                                <select
-                                                    value={fromUnitId}
-                                                    onChange={(e) => setFromUnitId(e.target.value)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm"
-                                                >
-                                                    {UNITS.map(u => (
-                                                        <option key={u.id} value={u.id}>{u.name}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-
-                                            <button
-                                                onClick={handleSwap}
-                                                className="p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors mb-[1px]"
-                                                title="Inverter unidades"
-                                            >
-                                                <ArrowRightLeft className="w-4 h-4 text-primary" />
-                                            </button>
-
-                                            <div>
-                                                <label className="block text-xs text-gray-500 mb-1">Para</label>
-                                                <select
-                                                    value={toUnitId}
-                                                    onChange={(e) => setToUnitId(e.target.value)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm"
-                                                >
-                                                    {UNITS.map(u => (
-                                                        <option key={u.id} value={u.id}>{u.name}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label className="block text-xs text-gray-500 mb-1">Quantidade</label>
-                                            <input
-                                                type="text"
-                                                value={amount}
-                                                onChange={(e) => setAmount(e.target.value)}
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg"
-                                                placeholder="Ex: 1"
-                                            />
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-8 pt-6 border-t border-white/5">
-                                        <p className="text-center text-gray-400 mb-2">Resultado</p>
-                                        <div className="text-5xl font-bold text-center text-primary mb-2">
-                                            {result} <span className="text-2xl text-gray-500">{UNITS.find(u => u.id === toUnitId)?.name.split('(')[0].trim()}</span>
-                                        </div>
-                                    </div>
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
+                                <Beaker className="w-5 h-5 text-primary" />
+                                Tabela Rápida (1 Xícara)
+                            </h3>
+                            <div className="space-y-2 text-sm">
+                                <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
+                                    <span>Farinha de Trigo</span>
+                                    <span className="text-white font-bold">120g</span>
                                 </div>
-
-                                <div className="bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20">
-                                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-yellow-400">
-                                        <Info className="w-5 h-5" />
-                                        Dica de Ouro
-                                    </h3>
-                                    <p className="text-sm text-gray-300">
-                                        Ao medir farinha em xícaras, <strong>nunca compacte o pó</strong> batendo a xícara na mesa! Isso faz caber mais farinha do que a receita pede, deixando a massa pesada. O correto é encher soltinho e nivelar com uma faca.
-                                    </p>
+                                <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
+                                    <span>Açúcar Refinado</span>
+                                    <span className="text-white font-bold">180g</span>
                                 </div>
-                            </div>
-
-                            <div className="space-y-6">
-                                <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
-                                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                        <HelpCircle className="w-5 h-5 text-primary" />
-                                        Peso vs. Volume
-                                    </h3>
-                                    <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
-                                        <p>
-                                            Na cozinha, precisão é tudo. O maior erro é achar que "1 xícara" é sempre a mesma coisa.
-                                        </p>
-                                        <p>
-                                            Para sólidos, a densidade muda tudo: 1 xícara de farinha pesa muito menos que 1 xícara de açúcar. Se trocar sem converter, o bolo sola ou fica doce demais.
-                                        </p>
-                                    </div>
+                                <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
+                                    <span>Chocolate em Pó</span>
+                                    <span className="text-white font-bold">90g</span>
                                 </div>
-
-                                <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
-                                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                                        <Beaker className="w-5 h-5 text-primary" />
-                                        Tabela Rápida (1 Xícara)
-                                    </h3>
-                                    <div className="space-y-2 text-sm">
-                                        <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
-                                            <span>Farinha de Trigo</span>
-                                            <span className="text-white font-bold">120g</span>
-                                        </div>
-                                        <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
-                                            <span>Açúcar Refinado</span>
-                                            <span className="text-white font-bold">180g</span>
-                                        </div>
-                                        <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
-                                            <span>Chocolate em Pó</span>
-                                            <span className="text-white font-bold">90g</span>
-                                        </div>
-                                        <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
-                                            <span>Manteiga</span>
-                                            <span className="text-white font-bold">200g</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
-                                    <h3 className="text-lg font-semibold mb-4 text-white">Dúvidas Frequentes</h3>
-                                    <div className="space-y-3 text-sm text-gray-400">
-                                        <div>
-                                            <strong className="text-white block">Quanto vale 1 xícara em ml?</strong>
-                                            <p>No padrão brasileiro, 1 xícara de chá equivale a 240ml.</p>
-                                        </div>
-                                        <div className="border-t border-white/5 pt-3">
-                                            <strong className="text-white block">Quantos ml tem uma colher de sopa?</strong>
-                                            <p>A medida padrão mundial é 15ml. A de chá tem 5ml.</p>
-                                        </div>
-                                    </div>
+                                <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
+                                    <span>Manteiga</span>
+                                    <span className="text-white font-bold">200g</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
+
+                <FAQ
+                    items={CULINARY_FAQS}
+                    title="Dúvidas Frequentes sobre Medidas"
+                    className="py-12"
+                    showSocialProof={false}
+                />
+
+                <AppPromoBanner />
             </div>
-        </div>
+        </section>
     );
 }

@@ -153,7 +153,7 @@ export const PixGeneratorPage: React.FC = () => {
             <SEO
                 title="Gerador de QR Code Pix Grátis - Copia e Cola Seguro"
                 description="Crie QR Codes Pix personalizados gratuitamente. Gere códigos Copia e Cola instantâneos, baixe a imagem e receba pagamentos sem taxas."
-                canonical="/ferramentas/gerador-pix"
+                canonical="/calculadoras/gerador-pix"
             />
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
@@ -180,8 +180,8 @@ export const PixGeneratorPage: React.FC = () => {
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
                     <Breadcrumb items={[
-                        { label: 'Ferramentas', href: '/ferramentas' },
-                        { label: 'Gerador de Pix', href: '/ferramentas/gerador-pix' }
+                        { label: 'Calculadoras', href: '/calculadoras' },
+                        { label: 'Gerador de Pix', href: '/calculadoras/gerador-pix' }
                     ]} />
 
                     <motion.div

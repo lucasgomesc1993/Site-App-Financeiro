@@ -7,7 +7,6 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'Depoimentos', href: '#depoimentos' },
   { label: 'Planos', href: '#investimento' },
   { label: 'Calculadoras', href: '/calculadoras' },
-  { label: 'Ferramentas', href: '/ferramentas' },
   { label: 'FAQ', href: '#faq' }
 ];
 

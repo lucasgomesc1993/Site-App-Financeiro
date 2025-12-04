@@ -14,7 +14,6 @@ const Support = lazy(() => import('./components/Support').then(module => ({ defa
 
 // Static imports for critical SEO pages
 import { Calculators } from './components/Calculators';
-import { Tools } from './components/Tools';
 import { InvestmentPage } from './components/tools/InvestmentPage';
 import { VacationPage } from './components/tools/VacationPage';
 import { EnergyPage } from './components/tools/EnergyPage';
@@ -79,7 +78,6 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/calculadoras" element={<Calculators />} />
-              <Route path="/ferramentas" element={<Tools />} />
               <Route path="/calculadoras/investimentos" element={<InvestmentPage />} />
               <Route path="/calculadoras/ferias" element={<VacationPage />} />
               <Route path="/calculadoras/energia" element={<EnergyPage />} />
@@ -124,8 +122,8 @@ function App() {
               <Route path="/calculadoras/agua" element={<WaterIntakeCalculatorPage />} />
               <Route path="/calculadoras/conversor-culinario" element={<CulinaryConverterPage />} />
               <Route path="/calculadoras/idade-gestacional" element={<GestationalAgeCalculatorPage />} />
-              <Route path="/ferramentas/amigo-secreto" element={<SecretSantaPage />} />
-              <Route path="/ferramentas/gerador-pix" element={<PixGeneratorPage />} />
+              <Route path="/calculadoras/amigo-secreto" element={<SecretSantaPage />} />
+              <Route path="/calculadoras/gerador-pix" element={<PixGeneratorPage />} />
               <Route path="/blog" element={<BlogIndex />} />
               <Route path="/blog/:category/:slug" element={<BlogPost />} />
               <Route path="/blog/:categorySlug" element={<CategoryPage />} />
