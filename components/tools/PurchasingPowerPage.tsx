@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { History, Calculator, HelpCircle, TrendingDown, ArrowRight } from 'lucide-react';
+import { History, Calculator, TrendingDown, ArrowRight, Info, AlertCircle, Shield, TrendingUp, DollarSign } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -11,16 +11,24 @@ import { INFLATION_DATA } from './inflationData';
 
 const INFLATION_FAQS: FAQItem[] = [
     {
-        question: "O que é inflação?",
-        answer: "É o aumento generalizado dos preços. Quando a inflação sobe, seu dinheiro perde valor, ou seja, você compra menos coisas com a mesma quantia."
+        question: "Qual é a diferença entre ganho nominal e ganho real?",
+        answer: "O ganho nominal é o valor bruto que você recebe a mais. Por exemplo, se seu salário subiu de R$ 2.000 para R$ 2.200, seu ganho nominal foi de 10%. O ganho real é esse aumento descontada a inflação. Se a inflação no período foi de 9%, seu ganho real (aumento de poder de compra) foi de apenas aprox. 1%."
     },
     {
-        question: "Qual índice é usado?",
-        answer: "Esta calculadora utiliza o IPCA (Índice Nacional de Preços ao Consumidor Amplo), que é o índice oficial de inflação do Brasil, medido pelo IBGE."
+        question: "Qual índice devo usar: IPCA ou IGP-M?",
+        answer: "Depende do objetivo. O IPCA é o índice oficial de inflação do consumidor (ideal para salários e compras do dia a dia). O IGP-M é mais usado para reajustes de aluguéis e tarifas públicas, sendo historicamente mais volátil."
     },
     {
-        question: "Por que corrigir valores?",
-        answer: "Para saber quanto um valor do passado valeria hoje. Por exemplo, um salário de R$ 1.000 em 1994 não compra as mesmas coisas que R$ 1.000 hoje."
+        question: "Como calcular a inflação acumulada manualmente?",
+        answer: "Não basta somar as porcentagens mensais. O cálculo é feito por juros compostos: multiplicam-se os fatores de cada mês. Exemplo: Para dois meses de 1% (fator 1,01), a conta é 1,01 x 1,01 = 1,0201, ou seja, 2,01% acumulado, e não 2,00%."
+    },
+    {
+        question: "A poupança protege meu poder de compra?",
+        answer: "Historicamente, muitas vezes não. Em diversos anos, o rendimento da poupança ficou abaixo da inflação (IPCA), o que significa que o dinheiro aplicado perdeu valor real de compra, mesmo que o saldo numérico tenha aumentado."
+    },
+    {
+        question: "O dólar afeta meu poder de compra no Brasil?",
+        answer: "Sim. Muitos produtos consumidos no Brasil (trigo, eletrônicos, combustíveis) têm preços atrelados ao dólar. Quando o real se desvaloriza frente ao dólar, a inflação interna tende a subir, reduzindo seu poder de compra. Você pode verificar essa relação em nossa ferramenta de conversor de moedas."
     }
 ];
 
@@ -41,10 +49,6 @@ export function PurchasingPowerPage() {
         }
 
         let accumulatedInflation = 1;
-
-        // Simple simulation using mock data structure logic
-        // In a real app, we would iterate through monthly indices between dates
-        // Here we will filter the annual data from inflationData
 
         const relevantData = INFLATION_DATA.filter(d => d.year >= start && d.year < end);
 
@@ -78,8 +82,8 @@ export function PurchasingPowerPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Poder de Compra (IPCA)",
-        "description": "Corrija valores pela inflação (IPCA) e descubra quanto seu dinheiro valia no passado ou quanto precisa valer hoje.",
+        "name": "Calculadora de Poder de Compra: Correção pela Inflação (IPCA)",
+        "description": "Descubra quanto seu dinheiro valia no passado e veja a perda do poder de compra pela inflação. Calcule a correção monetária exata agora.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -92,8 +96,8 @@ export function PurchasingPowerPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Inflação - Correção pelo IPCA"
-                description="Seu dinheiro perdeu valor? Corrija valores pela inflação oficial (IPCA) e compare o poder de compra entre diferentes anos."
+                title="Calculadora de Poder de Compra: Correção pela Inflação (IPCA)"
+                description="Descubra quanto seu dinheiro valia no passado e veja a perda do poder de compra pela inflação. Calcule a correção monetária exata agora."
                 canonical="/calculadoras/poder-de-compra"
             />
             <script type="application/ld+json">
@@ -138,13 +142,18 @@ export function PurchasingPowerPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-red-500">Poder de Compra</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Veja como a inflação corroeu seu dinheiro. Corrija valores pelo IPCA histórico.
-                        </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
+                            <p>
+                                Você já percebeu que <strong>R$ 100,00</strong> hoje não enchem o carrinho de compras como faziam há 10 anos? Isso não é apenas uma impressão; é a corrosão do seu dinheiro causada pela inflação.
+                            </p>
+                            <p>
+                                Nossa <strong>Calculadora de Poder de Compra</strong> revela a verdade financeira: ela atualiza valores do passado para o presente usando índices oficiais (como o IPCA), mostrando exatamente quanto você precisaria ganhar hoje para manter o mesmo padrão de vida de anos atrás.
+                            </p>
+                        </div>
                     </motion.div>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-8 mb-24">
+                <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -152,7 +161,7 @@ export function PurchasingPowerPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -228,27 +237,159 @@ export function PurchasingPowerPage() {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="lg:col-span-5 space-y-6"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <TrendingDown className="w-5 h-5 text-red-500" />
-                                O vilão invisível
-                            </h3>
-                            <div className="space-y-4 text-sm text-gray-400">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full">
+                            <h2 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
+                                <Info className="w-5 h-5 text-emerald-500" />
+                                Como usar a Calculadora
+                            </h2>
+                            <div className="space-y-6 text-gray-400">
                                 <p>
-                                    A inflação é como um imposto invisível. Se você deixa seu dinheiro parado na conta corrente ou embaixo do colchão, ele está perdendo valor todos os dias.
+                                    Nossa ferramenta simplifica a matemática financeira complexa. Para descobrir o valor real do dinheiro no tempo, você precisará apenas de três dados:
                                 </p>
-                                <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-                                    <strong className="text-white block mb-1">Proteja-se</strong>
-                                    Para não perder poder de compra, seus investimentos precisam render, no mínimo, acima da inflação (IPCA).
-                                </div>
+                                <ul className="space-y-4">
+                                    <li className="flex gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                                        <div>
+                                            <strong className="text-white block">Valor Inicial</strong>
+                                            A quantia que você quer corrigir (ex: o preço de um imóvel em 2015 ou seu primeiro salário).
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                                        <div>
+                                            <strong className="text-white block">Ano Inicial</strong>
+                                            O ano de referência daquele valor.
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                                        <div>
+                                            <strong className="text-white block">Ano Final</strong>
+                                            Para quando você quer trazer esse valor (geralmente, o ano atual).
+                                        </div>
+                                    </li>
+                                </ul>
+                                <p className="text-sm">
+                                    O sistema aplica a correção monetária acumulada ano a ano. Isso é essencial para saber se uma proposta de emprego atual realmente paga mais que seu emprego anterior ou para calcular o <Link to="/calculadoras/salario-liquido" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">salário líquido</Link> real descontando a inflação.
+                                </p>
                             </div>
                         </div>
                     </motion.div>
                 </div>
 
+                {/* Additional Content */}
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
+                    >
+                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <TrendingDown className="w-6 h-6 text-red-500" />
+                            O que é Poder de Compra?
+                        </h2>
+                        <div className="space-y-4 text-gray-400 leading-relaxed">
+                            <p>
+                                O <strong>poder de compra</strong> (ou poder aquisitivo) é a capacidade de adquirir bens e serviços com uma determinada quantia de dinheiro. Em termos simples: é o que o seu dinheiro consegue "pagar" no supermercado, no posto de gasolina ou no aluguel.
+                            </p>
+                            <p>
+                                Quando os preços sobem de forma generalizada — fenômeno conhecido como <strong>inflação</strong> — a sua moeda perde valor. Se o seu salário não cresce na mesma velocidade que a inflação, você fica "mais pobre", mesmo recebendo o mesmo valor nominal.
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
+                    >
+                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <AlertCircle className="w-6 h-6 text-emerald-500" />
+                            Como a Inflação "Come" seu Salário
+                        </h2>
+                        <div className="space-y-4 text-gray-400 leading-relaxed">
+                            <p>
+                                O principal vilão do seu bolso no Brasil é o <strong>IPCA</strong> (Índice Nacional de Preços ao Consumidor Amplo), medido pelo IBGE. Ele rastreia o aumento de preços de uma cesta de produtos e serviços.
+                            </p>
+
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr className="border-b border-white/10">
+                                            <th className="p-2 text-white">Ano</th>
+                                            <th className="p-2 text-white">Valor Nominal</th>
+                                            <th className="p-2 text-white">Equivalente Hoje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400">
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2">1994</td>
+                                            <td className="p-2">R$ 100,00</td>
+                                            <td className="p-2 font-bold text-red-400">R$ 820,00+</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2">2010</td>
+                                            <td className="p-2">R$ 100,00</td>
+                                            <td className="p-2 font-bold text-red-400">R$ 250,00+</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-2">2024</td>
+                                            <td className="p-2">R$ 100,00</td>
+                                            <td className="p-2 font-bold text-emerald-400">R$ 100,00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p className="text-sm">
+                                Para não perder dinheiro, é vital que seus rendimentos sejam corrigidos acima desses índices. Entender isso é o primeiro passo antes de planejar seus <Link to="/calculadoras/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">investimentos</Link> de longo prazo.
+                            </p>
+                        </div>
+                    </motion.div>
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24"
+                >
+                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <Shield className="w-6 h-6 text-emerald-500" />
+                        3 Formas de Proteger seu Poder de Compra
+                    </h2>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <TrendingUp className="w-8 h-8 text-emerald-500 mb-4" />
+                            <h3 className="text-lg font-bold text-white mb-2">Invista em Ativos Reais</h3>
+                            <p className="text-sm text-gray-400">
+                                Deixar dinheiro parado na conta corrente é prejuízo certo. Busque investimentos atrelados à inflação (Tesouro IPCA+, Fundos Imobiliários ou Ações). Use nossa calculadora de <Link to="/calculadoras/juros-compostos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">juros compostos</Link> para simular o crescimento real.
+                            </p>
+                        </div>
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <DollarSign className="w-8 h-8 text-emerald-500 mb-4" />
+                            <h3 className="text-lg font-bold text-white mb-2">Negocie seu Salário</h3>
+                            <p className="text-sm text-gray-400">
+                                Use os dados desta calculadora na sua avaliação de desempenho. Mostre ao seu chefe que um reajuste abaixo da inflação é, na prática, uma redução salarial.
+                            </p>
+                        </div>
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <AlertCircle className="w-8 h-8 text-emerald-500 mb-4" />
+                            <h3 className="text-lg font-bold text-white mb-2">Monitore seus Gastos</h3>
+                            <p className="text-sm text-gray-400">
+                                Às vezes a "inflação pessoal" é maior que a oficial. Se você gasta muito com educação ou saúde, setores que costumam subir acima da média, seu poder de compra cai mais rápido.
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+
                 <FAQ
                     items={INFLATION_FAQS}
-                    title="Dúvidas sobre Inflação"
+                    title="Perguntas Frequentes sobre Inflação (FAQ)"
                     className="py-12"
                     showSocialProof={false}
                 />

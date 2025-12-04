@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TrendingUp, Calculator, LineChart, ArrowRight, Info, AlertCircle } from 'lucide-react';
+import { TrendingUp, Calculator, LineChart, ArrowRight, Info, AlertCircle, Coins, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -10,24 +10,24 @@ import { FAQItem } from '../../types';
 
 const INVESTMENT_FAQS: FAQItem[] = [
     {
-        question: "Quanto rende R$ 1.000,00 investidos hoje?",
-        answer: "O rendimento depende da taxa contratada. Em um cenário de Renda Fixa pagando 100% do CDI (com a Selic próxima a 10,75% ou mais), R$ 1.000,00 renderiam aproximadamente R$ 107,50 brutos em um ano. Lembre-se que há desconto de Imposto de Renda sobre o lucro, que varia de 22,5% a 15% dependendo do prazo."
+        question: "Quanto rendem R$ 1.000,00 por mês hoje?",
+        answer: "O rendimento mensal depende da taxa Selic vigente. Se considerarmos uma taxa básica de juros próxima a 10,75% ao ano, um investimento que pague 100% do CDI renderia cerca de 0,85% ao mês bruto. Isso significa que R$ 1.000,00 gerariam aproximadamente R$ 8,50 no primeiro mês, antes do Imposto de Renda."
     },
     {
-        question: "Qual a diferença entre CDB e LCI/LCA?",
-        answer: "A principal diferença é a tributação. O CDB (Certificado de Depósito Bancário) tem incidência de Imposto de Renda, enquanto as LCIs (Letras de Crédito Imobiliário) e LCAs (Letras de Crédito do Agronegócio) são isentas de IR para pessoas físicas. Por isso, uma LCI que rende 90% do CDI pode valer mais a pena que um CDB que rende 110% do CDI, dependendo do prazo."
+        question: "Qual a diferença entre LCI e CDB?",
+        answer: "A diferença crucial é o Imposto de Renda. O CDB (Certificado de Depósito Bancário) sofre tributação regressiva de 22,5% a 15% sobre o lucro. Já as LCIs (Letras de Crédito Imobiliário) são isentas de IR para pessoas físicas. Por isso, uma LCI que rende 90% do CDI muitas vezes coloca mais dinheiro no seu bolso do que um CDB de 110% do CDI."
     },
     {
-        question: "Onde investir meu dinheiro com segurança em 2025?",
-        answer: "Os investimentos mais seguros do Brasil são os títulos do Tesouro Direto (garantidos pelo Governo Federal) e produtos bancários como CDBs, LCIs e LCAs que contam com a proteção do FGC (Fundo Garantidor de Créditos) até o limite de R$ 250 mil por CPF e por instituição."
+        question: "É seguro investir em bancos menores?",
+        answer: "Sim, desde que o investimento seja coberto pelo FGC (Fundo Garantidor de Créditos). O FGC garante até R$ 250.000,00 por CPF e por instituição financeira em casos de falência do banco. Isso vale para CDBs, LCIs, LCAs e Poupança, tornando o risco muito baixo para quem respeita esse limite."
     },
     {
-        question: "Como calcular o rendimento mensal de um investimento?",
-        answer: "Para transformar uma taxa anual em mensal de forma simples (juros compostos), a conta não é apenas dividir por 12. A fórmula correta é: (1 + taxa anual)^(1/12) - 1. Porém, para estimativas rápidas em nossa calculadora, você pode focar na taxa anual, que é o padrão do mercado financeiro."
+        question: "Vale a pena investir com pouco dinheiro?",
+        answer: "Com certeza. O fator \"tempo\" é mais importante que o valor do aporte inicial. Começar hoje com R$ 100,00 permite que os juros compostos atuem por mais tempo do que começar daqui a 5 anos com R$ 1.000,00. O hábito de investir cria disciplina financeira."
     },
     {
-        question: "Vale a pena investir pouco dinheiro por mês?",
-        answer: "Sim, absolutamente. O fator \"tempo\" é mais poderoso que o fator \"dinheiro\". Começar com R$ 100,00 hoje é infinitamente melhor do que esperar ter R$ 1.000,00 daqui a cinco anos. Use a calculadora para ver como pequenos aportes, somados à disciplina, criam grandes patrimônios."
+        question: "Como calcular a rentabilidade real de um investimento?",
+        answer: "A conta aproximada é: Rentabilidade Nominal - Inflação. Para a conta exata, usa-se a fórmula de Fisher: (1 + Taxa Nominal) / (1 + Inflação) - 1. Nossa calculadora foca no resultado final acumulado, mas você deve sempre ter em mente que o dinheiro do futuro valerá menos que o de hoje."
     }
 ];
 
@@ -91,8 +91,8 @@ export function InvestmentPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Investimentos",
-        "description": "Descubra quanto seu dinheiro pode render. Use nossa Calculadora de Investimentos gratuita para simular juros compostos, aportes mensais e planejar sua liberdade financeira.",
+        "name": "Calculadora de Investimentos: Simule Juros Compostos e Rendimentos",
+        "description": "Descubra quanto seu dinheiro vai render. Use nossa Calculadora de Investimentos para simular juros compostos, aportes mensais e planejar sua liberdade financeira.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -105,8 +105,8 @@ export function InvestmentPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Investimentos: Simule Rendimentos e Juros Reais"
-                description="Descubra quanto seu dinheiro pode render. Use nossa Calculadora de Investimentos gratuita para simular juros compostos, aportes mensais e planejar sua liberdade financeira."
+                title="Calculadora de Investimentos: Simule Juros Compostos e Rendimentos"
+                description="Descubra quanto seu dinheiro vai render. Use nossa Calculadora de Investimentos para simular juros compostos, aportes mensais e planejar sua liberdade financeira."
                 canonical="/calculadoras/investimentos"
             />
             <script type="application/ld+json">
@@ -153,10 +153,10 @@ export function InvestmentPage() {
                         </h1>
                         <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
                             <p>
-                                Você já parou para pensar que o dinheiro parado na conta corrente está, na verdade, encolhendo por causa da inflação? <strong className="text-gray-200">Investir não é apenas para quem tem muito dinheiro</strong>, é a única forma comprovada de proteger seu patrimônio e garantir um futuro tranquilo.
+                                Deixar dinheiro parado na conta corrente é o jeito mais rápido de perder poder de compra para a inflação. <strong>Investir é a única estratégia comprovada</strong> para proteger seu patrimônio e garantir um futuro tranquilo, independentemente de quanto você ganha hoje.
                             </p>
                             <p>
-                                Nossa <strong className="text-gray-200">Calculadora de Investimentos</strong> foi projetada para eliminar o "achismo". Com ela, você visualiza exatamente o poder dos juros compostos trabalhando a seu favor ao longo do tempo. Seja para comprar um imóvel, planejar a aposentadoria ou alcançar o <Link to="/calculadoras/primeiro-milhao" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30 transition-colors">primeiro milhão</Link>, a matemática financeira é sua maior aliada.
+                                Nossa <strong>Calculadora de Investimentos</strong> elimina as suposições. Com ela, você projeta o crescimento do seu capital e vê a matemática financeira acelerando seus resultados ao longo do tempo. Seja para comprar uma casa, planejar a aposentadoria ou atingir o <Link to="/calculadoras/primeiro-milhao" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">primeiro milhão</Link>, os números jogam no seu time.
                             </p>
                         </div>
                     </motion.div>
@@ -194,7 +194,7 @@ export function InvestmentPage() {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Aporte Mensal</label>
+                                        <label className="text-sm text-gray-400">Valor Mensal</label>
                                         <div className="relative">
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
@@ -220,7 +220,7 @@ export function InvestmentPage() {
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Prazo (Anos)</label>
+                                        <label className="text-sm text-gray-400">Período (Anos)</label>
                                         <input
                                             type="text"
                                             value={years}
@@ -267,38 +267,42 @@ export function InvestmentPage() {
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full">
                             <h2 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
                                 <Info className="w-5 h-5 text-emerald-500" />
-                                Como usar o simulador
+                                Como preencher o simulador corretamente
                             </h2>
                             <div className="space-y-6 text-gray-400">
-                                <p>Para obter um resultado preciso, você precisa preencher os campos com dados realistas. Veja o que cada um significa:</p>
+                                <p>Para ter um resultado fiel à realidade, entenda o que cada campo pede:</p>
 
                                 <ul className="space-y-4">
                                     <li className="flex gap-3">
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
                                         <div>
                                             <strong className="text-white block">Valor Inicial</strong>
-                                            O montante que você já tem guardado hoje. Se for começar do zero, basta deixar zerado.
+                                            Quanto você tem disponível hoje para começar. Se for zero, tudo bem.
                                         </div>
                                     </li>
                                     <li className="flex gap-3">
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
                                         <div>
                                             <strong className="text-white block">Valor Mensal</strong>
-                                            Quanto você consegue poupar do seu <Link to="/calculadoras/salario-liquido" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">salário líquido</Link> para investir todos os meses. A constância aqui é mais importante que a quantia.
+                                            A quantia do seu <Link to="/calculadoras/salario-liquido" className="text-white hover:underline">salário líquido</Link> que você vai separar religiosamente para investir. A constância vence a intensidade.
                                         </div>
                                     </li>
                                     <li className="flex gap-3">
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
                                         <div>
                                             <strong className="text-white block">Taxa de Juros Anual</strong>
-                                            A rentabilidade esperada. Em cenários de Selic alta, investimentos de Renda Fixa podem oferecer entre 10% a 13% ao ano. Para projeções conservadoras de longo prazo, utilize entre 6% e 8% acima da inflação.
+                                            A rentabilidade esperada.
+                                            <ul className="list-disc pl-4 mt-1 text-sm text-gray-500">
+                                                <li><em>Conservador:</em> 8% a 10% (Renda Fixa segura).</li>
+                                                <li><em>Arrojado:</em> 11% a 13% (Renda Variável).</li>
+                                            </ul>
                                         </div>
                                     </li>
                                     <li className="flex gap-3">
                                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
                                         <div>
                                             <strong className="text-white block">Período (Anos)</strong>
-                                            O tempo que o dinheiro ficará rendendo.
+                                            O tempo que o dinheiro ficará trabalhando para você.
                                         </div>
                                     </li>
                                 </ul>
@@ -306,10 +310,10 @@ export function InvestmentPage() {
                                 <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                                     <strong className="text-emerald-400 block mb-2 flex items-center gap-2">
                                         <AlertCircle className="w-4 h-4" />
-                                        Dica de Especialista
+                                        Dica Estratégica
                                     </strong>
                                     <p className="text-sm text-emerald-100/80">
-                                        Se você tem dúvidas sobre quanto separar do seu orçamento, utilize a <Link to="/calculadoras/regra-50-30-20" className="text-white hover:underline">Regra 50-30-20</Link> para definir o valor ideal dos seus aportes mensais antes de simular.
+                                        Está difícil definir o valor mensal? Utilize a <Link to="/calculadoras/regra-50-30-20" className="text-white hover:underline">Regra 50-30-20</Link> para organizar seu orçamento e descobrir sua capacidade real de poupança antes de simular.
                                     </p>
                                 </div>
                             </div>
@@ -328,17 +332,17 @@ export function InvestmentPage() {
                     >
                         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                             <LineChart className="w-6 h-6 text-emerald-500" />
-                            A Mágica dos Juros Compostos
+                            O Poder dos Juros Compostos
                         </h2>
                         <div className="space-y-4 text-gray-400 leading-relaxed">
                             <p>
-                                Albert Einstein supostamente chamou os juros compostos de "a oitava maravilha do mundo". Exageros à parte, o conceito é sólido: você ganha juros sobre o dinheiro que investiu <strong className="text-gray-200">e também sobre os juros que esse dinheiro já rendeu</strong>.
+                                Juros compostos são a aplicação de juros sobre o capital inicial acrescido dos juros acumulados em períodos anteriores, gerando crescimento exponencial. Diferente dos juros simples, aqui a base de cálculo aumenta a cada mês, criando o efeito "bola de neve".
                             </p>
                             <p>
-                                É o famoso "juros sobre juros". No curto prazo, a diferença parece pequena. Mas, após 10 ou 20 anos, a curva de crescimento se torna exponencial. É nesse ponto que sua renda passiva pode superar seu salário do trabalho.
+                                No gráfico de longo prazo, isso gera uma aceleração robusta. Nos primeiros anos, o crescimento parece linear, mas após uma década, os rendimentos mensais podem começar a superar o valor dos seus aportes.
                             </p>
                             <p>
-                                Para entender a matemática detalhada por trás dessa multiplicação, acesse nossa explicação completa sobre <Link to="/calculadoras/juros-compostos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">juros compostos</Link>.
+                                Para entender a fórmula exata por trás desse crescimento, veja nossa página detalhada sobre <Link to="/calculadoras/juros-compostos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">juros compostos</Link>.
                             </p>
                         </div>
                     </motion.div>
@@ -351,26 +355,22 @@ export function InvestmentPage() {
                         className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
                     >
                         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                            <AlertCircle className="w-6 h-6 text-emerald-500" />
-                            Taxa Nominal vs. Taxa Real
+                            <Coins className="w-6 h-6 text-emerald-500" />
+                            Ganho Real vs. Ganho Nominal
                         </h2>
                         <div className="space-y-4 text-gray-400 leading-relaxed">
                             <p>
-                                Um erro comum ao usar simuladores é esquecer a inflação.
+                                A diferença entre ganho real e nominal é a inflação. Enquanto o ganho nominal é a rentabilidade bruta informada pela instituição financeira, o ganho real representa o aumento efetivo do poder de compra após descontar o IPCA (Índice Nacional de Preços ao Consumidor Amplo).
                             </p>
-                            <ul className="space-y-2">
-                                <li>
-                                    <strong className="text-white">Taxa Nominal:</strong> É o número que você vê na corretora (ex: CDB rendendo 12% ao ano).
-                                </li>
-                                <li>
-                                    <strong className="text-white">Taxa Real:</strong> É quanto seu dinheiro cresceu de verdade, descontando a inflação (IPCA).
-                                </li>
+                            <ul className="space-y-2 list-disc pl-5">
+                                <li><strong>Taxa Nominal:</strong> É o número que aparece na tela da corretora (ex: 12% ao ano).</li>
+                                <li><strong>Taxa Real:</strong> É o quanto sua riqueza cresceu de verdade.</li>
                             </ul>
                             <p>
-                                Se o seu investimento rende 12% e a inflação foi de 5%, seu ganho real é de aproximadamente 7%. Ao fazer simulações para prazos muito longos (como 20 ou 30 anos), prefira usar uma <strong className="text-gray-200">taxa de juros real</strong> (ex: 5% ou 6%) para ter uma noção mais fiel do poder de compra futuro do seu dinheiro.
+                                Se seu investimento rende 12% e a inflação é 5%, seu ganho real é de aproximadamente 7%. Para metas de longuíssimo prazo, como a independência financeira ou o movimento <Link to="/calculadoras/fire" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">FIRE</Link>, prefira simular com taxas reais mais baixas para não superestimar seu patrimônio futuro.
                             </p>
                             <p>
-                                Você pode ler mais análises profundas sobre o mercado em nosso <Link to="/blog/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">blog sobre investimentos</Link>.
+                                Aprofunde-se em estratégias de alocação de ativos em nosso <Link to="/blog/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">blog sobre investimentos</Link>.
                             </p>
                         </div>
                     </motion.div>
@@ -378,7 +378,7 @@ export function InvestmentPage() {
 
                 <FAQ
                     items={INVESTMENT_FAQS}
-                    title="Perguntas Frequentes sobre Investimentos (FAQs)"
+                    title="Perguntas Frequentes (FAQs)"
                     className="py-12"
                     showSocialProof={false}
                 />

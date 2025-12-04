@@ -15,7 +15,7 @@ const FIRE_FAQS: FAQItem[] = [
     },
     {
         question: "A regra dos 4% funciona no Brasil?",
-        answer: "Sim, e pode ser até mais eficiente. Nos EUA, a regra depende muito do mercado de ações. No Brasil, devido às altas taxas de juros na Renda Fixa (Tesouro IPCA+, por exemplo), é possível construir carteiras mais seguras com rentabilidade real acima de 5%, o que favorece o aposentado brasileiro."
+        answer: "Sim, e pode ser até mais eficiente. Nos EUA, a regra depende muito do mercado de ações. No Brasil, devido às altas taxas de juros na Renda Fixa (como o Tesouro IPCA+), é possível construir carteiras mais seguras com rentabilidade real acima de 5%, o que favorece o aposentado brasileiro."
     },
     {
         question: "Onde devo investir para atingir o FIRE?",
@@ -103,7 +103,7 @@ export function FIREPage() {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Calculadora FIRE: Quando Você Vai Atingir a Independência Financeira?",
-        "description": "Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada hoje.",
+        "description": "Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -117,7 +117,7 @@ export function FIREPage() {
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
                 title="Calculadora FIRE: Quando Você Vai Atingir a Independência Financeira?"
-                description="Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada hoje."
+                description="Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada."
                 canonical="/calculadoras/fire"
             />
             <script type="application/ld+json">
@@ -160,7 +160,7 @@ export function FIREPage() {
                             <span className="text-sm text-gray-300">Investimentos e Planejamento</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-orange-500">FIRE</span>
+                            Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-orange-500">FIRE</span>: Planeje sua Independência Financeira
                         </h1>
                         <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
                             <p>
@@ -280,7 +280,7 @@ export function FIREPage() {
                                 Como Usar a Calculadora
                             </h2>
                             <div className="space-y-6 text-gray-400">
-                                <p>Para obter um resultado preciso, insira dados honestos sobre sua vida financeira:</p>
+                                <p>Preencha os campos abaixo com dados reais da sua vida financeira:</p>
 
                                 <ul className="space-y-4">
                                     <li className="flex gap-3">
@@ -338,9 +338,9 @@ export function FIREPage() {
                                 Existem variações do movimento, dependendo do seu estilo de vida:
                             </p>
                             <ul className="space-y-2 list-disc pl-5">
-                                <li><strong className="text-white">Lean FIRE:</strong> Para quem busca uma vida frugal e custos baixos.</li>
-                                <li><strong className="text-white">Fat FIRE:</strong> Para quem deseja manter um alto padrão de vida na aposentadoria.</li>
-                                <li><strong className="text-white">Barista FIRE:</strong> Para quem atinge a independência parcial e trabalha apenas por benefícios ou prazer.</li>
+                                <li><strong className="text-white">Lean FIRE:</strong> Ideal para quem busca uma vida frugal e custos baixos. O foco aqui é o minimalismo extremo para atingir a liberdade o mais rápido possível com um patrimônio menor.</li>
+                                <li><strong className="text-white">Fat FIRE:</strong> Para quem deseja manter um alto padrão de vida na aposentadoria. Exige um patrimônio acumulado significativamente maior para cobrir luxos e viagens frequentes.</li>
+                                <li><strong className="text-white">Barista FIRE:</strong> Para quem atinge a independência parcial. Você já tem patrimônio suficiente para cobrir o básico, mas continua trabalhando meio período (como barista, por exemplo) apenas para cobrir custos extras, benefícios de saúde ou simplesmente por prazer social.</li>
                             </ul>
                         </div>
                     </motion.div>
@@ -358,10 +358,7 @@ export function FIREPage() {
                         </h2>
                         <div className="space-y-4 text-gray-400 leading-relaxed">
                             <p>
-                                O cálculo base do FIRE fundamenta-se na <strong>Regra dos 4%</strong>, originada do Estudo da Universidade Trinity.
-                            </p>
-                            <p>
-                                A lógica é que, se você tiver investido <strong>25 vezes o seu custo anual</strong>, você pode retirar 4% desse valor todos os anos para viver, ajustando pela inflação, sem que o dinheiro acabe por pelo menos 30 anos.
+                                A <strong>Regra dos 4%</strong> é uma estratégia de retirada segura que estipula que você pode sacar 4% do seu patrimônio investido anualmente sem que o dinheiro acabe em 30 anos. Originada do Estudo da Universidade Trinity, a lógica define que você precisa acumular <strong>25 vezes o seu custo anual</strong>.
                             </p>
                             <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                                 <strong className="text-white block mb-2">Exemplo Prático:</strong>
@@ -376,7 +373,7 @@ export function FIREPage() {
                             <div className="flex gap-2 items-start text-sm text-emerald-400/80">
                                 <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                                 <p>
-                                    <strong>Nota para o Brasil:</strong> No cenário brasileiro, temos uma vantagem histórica de juros reais altos. Estudos locais sugerem que, com uma carteira focada em renda fixa, a taxa de retirada segura pode chegar a <strong>5%</strong>, acelerando sua jornada.
+                                    <strong>Nota para o Brasil:</strong> No cenário brasileiro, temos uma vantagem histórica de juros reais altos. Estudos locais sugerem que, com uma carteira focada em <Link to="/blog/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Renda Fixa</Link>, a taxa de retirada segura pode chegar a <strong>5%</strong>, acelerando sua jornada.
                                 </p>
                             </div>
                         </div>

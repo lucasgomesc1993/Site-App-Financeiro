@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart3, Calculator, HelpCircle, TrendingUp, ArrowRight } from 'lucide-react';
+import { BarChart3, Calculator, TrendingUp, ArrowRight, Info, AlertCircle, Coins, Target } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -10,16 +10,24 @@ import { FAQItem } from '../../types';
 
 const INTEREST_FAQS: FAQItem[] = [
     {
-        question: "O que são juros compostos?",
-        answer: "São 'juros sobre juros'. O rendimento de cada mês é somado ao capital inicial, e no mês seguinte, o juro é calculado sobre esse novo total maior."
+        question: "Qual a diferença entre juros simples e compostos?",
+        answer: "A diferença reside na base de cálculo. Nos juros simples, a taxa incide apenas sobre o valor principal inicial. Nos juros compostos, a taxa incide sobre o principal somado aos juros acumulados nos períodos anteriores, resultando em um crescimento exponencial do patrimônio."
     },
     {
-        question: "Qual a diferença para juros simples?",
-        answer: "Nos juros simples, o rendimento é sempre calculado apenas sobre o valor inicial. Nos compostos, o rendimento cresce exponencialmente com o tempo."
+        question: "Como calcular juros compostos mensalmente?",
+        answer: "A fórmula utilizada é M = C(1+i)^t. Para cálculos mensais, é crucial converter a taxa anual para mensal antes de aplicar a fórmula. Ferramentas online, como esta calculadora, fazem essa conversão automaticamente para garantir precisão."
     },
     {
-        question: "Como aproveitar os juros compostos?",
-        answer: "Comece a investir o quanto antes e mantenha a regularidade. O tempo é o fator que mais influencia o crescimento exponencial da curva de juros."
+        question: "Qual o melhor investimento para juros compostos?",
+        answer: "Os títulos de Renda Fixa pós-fixados (como Tesouro Selic e CDBs) garantem o efeito composto por contrato. Em Renda Variável (Ações e FIIs), o efeito composto é obtido manualmente através do reinvestimento sistemático dos dividendos recebidos."
+    },
+    {
+        question: "Quanto rendem R$ 1.000 a juros compostos?",
+        answer: "O rendimento depende da taxa e do prazo. Por exemplo, R$ 1.000 a 1% ao mês por 12 meses resultaria em R$ 1.126,82. Nos juros simples, o valor seria R$ 1.120,00. A discrepância aumenta drasticamente conforme o prazo se estende."
+    },
+    {
+        question: "A poupança usa juros compostos?",
+        answer: "Sim, a poupança utiliza o regime de juros compostos, com crédito mensal na data de aniversário. Contudo, devido à rentabilidade historicamente baixa, o efeito de acumulação é muito inferior quando comparado a outros tipos de investimentos de renda fixa."
     }
 ];
 
@@ -92,8 +100,8 @@ export function CompoundInterestPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Juros Compostos",
-        "description": "Simule o crescimento do seu patrimônio com a força dos juros compostos.",
+        "name": "Calculadora de Juros Compostos Online: Simule Rendimentos Reais",
+        "description": "Projete o crescimento do seu patrimônio. Use nossa calculadora de juros compostos para simular aportes mensais, taxas de juros e o efeito do tempo nos seus investimentos.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -106,8 +114,8 @@ export function CompoundInterestPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Juros Compostos Online"
-                description="Veja a mágica dos juros compostos acontecer. Simule seus investimentos e descubra quanto você terá no futuro."
+                title="Calculadora de Juros Compostos Online: Simule Rendimentos Reais"
+                description="Projete o crescimento do seu patrimônio. Use nossa calculadora de juros compostos para simular aportes mensais, taxas de juros e o efeito do tempo nos seus investimentos."
                 canonical="/calculadoras/juros-compostos"
             />
             <script type="application/ld+json">
@@ -150,15 +158,20 @@ export function CompoundInterestPage() {
                             <span className="text-sm text-gray-300">Investimentos e Planejamento</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Juros Compostos</span>
+                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Juros Compostos</span> Online
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            A força mais poderosa do universo financeiro. Simule o crescimento exponencial do seu dinheiro.
-                        </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
+                            <p>
+                                Esta ferramenta é essencial para <strong>planejar sua liberdade financeira</strong>. Ao contrário dos juros simples, onde o dinheiro cresce de forma linear, aqui o seu rendimento gera novos rendimentos, criando um efeito de acúmulo acelerado a seu favor.
+                            </p>
+                            <p>
+                                Use a calculadora abaixo para projetar seus ganhos reais com CDBs, Tesouro Direto ou qualquer aplicação de renda fixa e variável, ajustando o tempo e os depósitos mensais.
+                            </p>
+                        </div>
                     </motion.div>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-8 mb-24">
+                <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -166,7 +179,7 @@ export function CompoundInterestPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -273,40 +286,164 @@ export function CompoundInterestPage() {
                         </div>
                     </motion.div>
 
-                    {/* Sidebar Info */}
+                    {/* Sidebar Info - How to use */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="lg:col-span-5 space-y-6"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <TrendingUp className="w-5 h-5 text-emerald-500" />
-                                Juros sobre Juros
-                            </h3>
-                            <div className="space-y-4 text-sm text-gray-400">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full">
+                            <h2 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
+                                <Info className="w-5 h-5 text-emerald-500" />
+                                O Que São Juros Compostos?
+                            </h2>
+                            <div className="space-y-6 text-gray-400">
                                 <p>
-                                    A diferença entre juros simples e compostos é brutal no longo prazo.
+                                    <strong>Juros compostos representam o regime de capitalização onde os juros de cada período incidem sobre o montante acumulado (capital inicial + rendimentos passados), gerando crescimento exponencial.</strong>
                                 </p>
-                                <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-                                    <strong className="text-white block mb-1">Exemplo</strong>
-                                    Investindo R$ 1.000 por mês a 1% a.m. por 30 anos:
-                                    <br />
-                                    - Total investido: R$ 360.000
-                                    <br />
-                                    - Total final: <strong>R$ 3.500.000</strong>
-                                    <br />
-                                    Os juros geraram 10x mais que o seu trabalho!
+                                <p>
+                                    Diferente do crescimento linear, essa modalidade faz com que a base de cálculo aumente mês a mês.
+                                </p>
+                                <ul className="space-y-2 text-sm">
+                                    <li>• <strong>Mês 1:</strong> Você investe R$ 1.000 a 10%. Ganha R$ 100. Saldo: R$ 1.100.</li>
+                                    <li>• <strong>Mês 2:</strong> O juro de 10% incide sobre R$ 1.100. Você ganha R$ 110. Saldo: R$ 1.210.</li>
+                                </ul>
+
+                                <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                                    <strong className="text-emerald-400 block mb-2 flex items-center gap-2">
+                                        <Coins className="w-4 h-4" />
+                                        A Importância dos Aportes Mensais
+                                    </strong>
+                                    <p className="text-sm text-emerald-100/80 mb-2">
+                                        Muitos investidores focam apenas no capital inicial, mas o "combustível" da equação está na recorrência. <strong>Realizar aportes mensais constantes potencializa o efeito dos juros compostos</strong> de maneira drástica.
+                                    </p>
+                                    <p className="text-sm text-emerald-100/80">
+                                        Para organizar seu orçamento e garantir que sobre dinheiro para investir, recomendamos aplicar a <Link to="/calculadoras/regra-50-30-20" className="text-white hover:underline">Regra 50-30-20</Link>.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </motion.div>
                 </div>
 
+                {/* Additional Content */}
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
+                    >
+                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <TrendingUp className="w-6 h-6 text-emerald-500" />
+                            Juros Simples vs. Juros Compostos: O Duelo
+                        </h2>
+                        <div className="space-y-4 text-gray-400 leading-relaxed">
+                            <p>
+                                Veja a diferença prática de investir <strong>R$ 10.000</strong> a uma taxa de <strong>10% ao ano</strong> por 20 anos:
+                            </p>
+
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr className="border-b border-white/10">
+                                            <th className="p-2 text-white">Tipo</th>
+                                            <th className="p-2 text-white">Fórmula</th>
+                                            <th className="p-2 text-emerald-400">Saldo Final (Aprox.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400">
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">Juros Simples</td>
+                                            <td className="p-2">Linear (apenas sobre o principal)</td>
+                                            <td className="p-2 text-emerald-100">R$ 30.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-2 font-bold text-emerald-400">Juros Compostos</td>
+                                            <td className="p-2">Exponencial (Juros sobre juros)</td>
+                                            <td className="p-2 font-bold text-emerald-400">R$ 67.275</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p className="text-sm">
+                                No longo prazo, essa diferença matemática é o que separa pequenos poupadores de grandes investidores.
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
+                    >
+                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <Calculator className="w-6 h-6 text-emerald-500" />
+                            A Fórmula Matemática
+                        </h2>
+                        <div className="space-y-4 text-gray-400 leading-relaxed">
+                            <p>
+                                A base matemática utilizada no cálculo é:
+                            </p>
+
+                            <div className="bg-white/5 p-6 rounded-xl text-center my-4 font-mono text-xl text-emerald-400">
+                                M = C (1 + i)<sup>t</sup>
+                            </div>
+
+                            <ul className="space-y-2 text-sm">
+                                <li><strong className="text-white">M:</strong> Montante final (o que você recebe).</li>
+                                <li><strong className="text-white">C:</strong> Capital inicial (o que você investiu).</li>
+                                <li><strong className="text-white">i:</strong> Taxa de juros (na forma decimal, ex: 10% = 0,10).</li>
+                                <li><strong className="text-white">t:</strong> Tempo de aplicação.</li>
+                            </ul>
+
+                            <div className="flex gap-2 items-start text-sm text-yellow-500/80 bg-yellow-500/10 p-3 rounded-lg">
+                                <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                                <p>
+                                    <strong>Nota técnica:</strong> A taxa (<em>i</em>) e o tempo (<em>t</em>) devem estar sempre na mesma unidade (ambos em meses ou ambos em anos).
+                                </p>
+                            </div>
+
+                            <p className="text-sm mt-4">
+                                Se seu objetivo é atingir um valor específico, como sete dígitos na conta, nossa calculadora do <Link to="/calculadoras/primeiro-milhao" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Primeiro Milhão</Link> faz o caminho inverso e diz exatamente quanto você precisa poupar por mês.
+                            </p>
+                        </div>
+                    </motion.div>
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24"
+                >
+                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <Target className="w-6 h-6 text-emerald-500" />
+                        Onde investir com Juros Compostos no Brasil?
+                    </h2>
+                    <div className="text-gray-400 leading-relaxed space-y-4">
+                        <p>
+                            No Brasil, a maioria dos investimentos de Renda Fixa e a lógica de reinvestimento na Renda Variável utilizam este regime. As melhores opções incluem:
+                        </p>
+                        <ul className="space-y-2 list-disc pl-5">
+                            <li><strong>Tesouro Direto (Selic e IPCA+):</strong> A segurança do governo com a potência da capitalização composta.</li>
+                            <li><strong>CDBs (Certificados de Depósito Bancário):</strong> Títulos privados que frequentemente rendem acima de 100% do CDI.</li>
+                            <li><strong>Fundos Imobiliários e Ações:</strong> Embora a cota varie, ao reinvestir os dividendos na compra de novas cotas, você cria o efeito composto na quantidade de ativos que possui.</li>
+                        </ul>
+                        <p>
+                            Antes de escolher, é vital comparar a rentabilidade real. Use nossa ferramenta de <Link to="/calculadoras/roi" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">ROI (Retorno sobre Investimento)</Link> para validar se o ativo supera a inflação e os custos.
+                        </p>
+                    </div>
+                </motion.div>
+
                 <FAQ
                     items={INTEREST_FAQS}
-                    title="Dúvidas sobre Juros Compostos"
+                    title="Perguntas Frequentes (FAQ)"
                     className="py-12"
                     showSocialProof={false}
                 />
