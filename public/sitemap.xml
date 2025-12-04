@@ -47,6 +47,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/amigo-secreto</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/capital-de-giro</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -133,6 +138,11 @@
   </url>
   <url>
     <loc>https://junny.com.br/calculadoras/fire</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/gerador-pix</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -250,21 +260,6 @@
     <loc>https://junny.com.br/calculadoras/uber-ou-carro</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://junny.com.br/ferramentas</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://junny.com.br/ferramentas/amigo-secreto</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://junny.com.br/ferramentas/gerador-pix</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://junny.com.br/privacy</loc>

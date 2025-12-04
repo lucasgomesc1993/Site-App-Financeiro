@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Plus, Trash2, RotateCcw, Lightbulb, HelpCircle } from 'lucide-react';
+import { Clock, Calculator, RotateCcw, HelpCircle, AlertCircle, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -10,95 +10,76 @@ import { FAQItem } from '../../types';
 
 type Operation = 'add' | 'subtract';
 
-interface TimeRow {
-    id: string;
-    operation: Operation;
-    value: string;
-}
-
 const HOURS_FAQS: FAQItem[] = [
     {
-        question: "Como somar horas e minutos corretamente?",
-        answer: "Para somar horas, você deve converter tudo para minutos, realizar a soma e depois converter de volta para o formato de horas. Nossa calculadora faz isso automaticamente: 08:50 + 00:20 = 09:10 (e não 08:70)."
+        question: "Como funciona a soma de horas?",
+        answer: "O sistema converte tudo para minutos, realiza a soma e depois converte de volta para o formato Horas:Minutos. Exemplo: 01:30 + 00:40 = 02:10."
     },
     {
-        question: "Como calcular horas trabalhadas?",
-        answer: "Insira o horário de saída e subtraia o horário de entrada. Lembre-se de descontar o intervalo de almoço. Exemplo: (18:00 - 09:00) - 01:00 = 08:00 horas trabalhadas."
+        question: "Posso usar para calcular banco de horas?",
+        answer: "Sim! É ideal para somar todas as horas trabalhadas no mês e subtrair das horas devidas para saber seu saldo positivo ou negativo."
     },
     {
-        question: "O que é o sistema sexagesimal?",
-        answer: "É o sistema de numeração de base 60 usado para medir o tempo. Diferente do sistema decimal (base 10), onde 100 centavos formam 1 real, no tempo são necessários 60 minutos para formar 1 hora."
-    },
-    {
-        question: "Como converter minutos em horas?",
-        answer: "Divida o total de minutos por 60. A parte inteira será as horas e o resto será os minutos. Exemplo: 90 minutos ÷ 60 = 1 hora e sobram 30 minutos (01:30)."
+        question: "O cálculo considera segundos?",
+        answer: "Não, esta calculadora foca apenas em Horas e Minutos, que é o padrão para folhas de ponto e banco de horas."
     }
 ];
 
 export function HoursCalculatorPage() {
-    const [rows, setRows] = useState<TimeRow[]>([
-        { id: '1', operation: 'add', value: '' },
-        { id: '2', operation: 'add', value: '' }
-    ]);
+    const [time1, setTime1] = useState('');
+    const [time2, setTime2] = useState('');
+    const [operation, setOperation] = useState<Operation>('add');
     const [result, setResult] = useState<string>('00:00');
-    const [isNegative, setIsNegative] = useState(false);
 
-    const addRow = () => {
-        setRows([...rows, { id: Math.random().toString(36).substr(2, 9), operation: 'add', value: '' }]);
-    };
+    const calculateTime = () => {
+        if (!time1 || !time2) return;
 
-    const removeRow = (id: string) => {
-        if (rows.length > 2) {
-            setRows(rows.filter(row => row.id !== id));
+        const [h1, m1] = time1.split(':').map(Number);
+        const [h2, m2] = time2.split(':').map(Number);
+
+        if (isNaN(h1) || isNaN(m1) || isNaN(h2) || isNaN(m2)) return;
+
+        const totalMinutes1 = h1 * 60 + m1;
+        const totalMinutes2 = h2 * 60 + m2;
+
+        let finalMinutes;
+        if (operation === 'add') {
+            finalMinutes = totalMinutes1 + totalMinutes2;
+        } else {
+            finalMinutes = totalMinutes1 - totalMinutes2;
         }
-    };
 
-    const updateRow = (id: string, field: keyof TimeRow, value: string) => {
-        setRows(rows.map(row => row.id === id ? { ...row, [field]: value } : row));
-    };
+        const isNegative = finalMinutes < 0;
+        finalMinutes = Math.abs(finalMinutes);
 
-    const reset = () => {
-        setRows([
-            { id: '1', operation: 'add', value: '' },
-            { id: '2', operation: 'add', value: '' }
-        ]);
-    };
+        const hours = Math.floor(finalMinutes / 60);
+        const minutes = finalMinutes % 60;
 
-    const timeToMinutes = (time: string): number => {
-        if (!time) return 0;
-        const [hours, minutes] = time.split(':').map(Number);
-        if (isNaN(hours) || isNaN(minutes)) return 0;
-        return (hours * 60) + minutes;
-    };
-
-    const minutesToTime = (totalMinutes: number): string => {
-        const absMinutes = Math.abs(totalMinutes);
-        const hours = Math.floor(absMinutes / 60);
-        const minutes = absMinutes % 60;
-        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+        const formattedResult = `${isNegative ? '-' : ''}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+        setResult(formattedResult);
     };
 
     useEffect(() => {
-        let totalMinutes = 0;
+        calculateTime();
+    }, [time1, time2, operation]);
 
-        rows.forEach((row, index) => {
-            const minutes = timeToMinutes(row.value);
-            if (row.operation === 'add') {
-                totalMinutes += minutes;
+    const handleTimeInput = (value: string, setter: (value: string) => void) => {
+        // Allow numbers and colon
+        if (/^[\d:]*$/.test(value)) {
+            // Auto-insert colon
+            if (value.length === 2 && !value.includes(':')) {
+                setter(value + ':');
             } else {
-                totalMinutes -= minutes;
+                setter(value);
             }
-        });
-
-        setIsNegative(totalMinutes < 0);
-        setResult(minutesToTime(totalMinutes));
-    }, [rows]);
+        }
+    };
 
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Horas Online",
-        "description": "Some e subtraia horas e minutos facilmente. Ferramenta gratuita para RH e controle de ponto.",
+        "name": "Calculadora de Horas e Minutos",
+        "description": "Some ou subtraia horas e minutos facilmente. Ideal para banco de horas e folha de ponto.",
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -111,8 +92,8 @@ export function HoursCalculatorPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Horas Online - Soma e Subtração de Minutos"
-                description="Precisa fechar a folha de ponto? Some e subtraia horas e minutos facilmente. Ferramenta gratuita para RH, funcionários e controle de banco de horas."
+                title="Calculadora de Horas e Minutos Online - Somar e Subtrair"
+                description="Precisa calcular seu banco de horas? Use nossa calculadora gratuita para somar e subtrair horas e minutos de forma simples e rápida."
                 canonical="/calculadoras/horas"
             />
             <script type="application/ld+json">
@@ -134,8 +115,8 @@ export function HoursCalculatorPage() {
             </script>
 
             {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
@@ -151,14 +132,14 @@ export function HoursCalculatorPage() {
                         className="text-center mb-12"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Clock className="w-4 h-4 text-primary" />
-                            <span className="text-sm text-gray-300">Gestão de Tempo</span>
+                            <Clock className="w-4 h-4 text-blue-500" />
+                            <span className="text-sm text-gray-300">Trabalhistas e Previdenciárias</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Horas</span>
+                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Horas</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Chega de errar a conta do ponto. Some ou subtraia horas e minutos sem complicação para fechar sua folha ou banco de horas.
+                            Some ou subtraia horas e minutos facilmente. A ferramenta ideal para fechar sua folha de ponto ou banco de horas.
                         </p>
                     </motion.div>
                 </div>
@@ -172,63 +153,68 @@ export function HoursCalculatorPage() {
                         className="lg:col-span-7"
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                            <div className="space-y-4">
-                                {rows.map((row, index) => (
-                                    <div key={row.id} className="flex items-center gap-3 animate-in fade-in slide-in-from-left-4 duration-300">
-                                        <select
-                                            value={row.operation}
-                                            onChange={(e) => updateRow(row.id, 'operation', e.target.value as Operation)}
-                                            className={`bg-[#0a0a0a] border border-white/10 rounded-xl py-4 px-2 text-center focus:outline-none focus:border-primary/50 transition-all font-bold w-20 ${row.operation === 'add' ? 'text-emerald-400' : 'text-red-400'}`}
-                                        >
-                                            <option value="add">+</option>
-                                            <option value="subtract">-</option>
-                                        </select>
-
-                                        <div className="relative flex-1">
-                                            <input
-                                                type="time"
-                                                value={row.value}
-                                                onChange={(e) => updateRow(row.id, 'value', e.target.value)}
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-4 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center font-mono text-xl"
-                                            />
-                                        </div>
-
-                                        <button
-                                            onClick={() => removeRow(row.id)}
-                                            disabled={rows.length <= 2}
-                                            className={`p-4 rounded-xl border border-white/5 transition-colors ${rows.length <= 2 ? 'text-gray-600 cursor-not-allowed opacity-50' : 'text-gray-400 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20'}`}
-                                            title="Remover linha"
-                                        >
-                                            <Trash2 className="w-5 h-5" />
-                                        </button>
-                                    </div>
-                                ))}
-                            </div>
-
-                            <div className="flex gap-3 mt-6">
+                            <div className="flex items-center justify-between mb-8">
+                                <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
+                                    <Calculator className="w-5 h-5 text-blue-500" />
+                                    Calcular
+                                </h2>
                                 <button
-                                    onClick={addRow}
-                                    className="flex-1 py-4 px-4 bg-[#0a0a0a] hover:bg-white/5 border border-white/10 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 text-gray-300 hover:text-white group"
+                                    onClick={() => { setTime1(''); setTime2(''); setResult('00:00'); }}
+                                    className="text-xs flex items-center gap-1 text-gray-400 hover:text-white transition-colors"
                                 >
-                                    <Plus className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                                    Adicionar Linha
-                                </button>
-                                <button
-                                    onClick={reset}
-                                    className="py-4 px-6 bg-[#0a0a0a] hover:bg-white/5 border border-white/10 rounded-xl text-sm font-medium transition-all text-gray-300 hover:text-white"
-                                    title="Limpar tudo"
-                                >
-                                    <RotateCcw className="w-4 h-4" />
+                                    <RotateCcw className="w-3 h-3" /> Limpar
                                 </button>
                             </div>
 
-                            <div className="mt-8 pt-8 border-t border-white/5">
-                                <p className="text-center text-gray-400 mb-2 uppercase tracking-wider text-xs font-bold">Resultado Total</p>
-                                <div className={`text-6xl font-bold text-center font-mono tracking-wider ${isNegative ? 'text-red-400' : 'text-primary'}`}>
-                                    {isNegative ? '-' : ''}{result}
+                            <div className="grid grid-cols-[1fr,auto,1fr] gap-4 items-center mb-8">
+                                <div className="space-y-2">
+                                    <label className="text-xs text-gray-500 ml-1">Horário 1</label>
+                                    <input
+                                        type="text"
+                                        value={time1}
+                                        onChange={(e) => handleTimeInput(e.target.value, setTime1)}
+                                        placeholder="00:00"
+                                        maxLength={5}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-4 px-4 text-center text-2xl font-mono text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-gray-700"
+                                    />
                                 </div>
-                                <p className="text-center text-sm text-gray-500 mt-3">
-                                    {isNegative ? 'Saldo Negativo' : 'Saldo Positivo'}
+
+                                <div className="flex flex-col gap-2 pt-6">
+                                    <button
+                                        onClick={() => setOperation('add')}
+                                        className={`p-2 rounded-lg transition-all ${operation === 'add' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 text-gray-500 hover:bg-white/10'}`}
+                                    >
+                                        +
+                                    </button>
+                                    <button
+                                        onClick={() => setOperation('subtract')}
+                                        className={`p-2 rounded-lg transition-all ${operation === 'subtract' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'bg-white/5 text-gray-500 hover:bg-white/10'}`}
+                                    >
+                                        -
+                                    </button>
+                                </div>
+
+                                <div className="space-y-2">
+                                    <label className="text-xs text-gray-500 ml-1">Horário 2</label>
+                                    <input
+                                        type="text"
+                                        value={time2}
+                                        onChange={(e) => handleTimeInput(e.target.value, setTime2)}
+                                        placeholder="00:00"
+                                        maxLength={5}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-4 px-4 text-center text-2xl font-mono text-white focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-gray-700"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="bg-[#0a0a0a] rounded-2xl p-6 border border-white/5 text-center relative overflow-hidden">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50" />
+                                <p className="text-gray-400 text-sm mb-2">Resultado Final</p>
+                                <div className="text-5xl font-bold text-white font-mono tracking-wider">
+                                    {result}
+                                </div>
+                                <p className="text-xs text-blue-400 mt-2 font-medium">
+                                    {operation === 'add' ? 'Soma realizada' : 'Subtração realizada'}
                                 </p>
                             </div>
                         </div>
@@ -243,76 +229,40 @@ export function HoursCalculatorPage() {
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <HelpCircle className="w-5 h-5 text-primary" />
-                                Por que usar esta calculadora?
+                                <HelpCircle className="w-5 h-5 text-blue-500" />
+                                Como usar?
                             </h3>
-                            <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
-                                <p>
-                                    O sistema de tempo é <strong>sexagesimal</strong> (base 60), enquanto nossa matemática comum é decimal (base 10).
-                                </p>
-                                <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
-                                    <strong className="text-red-400 block mb-1">O Erro Comum:</strong>
-                                    <p>Somar 8h50 + 20min na calculadora normal dá <strong>8,70</strong> (errado!).</p>
-                                </div>
-                                <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-xl">
-                                    <strong className="text-emerald-400 block mb-1">O Jeito Certo:</strong>
-                                    <p>Nossa ferramenta converte os minutos corretamente: 08:50 + 00:20 = <strong>09:10</strong>.</p>
-                                </div>
-                            </div>
+                            <ul className="space-y-3 text-sm text-gray-400">
+                                <li className="flex items-start gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                                    <span>Digite as horas no formato <strong>HH:MM</strong> (ex: 08:30).</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                                    <span>Use o botão <strong>(+)</strong> para somar horas extras ou períodos trabalhados.</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-1.5 flex-shrink-0" />
+                                    <span>Use o botão <strong>(-)</strong> para descontar intervalos ou atrasos.</span>
+                                </li>
+                            </ul>
                         </div>
 
                         <div className="bg-blue-500/10 p-6 rounded-3xl border border-blue-500/20">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400">
-                                <Lightbulb className="w-5 h-5" />
-                                Dica de Ouro
+                                <Info className="w-5 h-5" />
+                                Dica Prática
                             </h3>
                             <p className="text-sm text-gray-300">
-                                O formato "8h30" é diferente de "8,5h". Se você precisa multiplicar as horas pelo valor em dinheiro (R$), use sempre o formato decimal (8,5).
+                                Para calcular seu saldo do dia: Some o horário de saída com o horário de entrada. Subtraia o tempo de almoço. O resultado é seu tempo total trabalhado.
                             </p>
                         </div>
                     </motion.div>
                 </div>
 
-                {/* SEO Content */}
-                <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
-                    <section className="mb-16">
-                        <h2 className="text-3xl font-bold text-white mb-6">Como funciona a Calculadora de Horas?</h2>
-                        <p className="text-gray-400 mb-6">
-                            A calculadora de horas da Junny foi desenvolvida para simplificar a vida de profissionais de RH, gestores e colaboradores que precisam controlar o banco de horas ou conferir a folha de ponto.
-                        </p>
-                        <p className="text-gray-400 mb-6">
-                            Diferente de uma calculadora comum, ela entende que <strong>1 hora tem 60 minutos</strong>. Isso evita erros clássicos de cálculo manual, garantindo que você saiba exatamente quanto tempo trabalhou ou quanto deve ser descontado.
-                        </p>
-                    </section>
-
-                    <section className="mb-16">
-                        <h3 className="text-2xl font-bold text-white mb-6">Exemplos Práticos de Uso</h3>
-                        <div className="grid md:grid-cols-3 gap-6">
-                            <div className="bg-[#1a1a1a] p-6 rounded-2xl border border-white/5">
-                                <h4 className="text-lg font-bold text-white mb-2 text-primary">Somar Horas</h4>
-                                <p className="text-gray-400 text-sm">
-                                    Ideal para somar todas as horas trabalhadas na semana e verificar se fechou as 44h semanais.
-                                </p>
-                            </div>
-                            <div className="bg-[#1a1a1a] p-6 rounded-2xl border border-white/5">
-                                <h4 className="text-lg font-bold text-white mb-2 text-primary">Subtrair Horas</h4>
-                                <p className="text-gray-400 text-sm">
-                                    Use para descontar atrasos ou saídas antecipadas do total de horas do dia.
-                                </p>
-                            </div>
-                            <div className="bg-[#1a1a1a] p-6 rounded-2xl border border-white/5">
-                                <h4 className="text-lg font-bold text-white mb-2 text-primary">Banco de Horas</h4>
-                                <p className="text-gray-400 text-sm">
-                                    Calcule o saldo acumulado (positivo ou negativo) para compensação futura.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
                 <FAQ
                     items={HOURS_FAQS}
-                    title="Dúvidas Frequentes sobre Cálculo de Horas"
+                    title="Dúvidas sobre Cálculo de Horas"
                     className="py-12"
                     showSocialProof={false}
                 />

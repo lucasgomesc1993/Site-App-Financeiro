@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, HelpCircle, User, Scale, Ruler, Info } from 'lucide-react';
+import { Activity, Calculator, HelpCircle, Heart, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -11,70 +11,64 @@ import { FAQItem } from '../../types';
 const IMC_FAQS: FAQItem[] = [
     {
         question: "O que é IMC?",
-        answer: "O Índice de Massa Corporal (IMC) é uma medida internacional usada para calcular se uma pessoa está no peso ideal. Foi desenvolvido pelo polímata Lambert Quételet no fim do século XIX."
+        answer: "IMC significa Índice de Massa Corporal. É um cálculo simples que permite avaliar se a pessoa está dentro do peso ideal em relação à altura."
     },
     {
-        question: "O IMC é preciso para atletas?",
-        answer: "Não. O IMC não distingue massa magra (músculo) de massa gorda. Um fisiculturista pode ter IMC de 'obeso' sendo extremamente saudável. Para atletas, o ideal é medir o percentual de gordura."
+        question: "O IMC é válido para todos?",
+        answer: "O IMC é uma referência geral para adultos. Ele pode não ser preciso para atletas (devido à massa muscular), idosos e gestantes."
     },
     {
-        question: "Qual o IMC ideal para idosos?",
-        answer: "Para idosos (acima de 60 anos), a classificação muda ligeiramente, pois uma reserva de peso pode ser benéfica. Geralmente, considera-se normal um IMC entre 22 e 27."
+        question: "Qual o IMC ideal?",
+        answer: "Para adultos, o IMC considerado normal está entre 18,5 e 24,9. Abaixo disso é magreza e acima é sobrepeso ou obesidade."
     }
 ];
 
 export function IMCCalculatorPage() {
-    // Inputs
     const [weight, setWeight] = useState('');
     const [height, setHeight] = useState('');
-
-    // Results
-    const [imc, setImc] = useState<number | null>(null);
-    const [classification, setClassification] = useState<string>('');
-    const [colorClass, setColorClass] = useState<string>('');
+    const [result, setResult] = useState<number | null>(null);
+    const [classification, setClassification] = useState('');
 
     const calculate = () => {
         const w = parseFloat(weight.replace(',', '.'));
-        const hCm = parseFloat(height.replace(',', '.'));
+        const h = parseFloat(height.replace(',', '.'));
 
-        if (isNaN(w) || isNaN(hCm) || w === 0 || hCm === 0) {
-            setImc(null);
+        if (isNaN(w) || isNaN(h) || h === 0) {
+            setResult(null);
             setClassification('');
-            setColorClass('');
             return;
         }
 
-        const hM = hCm / 100;
-        const calculatedImc = w / (hM * hM);
-        setImc(calculatedImc);
+        // Height usually in cm or meters. Let's assume user might type 175 (cm) or 1.75 (m)
+        // If > 3, assume cm and convert to m
+        const heightInMeters = h > 3 ? h / 100 : h;
 
-        if (calculatedImc < 18.5) {
-            setClassification('Magreza');
-            setColorClass('text-blue-400');
-        } else if (calculatedImc < 24.9) {
-            setClassification('Normal');
-            setColorClass('text-green-400');
-        } else if (calculatedImc < 29.9) {
-            setClassification('Sobrepeso (Grau I)');
-            setColorClass('text-yellow-400');
-        } else if (calculatedImc < 39.9) {
-            setClassification('Obesidade (Grau II)');
-            setColorClass('text-orange-400');
-        } else {
-            setClassification('Obesidade Grave (Grau III)');
-            setColorClass('text-red-500');
-        }
+        const imc = w / (heightInMeters * heightInMeters);
+        setResult(imc);
+
+        if (imc < 18.5) setClassification('Abaixo do Peso');
+        else if (imc < 24.9) setClassification('Peso Normal');
+        else if (imc < 29.9) setClassification('Sobrepeso');
+        else if (imc < 34.9) setClassification('Obesidade Grau I');
+        else if (imc < 39.9) setClassification('Obesidade Grau II');
+        else setClassification('Obesidade Grau III');
     };
 
     useEffect(() => {
         calculate();
     }, [weight, height]);
 
+    const handleInput = (value: string, setter: (value: string) => void) => {
+        if (/^[\d.,]*$/.test(value)) {
+            setter(value);
+        }
+    };
+
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Calculadora de IMC",
-        "description": "Calcule seu Índice de Massa Corporal (IMC).",
+        "description": "Calcule seu Índice de Massa Corporal (IMC) e descubra se está no peso ideal.",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -88,7 +82,7 @@ export function IMCCalculatorPage() {
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
                 title="Calculadora de IMC Online - Índice de Massa Corporal"
-                description="Calcule seu IMC gratuitamente. Descubra se você está no peso ideal, acima do peso ou com obesidade segundo a tabela oficial da OMS."
+                description="Calcule seu IMC grátis e veja se está no peso ideal. Ferramenta simples e rápida para acompanhar sua saúde."
                 canonical="/calculadoras/imc"
             />
             <script type="application/ld+json">
@@ -110,14 +104,14 @@ export function IMCCalculatorPage() {
             </script>
 
             {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
                     <Breadcrumb items={[
                         { label: 'Calculadoras', href: '/calculadoras' },
-                        { label: 'Calculadora de IMC', href: '/calculadoras/imc' }
+                        { label: 'IMC', href: '/calculadoras/imc' }
                     ]} />
 
                     <motion.div
@@ -127,14 +121,14 @@ export function IMCCalculatorPage() {
                         className="text-center mb-12"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Activity className="w-4 h-4 text-primary" />
-                            <span className="text-sm text-gray-300">Saúde e Bem-estar</span>
+                            <Activity className="w-4 h-4 text-cyan-500" />
+                            <span className="text-sm text-gray-300">Matemática e Saúde</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">IMC</span>
+                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">IMC</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Índice de Massa Corporal: descubra se seu peso está ideal de acordo com a Organização Mundial da Saúde.
+                            Monitore sua saúde. Calcule seu Índice de Massa Corporal em segundos.
                         </p>
                     </motion.div>
                 </div>
@@ -148,42 +142,51 @@ export function IMCCalculatorPage() {
                         className="lg:col-span-7"
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                            <div className="space-y-4 mb-6">
-                                <div>
-                                    <label className="block text-xs text-gray-500 mb-1 flex items-center gap-1">
-                                        <Scale className="w-3 h-3" /> Peso (kg)
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={weight}
-                                        onChange={(e) => setWeight(e.target.value)}
-                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg"
-                                        placeholder="Ex: 80"
-                                    />
-                                </div>
-
-                                <div>
-                                    <label className="block text-xs text-gray-500 mb-1 flex items-center gap-1">
-                                        <Ruler className="w-3 h-3" /> Altura (cm)
-                                    </label>
-                                    <input
-                                        type="text"
-                                        value={height}
-                                        onChange={(e) => setHeight(e.target.value)}
-                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg"
-                                        placeholder="Ex: 175"
-                                    />
-                                </div>
+                            <div className="flex items-center justify-between mb-8">
+                                <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
+                                    <Calculator className="w-5 h-5 text-cyan-500" />
+                                    Calcular IMC
+                                </h2>
                             </div>
 
-                            <div className="mt-8 pt-6 border-t border-white/5">
-                                <p className="text-center text-gray-400 mb-2">Seu IMC é</p>
-                                <div className={`text-6xl font-bold text-center mb-2 ${colorClass || 'text-gray-600'}`}>
-                                    {imc !== null ? imc.toFixed(1) : '--.-'}
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-gray-400">Peso (kg)</label>
+                                        <input
+                                            type="text"
+                                            value={weight}
+                                            onChange={(e) => handleInput(e.target.value, setWeight)}
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all"
+                                            placeholder="Ex: 70"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm text-gray-400">Altura (m)</label>
+                                        <input
+                                            type="text"
+                                            value={height}
+                                            onChange={(e) => handleInput(e.target.value, setHeight)}
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all"
+                                            placeholder="Ex: 1,75"
+                                        />
+                                    </div>
                                 </div>
-                                <p className={`text-center text-lg font-medium ${colorClass || 'text-gray-500'}`}>
-                                    {classification || 'Aguardando dados...'}
-                                </p>
+
+                                <div className="pt-6 border-t border-white/5 text-center">
+                                    <p className="text-gray-400 text-sm mb-2">Seu IMC é</p>
+                                    <div className="text-5xl font-bold text-white mb-2">
+                                        {result !== null ? result.toFixed(1) : '---'}
+                                    </div>
+                                    {result !== null && (
+                                        <div className={`inline-block px-4 py-1 rounded-full text-sm font-bold ${classification === 'Peso Normal' ? 'bg-green-500/20 text-green-400' :
+                                                classification === 'Abaixo do Peso' ? 'bg-yellow-500/20 text-yellow-400' :
+                                                    'bg-red-500/20 text-red-400'
+                                            }`}>
+                                            {classification}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </motion.div>
@@ -197,72 +200,38 @@ export function IMCCalculatorPage() {
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <HelpCircle className="w-5 h-5 text-primary" />
-                                O que é o IMC?
-                            </h3>
-                            <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
-                                <p>
-                                    O Índice de Massa Corporal (IMC) é a medida internacional usada pela OMS para avaliar se uma pessoa está no peso ideal.
-                                </p>
-                                <p>
-                                    É um cálculo simples que relaciona seu peso com a sua altura. Embora não meça diretamente a gordura corporal, é o melhor indicador inicial para riscos de saúde.
-                                </p>
-                                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
-                                    <strong className="block text-white mb-1">Fórmula:</strong>
-                                    <code className="text-primary">IMC = Peso ÷ (Altura × Altura)</code>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
-                            <h3 className="text-sm font-semibold mb-4 text-gray-300 flex items-center gap-2">
-                                <Info className="w-4 h-4" />
-                                Tabela de Classificação (OMS)
+                                <Heart className="w-5 h-5 text-cyan-500" />
+                                Tabela de Referência
                             </h3>
                             <div className="space-y-2 text-sm">
-                                <div className="flex justify-between p-2 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20">
-                                    <span>Menor que 18,5</span>
-                                    <span>Magreza</span>
+                                <div className="flex justify-between p-2 rounded bg-white/5">
+                                    <span className="text-gray-400">Menor que 18,5</span>
+                                    <span className="text-yellow-400 font-medium">Abaixo do peso</span>
                                 </div>
-                                <div className="flex justify-between p-2 rounded bg-green-500/10 text-green-300 border border-green-500/20">
-                                    <span>18,5 a 24,9</span>
-                                    <span>Normal</span>
+                                <div className="flex justify-between p-2 rounded bg-green-500/10 border border-green-500/20">
+                                    <span className="text-gray-300">18,5 a 24,9</span>
+                                    <span className="text-green-400 font-bold">Peso normal</span>
                                 </div>
-                                <div className="flex justify-between p-2 rounded bg-yellow-500/10 text-yellow-300 border border-yellow-500/20">
-                                    <span>25,0 a 29,9</span>
-                                    <span>Sobrepeso</span>
+                                <div className="flex justify-between p-2 rounded bg-white/5">
+                                    <span className="text-gray-400">25 a 29,9</span>
+                                    <span className="text-orange-400 font-medium">Sobrepeso</span>
                                 </div>
-                                <div className="flex justify-between p-2 rounded bg-orange-500/10 text-orange-300 border border-orange-500/20">
-                                    <span>30,0 a 39,9</span>
-                                    <span>Obesidade II</span>
+                                <div className="flex justify-between p-2 rounded bg-white/5">
+                                    <span className="text-gray-400">30 a 34,9</span>
+                                    <span className="text-red-400 font-medium">Obesidade I</span>
                                 </div>
-                                <div className="flex justify-between p-2 rounded bg-red-500/10 text-red-300 border border-red-500/20">
-                                    <span>Maior que 40,0</span>
-                                    <span>Obesidade III</span>
+                                <div className="flex justify-between p-2 rounded bg-white/5">
+                                    <span className="text-gray-400">Maior que 40</span>
+                                    <span className="text-red-500 font-bold">Obesidade III</span>
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-yellow-400">
-                                <User className="w-5 h-5" />
-                                Limitações do IMC
-                            </h3>
-                            <p className="text-sm text-gray-300 mb-2">
-                                O IMC é uma ferramenta de triagem, não um diagnóstico completo. Ele pode falhar em alguns casos:
-                            </p>
-                            <ul className="space-y-1 text-sm text-gray-400 list-disc pl-4">
-                                <li><strong>Atletas:</strong> Músculos pesam mais que gordura.</li>
-                                <li><strong>Idosos:</strong> IMC levemente menor/maior pode ser normal.</li>
-                                <li><strong>Gestantes:</strong> Tabela padrão não se aplica.</li>
-                            </ul>
                         </div>
                     </motion.div>
                 </div>
 
                 <FAQ
                     items={IMC_FAQS}
-                    title="Dúvidas Frequentes sobre IMC"
+                    title="Dúvidas sobre IMC"
                     className="py-12"
                     showSocialProof={false}
                 />

@@ -91,8 +91,8 @@ export const FuelPage: React.FC = () => {
                 })}
             </script>
             {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-rose-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-pink-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
@@ -110,11 +110,11 @@ export const FuelPage: React.FC = () => {
                         className="text-center mb-12"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Fuel className="w-4 h-4 text-primary" />
+                            <Fuel className="w-4 h-4 text-rose-500" />
                             <span className="text-sm text-gray-300">Economia no Tanque</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Álcool ou Gasolina</span>
+                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">Álcool ou Gasolina</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                             Descubra qual combustível compensa mais para o seu bolso agora mesmo. Simples, rápido e direto.
@@ -133,7 +133,7 @@ export const FuelPage: React.FC = () => {
                     <div className="lg:col-span-5 space-y-6">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
                             <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                                <Calculator className="w-5 h-5 text-primary" />
+                                <Calculator className="w-5 h-5 text-rose-500" />
                                 Preços na Bomba
                             </h2>
 
@@ -149,7 +149,7 @@ export const FuelPage: React.FC = () => {
                                             placeholder="0,00"
                                             value={alcoholPrice || ''}
                                             onChange={(e) => setAlcoholPrice(Number(e.target.value))}
-                                            className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                                            className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 transition-colors"
                                         />
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@ export const FuelPage: React.FC = () => {
                                             placeholder="0,00"
                                             value={gasolinePrice || ''}
                                             onChange={(e) => setGasolinePrice(Number(e.target.value))}
-                                            className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                                            className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 transition-colors"
                                         />
                                     </div>
                                 </div>
@@ -176,7 +176,7 @@ export const FuelPage: React.FC = () => {
                     {/* Results */}
                     <div className="lg:col-span-7 space-y-6">
                         <div className="bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col justify-center">
-                            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/5 rounded-full blur-[80px] pointer-events-none" />
 
                             <div className="relative z-10 text-center">
                                 {result.bestOption ? (
@@ -188,13 +188,13 @@ export const FuelPage: React.FC = () => {
                                         <h2 className="text-lg font-medium text-gray-400 mb-2 uppercase tracking-widest">Melhor Opção</h2>
                                         <div className="text-5xl md:text-7xl font-bold text-white mb-4">
                                             {result.bestOption === 'alcohol' ? (
-                                                <span className="text-primary">Álcool</span>
+                                                <span className="text-rose-500">Álcool</span>
                                             ) : (
                                                 <span className="text-emerald-400">Gasolina</span>
                                             )}
                                         </div>
                                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
-                                            <TrendingUp className="w-4 h-4 text-primary" />
+                                            <TrendingUp className="w-4 h-4 text-rose-500" />
                                             <span className="text-sm text-gray-300">
                                                 O álcool custa <span className="text-white font-bold">{formatPercent(result.ratio)}</span> do valor da gasolina
                                             </span>
@@ -238,7 +238,7 @@ export const FuelPage: React.FC = () => {
                     <section className="grid md:grid-cols-2 gap-8 mb-16">
                         <div className="bg-[#1a1a1a] p-8 rounded-2xl border border-white/5">
                             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                <div className="w-8 h-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary font-bold">1</div>
+                                <div className="w-8 h-8 rounded-lg bg-rose-500/20 flex items-center justify-center text-rose-500 font-bold">1</div>
                                 Exemplo: Álcool Vantajoso
                             </h3>
                             <p className="text-gray-400 mb-4">

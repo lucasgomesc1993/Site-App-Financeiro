@@ -16,6 +16,7 @@ type CalculatorItem = {
 
 type CategoryGroup = {
     title: string;
+    color: string; // Tailwind color name (e.g., 'blue', 'emerald')
     items: CalculatorItem[];
 };
 
@@ -46,6 +47,7 @@ export const Calculators: React.FC = () => {
     const categories: CategoryGroup[] = [
         {
             title: "Trabalhistas e Previdenciárias",
+            color: "blue",
             items: [
                 { title: "Férias", description: "Calcule o valor exato das suas férias.", icon: Plane, href: "/calculadoras/ferias" },
                 { title: "Rescisão", description: "Simule sua rescisão CLT completa.", icon: Calculator, href: "/calculadoras/rescisao" },
@@ -64,6 +66,7 @@ export const Calculators: React.FC = () => {
         },
         {
             title: "Investimentos e Planejamento",
+            color: "emerald",
             items: [
                 { title: "Simulador Investimentos", description: "Compare CDB, LCI, LCA e Tesouro.", icon: TrendingUp, href: "/calculadoras/investimentos" },
                 { title: "FIRE", description: "Quanto juntar para parar de trabalhar?", icon: Flame, href: "/calculadoras/fire" },
@@ -76,6 +79,7 @@ export const Calculators: React.FC = () => {
         },
         {
             title: "Empréstimos e Financiamentos",
+            color: "purple",
             items: [
                 { title: "Financiamento Imóvel", description: "SAC ou Price? Compare tabelas.", icon: Home, href: "/calculadoras/financiamento-imobiliario" },
                 { title: "Financiamento Veículo", description: "Simule parcelas de carro ou moto.", icon: Car, href: "/calculadoras/financiamento-veiculos" },
@@ -86,6 +90,7 @@ export const Calculators: React.FC = () => {
         },
         {
             title: "Empresariais e Empreendedorismo",
+            color: "amber",
             items: [
                 { title: "DAS MEI", description: "Calcule o valor da sua guia.", icon: Building2, href: "/calculadoras/das-mei" },
                 { title: "Markup", description: "Defina o preço de venda ideal.", icon: Tag, href: "/calculadoras/markup" },
@@ -97,6 +102,7 @@ export const Calculators: React.FC = () => {
         },
         {
             title: "Dia a Dia e Utilidades",
+            color: "rose",
             items: [
                 { title: "Gerador de Pix", description: "Crie QR Codes Pix personalizados.", icon: QrCode, href: "/calculadoras/gerador-pix" },
                 { title: "Amigo Secreto", description: "Sorteio rápido e imparcial.", icon: Gift, href: "/calculadoras/amigo-secreto" },
@@ -112,6 +118,7 @@ export const Calculators: React.FC = () => {
         },
         {
             title: "Matemática e Saúde",
+            color: "cyan",
             items: [
                 { title: "Regra de Três", description: "Resolva problemas de proporção.", icon: Divide, href: "/calculadoras/regra-de-tres" },
                 { title: "Porcentagem", description: "Calcule descontos e aumentos.", icon: Percent, href: "/calculadoras/porcentagem" },
@@ -134,6 +141,55 @@ export const Calculators: React.FC = () => {
             "price": "0",
             "priceCurrency": "BRL"
         }
+    };
+
+    // Helper to get color classes safely
+    const getColorClasses = (color: string) => {
+        const colors: Record<string, { border: string, text: string, bg: string, hoverBorder: string, gradient: string }> = {
+            blue: {
+                border: 'border-blue-500',
+                text: 'text-blue-500',
+                bg: 'bg-blue-500/10',
+                hoverBorder: 'hover:border-blue-500/30',
+                gradient: 'from-blue-500/5'
+            },
+            emerald: {
+                border: 'border-emerald-500',
+                text: 'text-emerald-500',
+                bg: 'bg-emerald-500/10',
+                hoverBorder: 'hover:border-emerald-500/30',
+                gradient: 'from-emerald-500/5'
+            },
+            purple: {
+                border: 'border-purple-500',
+                text: 'text-purple-500',
+                bg: 'bg-purple-500/10',
+                hoverBorder: 'hover:border-purple-500/30',
+                gradient: 'from-purple-500/5'
+            },
+            amber: {
+                border: 'border-amber-500',
+                text: 'text-amber-500',
+                bg: 'bg-amber-500/10',
+                hoverBorder: 'hover:border-amber-500/30',
+                gradient: 'from-amber-500/5'
+            },
+            rose: {
+                border: 'border-rose-500',
+                text: 'text-rose-500',
+                bg: 'bg-rose-500/10',
+                hoverBorder: 'hover:border-rose-500/30',
+                gradient: 'from-rose-500/5'
+            },
+            cyan: {
+                border: 'border-cyan-500',
+                text: 'text-cyan-500',
+                bg: 'bg-cyan-500/10',
+                hoverBorder: 'hover:border-cyan-500/30',
+                gradient: 'from-cyan-500/5'
+            }
+        };
+        return colors[color] || colors.blue;
     };
 
     return (
@@ -181,36 +237,39 @@ export const Calculators: React.FC = () => {
                 </div>
 
                 <div className="space-y-16">
-                    {categories.map((category, index) => (
-                        <div key={index} className="space-y-6">
-                            <h2 className="text-2xl font-bold text-white pl-2 border-l-4 border-primary">
-                                {category.title}
-                            </h2>
-                            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
-                                {category.items.map((item, itemIndex) => (
-                                    <Link key={itemIndex} to={item.href} className="group">
-                                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-2xl p-3 md:p-5 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98] flex flex-col">
-                                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-                                            <div className="relative z-10 flex flex-col h-full">
-                                                <div className="w-8 h-8 md:w-10 md:h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-3 border border-primary/20 group-hover:scale-110 transition-transform">
-                                                    <item.icon className="text-primary w-4 h-4 md:w-5 md:h-5" />
+                    {categories.map((category, index) => {
+                        const colors = getColorClasses(category.color);
+                        return (
+                            <div key={index} className="space-y-6">
+                                <h2 className={`text-2xl font-bold text-white pl-2 border-l-4 ${colors.border}`}>
+                                    {category.title}
+                                </h2>
+                                <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 md:gap-4">
+                                    {category.items.map((item, itemIndex) => (
+                                        <Link key={itemIndex} to={item.href} className="group">
+                                            <div className={`bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-2xl p-3 md:p-5 hover:bg-[#1a1a1a]/80 transition-all duration-300 ${colors.hoverBorder} h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98] flex flex-col`}>
+                                                <div className={`absolute inset-0 bg-gradient-to-br ${colors.gradient} to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity`} />
+                                                <div className="relative z-10 flex flex-col h-full">
+                                                    <div className={`w-8 h-8 md:w-10 md:h-10 ${colors.bg} rounded-lg flex items-center justify-center mb-3 border border-white/5 group-hover:scale-110 transition-transform`}>
+                                                        <item.icon className={`${colors.text} w-4 h-4 md:w-5 md:h-5`} />
+                                                    </div>
+                                                    <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2 leading-tight line-clamp-2">
+                                                        {item.title}
+                                                    </h3>
+                                                    <p className="text-xs text-gray-400 line-clamp-2 md:line-clamp-3 mb-2 md:mb-4 flex-grow hidden md:block">
+                                                        {item.description}
+                                                    </p>
+                                                    <span className={`inline-flex items-center gap-1 ${colors.text} text-xs font-bold group-hover:gap-2 transition-all mt-auto`}>
+                                                        Acessar <ArrowRight className="w-3 h-3" />
+                                                    </span>
                                                 </div>
-                                                <h3 className="text-sm md:text-base font-bold text-white mb-1 md:mb-2 leading-tight line-clamp-2">
-                                                    {item.title}
-                                                </h3>
-                                                <p className="text-xs text-gray-400 line-clamp-2 md:line-clamp-3 mb-2 md:mb-4 flex-grow hidden md:block">
-                                                    {item.description}
-                                                </p>
-                                                <span className="inline-flex items-center gap-1 text-primary text-xs font-bold group-hover:gap-2 transition-all mt-auto">
-                                                    Acessar <ArrowRight className="w-3 h-3" />
-                                                </span>
                                             </div>
-                                        </div>
-                                    </Link>
-                                ))}
+                                        </Link>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 <div className="mt-24">

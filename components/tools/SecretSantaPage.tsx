@@ -139,8 +139,8 @@ export function SecretSantaPage() {
             </script>
 
             {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-red-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-green-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-rose-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-pink-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
@@ -156,11 +156,11 @@ export function SecretSantaPage() {
                         className="text-center mb-12"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Gift className="w-4 h-4 text-red-500" />
-                            <span className="text-sm text-gray-300">Festas e Eventos</span>
+                            <Gift className="w-4 h-4 text-rose-500" />
+                            <span className="text-sm text-gray-300">Dia a Dia e Utilidades</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Sorteador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-green-500">Amigo Secreto</span>
+                            Sorteador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">Amigo Secreto</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                             Organize a troca de presentes da família ou empresa em segundos. Sem papelzinhos, sem repetições.
@@ -188,11 +188,11 @@ export function SecretSantaPage() {
                                                 onChange={(e) => setNewName(e.target.value)}
                                                 onKeyDown={handleKeyDown}
                                                 placeholder="Nome da pessoa..."
-                                                className="flex-1 bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-red-500/50 transition-all"
+                                                className="flex-1 bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
                                             />
                                             <button
                                                 onClick={addParticipant}
-                                                className="bg-red-500 hover:bg-red-600 text-white p-3 rounded-xl transition-colors"
+                                                className="bg-rose-500 hover:bg-rose-600 text-white p-3 rounded-xl transition-colors"
                                             >
                                                 <Plus className="w-6 h-6" />
                                             </button>
@@ -208,7 +208,7 @@ export function SecretSantaPage() {
                                                 <span className="font-medium text-white">{p.name}</span>
                                                 <button
                                                     onClick={() => removeParticipant(p.id)}
-                                                    className="text-gray-500 hover:text-red-400 transition-colors opacity-0 group-hover:opacity-100"
+                                                    className="text-gray-500 hover:text-rose-400 transition-colors opacity-0 group-hover:opacity-100"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
@@ -219,12 +219,12 @@ export function SecretSantaPage() {
                                     <div className="pt-4 border-t border-white/5">
                                         <div className="flex justify-between items-center mb-4 text-sm text-gray-400">
                                             <span>Total: {participants.length} participantes</span>
-                                            {participants.length < 3 && <span className="text-red-400 text-xs">Mínimo de 3 pessoas</span>}
+                                            {participants.length < 3 && <span className="text-rose-400 text-xs">Mínimo de 3 pessoas</span>}
                                         </div>
                                         <button
                                             onClick={performDraw}
                                             disabled={participants.length < 3}
-                                            className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold py-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-red-500/20"
+                                            className="w-full bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white font-bold py-4 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-rose-500/20"
                                         >
                                             <Shuffle className="w-5 h-5" />
                                             Realizar Sorteio
@@ -246,7 +246,7 @@ export function SecretSantaPage() {
                                                     <span className="font-bold text-lg text-white">{p.name}</span>
                                                     <button
                                                         onClick={() => toggleReveal(p.id)}
-                                                        className={`flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg transition-colors ${revealedId === p.id ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-gray-400 hover:bg-white/20'}`}
+                                                        className={`flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg transition-colors ${revealedId === p.id ? 'bg-rose-500/20 text-rose-400' : 'bg-white/10 text-gray-400 hover:bg-white/20'}`}
                                                     >
                                                         {revealedId === p.id ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
                                                         {revealedId === p.id ? 'Ocultar' : 'Ver quem tirei'}
@@ -256,7 +256,7 @@ export function SecretSantaPage() {
                                                 {revealedId === p.id && (
                                                     <div className="mt-3 p-3 bg-white/5 rounded-lg text-center border border-white/5 animate-in fade-in slide-in-from-top-2">
                                                         <span className="text-xs text-gray-500 block mb-1">Você tirou:</span>
-                                                        <span className="text-xl font-bold text-red-400">{p.target}</span>
+                                                        <span className="text-xl font-bold text-rose-400">{p.target}</span>
                                                     </div>
                                                 )}
                                             </div>
@@ -283,7 +283,7 @@ export function SecretSantaPage() {
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <Users className="w-5 h-5 text-red-500" />
+                                <Users className="w-5 h-5 text-rose-500" />
                                 Por que usar o Sorteador Online?
                             </h3>
                             <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
@@ -292,15 +292,15 @@ export function SecretSantaPage() {
                                 </p>
                                 <ul className="space-y-2 mt-2">
                                     <li className="flex items-start gap-2">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 flex-shrink-0" />
                                         <span><strong>Sem "Autosorteio":</strong> O sistema bloqueia matematicamente a chance de alguém tirar a si mesmo.</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 flex-shrink-0" />
                                         <span><strong>Imparcialidade:</strong> Ninguém manipula o papelzinho.</span>
                                     </li>
                                     <li className="flex items-start gap-2">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0" />
+                                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-1.5 flex-shrink-0" />
                                         <span><strong>Remoto:</strong> Organize tudo pelo WhatsApp sem precisar reunir todos antes.</span>
                                     </li>
                                 </ul>

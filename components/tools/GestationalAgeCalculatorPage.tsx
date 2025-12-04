@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Baby, Calendar, Clock, Info, Heart, HelpCircle } from 'lucide-react';
+import { Baby, Calendar, HelpCircle, Clock, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -10,72 +10,46 @@ import { FAQItem } from '../../types';
 
 const GESTATIONAL_FAQS: FAQItem[] = [
     {
-        question: "E se eu não lembrar a data da última menstruação?",
-        answer: "O cálculo mais confiável será feito pela primeira ultrassonografia (entre 6 e 12 semanas), que mede o tamanho do embrião."
+        question: "Como é calculada a idade gestacional?",
+        answer: "A contagem começa a partir do primeiro dia da última menstruação (DUM), e não do dia da concepção, pois é a data mais precisa que a mulher costuma ter."
     },
     {
-        question: "São 9 meses ou 40 semanas?",
-        answer: "O padrão médico é 40 semanas. Isso equivale a 10 meses lunares (de 28 dias) ou aproximadamente 9 meses e meio do calendário solar."
+        question: "O cálculo é 100% preciso?",
+        answer: "É uma estimativa muito próxima. A confirmação exata da idade gestacional e da data provável do parto deve ser feita através do ultrassom no primeiro trimestre."
     },
     {
-        question: "O bebê nasce exatamente na DPP?",
-        answer: "Raramente. Apenas 5% dos bebês nascem na data exata. O parto é considerado normal e a termo entre 37 e 42 semanas."
+        question: "Quantas semanas dura uma gravidez?",
+        answer: "Uma gravidez completa dura em média 40 semanas (280 dias), podendo variar entre 37 e 42 semanas."
     }
 ];
 
 export function GestationalAgeCalculatorPage() {
     const [dum, setDum] = useState('');
-    const [result, setResult] = useState<{
-        dpp: string;
-        weeks: number;
-        days: number;
-        months: number;
-        trimester: number;
-    } | null>(null);
+    const [result, setResult] = useState<{ weeks: number; days: number; dueDate: string } | null>(null);
 
     const calculate = () => {
-        if (!dum) {
-            setResult(null);
-            return;
-        }
+        if (!dum) return;
 
         const dumDate = new Date(dum);
+        const today = new Date();
+
         if (isNaN(dumDate.getTime())) return;
 
-        // DPP: DUM + 280 days (40 weeks)
-        const dppDate = new Date(dumDate);
-        dppDate.setDate(dumDate.getDate() + 280);
-
-        // Gestational Age: Current Date - DUM
-        const today = new Date();
+        // Calculate difference in time
         const diffTime = Math.abs(today.getTime() - dumDate.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
         const weeks = Math.floor(diffDays / 7);
         const days = diffDays % 7;
 
-        // Months approximation
-        let months = 0;
-        if (weeks <= 4) months = 1;
-        else if (weeks <= 8) months = 2;
-        else if (weeks <= 13) months = 3;
-        else if (weeks <= 17) months = 4;
-        else if (weeks <= 21) months = 5;
-        else if (weeks <= 26) months = 6;
-        else if (weeks <= 30) months = 7;
-        else if (weeks <= 35) months = 8;
-        else months = 9;
-
-        let trimester = 1;
-        if (weeks >= 14 && weeks <= 26) trimester = 2;
-        if (weeks >= 27) trimester = 3;
+        // Due date: DUM + 280 days (40 weeks)
+        const dueDate = new Date(dumDate);
+        dueDate.setDate(dumDate.getDate() + 280);
 
         setResult({
-            dpp: dppDate.toLocaleDateString('pt-BR'),
             weeks,
             days,
-            months,
-            trimester
+            dueDate: dueDate.toLocaleDateString('pt-BR')
         });
     };
 
@@ -86,8 +60,8 @@ export function GestationalAgeCalculatorPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Idade Gestacional",
-        "description": "Calcule a Data Provável do Parto (DPP) e idade gestacional.",
+        "name": "Calculadora Gestacional",
+        "description": "Calcule a idade gestacional e a data provável do parto (DPP) a partir da DUM.",
         "applicationCategory": "HealthApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -100,8 +74,8 @@ export function GestationalAgeCalculatorPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Idade Gestacional - Data Provável do Parto (DPP)"
-                description="Estou grávida de quanto tempo? Calcule sua Idade Gestacional pela DUM, descubra a Data Provável do Parto e acompanhe as semanas e meses da gravidez."
+                title="Calculadora Gestacional - Semanas de Gravidez e DPP"
+                description="Descubra de quantas semanas você está e qual a data provável do parto. Acompanhe sua gravidez com nossa calculadora gestacional."
                 canonical="/calculadoras/idade-gestacional"
             />
             <script type="application/ld+json">
@@ -123,8 +97,8 @@ export function GestationalAgeCalculatorPage() {
             </script>
 
             {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-pink-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
@@ -140,14 +114,14 @@ export function GestationalAgeCalculatorPage() {
                         className="text-center mb-12"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Baby className="w-4 h-4 text-pink-400" />
-                            <span className="text-sm text-gray-300">Maternidade</span>
+                            <Baby className="w-4 h-4 text-cyan-500" />
+                            <span className="text-sm text-gray-300">Matemática e Saúde</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Idade <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">Gestacional</span>
+                            Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">Gestacional</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Descubra de quantas semanas você está e qual a data provável do nascimento do seu bebê.
+                            Acompanhe o desenvolvimento do seu bebê. Saiba a data provável do nascimento.
                         </p>
                     </motion.div>
                 </div>
@@ -161,48 +135,43 @@ export function GestationalAgeCalculatorPage() {
                         className="lg:col-span-7"
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                            <div className="space-y-4 mb-6">
-                                <div>
-                                    <label className="block text-xs text-gray-500 mb-1 flex items-center gap-1">
-                                        <Calendar className="w-3 h-3" /> Data da Última Menstruação (DUM)
-                                    </label>
+                            <div className="flex items-center justify-between mb-8">
+                                <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
+                                    <Calendar className="w-5 h-5 text-cyan-500" />
+                                    Calcular Data
+                                </h2>
+                            </div>
+
+                            <div className="space-y-6">
+                                <div className="space-y-2">
+                                    <label className="text-sm text-gray-400">Data da Última Menstruação (DUM)</label>
                                     <input
                                         type="date"
                                         value={dum}
                                         onChange={(e) => setDum(e.target.value)}
-                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-pink-500/50 transition-all text-center text-lg [color-scheme:dark]"
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all [color-scheme:dark]"
                                     />
                                 </div>
-                            </div>
 
-                            <div className="mt-8 pt-6 border-t border-white/5">
-                                <p className="text-center text-gray-400 mb-2">Data Provável do Parto</p>
-                                <div className="text-4xl font-bold text-center text-pink-400 mb-4">
-                                    {result ? result.dpp : '--/--/----'}
-                                </div>
-
-                                {result && (
+                                <div className="pt-6 border-t border-white/5">
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-[#0a0a0a] p-4 rounded-xl text-center border border-white/5">
-                                            <span className="block text-xs text-gray-500 mb-1">Tempo de Gestação</span>
-                                            <span className="text-xl font-bold text-white">
-                                                {result.weeks} sem e {result.days} dias
+                                        <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
+                                            <span className="text-xs text-gray-400 block mb-1">Idade Gestacional</span>
+                                            <span className="text-2xl font-bold text-white">
+                                                {result ? `${result.weeks} Semanas` : '---'}
                                             </span>
+                                            {result && result.days > 0 && (
+                                                <span className="text-sm text-gray-500 block">+ {result.days} dias</span>
+                                            )}
                                         </div>
-                                        <div className="bg-[#0a0a0a] p-4 rounded-xl text-center border border-white/5">
-                                            <span className="block text-xs text-gray-500 mb-1">Mês Aproximado</span>
-                                            <span className="text-xl font-bold text-white">
-                                                {result.months}º Mês
-                                            </span>
-                                        </div>
-                                        <div className="col-span-2 bg-pink-500/10 p-4 rounded-xl text-center border border-pink-500/20">
-                                            <span className="block text-xs text-pink-300 mb-1 uppercase tracking-wider font-bold">Trimestre Atual</span>
-                                            <span className="text-2xl font-bold text-pink-400">
-                                                {result.trimester}º Trimestre
+                                        <div className="bg-cyan-500/10 p-4 rounded-xl border border-cyan-500/20 text-center">
+                                            <span className="text-xs text-cyan-400 block mb-1">Data Provável do Parto</span>
+                                            <span className="text-2xl font-bold text-white">
+                                                {result ? result.dueDate : '---'}
                                             </span>
                                         </div>
                                     </div>
-                                )}
+                                </div>
                             </div>
                         </div>
                     </motion.div>
@@ -216,55 +185,24 @@ export function GestationalAgeCalculatorPage() {
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <Heart className="w-5 h-5 text-pink-400" />
-                                Como funciona o cálculo?
+                                <Clock className="w-5 h-5 text-cyan-500" />
+                                Trimestres da Gravidez
                             </h3>
-                            <div className="space-y-4 text-gray-400 text-sm leading-relaxed">
-                                <p>
-                                    A medicina utiliza a <strong>Regra de Naegele</strong>, baseada no ciclo de 28 dias.
-                                </p>
-                                <p>
-                                    A gestação dura oficialmente 280 dias (40 semanas) a partir do primeiro dia da sua última menstruação (DUM).
-                                </p>
-                                <div className="bg-black/20 p-4 rounded-xl border border-white/5">
-                                    <strong className="block text-white mb-2">A Regra:</strong>
-                                    <ul className="list-disc pl-4 space-y-1">
-                                        <li>Pegue a data da DUM</li>
-                                        <li>Adicione 7 dias</li>
-                                        <li>Subtraia 3 meses</li>
-                                        <li>Adicione 1 ano</li>
-                                    </ul>
+                            <div className="space-y-4 relative pl-4 border-l border-white/10">
+                                <div className="relative">
+                                    <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-cyan-500" />
+                                    <strong className="text-white block text-sm">1º Trimestre</strong>
+                                    <span className="text-xs text-gray-400">Semana 1 a 13</span>
                                 </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20">
-                            <h3 className="text-lg font-semibold mb-4 text-yellow-400 flex items-center gap-2">
-                                <Clock className="w-5 h-5" />
-                                Nota Médica
-                            </h3>
-                            <p className="text-sm text-gray-300">
-                                A DPP é uma estimativa estatística. Apenas 5% dos bebês nascem na data exata. O parto é considerado normal entre <strong>37 e 42 semanas</strong>.
-                            </p>
-                        </div>
-
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-semibold mb-4 text-white flex items-center gap-2">
-                                <Info className="w-5 h-5 text-primary" />
-                                Semanas x Meses
-                            </h3>
-                            <div className="space-y-2 text-sm">
-                                <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
-                                    <span>1º Trimestre</span>
-                                    <span className="text-gray-400">1 a 13 semanas</span>
+                                <div className="relative">
+                                    <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-blue-500" />
+                                    <strong className="text-white block text-sm">2º Trimestre</strong>
+                                    <span className="text-xs text-gray-400">Semana 14 a 26</span>
                                 </div>
-                                <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
-                                    <span>2º Trimestre</span>
-                                    <span className="text-gray-400">14 a 26 semanas</span>
-                                </div>
-                                <div className="flex justify-between p-2 rounded bg-white/5 border border-white/5">
-                                    <span>3º Trimestre</span>
-                                    <span className="text-gray-400">27 a 40+ semanas</span>
+                                <div className="relative">
+                                    <div className="absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-purple-500" />
+                                    <strong className="text-white block text-sm">3º Trimestre</strong>
+                                    <span className="text-xs text-gray-400">Semana 27 a 40+</span>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +211,7 @@ export function GestationalAgeCalculatorPage() {
 
                 <FAQ
                     items={GESTATIONAL_FAQS}
-                    title="Dúvidas Frequentes sobre Gestação"
+                    title="Dúvidas sobre Gravidez"
                     className="py-12"
                     showSocialProof={false}
                 />

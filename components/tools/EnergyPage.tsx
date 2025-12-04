@@ -67,8 +67,8 @@ export const EnergyPage: React.FC = () => {
                 })}
             </script>
             {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-rose-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-pink-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
@@ -85,11 +85,11 @@ export const EnergyPage: React.FC = () => {
                         className="text-center mb-12"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Zap className="w-4 h-4 text-primary" />
+                            <Zap className="w-4 h-4 text-rose-500" />
                             <span className="text-sm text-gray-300">Utilidades</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Consumo de Energia</span>
+                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">Consumo de Energia</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
                             Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora da Junny.
@@ -158,7 +158,7 @@ export const EnergyPage: React.FC = () => {
                         <p className="text-gray-400 mb-4">
                             Sabendo que a potência do aparelho é de 1100W e que o preço do kWh, conforme informações da prestadora local, é de R$ 1,80, é hora de preencher os dados na calculadora. Nesse exemplo, consideramos que o tempo de uso do aparelho seria de uma hora por dia e uma vez por semana, ou seja, quatro dias de uso por mês.
                         </p>
-                        <p className="text-emerald-400 font-bold">
+                        <p className="text-rose-400 font-bold">
                             Resultado: Nesse caso, o custo mensal de energia para utilizar o aparelho será de R$ 7,92.
                         </p>
                     </div>

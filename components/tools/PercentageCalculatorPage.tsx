@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Percent, HelpCircle, Lightbulb, TrendingUp, PieChart, Calculator, ArrowRight } from 'lucide-react';
+import { Percent, Calculator, HelpCircle, TrendingDown, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -8,91 +8,72 @@ import { FAQ } from '../FAQ';
 import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQItem } from '../../types';
 
-type CalculationMode = 'percentageOf' | 'percentageChange' | 'percentageRepresentation';
-
 const PERCENTAGE_FAQS: FAQItem[] = [
     {
-        question: "Como calcular 30% de um valor?",
-        answer: "Multiplique o valor por 0,30. Exemplo: 30% de 100 = 100 x 0,30 = 30."
+        question: "Como calcular porcentagem de um valor?",
+        answer: "Multiplique o valor pela porcentagem e divida por 100. Exemplo: 30% de 200 = (200 * 30) / 100 = 60."
     },
     {
-        question: "Como calcular um aumento de 10%?",
-        answer: "Multiplique o valor original por 1,10. Exemplo: 100 + 10% = 100 x 1,10 = 110."
+        question: "Como calcular desconto?",
+        answer: "Subtraia a porcentagem do valor original. Exemplo: Produto de R$100 com 20% de desconto = R$100 - R$20 = R$80."
     },
     {
-        question: "Como calcular um desconto de 20%?",
-        answer: "Multiplique o valor original por 0,80 (que é 100% - 20%). Exemplo: 100 - 20% = 100 x 0,80 = 80."
+        question: "Como calcular aumento?",
+        answer: "Some a porcentagem ao valor original. Exemplo: Salário de R$1000 com 10% de aumento = R$1000 + R$100 = R$1100."
     }
 ];
 
 export function PercentageCalculatorPage() {
-    const [mode, setMode] = useState<CalculationMode>('percentageOf');
+    // Mode 1: X% of Y
+    const [val1_X, setVal1_X] = useState('');
+    const [val1_Y, setVal1_Y] = useState('');
+    const [res1, setRes1] = useState<string>('---');
 
-    // State for inputs
-    const [val1, setVal1] = useState('');
-    const [val2, setVal2] = useState('');
-    const [result, setResult] = useState<number | null>(null);
+    // Mode 2: X is what % of Y
+    const [val2_X, setVal2_X] = useState('');
+    const [val2_Y, setVal2_Y] = useState('');
+    const [res2, setRes2] = useState<string>('---');
 
-    const calculate = () => {
-        const v1 = parseFloat(val1.replace(',', '.'));
-        const v2 = parseFloat(val2.replace(',', '.'));
-
-        if (isNaN(v1) || isNaN(v2)) {
-            setResult(null);
-            return;
-        }
-
-        let res: number;
-
-        switch (mode) {
-            case 'percentageOf':
-                // X% of Y => (X / 100) * Y
-                res = (v1 / 100) * v2;
-                break;
-            case 'percentageChange':
-                // Change from A to B => ((B - A) / A) * 100
-                if (v1 === 0) {
-                    setResult(null);
-                    return;
-                }
-                res = ((v2 - v1) / v1) * 100;
-                break;
-            case 'percentageRepresentation':
-                // X is what % of Y => (X / Y) * 100
-                if (v2 === 0) {
-                    setResult(null);
-                    return;
-                }
-                res = (v1 / v2) * 100;
-                break;
-        }
-
-        setResult(res);
-    };
+    // Mode 3: Increase/Decrease from X to Y
+    const [val3_X, setVal3_X] = useState('');
+    const [val3_Y, setVal3_Y] = useState('');
+    const [res3, setRes3] = useState<string>('---');
 
     useEffect(() => {
-        calculate();
-    }, [val1, val2, mode]);
+        // Calc 1
+        const x1 = parseFloat(val1_X.replace(',', '.'));
+        const y1 = parseFloat(val1_Y.replace(',', '.'));
+        if (!isNaN(x1) && !isNaN(y1)) {
+            setRes1(((x1 / 100) * y1).toLocaleString('pt-BR', { maximumFractionDigits: 2 }));
+        } else {
+            setRes1('---');
+        }
+
+        // Calc 2
+        const x2 = parseFloat(val2_X.replace(',', '.'));
+        const y2 = parseFloat(val2_Y.replace(',', '.'));
+        if (!isNaN(x2) && !isNaN(y2) && y2 !== 0) {
+            setRes2(((x2 / y2) * 100).toLocaleString('pt-BR', { maximumFractionDigits: 2 }) + '%');
+        } else {
+            setRes2('---');
+        }
+
+        // Calc 3
+        const x3 = parseFloat(val3_X.replace(',', '.'));
+        const y3 = parseFloat(val3_Y.replace(',', '.'));
+        if (!isNaN(x3) && !isNaN(y3) && x3 !== 0) {
+            const diff = ((y3 - x3) / x3) * 100;
+            const sign = diff > 0 ? '+' : '';
+            setRes3(`${sign}${diff.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%`);
+        } else {
+            setRes3('---');
+        }
+
+    }, [val1_X, val1_Y, val2_X, val2_Y, val3_X, val3_Y]);
 
     const handleInput = (value: string, setter: (value: string) => void) => {
-        if (/^[\d.,-]*$/.test(value)) {
+        if (/^[\d.,]*$/.test(value)) {
             setter(value);
-        }
-    };
-
-    const getModeTitle = () => {
-        switch (mode) {
-            case 'percentageOf': return 'Quanto é X% de Y?';
-            case 'percentageChange': return 'Qual foi o aumento percentual?';
-            case 'percentageRepresentation': return 'X representa quantos % de Y?';
-        }
-    };
-
-    const getModeDescription = () => {
-        switch (mode) {
-            case 'percentageOf': return 'Descubra o valor correspondente a uma porcentagem.';
-            case 'percentageChange': return 'Calcule a variação (aumento ou queda) entre dois valores.';
-            case 'percentageRepresentation': return 'Descubra qual a proporção de um valor em relação ao total.';
         }
     };
 
@@ -100,7 +81,7 @@ export function PercentageCalculatorPage() {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Calculadora de Porcentagem",
-        "description": "Calcule porcentagens, descontos e aumentos.",
+        "description": "Calcule porcentagens, descontos e aumentos de forma simples e rápida.",
         "applicationCategory": "UtilityApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -113,8 +94,8 @@ export function PercentageCalculatorPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Porcentagem - Descontos e Aumentos Online"
-                description="Quanto é X% de Y? Qual foi o aumento percentual? Calcule descontos, lucros e variações com nossa calculadora de porcentagem gratuita."
+                title="Calculadora de Porcentagem Online - Descontos e Aumentos"
+                description="Precisa calcular 10%, 20% ou 50% de um valor? Use nossa calculadora de porcentagem gratuita para descontos, aumentos e variações."
                 canonical="/calculadoras/porcentagem"
             />
             <script type="application/ld+json">
@@ -136,14 +117,14 @@ export function PercentageCalculatorPage() {
             </script>
 
             {/* Background Orbs */}
-            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
                     <Breadcrumb items={[
                         { label: 'Calculadoras', href: '/calculadoras' },
-                        { label: 'Calculadora de Porcentagem', href: '/calculadoras/porcentagem' }
+                        { label: 'Porcentagem', href: '/calculadoras/porcentagem' }
                     ]} />
 
                     <motion.div
@@ -153,14 +134,14 @@ export function PercentageCalculatorPage() {
                         className="text-center mb-12"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Percent className="w-4 h-4 text-primary" />
-                            <span className="text-sm text-gray-300">Matemática Financeira</span>
+                            <Percent className="w-4 h-4 text-cyan-500" />
+                            <span className="text-sm text-gray-300">Matemática e Saúde</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">Porcentagem</span>
+                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">Porcentagem</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Chega de dúvidas na hora da conta. Calcule descontos, aumentos e proporções de forma simples e rápida.
+                            Calcule descontos, aumentos e variações percentuais em segundos.
                         </p>
                     </motion.div>
                 </div>
@@ -171,159 +152,97 @@ export function PercentageCalculatorPage() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="lg:col-span-7"
+                        className="lg:col-span-7 space-y-6"
                     >
+                        {/* Calc 1 */}
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                            <div className="flex flex-wrap gap-2 mb-6">
-                                <button
-                                    onClick={() => { setMode('percentageOf'); setVal1(''); setVal2(''); setResult(null); }}
-                                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${mode === 'percentageOf' ? 'bg-primary text-black shadow-lg' : 'bg-[#0a0a0a] text-gray-400 hover:text-white border border-white/10'}`}
-                                >
-                                    <Calculator className="w-4 h-4" />
-                                    % de Valor
-                                </button>
-                                <button
-                                    onClick={() => { setMode('percentageChange'); setVal1(''); setVal2(''); setResult(null); }}
-                                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${mode === 'percentageChange' ? 'bg-primary text-black shadow-lg' : 'bg-[#0a0a0a] text-gray-400 hover:text-white border border-white/10'}`}
-                                >
-                                    <TrendingUp className="w-4 h-4" />
-                                    Variação
-                                </button>
-                                <button
-                                    onClick={() => { setMode('percentageRepresentation'); setVal1(''); setVal2(''); setResult(null); }}
-                                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${mode === 'percentageRepresentation' ? 'bg-primary text-black shadow-lg' : 'bg-[#0a0a0a] text-gray-400 hover:text-white border border-white/10'}`}
-                                >
-                                    <PieChart className="w-4 h-4" />
-                                    Representação
-                                </button>
-                            </div>
-
-                            <h2 className="text-xl font-semibold mb-2 text-white">{getModeTitle()}</h2>
-                            <p className="text-sm text-gray-400 mb-6">{getModeDescription()}</p>
-
-                            <div className="space-y-4">
-                                {mode === 'percentageOf' && (
-                                    <>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-gray-400 font-medium">Quanto é</span>
-                                            <div className="relative flex-1">
-                                                <input
-                                                    type="text"
-                                                    value={val1}
-                                                    onChange={(e) => handleInput(e.target.value, setVal1)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center"
-                                                    placeholder="20"
-                                                />
-                                                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">%</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-gray-400 font-medium">de</span>
-                                            <div className="relative flex-1">
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
-                                                <input
-                                                    type="text"
-                                                    value={val2}
-                                                    onChange={(e) => handleInput(e.target.value, setVal2)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 pl-10 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center"
-                                                    placeholder="500,00"
-                                                />
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
-
-                                {mode === 'percentageChange' && (
-                                    <>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-gray-400 font-medium w-24">Valor Inicial</span>
-                                            <div className="relative flex-1">
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
-                                                <input
-                                                    type="text"
-                                                    value={val1}
-                                                    onChange={(e) => handleInput(e.target.value, setVal1)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 pl-10 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center"
-                                                    placeholder="2000,00"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-gray-400 font-medium w-24">Valor Final</span>
-                                            <div className="relative flex-1">
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
-                                                <input
-                                                    type="text"
-                                                    value={val2}
-                                                    onChange={(e) => handleInput(e.target.value, setVal2)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 pl-10 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center"
-                                                    placeholder="2500,00"
-                                                />
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
-
-                                {mode === 'percentageRepresentation' && (
-                                    <>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-gray-400 font-medium">O valor</span>
-                                            <div className="relative flex-1">
-                                                <input
-                                                    type="text"
-                                                    value={val1}
-                                                    onChange={(e) => handleInput(e.target.value, setVal1)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center"
-                                                    placeholder="600"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <span className="text-gray-400 font-medium">representa quantos % de</span>
-                                            <div className="relative flex-1">
-                                                <input
-                                                    type="text"
-                                                    value={val2}
-                                                    onChange={(e) => handleInput(e.target.value, setVal2)}
-                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center"
-                                                    placeholder="3000"
-                                                />
-                                            </div>
-                                        </div>
-                                    </>
-                                )}
-
-                                <div className="mt-8 pt-6 border-t border-white/5">
-                                    <p className="text-center text-gray-400 mb-2">Resultado</p>
-                                    <div className="text-4xl font-bold text-center text-primary">
-                                        {result !== null ? (
-                                            mode === 'percentageOf'
-                                                ? result.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                                                : `${result > 0 && mode === 'percentageChange' ? '+' : ''}${result.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`
-                                        ) : '---'}
-                                    </div>
-                                    {result !== null && mode === 'percentageChange' && (
-                                        <p className={`text-center text-sm mt-2 font-medium ${result > 0 ? 'text-green-400' : result < 0 ? 'text-red-400' : 'text-gray-400'}`}>
-                                            {result > 0 ? 'Aumento' : result < 0 ? 'Queda' : 'Sem variação'}
-                                        </p>
-                                    )}
+                            <h3 className="text-lg font-semibold text-white mb-4">Quanto é...</h3>
+                            <div className="flex flex-col md:flex-row items-center gap-4">
+                                <div className="relative flex-1 w-full">
+                                    <input
+                                        type="text"
+                                        value={val1_X}
+                                        onChange={(e) => handleInput(e.target.value, setVal1_X)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
+                                        placeholder="0"
+                                    />
+                                    <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500">%</span>
+                                </div>
+                                <span className="text-gray-400">de</span>
+                                <div className="relative flex-1 w-full">
+                                    <input
+                                        type="text"
+                                        value={val1_Y}
+                                        onChange={(e) => handleInput(e.target.value, setVal1_Y)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
+                                        placeholder="0"
+                                    />
+                                </div>
+                                <span className="text-gray-400">=</span>
+                                <div className="bg-cyan-500/10 border border-cyan-500/50 rounded-xl py-3 px-6 text-cyan-400 font-bold min-w-[100px] text-center">
+                                    {res1}
                                 </div>
                             </div>
+                        </div>
 
-                            {result !== null && (
-                                <div className="mt-6 p-4 bg-[#0a0a0a] rounded-xl border border-white/5 text-sm text-gray-400">
-                                    <p className="mb-2 font-semibold text-white">Cálculo realizado:</p>
-                                    {mode === 'percentageOf' && (
-                                        <p>({val1} ÷ 100) × {val2} = <span className="text-primary font-bold">{result.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}</span></p>
-                                    )}
-                                    {mode === 'percentageChange' && (
-                                        <p>(({val2} - {val1}) ÷ {val1}) × 100 = <span className="text-primary font-bold">{result.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%</span></p>
-                                    )}
-                                    {mode === 'percentageRepresentation' && (
-                                        <p>({val1} ÷ {val2}) × 100 = <span className="text-primary font-bold">{result.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}%</span></p>
-                                    )}
+                        {/* Calc 2 */}
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <h3 className="text-lg font-semibold text-white mb-4">O valor...</h3>
+                            <div className="flex flex-col md:flex-row items-center gap-4">
+                                <div className="relative flex-1 w-full">
+                                    <input
+                                        type="text"
+                                        value={val2_X}
+                                        onChange={(e) => handleInput(e.target.value, setVal2_X)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
+                                        placeholder="0"
+                                    />
                                 </div>
-                            )}
+                                <span className="text-gray-400 text-sm text-center">é qual % de</span>
+                                <div className="relative flex-1 w-full">
+                                    <input
+                                        type="text"
+                                        value={val2_Y}
+                                        onChange={(e) => handleInput(e.target.value, setVal2_Y)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
+                                        placeholder="0"
+                                    />
+                                </div>
+                                <span className="text-gray-400">=</span>
+                                <div className="bg-cyan-500/10 border border-cyan-500/50 rounded-xl py-3 px-6 text-cyan-400 font-bold min-w-[100px] text-center">
+                                    {res2}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Calc 3 */}
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <h3 className="text-lg font-semibold text-white mb-4">Variação de...</h3>
+                            <div className="flex flex-col md:flex-row items-center gap-4">
+                                <div className="relative flex-1 w-full">
+                                    <input
+                                        type="text"
+                                        value={val3_X}
+                                        onChange={(e) => handleInput(e.target.value, setVal3_X)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
+                                        placeholder="Valor Inicial"
+                                    />
+                                </div>
+                                <span className="text-gray-400 text-sm">para</span>
+                                <div className="relative flex-1 w-full">
+                                    <input
+                                        type="text"
+                                        value={val3_Y}
+                                        onChange={(e) => handleInput(e.target.value, setVal3_Y)}
+                                        className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
+                                        placeholder="Valor Final"
+                                    />
+                                </div>
+                                <span className="text-gray-400">=</span>
+                                <div className="bg-cyan-500/10 border border-cyan-500/50 rounded-xl py-3 px-6 text-cyan-400 font-bold min-w-[100px] text-center">
+                                    {res3}
+                                </div>
+                            </div>
                         </div>
                     </motion.div>
 
@@ -336,70 +255,38 @@ export function PercentageCalculatorPage() {
                     >
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <HelpCircle className="w-5 h-5 text-primary" />
-                                Entenda as Fórmulas
+                                <HelpCircle className="w-5 h-5 text-cyan-500" />
+                                Exemplos do Dia a Dia
                             </h3>
-                            <div className="space-y-4 text-gray-400 text-sm">
-                                <div>
-                                    <strong className="text-white block mb-1">1. Quanto é X% de Y?</strong>
-                                    <p>Clássico cálculo de "parte de um todo". Multiplique a porcentagem pelo valor e divida por 100.</p>
+                            <div className="space-y-4 text-sm text-gray-400">
+                                <div className="p-3 rounded-xl bg-white/5 border border-white/5">
+                                    <strong className="text-white block mb-1 flex items-center gap-2">
+                                        <TrendingDown className="w-4 h-4 text-green-400" /> Desconto
+                                    </strong>
+                                    Uma calça custa R$120 e tem 20% de desconto.
+                                    <br />
+                                    Cálculo: 120 x 0,20 = R$24 de desconto.
+                                    <br />
+                                    Preço final: R$96.
                                 </div>
-                                <div className="border-t border-white/5 pt-4">
-                                    <strong className="text-white block mb-1">2. Aumento/Queda Percentual</strong>
-                                    <p>Descobre a variação entre dois valores. Subtraia o final pelo inicial, divida pelo inicial e multiplique por 100.</p>
-                                </div>
-                                <div className="border-t border-white/5 pt-4">
-                                    <strong className="text-white block mb-1">3. Representação Percentual</strong>
-                                    <p>Quanto um valor representa do total. Divida a parte pelo todo e multiplique por 100.</p>
+                                <div className="p-3 rounded-xl bg-white/5 border border-white/5">
+                                    <strong className="text-white block mb-1 flex items-center gap-2">
+                                        <TrendingUp className="w-4 h-4 text-red-400" /> Aumento
+                                    </strong>
+                                    Conta de luz de R$150 aumentou 10%.
+                                    <br />
+                                    Cálculo: 150 x 0,10 = R$15 de aumento.
+                                    <br />
+                                    Valor final: R$165.
                                 </div>
                             </div>
-                        </div>
-
-                        <div className="bg-blue-500/10 p-6 rounded-3xl border border-blue-500/20">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400">
-                                <Lightbulb className="w-5 h-5" />
-                                Dica de Compras
-                            </h3>
-                            <p className="text-sm text-gray-300">
-                                Vai comprar com desconto à vista? Use o "Fator de Multiplicação". Se o desconto é 15%, você paga 85%. Multiplique o preço por 0,85 para saber o valor final na hora.
-                            </p>
                         </div>
                     </motion.div>
                 </div>
 
-                {/* SEO Content */}
-                <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
-                    <section className="mb-16">
-                        <h2 className="text-3xl font-bold text-white mb-6">Exemplos Práticos</h2>
-                        <div className="grid md:grid-cols-3 gap-6">
-                            <div className="bg-[#1a1a1a] p-6 rounded-2xl border border-white/5">
-                                <h3 className="font-semibold text-white mb-2">Desconto</h3>
-                                <p className="text-sm text-gray-400">
-                                    20% de R$ 500,00<br />
-                                    (20 ÷ 100) × 500 = <strong className="text-primary">R$ 100,00</strong>
-                                </p>
-                            </div>
-                            <div className="bg-[#1a1a1a] p-6 rounded-2xl border border-white/5">
-                                <h3 className="font-semibold text-white mb-2">Aumento Salarial</h3>
-                                <p className="text-sm text-gray-400">
-                                    De R$ 2.000 para R$ 2.500<br />
-                                    (500 ÷ 2.000) × 100 = <strong className="text-primary">25%</strong>
-                                </p>
-                            </div>
-                            <div className="bg-[#1a1a1a] p-6 rounded-2xl border border-white/5">
-                                <h3 className="font-semibold text-white mb-2">Orçamento</h3>
-                                <p className="text-sm text-gray-400">
-                                    Gasto de 600 em ganho de 3.000<br />
-                                    (600 ÷ 3.000) × 100 = <strong className="text-primary">20%</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-
                 <FAQ
                     items={PERCENTAGE_FAQS}
-                    title="Dúvidas Frequentes sobre Porcentagem"
+                    title="Dúvidas sobre Porcentagem"
                     className="py-12"
                     showSocialProof={false}
                 />
