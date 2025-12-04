@@ -8,6 +8,7 @@ import { Community } from './Community';
 import { Testimonials } from './Testimonials';
 import { Price } from './Price';
 import { RecentStories } from './RecentStories';
+import { LatestPosts } from './LatestPosts';
 import { FAQ } from './FAQ';
 
 export const Home: React.FC = () => {
@@ -36,6 +37,7 @@ export const Home: React.FC = () => {
             <Community />
             <Testimonials />
             <Price />
+            <LatestPosts />
             <RecentStories />
             <FAQ />
         </>

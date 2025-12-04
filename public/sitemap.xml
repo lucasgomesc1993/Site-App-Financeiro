@@ -22,15 +22,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://junny.com.br/blog/financas-pessoais/vender-10-dias-ferias-vale-a-pena</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-12-03T12:47:01.042Z</lastmod>
-    <image:image>
-      <image:loc>https://cfbwntkyygkqbottkktc.supabase.co/storage/v1/object/public/blog-images/2952pacbvtn_1764766003686.jpg</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://junny.com.br/blog/investimentos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -46,7 +37,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/agua</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/alugar-ou-financiar</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/capital-de-giro</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/churrasco</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -56,7 +62,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/conversor-culinario</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/conversor-moedas</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/custo-efetivo-total</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -66,7 +82,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/custo-viagem</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/das-mei</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/decimo-terceiro</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/dias-uteis</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/divida-cartao-credito</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -86,12 +122,37 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/financiamento-imobiliario</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/financiamento-veiculos</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/fire</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/horas</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/horas-extras</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/idade-gestacional</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/imc</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -111,7 +172,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/markup</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/plr</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/poder-de-compra</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/ponto-de-equilibrio</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/porcentagem</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -121,7 +202,27 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/quitacao-antecipada</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/regra-50-30-20</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/regra-de-tres</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/rescisao</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/roi</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -132,6 +233,16 @@
   </url>
   <url>
     <loc>https://junny.com.br/calculadoras/seguro-desemprego</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/simples-vs-presumido</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/tijolos-pisos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>

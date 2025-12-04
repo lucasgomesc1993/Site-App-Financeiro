@@ -9,10 +9,10 @@ import "invariant";
 import "shallowequal";
 import "framer-motion";
 import "@google/genai";
-import "qrcode.react";
+import "@supabase/supabase-js";
 import "date-fns";
 import "date-fns/locale";
-import "@supabase/supabase-js";
+import "qrcode.react";
 const Privacy = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
@@ -88,4 +88,4 @@ const Privacy = () => {
 export {
   Privacy
 };
-//# sourceMappingURL=Privacy-B8I55MW0.js.map
+//# sourceMappingURL=Privacy-zoKxadq7.js.map

@@ -9,13 +9,13 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Calendar, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, QrCode, Percent, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, MapPin, CheckCircle, Copy, Download, VolumeX, Volume2, Search, BookOpen, ArrowLeft } from "lucide-react";
+import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, Calendar, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, Fuel, DollarSign, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Car, Gem, PieChart, Tag, Scale, CreditCard, FileText, History, Divide, QrCode, Percent as Percent$1, User, AlertCircle, Users, MinusCircle, Coins, Target, Key, Building, RefreshCw, ArrowRightLeft, AlertTriangle, ShoppingCart, Coffee, TrendingDown, ArrowDownCircle, ArrowLeft, HelpCircle, Lightbulb, Utensils, Beer, CheckCircle, XCircle, Trash2, Plus, RotateCcw, Layers as Layers$1, Grid, Ruler, Info, MapPin, Activity as Activity$1, Droplets as Droplets$1, Timer, ChefHat as ChefHat$1, Beaker, Baby as Baby$1, Heart, Copy, Download, VolumeX, Volume2, Search, BookOpen } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
-import { QRCodeSVG } from "qrcode.react";
+import { createClient } from "@supabase/supabase-js";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
-import { createClient } from "@supabase/supabase-js";
+import { QRCodeSVG } from "qrcode.react";
 var TAG_NAMES = /* @__PURE__ */ ((TAG_NAMES2) => {
   TAG_NAMES2["BASE"] = "base";
   TAG_NAMES2["BODY"] = "body";
@@ -2031,6 +2031,152 @@ const RecentStories = () => {
     )) })
   ] }) });
 };
+const supabaseUrl = "https://cfbwntkyygkqbottkktc.supabase.co";
+const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmYndudGt5eWdrcWJvdHRra3RjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4MDExOTAsImV4cCI6MjA3NDM3NzE5MH0.08-1PNyvfi6YsG8z3EpAkoLLYzRMcZg8jAJSKkYVfzM";
+const supabase = createClient(
+  supabaseUrl,
+  supabaseAnonKey
+);
+const blogService = {
+  async getPosts() {
+    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories(*)").eq("published", true).order("published_at", { ascending: false });
+    if (error) {
+      console.error("Error fetching posts:", error);
+      return [];
+    }
+    return data.map((post) => ({
+      ...post,
+      reading_time: Math.ceil(post.content.split(" ").length / 200)
+    }));
+  },
+  async getPostBySlug(slug) {
+    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories(*)").eq("slug", slug).eq("published", true).single();
+    if (error) {
+      console.error(`Error fetching post with slug ${slug}:`, error);
+      return null;
+    }
+    return {
+      ...data,
+      reading_time: Math.ceil(data.content.split(" ").length / 200)
+    };
+  },
+  async getPostsByCategory(categorySlug) {
+    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories!inner(*)").eq("category.slug", categorySlug).eq("published", true).order("published_at", { ascending: false });
+    if (error) {
+      console.error(`Error fetching posts for category ${categorySlug}:`, error);
+      return [];
+    }
+    return data.map((post) => ({
+      ...post,
+      reading_time: Math.ceil(post.content.split(" ").length / 200)
+    }));
+  },
+  async getAllCategories() {
+    const { data, error } = await supabase.from("categories").select("*").order("name");
+    if (error) {
+      console.error("Error fetching categories:", error);
+      return [];
+    }
+    return data;
+  }
+};
+const CategoryBadge = ({ category, className = "" }) => {
+  return /* @__PURE__ */ jsx(
+    Link,
+    {
+      to: `/blog/${category.slug}`,
+      className: `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 whitespace-nowrap ${className}`,
+      children: category.name
+    }
+  );
+};
+const PostCard = ({ post }) => {
+  var _a2, _b2, _c, _d, _e;
+  return /* @__PURE__ */ jsxs("article", { className: "group relative flex flex-col h-full bg-[#0d0d0d] rounded-2xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(71,255,183,0.1)]", children: [
+    /* @__PURE__ */ jsx(Link, { to: `/blog/${((_a2 = post.category) == null ? void 0 : _a2.slug) || "geral"}/${post.slug}`, className: "block overflow-hidden aspect-video", children: /* @__PURE__ */ jsx(
+      "img",
+      {
+        src: post.cover_image,
+        alt: post.cover_image_alt,
+        className: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105",
+        loading: "lazy"
+      }
+    ) }),
+    /* @__PURE__ */ jsxs("div", { className: "flex flex-col flex-1 p-6", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start gap-3 mb-4", children: [
+        post.category && /* @__PURE__ */ jsx(CategoryBadge, { category: post.category }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center text-xs text-gray-400 gap-2", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+            /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
+            /* @__PURE__ */ jsx("time", { dateTime: post.published_at, children: format(new Date(post.published_at), "d 'de' MMM, yyyy", { locale: ptBR }) })
+          ] }),
+          /* @__PURE__ */ jsx("span", { className: "w-1 h-1 rounded-full bg-gray-600" }),
+          /* @__PURE__ */ jsxs("span", { children: [
+            post.reading_time || 5,
+            " min de leitura"
+          ] })
+        ] })
+      ] }),
+      /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${((_b2 = post.category) == null ? void 0 : _b2.slug) || "geral"}/${post.slug}`, children: post.title }) }),
+      /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-6 line-clamp-3 flex-1", children: post.excerpt }),
+      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mt-auto pt-4 border-t border-white/5", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+          ((_c = post.author) == null ? void 0 : _c.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-6 h-6 rounded-full" }),
+          /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: (_d = post.author) == null ? void 0 : _d.name })
+        ] }),
+        /* @__PURE__ */ jsxs(Link, { to: `/blog/${((_e = post.category) == null ? void 0 : _e.slug) || "geral"}/${post.slug}`, className: "text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all", children: [
+          "Ler artigo ",
+          /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+        ] })
+      ] })
+    ] })
+  ] });
+};
+const LatestPosts = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const allPosts = await blogService.getPosts();
+        setPosts(allPosts.slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching latest posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  }, []);
+  if (!loading && posts.length === 0) return null;
+  return /* @__PURE__ */ jsxs("section", { className: "py-24 bg-[#0d0d0d] relative overflow-hidden", children: [
+    /* @__PURE__ */ jsx("div", { className: "absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto px-4 md:px-8 relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row items-end justify-between mb-12 gap-6", children: [
+        /* @__PURE__ */ jsxs("div", { children: [
+          /* @__PURE__ */ jsxs("h2", { className: "text-3xl md:text-4xl font-bold text-white mb-4", children: [
+            "Últimas do ",
+            /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Blog" })
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "text-gray-400 max-w-xl", children: "Fique por dentro das novidades, dicas de economia e estratégias para dominar suas finanças." })
+        ] }),
+        /* @__PURE__ */ jsxs(
+          Link,
+          {
+            to: "/blog",
+            className: "group flex items-center gap-2 text-primary font-medium hover:text-emerald-400 transition-colors",
+            children: [
+              "Ver todos os artigos",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4 group-hover:translate-x-1 transition-transform" })
+            ]
+          }
+        )
+      ] }),
+      loading ? /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: [1, 2, 3].map((i) => /* @__PURE__ */ jsx("div", { className: "h-[400px] bg-white/5 rounded-2xl animate-pulse border border-white/5" }, i)) }) : /* @__PURE__ */ jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8", children: posts.map((post) => /* @__PURE__ */ jsx(PostCard, { post }, post.id)) })
+    ] })
+  ] });
+};
 const FAQ = ({ items, title = "Dúvidas frequentes", className = "py-24 md:py-32", showSocialProof = true }) => {
   const [openIndex, setOpenIndex] = useState(0);
   const data = items || FAQS;
@@ -2116,6 +2262,7 @@ const Home = () => {
     /* @__PURE__ */ jsx(Community, {}),
     /* @__PURE__ */ jsx(Testimonials, {}),
     /* @__PURE__ */ jsx(Price, {}),
+    /* @__PURE__ */ jsx(LatestPosts, {}),
     /* @__PURE__ */ jsx(RecentStories, {}),
     /* @__PURE__ */ jsx(FAQ, {})
   ] });
@@ -2562,6 +2709,342 @@ const Calculators = () => {
               /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
             ] })
           ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/regra-50-30-20", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(PieChart, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Regra 50-30-20" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Organize suas finanças. Descubra quanto gastar com necessidades, lazer e investimentos." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/das-mei", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Building2, { className: "text-blue-400 w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora DAS MEI" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Calcule o valor atualizado da sua guia e monitore o limite de faturamento." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-blue-400 font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/markup", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 border border-purple-500/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Tag, { className: "text-purple-400 w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Markup" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra o preço de venda exato para cobrir custos e garantir lucro real." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-purple-400 font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/ponto-de-equilibrio", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 border border-cyan-500/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Scale, { className: "text-cyan-400 w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Ponto de Equilíbrio" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra quanto sua empresa precisa vender para começar a lucrar." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-cyan-400 font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/simples-vs-presumido", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6 border border-emerald-500/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Building2, { className: "text-emerald-400 w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Simples vs Presumido" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule qual regime tributário é mais barato para a sua empresa." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-emerald-400 font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/divida-cartao-credito", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(CreditCard, { className: "text-red-400 w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Dívida de Cartão" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'Simule o "Efeito Bola de Neve" dos juros rotativos.' }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-red-400 font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/custo-efetivo-total", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(FileText, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Custo Efetivo Total (CET)" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra os juros reais e taxas ocultas do seu empréstimo." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/quitacao-antecipada", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(PiggyBank, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Quitação Antecipada" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra o desconto ao antecipar parcelas do seu financiamento." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/financiamento-imobiliario", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Home$1, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Financiamento Imobiliário" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "SAC ou Price? Compare as tabelas e descubra qual paga menos juros." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/financiamento-veiculos", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Car, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Financiamento de Veículos" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Simule parcelas de carro ou moto e descubra os juros reais (CET)." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/poder-de-compra", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(History, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Poder de Compra" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Quanto valia R$ 100 em 1994? Corrija valores pela inflação (IPCA/IGP-M)." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/das-mei", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Building2, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora DAS MEI" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Calcule o valor do seu DAS MEI atualizado e evite multas." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/markup", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Tag, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Markup" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Defina o preço de venda ideal para garantir seu lucro." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/ponto-de-equilibrio", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Scale, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Ponto de Equilíbrio" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra quanto você precisa vender para não ter prejuízo." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/simples-vs-presumido", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(FileText, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Simples vs Presumido" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Compare e descubra o melhor regime tributário para sua empresa." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/capital-de-giro", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(DollarSign, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Capital de Giro" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra quanto dinheiro sua empresa precisa ter em caixa para manter as portas abertas." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/roi", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(BarChart3, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de ROI" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra a eficiência real dos seus investimentos em marketing e projetos." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/churrasco", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Flame, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Churrasco" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Calcule a quantidade ideal de carne e bebida para sua festa." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/dias-uteis", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Calendar, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Dias Úteis" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Conte prazos excluindo fins de semana e feriados nacionais." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/regra-de-tres", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Divide, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Regra de Três" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Resolva problemas de proporção, porcentagem e conversões em segundos." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/porcentagem", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Percent, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Porcentagem" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Calcule descontos, aumentos e proporções de forma instantânea." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/horas", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Clock, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Horas" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Some e subtraia horas e minutos facilmente. Ideal para folha de ponto." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/tijolos-pisos", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Layers, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Tijolos e Pisos" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Calcule a quantidade exata de material para sua obra e evite desperdícios." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/custo-viagem", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Car, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Custo de Viagem" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Planeje seu orçamento de viagem somando combustível e pedágios." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/imc", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Activity, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de IMC" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra se seu peso está ideal segundo a OMS." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/agua", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Droplets, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Calculadora de Água" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra a meta diária exata para o seu corpo." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/conversor-culinario", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(ChefHat, { className: "text-primary w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Conversor Culinário" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Xícaras para gramas, colheres para ml. Precisão de chef." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx(Link, { to: "/calculadoras/idade-gestacional", className: "group", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-pink-500/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]", children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-br from-pink-500/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" }),
+          /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+            /* @__PURE__ */ jsx("div", { className: "w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center mb-6 border border-pink-500/20 group-hover:scale-110 transition-transform", children: /* @__PURE__ */ jsx(Baby, { className: "text-pink-400 w-6 h-6" }) }),
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-3", children: "Idade Gestacional" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Descubra a data provável do parto e acompanhe sua gravidez." }),
+            /* @__PURE__ */ jsxs("span", { className: "inline-flex items-center gap-2 text-pink-400 font-bold group-hover:gap-3 transition-all", children: [
+              "Acessar ferramenta ",
+              /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
+            ] })
+          ] })
         ] }) })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto space-y-16", children: [
@@ -2870,7 +3353,7 @@ const InvestmentSimulator = () => {
           /* @__PURE__ */ jsxs("div", { children: [
             /* @__PURE__ */ jsx("label", { htmlFor: "rate", className: "block text-sm text-gray-400 mb-2", children: "Taxa Anual (%)" }),
             /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-              /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+              /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
               /* @__PURE__ */ jsx(
                 "input",
                 {
@@ -8508,7 +8991,7 @@ const CompoundInterestPage = () => {
                   /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Taxa de Juros (%)" }),
                   /* @__PURE__ */ jsxs("div", { className: "flex gap-2", children: [
                     /* @__PURE__ */ jsxs("div", { className: "relative flex-1", children: [
-                      /* @__PURE__ */ jsx(Percent, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
                       /* @__PURE__ */ jsx(
                         "input",
                         {
@@ -10369,6 +10852,7060 @@ const CurrencyConverterPage = () => {
     ] })
   ] });
 };
+const INFLATION_DATA = [
+  { year: 1994, ipca: 47.43, igpm: 27.24 },
+  // July-Dec (Plano Real start approx) - simplified for annual context or partial
+  { year: 1995, ipca: 22.41, igpm: 15.25 },
+  { year: 1996, ipca: 9.56, igpm: 9.2 },
+  { year: 1997, ipca: 5.22, igpm: 7.48 },
+  { year: 1998, ipca: 1.65, igpm: 1.78 },
+  { year: 1999, ipca: 8.94, igpm: 20.1 },
+  { year: 2e3, ipca: 5.97, igpm: 9.95 },
+  { year: 2001, ipca: 7.67, igpm: 10.37 },
+  { year: 2002, ipca: 12.53, igpm: 25.31 },
+  { year: 2003, ipca: 9.3, igpm: 8.71 },
+  { year: 2004, ipca: 7.6, igpm: 12.41 },
+  { year: 2005, ipca: 5.69, igpm: 1.2 },
+  { year: 2006, ipca: 3.14, igpm: 3.83 },
+  { year: 2007, ipca: 4.46, igpm: 7.75 },
+  { year: 2008, ipca: 5.9, igpm: 9.81 },
+  { year: 2009, ipca: 4.31, igpm: -1.72 },
+  { year: 2010, ipca: 5.91, igpm: 11.32 },
+  { year: 2011, ipca: 6.5, igpm: 5.1 },
+  { year: 2012, ipca: 5.84, igpm: 7.82 },
+  { year: 2013, ipca: 5.91, igpm: 5.51 },
+  { year: 2014, ipca: 6.41, igpm: 3.69 },
+  { year: 2015, ipca: 10.67, igpm: 10.54 },
+  { year: 2016, ipca: 6.29, igpm: 7.17 },
+  { year: 2017, ipca: 2.95, igpm: -0.52 },
+  { year: 2018, ipca: 3.75, igpm: 7.54 },
+  { year: 2019, ipca: 4.31, igpm: 7.3 },
+  { year: 2020, ipca: 4.52, igpm: 23.14 },
+  { year: 2021, ipca: 10.06, igpm: 17.78 },
+  { year: 2022, ipca: 5.79, igpm: 5.45 },
+  { year: 2023, ipca: 4.62, igpm: -3.18 },
+  { year: 2024, ipca: 4.62, igpm: 6.54 },
+  // Estimated/Partial
+  { year: 2025, ipca: 4.68, igpm: -1.03 }
+  // Estimated/Partial
+];
+const calculateInflation = (initialValue, startYear, indexType) => {
+  let multiplier = 1;
+  const relevantYears = INFLATION_DATA.filter((data) => data.year >= startYear);
+  relevantYears.forEach((data) => {
+    const rate = indexType === "IPCA" ? data.ipca : data.igpm;
+    multiplier *= 1 + rate / 100;
+  });
+  const correctedValue = initialValue * multiplier;
+  const totalInflation = (multiplier - 1) * 100;
+  return {
+    correctedValue,
+    totalInflation,
+    multiplier
+  };
+};
+const PURCHASING_POWER_FAQS = [
+  {
+    question: "Para que serve esta calculadora?",
+    answer: "Ela é útil para atualizar valores de dívidas antigas, saber quanto o seu salário de 10 anos atrás valeria hoje, corrigir valores de venda de imóveis para declaração de ganho de capital ou simplesmente para matar a curiosidade histórica."
+  },
+  {
+    question: "Qual índice devo usar: IPCA ou IGP-M?",
+    answer: "Para consumo do dia a dia (salário, compras, gasolina), use o IPCA. Para imóveis e aluguéis, o contrato geralmente estipula o IGP-M (embora muitos tenham migrado para o IPCA recentemente)."
+  },
+  {
+    question: "O que é deflação?",
+    answer: "É o contrário da inflação: quando os preços caem. É raro no Brasil, mas acontece em alguns meses específicos. Nossa calculadora já considera esses meses negativos na conta final."
+  },
+  {
+    question: "Se eu guardasse R$ 100 no colchão desde 1994, quanto valeria?",
+    answer: "Valeria os mesmos R$ 100 nominais, mas o poder de compra seria irrisório. Você teria perdido mais de 85% da sua capacidade de adquirir bens. Por isso, nunca deixe dinheiro parado. Ele precisa render, no mínimo, a inflação para não virar pó."
+  }
+];
+const PurchasingPowerPage = () => {
+  const [initialValue, setInitialValue] = useState(100);
+  const [startYear, setStartYear] = useState(1994);
+  const [indexType, setIndexType] = useState("IPCA");
+  const [result, setResult] = useState(null);
+  const handleCalculate = () => {
+    const data = calculateInflation(initialValue, startYear, indexType);
+    setResult(data);
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Poder de Compra (Correção Monetária)",
+    "description": "Descubra como a inflação impactou o dinheiro e atualize valores do passado para os dias de hoje.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Poder de Compra - Correção pelo IPCA e IGP-M",
+        description: "Quanto valia R$ 100 em 1994? Atualize valores passados pela inflação (IPCA/IGP-M) e descubra o poder de compra real do seu dinheiro hoje.",
+        canonical: "/calculadoras/poder-de-compra"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": PURCHASING_POWER_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Poder de Compra", href: "/calculadoras/poder-de-compra" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(History, { className: "w-4 h-4 text-primary" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Correção Monetária" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Poder de Compra" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: '"Quanto valia R$ 100 em 1994?" Descubra como a inflação impactou o dinheiro e atualize valores do passado para os dias de hoje.' })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                "Dados da Correção"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor Original (R$)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "number",
+                        placeholder: "Ex: 100",
+                        value: initialValue,
+                        onChange: (e) => setInitialValue(Number(e.target.value)),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Ano Inicial" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx(Calendar, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "select",
+                      {
+                        value: startYear,
+                        onChange: (e) => setStartYear(Number(e.target.value)),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none cursor-pointer",
+                        children: INFLATION_DATA.map((data) => /* @__PURE__ */ jsx("option", { value: data.year, children: data.year }, data.year))
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-3", children: "Índice de Correção" }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsx(
+                      "button",
+                      {
+                        onClick: () => setIndexType("IPCA"),
+                        className: `py-3 px-4 rounded-xl border transition-all ${indexType === "IPCA" ? "bg-primary/20 border-primary text-primary font-bold" : "bg-black/30 border-white/10 text-gray-400 hover:bg-white/5"}`,
+                        children: "IPCA (IBGE)"
+                      }
+                    ),
+                    /* @__PURE__ */ jsx(
+                      "button",
+                      {
+                        onClick: () => setIndexType("IGPM"),
+                        className: `py-3 px-4 rounded-xl border transition-all ${indexType === "IGPM" ? "bg-primary/20 border-primary text-primary font-bold" : "bg-black/30 border-white/10 text-gray-400 hover:bg-white/5"}`,
+                        children: "IGP-M (FGV)"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-2", children: indexType === "IPCA" ? "Ideal para corrigir salários e consumo geral." : "Ideal para corrigir aluguéis e contratos." })
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "pt-4", children: /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: handleCalculate,
+                    className: "w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl transition-all hover:scale-[1.02] active:scale-[0.98]",
+                    children: "Calcular Correção"
+                  }
+                ) })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+                      /* @__PURE__ */ jsx("h2", { className: "text-lg font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Valor Atualizado" }),
+                      /* @__PURE__ */ jsx("div", { className: "text-5xl md:text-6xl font-bold text-primary mb-4", children: formatCurrency(result.correctedValue) }),
+                      /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+                        "Equivalente a ",
+                        formatCurrency(initialValue),
+                        " em ",
+                        startYear
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-4", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2", children: [
+                          /* @__PURE__ */ jsx(TrendingUp, { className: "w-5 h-5 text-red-400" }),
+                          /* @__PURE__ */ jsx("h3", { className: "font-bold text-white", children: "Inflação Acumulada" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("span", { className: "text-2xl font-bold text-white", children: [
+                          result.totalInflation.toFixed(2),
+                          "%"
+                        ] }),
+                        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Variação total do período" })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2", children: [
+                          /* @__PURE__ */ jsx(History, { className: "w-5 h-5 text-blue-400" }),
+                          /* @__PURE__ */ jsx("h3", { className: "font-bold text-white", children: "Multiplicador" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("span", { className: "text-2xl font-bold text-white", children: [
+                          result.multiplier.toFixed(2),
+                          "x"
+                        ] }),
+                        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Fator de correção aplicado" })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                      /* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 text-yellow-500 flex-shrink-0" }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("h4", { className: "font-bold text-yellow-200 mb-1", children: "O que isso significa?" }),
+                        /* @__PURE__ */ jsxs("p", { className: "text-sm text-yellow-500/80 leading-relaxed", children: [
+                          "Para comprar a mesma quantidade de produtos que você comprava com ",
+                          /* @__PURE__ */ jsx("strong", { children: formatCurrency(initialValue) }),
+                          " em ",
+                          startYear,
+                          ", hoje você precisaria de aproximadamente ",
+                          /* @__PURE__ */ jsx("strong", { children: formatCurrency(result.correctedValue) }),
+                          "."
+                        ] })
+                      ] })
+                    ] }) })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(TrendingUp, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para ver a correção" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Fantasma da Inflação" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Você já ouviu seus pais dizerem que "antigamente, com 50 reais a gente fazia a compra do mês"? Eles não estão mentindo. Isso acontece por causa da Inflação, o fenômeno econômico que corrói o poder de compra da moeda ao longo do tempo.' }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Ter R$ 1.000,00 na gaveta em 2010 não é a mesma coisa que ter R$ 1.000,00 hoje. Embora a nota seja a mesma, a quantidade de produtos que ela compra diminuiu drasticamente. Nossa calculadora utiliza os índices oficiais (IPCA e IGP-M) para mostrar essa diferença brutal." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como corrigir um valor pelo tempo?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'Para saber quanto um valor do passado representa no dinheiro de hoje, precisamos aplicar a Correção Monetária. Isso não significa que o dinheiro "rendeu", mas apenas que ele manteve seu poder de compra original.' }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-black/20 p-6 rounded-2xl", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2 text-primary", children: "IPCA (IBGE)" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "É a inflação oficial do Brasil. Mede a variação de preços para o consumidor final (comida, transporte, educação). É o índice ideal para corrigir salários e mesadas." })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-black/20 p-6 rounded-2xl", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2 text-primary", children: "IGP-M (FGV)" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'Conhecido como a "inflação do aluguel". É muito influenciado pelo dólar e preços de atacado. Usado para corrigir contratos de aluguel e energia.' })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "A Nostalgia do Plano Real (1994)" }),
+          /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed mb-8", children: /* @__PURE__ */ jsx("p", { children: "Em julho de 1994, quando o Real foi lançado, a moeda brasileira valia mais que o Dólar." }) }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 mb-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3", children: "Em 1994" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Com R$ 100,00, você enchia um carrinho de supermercado com itens básicos, carne e produtos de limpeza." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3", children: "Hoje" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Para comprar os mesmos itens, você precisaria de aproximadamente R$ 800,00 a R$ 1.000,00 (dependendo da região)." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-primary/10 border-l-4 border-primary p-6 rounded-r-xl", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "💡 O Teste do Big Mac" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-300 text-sm", children: "Economistas usam o preço do Big Mac para comparar poder de compra. Nos anos 90, um Big Mac custava cerca de R$ 3,00. Hoje, o mesmo sanduíche passa dos R$ 25,00." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: PURCHASING_POWER_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const BUDGET_50_30_20_FAQS = [
+  {
+    question: "A regra se aplica ao salário Bruto ou Líquido?",
+    answer: "Sempre sobre o Salário Líquido (o que cai na conta). Você só pode dividir o dinheiro que efetivamente tem disponível para gastar. Impostos e descontos na folha não entram nessa conta."
+  },
+  {
+    question: "E se minhas necessidades passarem de 50%?",
+    answer: 'Isso é muito comum, especialmente com aluguéis caros. Se suas despesas fixas estão em 60% ou 70%, você precisará "roubar" temporariamente da categoria de Desejos (30%) para fechar a conta, ou buscar aumentar sua renda.'
+  },
+  {
+    question: "Onde entra o pagamento de dívidas?",
+    answer: "Dívidas devem ser prioridade. Elas entram na fatia de 20% (Objetivos Financeiros). Se a dívida for muito alta e os juros abusivos, você pode suspender temporariamente os investimentos e usar todo o pote de 20% para quitar o que deve."
+  },
+  {
+    question: "Posso mudar as porcentagens?",
+    answer: "Claro! A regra 50-30-20 é um ponto de partida ideal, mas você pode adaptar para 60-20-20 (mais conservador) ou 50-20-30 (mais focado em investir), dependendo da sua realidade e fase de vida."
+  }
+];
+const Budget503020Page = () => {
+  const [income, setIncome] = useState(4e3);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateBudget();
+  }, [income]);
+  const calculateBudget = () => {
+    const needs = income * 0.5;
+    const wants = income * 0.3;
+    const savings = income * 0.2;
+    setResult({
+      needs,
+      wants,
+      savings
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora da Regra 50-30-20",
+    "description": "O método mais simples do mundo para organizar suas finanças. Descubra exatamente quanto gastar com contas, lazer e investimentos.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora Regra 50-30-20 - Organize seu Orçamento",
+        description: "Aprenda a dividir seu salário do jeito certo. Calcule quanto gastar com necessidades, desejos e investimentos usando o método 50-30-20.",
+        canonical: "/calculadoras/regra-50-30-20"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": BUDGET_50_30_20_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Regra 50-30-20", href: "/calculadoras/regra-50-30-20" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(PieChart, { className: "w-4 h-4 text-primary" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Orçamento Pessoal" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora da ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Regra 50-30-20" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "O método mais simples do mundo para organizar suas finanças. Descubra exatamente quanto gastar com contas, lazer e investimentos." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Sua Renda"
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "space-y-5", children: /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Salário Líquido Mensal (R$)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "number",
+                        placeholder: "Ex: 4000",
+                        value: income || "",
+                        onChange: (e) => setIncome(Number(e.target.value)),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors text-lg font-bold"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-2", children: "Insira o valor que realmente cai na sua conta (após descontos)." })
+                ] }) })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-primary/10 border border-primary/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 text-primary flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Dica de Ouro" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 leading-relaxed", children: "Se seus gastos fixos (Necessidades) ultrapassarem 50%, o alerta vermelho acende: você precisa reduzir o padrão de vida ou aumentar a renda." })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsx(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-6",
+                  children: /* @__PURE__ */ jsxs("div", { className: "grid gap-4", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border-l-4 border-blue-500", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-4", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                          /* @__PURE__ */ jsx("div", { className: "p-2 bg-blue-500/20 rounded-lg text-blue-400", children: /* @__PURE__ */ jsx(ShoppingCart, { className: "w-6 h-6" }) }),
+                          /* @__PURE__ */ jsxs("div", { children: [
+                            /* @__PURE__ */ jsx("h3", { className: "font-bold text-white text-lg", children: "Necessidades (50%)" }),
+                            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: "Gastos essenciais para sobrevivência" })
+                          ] })
+                        ] }),
+                        /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: formatCurrency(result.needs) })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-black/50 rounded-full h-2 mb-2", children: /* @__PURE__ */ jsx("div", { className: "bg-blue-500 h-2 rounded-full", style: { width: "50%" } }) }),
+                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Aluguel, condomínio, contas de luz/água, supermercado básico, farmácia e transporte." })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border-l-4 border-purple-500", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-4", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                          /* @__PURE__ */ jsx("div", { className: "p-2 bg-purple-500/20 rounded-lg text-purple-400", children: /* @__PURE__ */ jsx(Coffee, { className: "w-6 h-6" }) }),
+                          /* @__PURE__ */ jsxs("div", { children: [
+                            /* @__PURE__ */ jsx("h3", { className: "font-bold text-white text-lg", children: "Desejos (30%)" }),
+                            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: "Estilo de vida e diversão" })
+                          ] })
+                        ] }),
+                        /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: formatCurrency(result.wants) })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-black/50 rounded-full h-2 mb-2", children: /* @__PURE__ */ jsx("div", { className: "bg-purple-500 h-2 rounded-full", style: { width: "30%" } }) }),
+                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Jantar fora, iFood, Netflix, academia, viagens, roupas novas e hobbies." })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border-l-4 border-primary", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-start mb-4", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                          /* @__PURE__ */ jsx("div", { className: "p-2 bg-primary/20 rounded-lg text-primary", children: /* @__PURE__ */ jsx(PiggyBank, { className: "w-6 h-6" }) }),
+                          /* @__PURE__ */ jsxs("div", { children: [
+                            /* @__PURE__ */ jsx("h3", { className: "font-bold text-white text-lg", children: "Objetivos (20%)" }),
+                            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: 'Seu "eu do futuro"' })
+                          ] })
+                        ] }),
+                        /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: formatCurrency(result.savings) })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-black/50 rounded-full h-2 mb-2", children: /* @__PURE__ */ jsx("div", { className: "bg-primary h-2 rounded-full", style: { width: "20%" } }) }),
+                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Reserva de emergência, investimentos, aposentadoria ou quitação de dívidas." })
+                    ] })
+                  ] })
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(PieChart, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Informe sua renda para ver a divisão" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona a Regra 50-30-20?" }),
+          /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Criada pela senadora norte-americana e especialista em falências Elizabeth Warren, a regra 50-30-20 é a estratégia de orçamento ideal para quem não gosta de planilhas complexas. A ideia é dividir sua Renda Líquida Mensal em apenas três grandes potes:" }) })
+        ] }),
+        /* @__PURE__ */ jsx("section", { className: "mb-16", children: /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-blue-400", children: "1. Necessidades (50%)" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "São os gastos essenciais para sua sobrevivência básica e manutenção do trabalho. Se você perdesse o emprego hoje, essas contas continuariam chegando." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-purple-400", children: "2. Desejos (30%)" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'É a categoria do "Estilo de Vida". Tudo aquilo que você quer, mas não necessariamente precisa para sobreviver. É aqui que você aproveita a vida hoje.' })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 text-primary", children: "3. Objetivos (20%)" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'É o pagamento do seu "eu do futuro". Esse dinheiro deve sumir da sua conta assim que o salário cai.' })
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Exemplo Prático" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Imagine que você receba um salário líquido de R$ 4.000,00. Veja como ficaria sua divisão ideal:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 text-gray-300", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3 items-center", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-blue-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "R$ 2.000 (50%)" }),
+                  " vai para pagar as contas fixas da casa e mercado."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3 items-center", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-purple-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "R$ 1.200 (30%)" }),
+                  " é o seu limite para gastar com diversão e estilo de vida no mês."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex gap-3 items-center", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-2 h-2 rounded-full bg-primary flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "R$ 800 (20%)" }),
+                  " vai direto para a corretora de investimentos ou poupança."
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: BUDGET_50_30_20_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const VEHICLE_FINANCING_FAQS = [
+  {
+    question: "Qual a diferença entre CDC e Leasing?",
+    answer: 'O CDC (Crédito Direto ao Consumidor) é o mais comum: o carro fica no seu nome, mas alienado ao banco até a quitação. No Leasing (arrendamento), o carro fica no nome do banco e você paga um "aluguel" com opção de compra no final. Hoje, o CDC é mais vantajoso para pessoa física.'
+  },
+  {
+    question: "Posso antecipar parcelas para ter desconto?",
+    answer: "Sim! Por lei, ao antecipar parcelas (de trás para frente), o banco é obrigado a descontar os juros proporcionais. É uma excelente estratégia para pagar menos por um carro financiado."
+  },
+  {
+    question: "Até quantos anos posso financiar?",
+    answer: "Geralmente, carros novos podem ser financiados em até 60 meses (5 anos). Carros usados costumam ter prazos menores (36 ou 48 meses), dependendo do ano de fabricação."
+  },
+  {
+    question: "Compromete quanto da minha renda?",
+    answer: "A regra do Banco Central sugere que a parcela não ultrapasse 30% da sua renda mensal bruta. Se passar disso, o financiamento provavelmente será reprovado."
+  }
+];
+const VehicleFinancingPage = () => {
+  const [vehicleValue, setVehicleValue] = useState(5e4);
+  const [downPayment, setDownPayment] = useState(1e4);
+  const [interestRate, setInterestRate] = useState(1.5);
+  const [term, setTerm] = useState(48);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateFinancing();
+  }, [vehicleValue, downPayment, interestRate, term]);
+  const calculateFinancing = () => {
+    const loanAmount = vehicleValue - downPayment;
+    if (loanAmount <= 0) {
+      setResult(null);
+      return;
+    }
+    const monthlyRate = interestRate / 100;
+    const monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+    const totalPaid = monthlyPayment * term + downPayment;
+    const totalInterest = monthlyPayment * term - loanAmount;
+    setResult({
+      monthlyPayment,
+      totalPaid,
+      totalInterest,
+      loanAmount
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Financiamento de Veículos",
+    "description": "Simule o valor das parcelas e descubra os juros reais antes de assinar o contrato.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Financiamento de Veículos - Simule Parcelas de Carro e Moto",
+        description: "Vai financiar? Simule o valor da parcela do seu carro ou moto nova. Entenda o Custo Efetivo Total (CET) e descubra como pagar menos juros.",
+        canonical: "/calculadoras/financiamento-veiculos"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": VEHICLE_FINANCING_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Financiamento de Veículos", href: "/calculadoras/financiamento-veiculos" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(Car, { className: "w-4 h-4 text-primary" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Simulador de Crédito" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Financiamento de Veículos" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Sonhando com o carro ou moto nova? Simule o valor das parcelas e descubra os juros reais antes de assinar o contrato." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Dados do Financiamento"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor do Veículo (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: vehicleValue,
+                          onChange: (e) => setVehicleValue(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor da Entrada (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: downPayment,
+                          onChange: (e) => setDownPayment(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Taxa de Juros (% a.m.)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            step: "0.01",
+                            value: interestRate,
+                            onChange: (e) => setInterestRate(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Prazo (Meses)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Calendar, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            value: term,
+                            onChange: (e) => setTerm(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-primary/10 border border-primary/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 text-primary flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Dica FinZap" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300 leading-relaxed", children: [
+                    "Sempre pergunte pelo ",
+                    /* @__PURE__ */ jsx("strong", { children: "CET anual" }),
+                    '. É ele que revela o verdadeiro "peso" do financiamento, incluindo taxas e seguros.'
+                  ] })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+                      /* @__PURE__ */ jsx("h2", { className: "text-lg font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Valor da Parcela Mensal" }),
+                      /* @__PURE__ */ jsx("div", { className: "text-5xl md:text-6xl font-bold text-primary mb-4", children: formatCurrency(result.monthlyPayment) }),
+                      /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+                        "Em ",
+                        term,
+                        "x de ",
+                        formatCurrency(result.monthlyPayment)
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-4", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2", children: [
+                          /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5 text-green-400" }),
+                          /* @__PURE__ */ jsx("h3", { className: "font-bold text-white", children: "Total a Pagar" })
+                        ] }),
+                        /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: formatCurrency(result.totalPaid) }),
+                        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Soma de todas as parcelas + entrada" })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 mb-2", children: [
+                          /* @__PURE__ */ jsx(Percent$1, { className: "w-5 h-5 text-red-400" }),
+                          /* @__PURE__ */ jsx("h3", { className: "font-bold text-white", children: "Total de Juros" })
+                        ] }),
+                        /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: formatCurrency(result.totalInterest) }),
+                        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Custo do dinheiro emprestado" })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Valor Financiado" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.loanAmount) })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-white/5 rounded-full h-1" }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Valor Final do Veículo" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.totalPaid) })
+                      ] })
+                    ] })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(Car, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para simular" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Peso dos Juros no Sonho do Carro Próprio" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Comprar um veículo à vista é para poucos. A grande maioria dos brasileiros recorre ao financiamento (CDC) para realizar esse sonho. O problema é que, na empolgação, muitos olham apenas se "a parcela cabe no bolso" e esquecem de calcular o valor final pago.' }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Nossa calculadora simula o cenário real do financiamento, mostrando quanto você pagará de juros ao longo dos anos. Muitas vezes, ao financiar um carro em 60 meses sem entrada, você acaba pagando o preço de dois veículos." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Inimigo Invisível: O que é CET?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'Ao ver um anúncio de taxa de "0,99% ao mês", não se iluda. Esse não é o custo real. O que você paga de verdade se chama CET (Custo Efetivo Total). Ele é a soma de:' }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-3 text-gray-300", children: [
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2 items-start", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary flex-shrink-0 mt-0.5" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Juros Nominais:" }),
+                    " A taxa anunciada pelo banco."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2 items-start", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary flex-shrink-0 mt-0.5" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "IOF:" }),
+                    " Imposto sobre Operações Financeiras (cobrado na hora)."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-3 text-gray-300", children: [
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2 items-start", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary flex-shrink-0 mt-0.5" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Taxas de Cadastro:" }),
+                    " Tarifas administrativas de abertura de crédito."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2 items-start", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary flex-shrink-0 mt-0.5" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Gravame:" }),
+                    " Taxa de registro do contrato no Detran."
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como aumentar suas chances de aprovação?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5 text-blue-400" }) }),
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Valor da Entrada" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Financiar 100% do veículo é muito arriscado para o banco. Tente dar pelo menos 20% a 30% de entrada para derrubar a taxa de juros." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-purple-400" }) }),
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Score de Crédito" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Sua pontuação no Serasa/SPC define sua taxa. Um score acima de 700 garante condições muito melhores do que um score de 400." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Car, { className: "w-5 h-5 text-primary" }) }),
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Idade do Veículo" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Bancos preferem financiar carros mais novos (até 5 ou 10 anos). Carros muito antigos têm juros maiores ou nem são aprovados." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: VEHICLE_FINANCING_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const REAL_ESTATE_FAQS = [
+  {
+    question: "Posso mudar de tabela depois?",
+    answer: "É possível fazer a portabilidade de crédito para outro banco e mudar o sistema de amortização, mas o banco original raramente aceita essa troca no mesmo contrato."
+  },
+  {
+    question: "A Tabela Price é realmente fixa?",
+    answer: 'Cuidado! A parcela da Price é fixa matematicamente, mas no Brasil os contratos têm correção monetária (geralmente pela TR - Taxa Referencial). Se a TR subir, sua parcela "fixa" também vai subir um pouco todo mês.'
+  },
+  {
+    question: "O que é amortização extraordinária?",
+    answer: 'É quando você usa um dinheiro extra (FGTS ou 13º) para adiantar pagamentos. Na tabela SAC, esse adiantamento é super poderoso: ele abate direto do saldo devedor e "mata" muitos juros futuros.'
+  },
+  {
+    question: "Qual banco oferece a melhor taxa?",
+    answer: "Isso varia dia a dia. A Caixa Econômica costuma ter as menores taxas, mas bancos privados (Itaú, Bradesco, Santander) podem cobrir a oferta dependendo do seu relacionamento e pontuação de crédito (Score)."
+  }
+];
+const RealEstateFinancingPage = () => {
+  const [propertyValue, setPropertyValue] = useState(3e5);
+  const [downPayment, setDownPayment] = useState(6e4);
+  const [interestRate, setInterestRate] = useState(9.5);
+  const [termYears, setTermYears] = useState(30);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateFinancing();
+  }, [propertyValue, downPayment, interestRate, termYears]);
+  const calculateFinancing = () => {
+    const loanAmount = propertyValue - downPayment;
+    if (loanAmount <= 0) {
+      setResult(null);
+      return;
+    }
+    const months = termYears * 12;
+    const monthlyRate = Math.pow(1 + interestRate / 100, 1 / 12) - 1;
+    const amortization = loanAmount / months;
+    const firstInstallmentSAC = amortization + loanAmount * monthlyRate;
+    const lastInstallmentSAC = amortization + amortization * monthlyRate;
+    const totalInterestSAC = (loanAmount * monthlyRate + amortization * monthlyRate) * months / 2;
+    const totalPaidSAC = loanAmount + totalInterestSAC;
+    const installmentPrice = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+    const totalPaidPrice = installmentPrice * months;
+    const totalInterestPrice = totalPaidPrice - loanAmount;
+    setResult({
+      sac: {
+        firstInstallment: firstInstallmentSAC,
+        lastInstallment: lastInstallmentSAC,
+        totalPaid: totalPaidSAC,
+        totalInterest: totalInterestSAC
+      },
+      price: {
+        installment: installmentPrice,
+        totalPaid: totalPaidPrice,
+        totalInterest: totalInterestPrice
+      },
+      loanAmount,
+      months
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Financiamento Imobiliário (SAC vs Price)",
+    "description": "Compare as tabelas SAC e Price e descubra qual delas faz você pagar menos juros no final.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "SAC ou Price? Calculadora de Financiamento Imobiliário e Juros",
+        description: "Vai comprar imóvel? Simule as parcelas nas tabelas SAC (decrescente) e Price (fixa). Descubra em qual opção você paga menos juros no total.",
+        canonical: "/calculadoras/financiamento-imobiliario"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": REAL_ESTATE_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Financiamento Imobiliário", href: "/calculadoras/financiamento-imobiliario" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(Home$1, { className: "w-4 h-4 text-primary" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "SAC vs Price" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Financiamento Imobiliário" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Vai financiar a casa própria? Compare as tabelas SAC e Price e descubra qual delas faz você pagar menos juros no final." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-4 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Dados do Imóvel"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor do Imóvel (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: propertyValue,
+                          onChange: (e) => setPropertyValue(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor da Entrada (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: downPayment,
+                          onChange: (e) => setDownPayment(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Juros (% a.a.)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            step: "0.1",
+                            value: interestRate,
+                            onChange: (e) => setInterestRate(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Prazo (Anos)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Calendar, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            value: termYears,
+                            onChange: (e) => setTermYears(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-primary/10 border border-primary/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 text-primary flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Dica de Ouro" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 leading-relaxed", children: "Se a sua renda não aprova o imóvel na SAC (parcela inicial alta), a Tabela Price pode ser a única saída para conseguir a aprovação." })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-8 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border-2 border-primary/50 relative overflow-hidden", children: [
+                        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 bg-primary text-black text-xs font-bold px-3 py-1 rounded-bl-xl", children: "RECOMENDADO" }),
+                        /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
+                          /* @__PURE__ */ jsx(TrendingDown, { className: "w-5 h-5 text-primary" }),
+                          "Tabela SAC"
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                          /* @__PURE__ */ jsxs("div", { children: [
+                            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mb-1", children: "Primeira Parcela" }),
+                            /* @__PURE__ */ jsx("p", { className: "text-2xl font-bold text-white", children: formatCurrency(result.sac.firstInstallment) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { children: [
+                            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mb-1", children: "Última Parcela" }),
+                            /* @__PURE__ */ jsx("p", { className: "text-xl font-bold text-green-400", children: formatCurrency(result.sac.lastInstallment) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10", children: [
+                            /* @__PURE__ */ jsxs("div", { className: "flex justify-between mb-1", children: [
+                              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-400", children: "Total Pago" }),
+                              /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-white", children: formatCurrency(result.sac.totalPaid) })
+                            ] }),
+                            /* @__PURE__ */ jsxs("div", { className: "flex justify-between", children: [
+                              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-400", children: "Total Juros" }),
+                              /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-green-400", children: formatCurrency(result.sac.totalInterest) })
+                            ] })
+                          ] })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/10", children: [
+                        /* @__PURE__ */ jsxs("h3", { className: "text-xl font-bold text-white mb-4 flex items-center gap-2", children: [
+                          /* @__PURE__ */ jsx(ArrowRightLeft, { className: "w-5 h-5 text-purple-400" }),
+                          "Tabela Price"
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                          /* @__PURE__ */ jsxs("div", { children: [
+                            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mb-1", children: "Parcela (Fixa*)" }),
+                            /* @__PURE__ */ jsx("p", { className: "text-2xl font-bold text-white", children: formatCurrency(result.price.installment) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "opacity-0", children: [
+                            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mb-1", children: "Placeholder" }),
+                            /* @__PURE__ */ jsx("p", { className: "text-xl font-bold text-transparent", children: "Placeholder" })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "pt-4 border-t border-white/10", children: [
+                            /* @__PURE__ */ jsxs("div", { className: "flex justify-between mb-1", children: [
+                              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-400", children: "Total Pago" }),
+                              /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-white", children: formatCurrency(result.price.totalPaid) })
+                            ] }),
+                            /* @__PURE__ */ jsxs("div", { className: "flex justify-between", children: [
+                              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-400", children: "Total Juros" }),
+                              /* @__PURE__ */ jsx("span", { className: "text-sm font-bold text-red-400", children: formatCurrency(result.price.totalInterest) })
+                            ] })
+                          ] })
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "bg-black/30 rounded-xl p-6 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-gray-300", children: [
+                      "Economia total escolhendo a SAC: ",
+                      /* @__PURE__ */ jsx("strong", { className: "text-green-400", children: formatCurrency(result.price.totalInterest - result.sac.totalInterest) })
+                    ] }) })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(Home$1, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para comparar" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Dilema da Casa Própria: SAC ou Price?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Quando você aprova um financiamento habitacional, o gerente do banco faz a famosa pergunta: "Você prefere Tabela SAC ou Tabela Price?".' }),
+            /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
+              "Essa escolha pode representar uma diferença de ",
+              /* @__PURE__ */ jsx("strong", { children: "dezenas de milhares de reais" }),
+              " no valor total pago pelo seu imóvel. Infelizmente, a maioria das pessoas escolhe olhando apenas para a primeira parcela, sem entender o impacto de longo prazo."
+            ] }),
+            /* @__PURE__ */ jsx("p", { children: "Nossa calculadora coloca as duas opções lado a lado para você ver a evolução das parcelas e o saldo devedor ao longo dos anos." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Entenda as Diferenças" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-primary mb-4", children: "1. Tabela SAC" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-500 mb-4 uppercase tracking-wider", children: "Sistema de Amortização Constante" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "É a queridinha dos brasileiros e a mais recomendada para financiamentos longos." }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-3 text-gray-300 text-sm", children: [
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary flex-shrink-0" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "A Parcela:" }),
+                    " Começa mais alta e vai diminuindo todo mês."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary flex-shrink-0" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "A Lógica:" }),
+                    " Você abate o mesmo valor da dívida todo mês."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary flex-shrink-0" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Resultado:" }),
+                    " No final, você paga menos juros no total."
+                  ] })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-purple-400 mb-4", children: "2. Tabela Price" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-500 mb-4 uppercase tracking-wider", children: "Sistema Francês de Amortização" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Muito comum em financiamentos de veículos e empréstimos pessoais." }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-3 text-gray-300 text-sm", children: [
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-purple-400 flex-shrink-0" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "A Parcela:" }),
+                    " É fixa (ou quase fixa). Começa menor que na SAC."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-purple-400 flex-shrink-0" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "A Lógica:" }),
+                    " No início, você paga muitos juros e amortiza pouco."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-purple-400 flex-shrink-0" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Resultado:" }),
+                    " O saldo devedor cai lentamente. Total pago é maior."
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Qual vale mais a pena?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsxs("p", { className: "text-gray-400 mb-6", children: [
+              "A resposta matemática é quase sempre a ",
+              /* @__PURE__ */ jsx("strong", { children: "SAC" }),
+              ", pois o custo total é menor. Porém, a Price tem uma vantagem estratégica:"
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-black/20 p-6 rounded-2xl border-l-4 border-purple-400", children: [
+              /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-2", children: "O Pulo do Gato" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Como a parcela inicial da Price é menor (cerca de 20% a 30% mais barata que a primeira da SAC), ela permite que você financie um valor maior com a mesma renda mensal. Se sua renda não aprova o imóvel que você quer na SAC, a Price pode ser a solução." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: REAL_ESTATE_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const EARLY_REPAYMENT_FAQS = [
+  {
+    question: "O banco é obrigado a dar o desconto?",
+    answer: "Sim! O Artigo 52 do Código de Defesa do Consumidor (CDC) garante a redução proporcional dos juros e demais acréscimos na liquidação antecipada do débito, total ou parcialmente. Se o banco recusar, denuncie ao Procon ou Banco Central."
+  },
+  {
+    question: "Serve para qualquer tipo de dívida?",
+    answer: "Funciona para todas as dívidas com juros pré-fixados (onde você sabe a taxa exata no contrato), como Financiamento de Veículos (CDC), Empréstimo Pessoal, Consignado e Crediário de loja."
+  },
+  {
+    question: "Como faço para pagar?",
+    answer: 'Entre em contato com o banco ou financeira e peça um boleto para "Amortização de Saldo Devedor" ou antecipação de parcelas. Muitos apps de banco já permitem gerar esse boleto automaticamente escolhendo as últimas parcelas.'
+  },
+  {
+    question: "O que é Amortização?",
+    answer: 'Amortizar significa "matar a dívida". Quando você paga a parcela mensal normal, você paga muitos juros e amortiza pouco. Quando você antecipa, você foca na amortização, reduzindo o principal da dívida muito mais rápido.'
+  }
+];
+const EarlyRepaymentPage = () => {
+  const [installmentValue, setInstallmentValue] = useState(1e3);
+  const [interestRate, setInterestRate] = useState(1.5);
+  const [installmentsToAnticipate, setInstallmentsToAnticipate] = useState(1);
+  const [monthsUntilLast, setMonthsUntilLast] = useState(48);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateDiscount();
+  }, [installmentValue, interestRate, installmentsToAnticipate, monthsUntilLast]);
+  const calculateDiscount = () => {
+    if (installmentValue <= 0 || installmentsToAnticipate <= 0 || monthsUntilLast <= 0) {
+      setResult(null);
+      return;
+    }
+    const monthlyRate = interestRate / 100;
+    let totalPresentValue = 0;
+    let totalOriginalValue = installmentValue * installmentsToAnticipate;
+    for (let i = 0; i < installmentsToAnticipate; i++) {
+      const time = monthsUntilLast - i;
+      if (time <= 0) continue;
+      const presentValue = installmentValue / Math.pow(1 + monthlyRate, time);
+      totalPresentValue += presentValue;
+    }
+    const totalDiscount = totalOriginalValue - totalPresentValue;
+    const discountPercentage = totalDiscount / totalOriginalValue * 100;
+    setResult({
+      totalPresentValue,
+      totalOriginalValue,
+      totalDiscount,
+      discountPercentage
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Quitação Antecipada",
+    "description": "Descubra quanto você economiza de juros ao antecipar as últimas parcelas do seu financiamento ou empréstimo.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Quitação Antecipada - Desconto de Juros",
+        description: "Quanto economizo se adiantar as parcelas? Simule o desconto de juros ao pagar seu financiamento ou empréstimo de trás para frente.",
+        canonical: "/calculadoras/quitacao-antecipada"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": EARLY_REPAYMENT_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Quitação Antecipada", href: "/calculadoras/quitacao-antecipada" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(PiggyBank, { className: "w-4 h-4 text-primary" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Economia de Juros" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Quitação Antecipada" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Tem um dinheiro extra? Descubra quanto você economiza de juros ao antecipar as últimas parcelas do seu financiamento ou empréstimo." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Dados da Parcela"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor da Parcela (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: installmentValue,
+                          onChange: (e) => setInstallmentValue(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Taxa de Juros (% a.m.)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          step: "0.01",
+                          value: interestRate,
+                          onChange: (e) => setInterestRate(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Verifique a taxa no seu contrato (CET mensal)." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Qtd. a Antecipar" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(ArrowDownCircle, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            value: installmentsToAnticipate,
+                            onChange: (e) => setInstallmentsToAnticipate(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Meses p/ Vencer" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Calendar, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            value: monthsUntilLast,
+                            onChange: (e) => setMonthsUntilLast(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                            placeholder: "Ex: 48"
+                          }
+                        )
+                      ] })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500", children: '* "Meses p/ Vencer" refere-se à última parcela que você quer antecipar. Ex: se faltam 48 meses para acabar, coloque 48.' })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-primary/10 border border-primary/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 text-primary flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Dica FinZap" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 leading-relaxed", children: "Quanto mais longe estiver o vencimento da parcela (as últimas do carnê), maior será o desconto ao antecipá-la." })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+                      /* @__PURE__ */ jsx("h2", { className: "text-lg font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Valor para Quitar Hoje" }),
+                      /* @__PURE__ */ jsx("div", { className: "text-5xl md:text-6xl font-bold text-primary mb-4", children: formatCurrency(result.totalPresentValue) }),
+                      /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+                        "Ao invés de pagar ",
+                        formatCurrency(result.totalOriginalValue)
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                          /* @__PURE__ */ jsx(PiggyBank, { className: "w-6 h-6 text-green-400" }),
+                          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "Sua Economia" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("span", { className: "bg-green-500/20 text-green-400 text-xs font-bold px-3 py-1 rounded-full", children: [
+                          "-",
+                          result.discountPercentage.toFixed(1),
+                          "% OFF"
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "text-3xl font-bold text-white mb-2", children: formatCurrency(result.totalDiscount) }),
+                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Esse é o valor de juros que você deixa de pagar ao banco." })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Valor Original (Sem desconto)" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.totalOriginalValue) })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-white/5 rounded-full h-1" }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Valor com Desconto" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.totalPresentValue) })
+                      ] })
+                    ] })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(PiggyBank, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para ver o desconto" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: 'O Segredo de "Pagar de Trás para Frente"' }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Você já ouviu falar que pagar as últimas parcelas do financiamento sai muito mais barato? Isso é verdade e é um direito seu garantido por lei." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Quando você financia um carro, imóvel ou faz um empréstimo, os juros são calculados com base no tempo. Se você devolve o dinheiro ao banco antes do prazo combinado, o banco não pode cobrar os juros referentes a esse período futuro." }),
+            /* @__PURE__ */ jsx("p", { children: 'Nossa calculadora simula esse desconto obrigatório e mostra o "valor presente" daquela parcela que venceria daqui a 5 anos. O resultado costuma chocar: em muitos casos, uma parcela de R$ 1.000,00 pode cair para menos de R$ 400,00 se paga hoje.' })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como funciona o Desconto Proporcional?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'O cálculo segue a regra do Valor Presente com juros compostos. Basicamente, "trazemos a valor presente" o montante futuro, descontando a taxa de juros do contrato.' }),
+            /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-4", children: "Por que o desconto é tão grande?" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Imagine que você tem uma parcela de R$ 500 para pagar daqui a 48 meses (4 anos). Dentro desses R$ 500, uma parte é o valor que você pegou emprestado (amortização) e a outra parte são juros acumulados por 4 anos de espera." }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: 'Ao pagar hoje, você elimina esses 4 anos de espera. Os juros somem, e você paga apenas o "valor puro" da dívida.' })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quando vale a pena antecipar?" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(Percent$1, { className: "w-5 h-5 text-red-400" }) }),
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Cenário A" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                "Seu financiamento de carro cobra ",
+                /* @__PURE__ */ jsx("strong", { children: "2,5% ao mês" }),
+                " de juros."
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(TrendingDown, { className: "w-5 h-5 text-green-400" }) }),
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Cenário B" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                "Seu dinheiro no banco rende ",
+                /* @__PURE__ */ jsx("strong", { children: "0,8% ao mês" }),
+                "."
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center mb-4", children: /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-primary" }) }),
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Veredito" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'Tire o dinheiro do banco e quite a dívida! Você deixa de ganhar 0,8% para economizar 2,5%. É um "lucro" imediato de 1,7% ao mês.' })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: EARLY_REPAYMENT_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const CET_FAQS = [
+  {
+    question: "O que é CET (Custo Efetivo Total)?",
+    answer: "É a soma de TODOS os custos envolvidos em um empréstimo ou financiamento. Ele inclui não apenas os juros, mas também taxas administrativas, seguros, impostos (IOF) e tarifas de cadastro. É o valor real que você paga."
+  },
+  {
+    question: "Por que a taxa de juros é diferente do CET?",
+    answer: "O banco anuncia a taxa de juros nominal para atrair clientes com um número baixo. Porém, ao somar as taxas extras obrigatórias, o custo real sobe. O CET é a verdade nua e crua sobre o quanto o dinheiro custa para você."
+  },
+  {
+    question: "Onde encontro o CET no meu contrato?",
+    answer: "Por lei, o CET deve estar destacado na primeira página do contrato de qualquer operação de crédito, expresso em forma de taxa percentual anual e mensal. Se o banco esconder essa informação, denuncie ao Procon ou Banco Central."
+  },
+  {
+    question: "Qual a diferença entre CET Mensal e Anual?",
+    answer: "O CET Mensal é o custo aplicado a cada prestação. O CET Anual é a projeção desse custo por 12 meses. Para comparar empréstimos de prazos diferentes, sempre olhe para o CET Anual."
+  }
+];
+const CETCalculatorPage = () => {
+  const [loanAmount, setLoanAmount] = useState(1e4);
+  const [nominalRate, setNominalRate] = useState(1.5);
+  const [term, setTerm] = useState(12);
+  const [extraCosts, setExtraCosts] = useState(500);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateCET();
+  }, [loanAmount, nominalRate, term, extraCosts]);
+  const calculateCET = () => {
+    if (loanAmount <= 0 || term <= 0) {
+      setResult(null);
+      return;
+    }
+    const monthlyRate = nominalRate / 100;
+    const totalFinanced = loanAmount + extraCosts;
+    const pmt = totalFinanced * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+    let r = monthlyRate;
+    for (let i = 0; i < 20; i++) {
+      const f = pmt * (1 - Math.pow(1 + r, -term)) / r - loanAmount;
+      const df = pmt * (Math.pow(1 + r, -term - 1) * term * r - (1 - Math.pow(1 + r, -term))) / (r * r);
+      const newR = r - f / df;
+      if (Math.abs(newR - r) < 1e-6) {
+        r = newR;
+        break;
+      }
+      r = newR;
+    }
+    const monthlyCET = r * 100;
+    const annualCET = (Math.pow(1 + r, 12) - 1) * 100;
+    setResult({
+      pmt,
+      monthlyCET,
+      annualCET,
+      totalFinanced
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const formatPercent = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "percent", minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val / 100);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de CET (Custo Efetivo Total)",
+    "description": "Descubra o custo real do seu empréstimo somando taxas, seguros e impostos ocultos.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de CET (Custo Efetivo Total) - Descubra os Juros Reais",
+        description: "Não seja enganado pela taxa de juros. Calcule o Custo Efetivo Total (CET) do seu empréstimo e descubra as taxas, seguros e impostos escondidos pelo banco.",
+        canonical: "/calculadoras/custo-efetivo-total"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": CET_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Custo Efetivo Total (CET)", href: "/calculadoras/custo-efetivo-total" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(FileText, { className: "w-4 h-4 text-primary" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Transparência Financeira" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400", children: "Custo Efetivo Total (CET)" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "A taxa de juros é apenas a ponta do iceberg. Descubra o custo real do seu empréstimo somando taxas, seguros e impostos ocultos." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Dados do Empréstimo"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor Líquido (O que você recebe)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: loanAmount,
+                          onChange: (e) => setLoanAmount(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Custos Extras (Taxas, IOF, Seguros)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: extraCosts,
+                          onChange: (e) => setExtraCosts(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Some todas as tarifas que o banco incluiu no financiamento." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Juros Nominais (% a.m.)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            step: "0.01",
+                            value: nominalRate,
+                            onChange: (e) => setNominalRate(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Prazo (Meses)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Calendar, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            value: term,
+                            onChange: (e) => setTerm(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-primary/10 border border-primary/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertTriangle, { className: "w-6 h-6 text-primary flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Alerta de Venda Casada" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 leading-relaxed", children: "Se o CET ficou muito alto, verifique se o banco incluiu seguros ou títulos de capitalização não obrigatórios. Você pode exigir a retirada." })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-1", children: "Taxa Nominal (Banco)" }),
+                        /* @__PURE__ */ jsxs("div", { className: "text-2xl font-bold text-gray-300", children: [
+                          formatPercent(nominalRate),
+                          " a.m."
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "bg-primary/20 rounded-2xl p-6 border border-primary/50", children: [
+                        /* @__PURE__ */ jsx("p", { className: "text-sm text-primary mb-1 font-bold", children: "CET Final (Real)" }),
+                        /* @__PURE__ */ jsxs("div", { className: "text-3xl font-bold text-white", children: [
+                          formatPercent(result.monthlyCET),
+                          " a.m."
+                        ] }),
+                        /* @__PURE__ */ jsxs("p", { className: "text-xs text-green-300 mt-1", children: [
+                          formatPercent(result.annualCET),
+                          " ao ano"
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5 space-y-4", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Valor da Parcela" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: formatCurrency(result.pmt) })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-white/5 h-px" }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Valor Financiado (Bruto)" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-white", children: formatCurrency(result.totalFinanced) })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Total Pago no Final" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-white", children: formatCurrency(result.pmt * term) })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "bg-black/30 rounded-xl p-4 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-gray-400 text-sm", children: [
+                      "Você está pagando ",
+                      /* @__PURE__ */ jsx("strong", { className: "text-red-400", children: formatPercent(result.monthlyCET - nominalRate) }),
+                      " a mais de taxas todo mês além dos juros."
+                    ] }) })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(FileText, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para revelar o CET" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que os bancos não te contam sobre os juros" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Você vê um anúncio de empréstimo ou financiamento de carro com taxa de "0,99% ao mês" e acha barato. Mas quando assina o contrato, a parcela fica pesada e o valor final dispara.' }),
+            /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
+              "O culpado tem nome: ",
+              /* @__PURE__ */ jsx("strong", { children: "Custo Efetivo Total (CET)" }),
+              "."
+            ] }),
+            /* @__PURE__ */ jsx("p", { children: 'O CET é a única métrica que realmente importa para saber se um empréstimo é barato ou caro. Ele soma os juros do banco com todas as "letras miúdas" do contrato que encarecem a dívida.' })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "A Composição do CET" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-lg font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Percent$1, { className: "w-5 h-5 text-primary" }),
+                "Juros Nominais"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "O lucro do banco (a taxa anunciada na propaganda)." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-lg font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(FileText, { className: "w-5 h-5 text-blue-400" }),
+                "Tarifas"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Taxa de Abertura de Crédito (TAC), Taxas Administrativas, Avaliação do Bem e Registro." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-lg font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5 text-green-400" }),
+                "Impostos"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "O IOF (Imposto sobre Operações Financeiras) é cobrado pelo governo em toda operação de crédito." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h3", { className: "text-lg font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-purple-400" }),
+                "Seguros"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm", children: "Seguro Prestamista (cobre a dívida em caso de morte/desemprego) e outros seguros embutidos." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como comparar propostas?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsxs("p", { className: "text-gray-400 mb-6", children: [
+              "Nunca compare empréstimos pela taxa de juros nominal ou apenas pelo valor da parcela. Compare sempre pelo ",
+              /* @__PURE__ */ jsx("strong", { children: "CET Anual" }),
+              "."
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-red-500/10 p-6 rounded-2xl border border-red-500/20", children: [
+                /* @__PURE__ */ jsx("h4", { className: "font-bold text-red-400 mb-2", children: "Banco A" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "Anuncia Juros de 1,5% a.m., mas tem muitas taxas." }),
+                /* @__PURE__ */ jsx("p", { className: "text-lg font-bold text-white mt-2", children: "CET Final: 2,8% a.m." })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-green-500/10 p-6 rounded-2xl border border-green-500/20", children: [
+                /* @__PURE__ */ jsx("h4", { className: "font-bold text-green-400 mb-2", children: "Banco B" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "Anuncia Juros de 1,9% a.m., mas tem poucas taxas." }),
+                /* @__PURE__ */ jsx("p", { className: "text-lg font-bold text-white mt-2", children: "CET Final: 2,1% a.m." })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-6 text-sm text-center", children: "Mesmo com a taxa de juros nominal maior, o Banco B é a opção mais barata." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: CET_FAQS,
+            title: "Perguntas Frequentes sobre CET",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const CREDIT_CARD_FAQS = [
+  {
+    question: "O que acontece se eu não pagar nada da fatura?",
+    answer: "Seu cartão é bloqueado, seu nome pode ser incluído nos órgãos de proteção ao crédito (Serasa/SPC) após alguns dias e os juros continuam correndo, acrescidos de multa de 2% e juros de mora de 1% ao mês."
+  },
+  {
+    question: "Posso negociar a dívida do cartão?",
+    answer: "Sim, e deve! Muitas vezes, os bancos oferecem descontos de até 90% para quitar dívidas antigas (que já viraram prejuízo para o banco). Porém, para dívidas recentes, a negociação é mais dura. A melhor saída é trocar a dívida cara do cartão por uma dívida barata (empréstimo consignado ou pessoal)."
+  },
+  {
+    question: "O banco pode parcelar minha fatura sem eu pedir?",
+    answer: 'Sim. Se você pagar o mínimo (ou um valor parcial) por dois meses seguidos, o banco deve, por lei, parcelar o saldo restante em uma linha de crédito com juros "menores" que o rotativo (mas ainda altos).'
+  },
+  {
+    question: "Como sair dessa situação?",
+    answer: "Pare de usar o cartão imediatamente. Use nossa calculadora para ver o tamanho do buraco. Liste bens que pode vender ou busque renda extra. Tente um empréstimo com juros menores para quitar a fatura total à vista."
+  }
+];
+const CreditCardDebtPage = () => {
+  const [invoiceAmount, setInvoiceAmount] = useState(1e3);
+  const [amountPaid, setAmountPaid] = useState(0);
+  const [interestRate, setInterestRate] = useState(15);
+  const [months, setMonths] = useState(12);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateDebt();
+  }, [invoiceAmount, amountPaid, interestRate, months]);
+  const calculateDebt = () => {
+    const initialDebt = invoiceAmount - amountPaid;
+    if (initialDebt <= 0) {
+      setResult(null);
+      return;
+    }
+    const monthlyRate = interestRate / 100;
+    const finalDebt = initialDebt * Math.pow(1 + monthlyRate, months);
+    const totalInterest = finalDebt - initialDebt;
+    setResult({
+      initialDebt,
+      finalDebt,
+      totalInterest,
+      growthMultiplier: finalDebt / initialDebt
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Dívida de Cartão de Crédito",
+    "description": "Simule o crescimento da sua dívida com os juros rotativos do cartão de crédito.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Dívida de Cartão de Crédito - Juros Rotativos",
+        description: "Pagou o mínimo da fatura? Veja o tamanho do prejuízo. Simule o crescimento da sua dívida com os juros rotativos do cartão de crédito (Efeito Bola de Neve).",
+        canonical: "/calculadoras/divida-cartao-credito"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": CREDIT_CARD_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-red-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Dívida de Cartão", href: "/calculadoras/divida-cartao-credito" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(CreditCard, { className: "w-4 h-4 text-red-400" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Alerta de Juros Altos" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-orange-400", children: "Dívida de Cartão" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: 'Entrou no rotativo? Simule o "Efeito Bola de Neve" e descubra quanto sua dívida vai crescer se você não quitar o valor total da fatura.' })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Simular Dívida"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor Total da Fatura (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: invoiceAmount,
+                          onChange: (e) => setInvoiceAmount(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-red-500/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Valor que você vai pagar (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: amountPaid,
+                          onChange: (e) => setAmountPaid(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-red-500/50 transition-colors"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Se pagar 0, a dívida será total. Se pagar o mínimo, a dívida será o restante." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Juros Rotativo (% a.m.)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            step: "0.1",
+                            value: interestRate,
+                            onChange: (e) => setInterestRate(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-red-500/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Projeção (Meses)" }),
+                      /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                        /* @__PURE__ */ jsx(Calendar, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                        /* @__PURE__ */ jsx(
+                          "input",
+                          {
+                            type: "number",
+                            value: months,
+                            onChange: (e) => setMonths(Number(e.target.value)),
+                            className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-red-500/50 transition-colors"
+                          }
+                        )
+                      ] })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-red-500/10 border border-red-500/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertTriangle, { className: "w-6 h-6 text-red-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Perigo!" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 leading-relaxed", children: "O cartão de crédito tem os juros mais altos do mercado. Pagar o mínimo é a forma mais rápida de se endividar." })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-red-500/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "text-center", children: [
+                      /* @__PURE__ */ jsxs("h2", { className: "text-lg font-medium text-gray-400 mb-2 uppercase tracking-widest", children: [
+                        "Sua Dívida em ",
+                        months,
+                        " Meses"
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "text-5xl md:text-6xl font-bold text-red-500 mb-4", children: formatCurrency(result.finalDebt) }),
+                      /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-500", children: [
+                        "A dívida cresceu ",
+                        /* @__PURE__ */ jsxs("strong", { className: "text-white", children: [
+                          result.growthMultiplier.toFixed(1),
+                          "x"
+                        ] }),
+                        " o valor original."
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                      /* @__PURE__ */ jsx("div", { className: "flex items-center justify-between mb-4", children: /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                        /* @__PURE__ */ jsx(TrendingUp, { className: "w-6 h-6 text-red-400" }),
+                        /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "Juros Acumulados" })
+                      ] }) }),
+                      /* @__PURE__ */ jsx("div", { className: "text-3xl font-bold text-white mb-2", children: formatCurrency(result.totalInterest) }),
+                      /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Isso é apenas dinheiro jogado fora em juros." })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Dívida Inicial (Hoje)" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.initialDebt) })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-white/5 rounded-full h-1" }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-sm", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Dívida Final (Projeção)" }),
+                        /* @__PURE__ */ jsx("span", { className: "text-red-400 font-bold", children: formatCurrency(result.finalDebt) })
+                      ] })
+                    ] })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(CreditCard, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para ver o estrago" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Perigo dos Juros Rotativos" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsxs("p", { className: "mb-4", children: [
+              "O cartão de crédito é o maior vilão do endividamento no Brasil. Isso acontece por causa dos ",
+              /* @__PURE__ */ jsx("strong", { children: "Juros do Rotativo" }),
+              ', a linha de crédito mais cara do mercado, que é acionada automaticamente quando você paga qualquer valor entre o "Mínimo" e o "Total" da fatura.'
+            ] }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Com taxas que frequentemente ultrapassam 400% ao ano, uma dívida pequena pode duplicar ou triplicar em questão de meses. Nossa calculadora projeta esse crescimento assustador para te ajudar a tomar a decisão certa: cortar gastos e quitar tudo o quanto antes." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: 'O Que é o "Efeito Bola de Neve"?' }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "É o poder dos juros compostos trabalhando contra você." }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 p-4 bg-white/5 rounded-xl", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-white", children: "1" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white", children: "Mês 1" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Você deixa de pagar R$ 1.000." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 p-4 bg-white/5 rounded-xl", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-white", children: "2" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white", children: "Mês 2" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Com juros de 15% a.m., a dívida vira R$ 1.150." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 p-4 bg-white/5 rounded-xl", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-white/10 flex items-center justify-center font-bold text-white", children: "3" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white", children: "Mês 3" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Os juros incidem sobre os R$ 1.150. A dívida pula para R$ 1.322." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl", children: [
+                /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center font-bold text-red-500", children: "12" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-red-400", children: "Mês 12" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+                    "Aqueles R$ 1.000 iniciais se transformaram em ",
+                    /* @__PURE__ */ jsx("strong", { children: "R$ 5.350" }),
+                    "."
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "A Armadilha do Pagamento Mínimo" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Empréstimo Pessoal" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                "Juros médios de ",
+                /* @__PURE__ */ jsx("strong", { children: "2% a 5%" }),
+                " ao mês."
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Cheque Especial" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                "Juros médios de ",
+                /* @__PURE__ */ jsx("strong", { children: "8% a 12%" }),
+                " ao mês."
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-red-500/10 p-6 rounded-2xl border border-red-500/20", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-red-400 mb-2", children: "Cartão (Rotativo)" }),
+              /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+                "Juros médios de ",
+                /* @__PURE__ */ jsx("strong", { children: "12% a 18%" }),
+                " ao mês."
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("p", { className: "text-gray-400 mt-6 text-center", children: [
+            /* @__PURE__ */ jsx("strong", { children: "Conclusão:" }),
+            " Vale mais a pena pegar um empréstimo pessoal (mais barato) para quitar o cartão à vista do que entrar no rotativo."
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: CREDIT_CARD_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const MEI_FAQS = [
+  {
+    question: "O que acontece se eu não pagar a DAS?",
+    answer: "Além de correr juros e multa, o tempo de inadimplência não conta para sua aposentadoria. Se a dívida persistir, seu CNPJ pode ser cancelado e a dívida transferida para o seu CPF (Dívida Ativa da União), sujando seu nome."
+  },
+  {
+    question: "Preciso pagar DAS mesmo sem faturar?",
+    answer: "Sim! A DAS é devida mensalmente, mesmo que você não tenha emitido nenhuma nota fiscal ou não tenha tido nenhum cliente no mês. O valor serve para manter sua qualidade de segurado no INSS."
+  },
+  {
+    question: "Posso pagar todas as DAS de uma vez?",
+    answer: "Sim, você pode gerar as guias do ano todo pelo Portal do Empreendedor e já deixar pago. Porém, lembre-se que o valor pode sofrer reajuste em janeiro devido ao aumento do salário mínimo."
+  },
+  {
+    question: "Estourei o limite de faturamento, e agora?",
+    answer: "Até 20% (R$ 97.200): Você paga uma DAS complementar sobre o excesso e vira Microempresa (ME) no ano seguinte. Acima de 20%: Você é desenquadrado retroativamente desde janeiro (ou da data de abertura), tendo que pagar impostos como ME sobre tudo o que faturou no ano."
+  }
+];
+const MEIDasPage = () => {
+  const [activity, setActivity] = useState("servicos");
+  const [monthsActive, setMonthsActive] = useState(12);
+  const [annualBilling, setAnnualBilling] = useState(0);
+  const [result, setResult] = useState(null);
+  const MINIMUM_WAGE_2025 = 1509;
+  const MONTHLY_LIMIT = 6750;
+  useEffect(() => {
+    calculateDAS();
+  }, [activity, monthsActive, annualBilling]);
+  const calculateDAS = () => {
+    let inssRate = 0.05;
+    let icms = 0;
+    let iss = 0;
+    if (activity === "caminhoneiro") {
+      inssRate = 0.12;
+    }
+    if (activity === "comercio") {
+      icms = 1;
+    } else if (activity === "servicos") {
+      iss = 5;
+    } else if (activity === "comercio_servicos") {
+      icms = 1;
+      iss = 5;
+    } else if (activity === "caminhoneiro") {
+      icms = 1;
+      iss = 5;
+      icms = 1;
+      iss = 5;
+    }
+    const inssValue = MINIMUM_WAGE_2025 * inssRate;
+    const totalDas = inssValue + icms + iss;
+    const proportionalLimit = monthsActive * MONTHLY_LIMIT;
+    const limitStatus = annualBilling > proportionalLimit ? "exceeded" : annualBilling > proportionalLimit * 0.8 ? "warning" : "safe";
+    const excessAmount = Math.max(0, annualBilling - proportionalLimit);
+    setResult({
+      inssValue,
+      icms,
+      iss,
+      totalDas,
+      proportionalLimit,
+      limitStatus,
+      excessAmount
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora DAS MEI 2025",
+    "description": "Calcule o valor da guia DAS MEI 2025 e verifique seu limite de faturamento.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora DAS MEI 2025 - Valor Atualizado e Limite Anual",
+        description: "Quanto o MEI paga de imposto hoje? Calcule o valor da guia DAS 2025 e verifique se você está dentro do limite de faturamento de R$ 81 mil.",
+        canonical: "/calculadoras/das-mei"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": MEI_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-green-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Imposto MEI (DAS)", href: "/calculadoras/das-mei" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(Building2, { className: "w-4 h-4 text-blue-400" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Empreendedorismo" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400", children: "DAS MEI 2025" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Mantenha seu CNPJ regular. Calcule o valor atualizado da sua guia DAS e monitore o limite de faturamento anual." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Dados do seu MEI"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Atividade Principal" }),
+                    /* @__PURE__ */ jsxs(
+                      "select",
+                      {
+                        value: activity,
+                        onChange: (e) => setActivity(e.target.value),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                        children: [
+                          /* @__PURE__ */ jsx("option", { value: "servicos", children: "Prestação de Serviços" }),
+                          /* @__PURE__ */ jsx("option", { value: "comercio", children: "Comércio ou Indústria" }),
+                          /* @__PURE__ */ jsx("option", { value: "comercio_servicos", children: "Comércio e Serviços (Misto)" }),
+                          /* @__PURE__ */ jsx("option", { value: "caminhoneiro", children: "MEI Caminhoneiro" })
+                        ]
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Meses de Atividade em 2025" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(Calendar, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          min: "1",
+                          max: "12",
+                          value: monthsActive,
+                          onChange: (e) => setMonthsActive(Math.min(12, Math.max(1, Number(e.target.value)))),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Se abriu a empresa este ano, coloque quantos meses ela existirá até Dezembro." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Faturamento Acumulado no Ano (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: annualBilling,
+                          onChange: (e) => setAnnualBilling(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
+                        }
+                      )
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-blue-500/10 border border-blue-500/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 text-blue-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Dica de Ouro" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300 leading-relaxed", children: [
+                    "O limite anual é de R$ 81.000,00, mas ele é ",
+                    /* @__PURE__ */ jsx("strong", { children: "proporcional" }),
+                    ". Se você abriu o MEI na metade do ano, seu limite é menor!"
+                  ] })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-blue-500/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsx("h3", { className: "text-sm font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Valor da DAS Mensal" }),
+                        /* @__PURE__ */ jsx("div", { className: "text-4xl font-bold text-white mb-2", children: formatCurrency(result.totalDas) }),
+                        /* @__PURE__ */ jsxs("div", { className: "space-y-1 mt-4 text-sm text-gray-400", children: [
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between", children: [
+                            /* @__PURE__ */ jsxs("span", { children: [
+                              "INSS (",
+                              activity === "caminhoneiro" ? "12%" : "5%",
+                              "):"
+                            ] }),
+                            /* @__PURE__ */ jsx("span", { children: formatCurrency(result.inssValue) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between", children: [
+                            /* @__PURE__ */ jsx("span", { children: "ICMS:" }),
+                            /* @__PURE__ */ jsx("span", { children: formatCurrency(result.icms) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between", children: [
+                            /* @__PURE__ */ jsx("span", { children: "ISS:" }),
+                            /* @__PURE__ */ jsx("span", { children: formatCurrency(result.iss) })
+                          ] })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: `rounded-2xl p-6 border ${result.limitStatus === "exceeded" ? "bg-red-500/10 border-red-500/20" : result.limitStatus === "warning" ? "bg-yellow-500/10 border-yellow-500/20" : "bg-green-500/10 border-green-500/20"}`, children: [
+                        /* @__PURE__ */ jsxs("h3", { className: "text-sm font-medium mb-2 uppercase tracking-widest flex items-center gap-2", children: [
+                          "Status do Faturamento",
+                          result.limitStatus === "exceeded" && /* @__PURE__ */ jsx(AlertTriangle, { className: "w-4 h-4 text-red-500" }),
+                          result.limitStatus === "warning" && /* @__PURE__ */ jsx(AlertTriangle, { className: "w-4 h-4 text-yellow-500" }),
+                          result.limitStatus === "safe" && /* @__PURE__ */ jsx(CheckCircle2, { className: "w-4 h-4 text-green-500" })
+                        ] }),
+                        /* @__PURE__ */ jsx("div", { className: `text-2xl font-bold mb-2 ${result.limitStatus === "exceeded" ? "text-red-500" : result.limitStatus === "warning" ? "text-yellow-500" : "text-green-500"}`, children: result.limitStatus === "exceeded" ? "Limite Estourado" : result.limitStatus === "warning" ? "Atenção!" : "Dentro do Limite" }),
+                        /* @__PURE__ */ jsxs("p", { className: "text-sm opacity-80", children: [
+                          "Seu limite proporcional é ",
+                          /* @__PURE__ */ jsx("strong", { children: formatCurrency(result.proportionalLimit) }),
+                          "."
+                        ] }),
+                        result.limitStatus === "exceeded" && /* @__PURE__ */ jsxs("p", { className: "text-sm text-red-400 mt-2 font-bold", children: [
+                          "Você excedeu ",
+                          formatCurrency(result.excessAmount),
+                          ". Cuidado com o desenquadramento!"
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-4", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                          /* @__PURE__ */ jsx(TrendingUp, { className: "w-6 h-6 text-blue-400" }),
+                          /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white", children: "Progresso do Limite" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("span", { className: "text-sm text-gray-400", children: [
+                          (annualBilling / result.proportionalLimit * 100).toFixed(1),
+                          "% utilizado"
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "w-full bg-black/50 rounded-full h-4 overflow-hidden mb-2", children: /* @__PURE__ */ jsx(
+                        motion.div,
+                        {
+                          className: `h-full rounded-full ${result.limitStatus === "exceeded" ? "bg-red-500" : result.limitStatus === "warning" ? "bg-yellow-500" : "bg-blue-500"}`,
+                          initial: { width: 0 },
+                          animate: { width: `${Math.min(100, annualBilling / result.proportionalLimit * 100)}%` },
+                          transition: { duration: 1 }
+                        }
+                      ) }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-xs text-gray-500", children: [
+                        /* @__PURE__ */ jsx("span", { children: "R$ 0" }),
+                        /* @__PURE__ */ jsx("span", { children: formatCurrency(result.proportionalLimit) })
+                      ] })
+                    ] })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(Building2, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para calcular" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Quanto o MEI paga de imposto em 2025?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Uma das maiores vantagens de ser Microempreendedor Individual (MEI) é a simplicidade tributária. Você não paga impostos sobre cada nota fiscal emitida. Em vez disso, paga um valor fixo mensal através da DAS (Documento de Arrecadação do Simples Nacional)." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Esse valor é reajustado anualmente com base no Salário Mínimo. Para 2025, o cálculo segue a regra de 5% do salário mínimo para a previdência social, somado a pequenas taxas fixas de ICMS e ISS, dependendo da sua atividade." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Composição da DAS Mensal" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "O valor que você paga todo mês cobre sua aposentadoria e impostos estaduais/municipais. Veja como é formado:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "INSS (Previdência):" }),
+                  " 5% do Salário Mínimo vigente. É o que garante sua aposentadoria, auxílio-doença e salário-maternidade."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Caminhoneiro MEI:" }),
+                  " A alíquota é diferenciada (12% do salário mínimo)."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "ICMS (Comércio e Indústria):" }),
+                  " Valor fixo de R$ 1,00."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "ISS (Serviços):" }),
+                  " Valor fixo de R$ 5,00."
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "mt-6 p-4 bg-blue-500/10 rounded-xl border border-blue-500/20", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+              /* @__PURE__ */ jsx("strong", { children: "💡 Exemplo Prático:" }),
+              " Se você é um prestador de serviços (ex: designer, pedreiro), sua DAS será a soma do INSS + R$ 5,00. Se você vende produtos (ex: loja de roupas), será INSS + R$ 1,00."
+            ] }) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Cuidado com o Limite de Faturamento!" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Limite Anual" }),
+              /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-blue-400", children: "R$ 81.000,00" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Média Mensal" }),
+              /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-green-400", children: "R$ 6.750,00" })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-6 p-6 bg-yellow-500/10 rounded-2xl border border-yellow-500/20", children: [
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-yellow-500 mb-2", children: "⚠️ Atenção à Proporcionalidade" }),
+            /* @__PURE__ */ jsx("p", { className: "text-gray-300 mb-4", children: "Se você abriu o MEI no meio do ano, seu limite não é R$ 81 mil. O limite é proporcional aos meses de existência da empresa." }),
+            /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+              /* @__PURE__ */ jsx("strong", { children: "Exemplo:" }),
+              " Abriu em Junho? Você tem 7 meses de operação. Limite = 7 x R$ 6.750 = ",
+              /* @__PURE__ */ jsx("strong", { children: "R$ 47.250,00" }),
+              "."
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: MEI_FAQS,
+            title: "Dúvidas Frequentes do MEI",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const MARKUP_FAQS = [
+  {
+    question: "O que é Markup?",
+    answer: "Markup é um índice multiplicador aplicado sobre o custo de um produto para definir seu preço de venda. Ele serve para cobrir todas as despesas (fixas e variáveis) e ainda garantir a margem de lucro desejada."
+  },
+  {
+    question: "Qual a diferença entre Markup e Margem de Lucro?",
+    answer: "A Margem de Lucro é a porcentagem do preço final que sobra para você (Lucro ÷ Preço Venda). O Markup é a porcentagem que você adiciona ao custo para formar o preço. Eles são matematicamente conectados, mas são números diferentes."
+  },
+  {
+    question: "Como calcular o preço de venda correto?",
+    answer: "A fórmula básica do Markup Divisor é: Preço de Venda = Custo / (1 - (%Despesas Variáveis + %Despesas Fixas + %Lucro)). Parece complexo, mas nossa calculadora faz essa conta automaticamente."
+  },
+  {
+    question: "Existe um Markup ideal?",
+    answer: "Não existe um número mágico. O Markup ideal depende do seu nicho. Restaurantes costumam ter markups altos (200% a 300%) para cobrir perdas e mão de obra intensiva, enquanto revendas de eletrônicos trabalham com markups menores e ganham na quantidade (giro rápido)."
+  }
+];
+const MarkupPage = () => {
+  const [costPrice, setCostPrice] = useState(0);
+  const [fixedExpenses, setFixedExpenses] = useState(0);
+  const [variableExpenses, setVariableExpenses] = useState(0);
+  const [profitMargin, setProfitMargin] = useState(0);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateMarkup();
+  }, [costPrice, fixedExpenses, variableExpenses, profitMargin]);
+  const calculateMarkup = () => {
+    const totalPercentage = fixedExpenses + variableExpenses + profitMargin;
+    if (totalPercentage >= 100) {
+      setResult({ error: "A soma das porcentagens não pode ser igual ou maior que 100%." });
+      return;
+    }
+    if (costPrice <= 0) {
+      setResult(null);
+      return;
+    }
+    const divisor = 1 - totalPercentage / 100;
+    const sellingPrice = costPrice / divisor;
+    const grossProfit = sellingPrice - costPrice;
+    const netProfit = sellingPrice * (profitMargin / 100);
+    const markupMultiplier = sellingPrice / costPrice;
+    const fixedValue = sellingPrice * (fixedExpenses / 100);
+    const variableValue = sellingPrice * (variableExpenses / 100);
+    setResult({
+      sellingPrice,
+      markupMultiplier,
+      grossProfit,
+      netProfit,
+      fixedValue,
+      variableValue,
+      totalPercentage
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Markup",
+    "description": "Calcule o preço de venda ideal para seus produtos usando Markup.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Markup - Como Precificar Produtos Corretamente",
+        description: "Pare de ter prejuízo. Aprenda a calcular o preço de venda ideal usando Markup. Cubra custos fixos, variáveis e garanta sua margem de lucro real.",
+        canonical: "/calculadoras/markup"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": MARKUP_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-purple-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-pink-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Calculadora de Markup", href: "/calculadoras/markup" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(Tag, { className: "w-4 h-4 text-purple-400" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Precificação Inteligente" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400", children: "Markup" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Você está pagando para trabalhar? Descubra o preço de venda exato para cobrir seus custos e colocar lucro de verdade no bolso." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Composição do Preço"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Custo do Produto (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: costPrice,
+                          onChange: (e) => setCostPrice(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                          placeholder: "Ex: 50.00"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Quanto você pagou pelo produto ou matéria-prima." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Despesas Fixas (%)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: fixedExpenses,
+                          onChange: (e) => setFixedExpenses(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                          placeholder: "Ex: 15"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Aluguel, salários, internet, etc." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Despesas Variáveis (%)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: variableExpenses,
+                          onChange: (e) => setVariableExpenses(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                          placeholder: "Ex: 10 (Impostos, Taxas, Comissão)"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Margem de Lucro Desejada (%)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(Percent$1, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: profitMargin,
+                          onChange: (e) => setProfitMargin(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                          placeholder: "Ex: 20"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Quanto você quer que sobre limpo no bolso." })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-yellow-500/10 border border-yellow-500/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertTriangle, { className: "w-6 h-6 text-yellow-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Cuidado com a Taxa da Maquininha!" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300 leading-relaxed", children: [
+                    "Não esqueça de incluir a taxa do cartão nas ",
+                    /* @__PURE__ */ jsx("strong", { children: "Despesas Variáveis" }),
+                    ". Se sua margem é apertada, essa taxa pode comer todo o seu lucro."
+                  ] })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-purple-500/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result && !result.error ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-8 border border-white/5 text-center", children: [
+                      /* @__PURE__ */ jsx("h3", { className: "text-sm font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Preço de Venda Sugerido" }),
+                      /* @__PURE__ */ jsx("div", { className: "text-5xl font-bold text-white mb-4", children: formatCurrency(result.sellingPrice) }),
+                      /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 text-sm font-bold", children: [
+                        "Markup: ",
+                        result.markupMultiplier.toFixed(2),
+                        "x"
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsxs("h3", { className: "text-sm font-medium text-gray-400 mb-4 uppercase tracking-widest flex items-center gap-2", children: [
+                          /* @__PURE__ */ jsx(TrendingUp, { className: "w-4 h-4 text-green-400" }),
+                          "Lucro Real"
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Lucro Bruto:" }),
+                            /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.grossProfit) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Lucro Líquido:" }),
+                            /* @__PURE__ */ jsx("span", { className: "text-green-400 font-bold", children: formatCurrency(result.netProfit) })
+                          ] })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsxs("h3", { className: "text-sm font-medium text-gray-400 mb-4 uppercase tracking-widest flex items-center gap-2", children: [
+                          /* @__PURE__ */ jsx(AlertCircle, { className: "w-4 h-4 text-red-400" }),
+                          "Para onde vai o dinheiro?"
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Custo Produto:" }),
+                            /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(costPrice) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Despesas Fixas:" }),
+                            /* @__PURE__ */ jsx("span", { className: "text-red-400 font-bold", children: formatCurrency(result.fixedValue) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Despesas Variáveis:" }),
+                            /* @__PURE__ */ jsx("span", { className: "text-red-400 font-bold", children: formatCurrency(result.variableValue) })
+                          ] })
+                        ] })
+                      ] })
+                    ] })
+                  ]
+                }
+              ) : (result == null ? void 0 : result.error) ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12", children: [
+                /* @__PURE__ */ jsx(AlertTriangle, { className: "w-16 h-16 text-red-500 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-red-400 text-lg text-center font-bold", children: result.error }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-500 text-center mt-2", children: "Reduza as porcentagens para que a soma seja menor que 100%." })
+              ] }) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(Tag, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para calcular o preço ideal" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Por que calcular o Markup é vital?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: 'Muitos empreendedores definem o preço "de cabeça", copiando a concorrência ou apenas multiplicando o custo por 2. O resultado? Prejuízo invisível.' }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "O Markup é a ferramenta técnica que garante que cada centavo que sai da sua empresa (impostos, luz, taxas de cartão, comissões) seja pago pelo cliente final na hora da venda. Se o preço estiver errado, quanto mais você vende, mais prejuízo você toma." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Os 3 Pilares do Preço" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Custo Direto" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Quanto você pagou pelo produto, embalagem ou matéria-prima." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Despesas Variáveis" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Gastos atrelados à venda (Impostos, Taxa de Cartão, Comissão, Frete)." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Despesas Fixas" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'O "custo de existir" (Aluguel, Internet, Pró-labore, Salários).' })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O Erro Clássico: Markup vs. Margem" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Essa é a casca de banana onde 90% dos iniciantes escorregam. Imagine que você comprou uma camisa por R$ 50,00 e quer ter 50% de lucro." }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8", children: [
+              /* @__PURE__ */ jsxs("div", { className: "p-6 bg-red-500/10 rounded-2xl border border-red-500/20", children: [
+                /* @__PURE__ */ jsxs("h4", { className: "text-red-400 font-bold mb-2 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(AlertCircle, { className: "w-4 h-4" }),
+                  " O Jeito Errado"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 mb-2", children: "Calcular 50% de R$ 50 (R$ 25) e vender por R$ 75,00." }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-red-300 font-bold", children: "Problema: R$ 25 representa apenas 33% de R$ 75. Sua margem real caiu!" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "p-6 bg-green-500/10 rounded-2xl border border-green-500/20", children: [
+                /* @__PURE__ */ jsxs("h4", { className: "text-green-400 font-bold mb-2 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-4 h-4" }),
+                  " O Jeito Certo (Markup)"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 mb-2", children: "Aplicar o Markup correto. O preço de venda deve ser R$ 100,00." }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-green-300 font-bold", children: "Prova: Vendeu por 100 → Tira 50 (custo) → Sobra 50 (Lucro). Agora sim, 50%!" })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: MARKUP_FAQS,
+            title: "Perguntas Frequentes sobre Precificação",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const BREAK_EVEN_FAQS = [
+  {
+    question: "O que é Margem de Contribuição?",
+    answer: "É o lucro bruto de cada produto. Se você vende uma camisa por R$ 100 e ela custou R$ 60 (tecido + impostos), sua margem de contribuição é R$ 40. São esses R$ 40 que vão ajudar a pagar a luz e o aluguel da loja."
+  },
+  {
+    question: "O Ponto de Equilíbrio inclui meu lucro desejado?",
+    answer: 'O cálculo padrão mostra onde o lucro é zero. Mas você pode adicionar uma "Meta de Lucro" aos seus custos fixos na calculadora. Assim, você descobre quanto precisa vender para pagar tudo E ainda sobrar aquele valor no bolso.'
+  },
+  {
+    question: "Por que meu Ponto de Equilíbrio está tão alto?",
+    answer: "Geralmente é sinal de Custos Fixos inchados (aluguel caro, equipe ociosa) ou Margem baixa demais (preço errado). A calculadora funciona como um diagnóstico de saúde da empresa."
+  },
+  {
+    question: "Com que frequência devo calcular?",
+    answer: "Idealmente, todo mês. Se o aluguel subiu ou o fornecedor aumentou o preço, seu Ponto de Equilíbrio mudou. O empresário que não atualiza esse número está dirigindo no escuro."
+  }
+];
+const BreakEvenPage = () => {
+  const [fixedCosts, setFixedCosts] = useState(0);
+  const [sellingPrice, setSellingPrice] = useState(0);
+  const [variableCosts, setVariableCosts] = useState(0);
+  const [desiredProfit, setDesiredProfit] = useState(0);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateBreakEven();
+  }, [fixedCosts, sellingPrice, variableCosts, desiredProfit]);
+  const calculateBreakEven = () => {
+    if (sellingPrice <= 0 || variableCosts >= sellingPrice) {
+      setResult({ error: "O Preço de Venda deve ser maior que o Custo Variável." });
+      return;
+    }
+    const contributionMarginUnit = sellingPrice - variableCosts;
+    const contributionMarginPercent = contributionMarginUnit / sellingPrice;
+    const totalTarget = fixedCosts + desiredProfit;
+    const breakEvenUnits = totalTarget / contributionMarginUnit;
+    const breakEvenRevenue = totalTarget / contributionMarginPercent;
+    setResult({
+      contributionMarginUnit,
+      contributionMarginPercent,
+      breakEvenUnits,
+      breakEvenRevenue,
+      totalTarget
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const formatNumber = (val) => {
+    return new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora de Ponto de Equilíbrio",
+    "description": "Descubra quanto sua empresa precisa vender para cobrir custos e começar a lucrar.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Ponto de Equilíbrio - Break-Even Point Online",
+        description: "Quanto sua empresa precisa vender para começar a lucrar? Calcule o Ponto de Equilíbrio (Break-Even) financeiro e descubra sua meta mínima de vendas.",
+        canonical: "/calculadoras/ponto-de-equilibrio"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": BREAK_EVEN_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Ponto de Equilíbrio", href: "/calculadoras/ponto-de-equilibrio" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(Scale, { className: "w-4 h-4 text-cyan-400" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Gestão Financeira" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Calculadora de ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400", children: "Ponto de Equilíbrio" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Sua empresa está no vermelho ou no azul? Descubra exatamente quanto você precisa vender para cobrir todos os custos e começar a lucrar de verdade." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                "Dados do Negócio"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Custos Fixos Mensais (R$)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "number",
+                        value: fixedCosts,
+                        onChange: (e) => setFixedCosts(Number(e.target.value)),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                        placeholder: "Ex: 10000"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Aluguel, salários, internet, etc." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Preço de Venda Unitário (R$)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "number",
+                        value: sellingPrice,
+                        onChange: (e) => setSellingPrice(Number(e.target.value)),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                        placeholder: "Ex: 100"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Custo Variável Unitário (R$)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "number",
+                        value: variableCosts,
+                        onChange: (e) => setVariableCosts(Number(e.target.value)),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                        placeholder: "Ex: 60"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Matéria-prima, impostos, comissão." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Meta de Lucro (Opcional)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx(Target, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "number",
+                        value: desiredProfit,
+                        onChange: (e) => setDesiredProfit(Number(e.target.value)),
+                        className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                        placeholder: "Ex: 5000"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Quanto você quer lucrar além de pagar as contas." })
+                ] })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result && !result.error ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsx("h3", { className: "text-sm font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Faturamento Necessário" }),
+                        /* @__PURE__ */ jsx("div", { className: "text-3xl font-bold text-white mb-2", children: formatCurrency(result.breakEvenRevenue) }),
+                        /* @__PURE__ */ jsxs("p", { className: "text-sm text-cyan-400 font-medium", children: [
+                          "Para cobrir custos ",
+                          desiredProfit > 0 ? "+ lucro" : ""
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                        /* @__PURE__ */ jsx("h3", { className: "text-sm font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Vendas Necessárias" }),
+                        /* @__PURE__ */ jsxs("div", { className: "text-3xl font-bold text-white mb-2", children: [
+                          formatNumber(Math.ceil(result.breakEvenUnits)),
+                          " ",
+                          /* @__PURE__ */ jsx("span", { className: "text-lg text-gray-500", children: "unidades" })
+                        ] }),
+                        /* @__PURE__ */ jsx("p", { className: "text-sm text-indigo-400 font-medium", children: "Meta de vendas mensal" })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                      /* @__PURE__ */ jsxs("h3", { className: "text-sm font-medium text-gray-400 mb-4 uppercase tracking-widest flex items-center gap-2", children: [
+                        /* @__PURE__ */ jsx(TrendingUp, { className: "w-4 h-4 text-green-400" }),
+                        "Análise de Margem"
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                        /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center p-3 bg-white/5 rounded-xl", children: [
+                          /* @__PURE__ */ jsx("span", { className: "text-gray-300", children: "Margem de Contribuição Unitária" }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.contributionMarginUnit) })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center p-3 bg-white/5 rounded-xl", children: [
+                          /* @__PURE__ */ jsx("span", { className: "text-gray-300", children: "Margem de Contribuição (%)" }),
+                          /* @__PURE__ */ jsxs("span", { className: "text-white font-bold", children: [
+                            (result.contributionMarginPercent * 100).toFixed(2),
+                            "%"
+                          ] })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsx("div", { className: "mt-4 p-4 bg-blue-500/10 rounded-xl border border-blue-500/20", children: /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+                        /* @__PURE__ */ jsx("strong", { children: "Interpretação:" }),
+                        " Para cada produto vendido, sobram ",
+                        /* @__PURE__ */ jsx("strong", { children: formatCurrency(result.contributionMarginUnit) }),
+                        " para pagar os custos fixos ",
+                        desiredProfit > 0 ? "e gerar lucro" : "",
+                        "."
+                      ] }) })
+                    ] })
+                  ]
+                }
+              ) : (result == null ? void 0 : result.error) ? /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12", children: [
+                /* @__PURE__ */ jsx(AlertTriangle, { className: "w-16 h-16 text-red-500 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-red-400 text-lg text-center font-bold", children: result.error }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-500 text-center mt-2", children: "Aumente o preço ou reduza os custos variáveis." })
+              ] }) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(Scale, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para descobrir seu ponto de equilíbrio" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "O que é o Ponto de Equilíbrio?" }),
+          /* @__PURE__ */ jsxs("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: [
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "O Ponto de Equilíbrio (ou Break-Even Point) é o número mágico onde as Receitas da sua empresa se igualam às Despesas. Nesse ponto, o lucro é zero, mas o prejuízo também é zero." }),
+            /* @__PURE__ */ jsx("p", { className: "mb-4", children: "É a meta mínima de sobrevivência. Cada real vendido acima desse ponto é lucro líquido. Cada real vendido abaixo significa que você está pagando para trabalhar. Saber esse número não é opcional; é a diferença entre uma empresa que cresce e uma que fecha as portas." })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "A Matemática do Lucro" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "1. Custos Fixos" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Contas que chegam todo mês, venda você ou não (Aluguel, salários, internet)." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "2. Custos Variáveis" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Gastos atrelados à venda (Matéria-prima, comissão, impostos)." })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "3. Margem de Contribuição" }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Quanto sobra de cada venda para pagar os custos fixos." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como interpretar o resultado?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "A calculadora vai te dar dois números cruciais:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4 mb-6", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-cyan-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Em Valor (R$):" }),
+                  ' "Preciso faturar R$ 50.000,00 por mês para empatar."'
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-cyan-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Em Quantidade (Unidades):" }),
+                  ' "Preciso vender 500 unidades para empatar."'
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "p-6 bg-red-500/10 rounded-2xl border border-red-500/20", children: [
+              /* @__PURE__ */ jsxs("h4", { className: "text-red-400 font-bold mb-2 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-4 h-4" }),
+                " Alerta Vermelho"
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "Se a sua meta de vendas atual é menor que o Ponto de Equilíbrio, você tem três saídas: Cortar custos fixos, Negociar custos variáveis ou Aumentar o preço." })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: BREAK_EVEN_FAQS,
+            title: "Dúvidas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+const TAX_FAQS = [
+  {
+    question: "O Simples Nacional é sempre mais barato?",
+    answer: "Não! Esse é um mito. Para empresas com faturamento médio (acima de R$ 20k/mês) e poucos funcionários, o Lucro Presumido costuma vencer."
+  },
+  {
+    question: "Quando devo mudar de regime?",
+    answer: "A troca de regime tributário só pode ser feita uma vez por ano, sempre em janeiro. Por isso, é fundamental fazer essa simulação no final do ano para começar o exercício seguinte no modelo mais econômico."
+  },
+  {
+    question: "O que é o Fator R?",
+    answer: "É uma regra do Simples Nacional para empresas de serviços intelectuais. Se a sua folha de pagamento (salários + pró-labore) for igual ou superior a 28% do faturamento, você sai do Anexo V (caro) e vai para o Anexo III (barato). Nossa calculadora faz essa verificação automática."
+  },
+  {
+    question: "Empresas com muitos funcionários pagam menos no Simples?",
+    answer: "Geralmente sim. No Simples Nacional, a empresa não paga os 20% de INSS Patronal sobre a folha de salários, o que gera uma economia gigante para quem tem equipe grande."
+  }
+];
+const SimplesVsPresumidoPage = () => {
+  const [monthlyBilling, setMonthlyBilling] = useState(0);
+  const [monthlyPayroll, setMonthlyPayroll] = useState(0);
+  const [activity, setActivity] = useState("servicos");
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    calculateTaxComparison();
+  }, [monthlyBilling, monthlyPayroll, activity]);
+  const calculateTaxComparison = () => {
+    if (monthlyBilling <= 0) {
+      setResult(null);
+      return;
+    }
+    const annualBilling = monthlyBilling * 12;
+    let aliquotaNominal = 0;
+    let deducao = 0;
+    let effectiveAnexo = "";
+    if (activity === "comercio") {
+      effectiveAnexo = "Anexo I";
+      if (annualBilling <= 18e4) {
+        aliquotaNominal = 0.04;
+        deducao = 0;
+      } else if (annualBilling <= 36e4) {
+        aliquotaNominal = 0.073;
+        deducao = 5940;
+      } else if (annualBilling <= 72e4) {
+        aliquotaNominal = 0.095;
+        deducao = 13860;
+      } else if (annualBilling <= 18e5) {
+        aliquotaNominal = 0.107;
+        deducao = 22500;
+      } else if (annualBilling <= 36e5) {
+        aliquotaNominal = 0.143;
+        deducao = 87300;
+      } else {
+        aliquotaNominal = 0.19;
+        deducao = 378e3;
+      }
+    } else if (activity === "industria") {
+      effectiveAnexo = "Anexo II";
+      if (annualBilling <= 18e4) {
+        aliquotaNominal = 0.045;
+        deducao = 0;
+      } else if (annualBilling <= 36e4) {
+        aliquotaNominal = 0.078;
+        deducao = 5940;
+      } else if (annualBilling <= 72e4) {
+        aliquotaNominal = 0.1;
+        deducao = 13860;
+      } else if (annualBilling <= 18e5) {
+        aliquotaNominal = 0.112;
+        deducao = 22500;
+      } else if (annualBilling <= 36e5) {
+        aliquotaNominal = 0.147;
+        deducao = 85500;
+      } else {
+        aliquotaNominal = 0.3;
+        deducao = 72e4;
+      }
+    } else {
+      const fatorR = monthlyPayroll / monthlyBilling;
+      if (fatorR >= 0.28) {
+        effectiveAnexo = "Anexo III (Fator R)";
+        if (annualBilling <= 18e4) {
+          aliquotaNominal = 0.06;
+          deducao = 0;
+        } else if (annualBilling <= 36e4) {
+          aliquotaNominal = 0.112;
+          deducao = 9360;
+        } else if (annualBilling <= 72e4) {
+          aliquotaNominal = 0.135;
+          deducao = 17640;
+        } else if (annualBilling <= 18e5) {
+          aliquotaNominal = 0.16;
+          deducao = 35640;
+        } else if (annualBilling <= 36e5) {
+          aliquotaNominal = 0.21;
+          deducao = 125640;
+        } else {
+          aliquotaNominal = 0.33;
+          deducao = 648e3;
+        }
+      } else {
+        effectiveAnexo = "Anexo V";
+        if (annualBilling <= 18e4) {
+          aliquotaNominal = 0.155;
+          deducao = 0;
+        } else if (annualBilling <= 36e4) {
+          aliquotaNominal = 0.18;
+          deducao = 4500;
+        } else if (annualBilling <= 72e4) {
+          aliquotaNominal = 0.195;
+          deducao = 9900;
+        } else if (annualBilling <= 18e5) {
+          aliquotaNominal = 0.205;
+          deducao = 17100;
+        } else if (annualBilling <= 36e5) {
+          aliquotaNominal = 0.23;
+          deducao = 62100;
+        } else {
+          aliquotaNominal = 0.305;
+          deducao = 54e4;
+        }
+      }
+    }
+    const effectiveRateSimples = (annualBilling * aliquotaNominal - deducao) / annualBilling;
+    const simplesTax = monthlyBilling * effectiveRateSimples;
+    const pis = monthlyBilling * 65e-4;
+    const cofins = monthlyBilling * 0.03;
+    let presumedProfitRate = activity === "servicos" ? 0.32 : 0.08;
+    const presumedProfit = monthlyBilling * presumedProfitRate;
+    const irpj = presumedProfit * 0.15;
+    const irpjSurcharge = presumedProfit > 2e4 ? (presumedProfit - 2e4) * 0.1 : 0;
+    const csllBaseRate = activity === "servicos" ? 0.32 : 0.12;
+    const csll = monthlyBilling * csllBaseRate * 0.09;
+    let localTax = 0;
+    if (activity === "servicos") {
+      localTax = monthlyBilling * 0.05;
+    } else {
+      localTax = monthlyBilling * 0.18;
+    }
+    const inssPatronal = monthlyPayroll * 0.2;
+    const presumidoTax = pis + cofins + irpj + irpjSurcharge + csll + localTax + inssPatronal;
+    const difference = Math.abs(simplesTax - presumidoTax);
+    const recommendation = simplesTax < presumidoTax ? "simples" : "presumido";
+    setResult({
+      simplesTax,
+      effectiveRateSimples,
+      effectiveAnexo,
+      presumidoTax,
+      presumidoBreakdown: {
+        federal: pis + cofins + irpj + irpjSurcharge + csll,
+        local: localTax,
+        inss: inssPatronal
+      },
+      difference,
+      recommendation
+    });
+  };
+  const formatCurrency = (val) => {
+    return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(val);
+  };
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calculadora Simples Nacional vs Lucro Presumido",
+    "description": "Compare os custos do Simples Nacional vs. Lucro Presumido e descubra o melhor regime para sua empresa.",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "BRL"
+    }
+  };
+  return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Simples Nacional ou Lucro Presumido? Comparador Tributário 2025",
+        description: "Pare de pagar impostos a mais. Compare os custos do Simples Nacional vs. Lucro Presumido e descubra o melhor regime para sua empresa economizar.",
+        canonical: "/calculadoras/simples-vs-presumido"
+      }
+    ),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify(schema) }),
+    /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": TAX_FAQS.map((faq) => ({
+        "@type": "Question",
+        "name": faq.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer
+        }
+      }))
+    }) }),
+    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-teal-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsxs("div", { className: "max-w-7xl mx-auto relative z-10", children: [
+      /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
+        /* @__PURE__ */ jsx(Breadcrumb, { items: [
+          { label: "Calculadoras", href: "/calculadoras" },
+          { label: "Simples vs Presumido", href: "/calculadoras/simples-vs-presumido" }
+        ] }),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: 1, y: 0 },
+            transition: { duration: 0.6 },
+            className: "text-center mb-12",
+            children: [
+              /* @__PURE__ */ jsxs("div", { className: "inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm", children: [
+                /* @__PURE__ */ jsx(Building2, { className: "w-4 h-4 text-emerald-400" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Planejamento Tributário" })
+              ] }),
+              /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
+                "Simples Nacional ou ",
+                /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400", children: "Lucro Presumido?" })
+              ] }),
+              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Não jogue dinheiro fora pagando impostos errados. Simule qual regime tributário é mais barato para a sua empresa em 2025." })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 30 },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: 0.6, delay: 0.2 },
+          className: "grid lg:grid-cols-12 gap-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "lg:col-span-5 space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-bold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Dados da Empresa"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-5", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Atividade Principal" }),
+                    /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-2", children: [
+                      /* @__PURE__ */ jsx(
+                        "button",
+                        {
+                          onClick: () => setActivity("servicos"),
+                          className: `px-4 py-3 rounded-xl text-sm font-medium transition-all ${activity === "servicos" ? "bg-emerald-500 text-white" : "bg-white/5 text-gray-400 hover:bg-white/10"}`,
+                          children: "Serviços"
+                        }
+                      ),
+                      /* @__PURE__ */ jsx(
+                        "button",
+                        {
+                          onClick: () => setActivity("comercio"),
+                          className: `px-4 py-3 rounded-xl text-sm font-medium transition-all ${activity === "comercio" ? "bg-emerald-500 text-white" : "bg-white/5 text-gray-400 hover:bg-white/10"}`,
+                          children: "Comércio"
+                        }
+                      ),
+                      /* @__PURE__ */ jsx(
+                        "button",
+                        {
+                          onClick: () => setActivity("industria"),
+                          className: `px-4 py-3 rounded-xl text-sm font-medium transition-all ${activity === "industria" ? "bg-emerald-500 text-white" : "bg-white/5 text-gray-400 hover:bg-white/10"}`,
+                          children: "Indústria"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Faturamento Mensal Médio (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: monthlyBilling,
+                          onChange: (e) => setMonthlyBilling(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                          placeholder: "Ex: 30000"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm text-gray-400 mb-2", children: "Folha de Pagamento Mensal (R$)" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                      /* @__PURE__ */ jsx(Users, { className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "number",
+                          value: monthlyPayroll,
+                          onChange: (e) => setMonthlyPayroll(Number(e.target.value)),
+                          className: "w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors",
+                          placeholder: "Salários + Pró-labore"
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Importante para cálculo do Fator R e INSS Patronal." })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsx("div", { className: "bg-blue-500/10 border border-blue-500/20 rounded-3xl p-6", children: /* @__PURE__ */ jsxs("div", { className: "flex gap-3", children: [
+                /* @__PURE__ */ jsx(AlertTriangle, { className: "w-6 h-6 text-blue-500 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h4", { className: "font-bold text-white mb-1", children: "Atenção ao Fator R" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 leading-relaxed", children: "Empresas de serviço podem pagar menos no Simples se a folha de pagamento for maior que 28% do faturamento. A calculadora verifica isso automaticamente." })
+                ] })
+              ] }) })
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden h-full flex flex-col", children: [
+              /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-emerald-500/5 rounded-full blur-[80px] pointer-events-none" }),
+              /* @__PURE__ */ jsx("div", { className: "relative z-10", children: result ? /* @__PURE__ */ jsxs(
+                motion.div,
+                {
+                  initial: { opacity: 0, scale: 0.9 },
+                  animate: { opacity: 1, scale: 1 },
+                  transition: { type: "spring", stiffness: 200, damping: 20 },
+                  className: "space-y-8",
+                  children: [
+                    /* @__PURE__ */ jsxs("div", { className: `rounded-2xl p-8 border ${result.recommendation === "simples" ? "bg-emerald-500/10 border-emerald-500/20" : "bg-teal-500/10 border-teal-500/20"} text-center`, children: [
+                      /* @__PURE__ */ jsx("h3", { className: "text-sm font-medium text-gray-400 mb-2 uppercase tracking-widest", children: "Melhor Opção para Você" }),
+                      /* @__PURE__ */ jsx("div", { className: "text-4xl font-bold text-white mb-2", children: result.recommendation === "simples" ? "Simples Nacional" : "Lucro Presumido" }),
+                      /* @__PURE__ */ jsxs("p", { className: "text-lg text-gray-300", children: [
+                        "Economia estimada de ",
+                        /* @__PURE__ */ jsxs("span", { className: "font-bold text-white", children: [
+                          formatCurrency(result.difference),
+                          "/mês"
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                      /* @__PURE__ */ jsxs("div", { className: `rounded-2xl p-6 border transition-all ${result.recommendation === "simples" ? "bg-white/10 border-emerald-500/50 scale-[1.02]" : "bg-white/5 border-white/5 opacity-70"}`, children: [
+                        /* @__PURE__ */ jsxs("h3", { className: "text-lg font-bold text-white mb-4 flex items-center gap-2", children: [
+                          "Simples Nacional",
+                          result.recommendation === "simples" && /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-emerald-400" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Imposto Mensal:" }),
+                            /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.simplesTax) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Alíquota Efetiva:" }),
+                            /* @__PURE__ */ jsxs("span", { className: "text-emerald-400 font-bold", children: [
+                              (result.effectiveRateSimples * 100).toFixed(2),
+                              "%"
+                            ] })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "text-xs text-gray-500 mt-2 pt-2 border-t border-white/5", children: [
+                            "Enquadramento: ",
+                            result.effectiveAnexo
+                          ] })
+                        ] })
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: `rounded-2xl p-6 border transition-all ${result.recommendation === "presumido" ? "bg-white/10 border-teal-500/50 scale-[1.02]" : "bg-white/5 border-white/5 opacity-70"}`, children: [
+                        /* @__PURE__ */ jsxs("h3", { className: "text-lg font-bold text-white mb-4 flex items-center gap-2", children: [
+                          "Lucro Presumido",
+                          result.recommendation === "presumido" && /* @__PURE__ */ jsx(CheckCircle2, { className: "w-5 h-5 text-teal-400" })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { className: "space-y-3", children: [
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Imposto Mensal:" }),
+                            /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.presumidoTax) })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                            /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "Alíquota Efetiva:" }),
+                            /* @__PURE__ */ jsxs("span", { className: "text-teal-400 font-bold", children: [
+                              (result.presumidoTax / monthlyBilling * 100).toFixed(2),
+                              "%"
+                            ] })
+                          ] }),
+                          /* @__PURE__ */ jsxs("div", { className: "text-xs text-gray-500 mt-2 pt-2 border-t border-white/5", children: [
+                            "Inclui Federais + ",
+                            activity === "servicos" ? "ISS" : "ICMS",
+                            " + INSS Patronal"
+                          ] })
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 rounded-2xl p-6 border border-white/5", children: [
+                      /* @__PURE__ */ jsxs("h3", { className: "text-sm font-medium text-gray-400 mb-4 uppercase tracking-widest flex items-center gap-2", children: [
+                        /* @__PURE__ */ jsx(TrendingDown, { className: "w-4 h-4 text-gray-400" }),
+                        "Detalhamento Lucro Presumido"
+                      ] }),
+                      /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-3 gap-4 text-sm", children: [
+                        /* @__PURE__ */ jsxs("div", { children: [
+                          /* @__PURE__ */ jsx("span", { className: "block text-gray-500 mb-1", children: "Impostos Federais" }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.presumidoBreakdown.federal) })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { children: [
+                          /* @__PURE__ */ jsx("span", { className: "block text-gray-500 mb-1", children: activity === "servicos" ? "ISS (Municipal)" : "ICMS (Estadual)" }),
+                          /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: formatCurrency(result.presumidoBreakdown.local) })
+                        ] }),
+                        /* @__PURE__ */ jsxs("div", { children: [
+                          /* @__PURE__ */ jsx("span", { className: "block text-gray-500 mb-1", children: "INSS Patronal" }),
+                          /* @__PURE__ */ jsx("span", { className: "text-red-400 font-bold", children: formatCurrency(result.presumidoBreakdown.inss) })
+                        ] })
+                      ] })
+                    ] })
+                  ]
+                }
+              ) : /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-center justify-center h-full py-12 opacity-50", children: [
+                /* @__PURE__ */ jsx(Scale, { className: "w-16 h-16 text-gray-600 mb-4" }),
+                /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-lg text-center", children: "Preencha os dados para comparar os regimes" })
+              ] }) })
+            ] }) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxs("div", { className: "mt-24 max-w-4xl mx-auto prose prose-invert prose-lg", children: [
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: 'Simples Nacional nem sempre é "Simples"' }),
+          /* @__PURE__ */ jsx("div", { className: "prose prose-invert max-w-none text-gray-400 leading-relaxed", children: /* @__PURE__ */ jsx("p", { className: "mb-4", children: "Escolher o regime tributário errado pode custar milhares de reais por ano ao seu negócio. Muitos empresários entram no Simples Nacional por padrão, sem saber que, dependendo do faturamento e da atividade, o Lucro Presumido pode ser muito mais vantajoso." }) })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "As Diferenças Básicas" }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-emerald-400 mb-4", children: "1. Simples Nacional" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: "Unifica 8 impostos em uma única guia (DAS). As alíquotas são progressivas." }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm", children: [
+                /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-gray-300", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-4 h-4 text-green-500" }),
+                  " Isenção de INSS Patronal"
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-gray-300", children: [
+                  /* @__PURE__ */ jsx(AlertTriangle, { className: "w-4 h-4 text-yellow-500" }),
+                  " Alíquota sobe com faturamento"
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-teal-400 mb-4", children: "2. Lucro Presumido" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-4", children: 'Impostos calculados separadamente. O governo "presume" seu lucro.' }),
+              /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm", children: [
+                /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-gray-300", children: [
+                  /* @__PURE__ */ jsx(CheckCircle2, { className: "w-4 h-4 text-green-500" }),
+                  " Alíquotas federais fixas"
+                ] }),
+                /* @__PURE__ */ jsxs("li", { className: "flex items-center gap-2 text-gray-300", children: [
+                  /* @__PURE__ */ jsx(AlertTriangle, { className: "w-4 h-4 text-red-500" }),
+                  " Paga 20% de INSS Patronal"
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxs("section", { className: "mb-16", children: [
+          /* @__PURE__ */ jsx("h2", { className: "text-3xl font-bold text-white mb-6", children: "Como a calculadora decide?" }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] p-8 rounded-3xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Nossa ferramenta cruza três dados vitais do seu negócio:" }),
+            /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Faturamento Mensal:" }),
+                  " Define em qual faixa do Simples você se encaixa."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Folha de Pagamento:" }),
+                  " Calcula o peso do INSS Patronal e verifica o Fator R."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("li", { className: "flex items-start gap-3 text-gray-400", children: [
+                /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2.5 flex-shrink-0" }),
+                /* @__PURE__ */ jsxs("span", { children: [
+                  /* @__PURE__ */ jsx("strong", { children: "Atividade (CNAE):" }),
+                  " Define as regras específicas de cada setor."
+                ] })
+              ] })
+            ] })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx(
+          FAQ,
+          {
+            items: TAX_FAQS,
+            title: "Perguntas Frequentes",
+            className: "py-12",
+            showSocialProof: false
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsx(AppPromoBanner$1, {})
+    ] })
+  ] });
+};
+function WorkingCapitalPage() {
+  const [receivables, setReceivables] = useState("");
+  const [inventory, setInventory] = useState("");
+  const [payables, setPayables] = useState("");
+  const [result, setResult] = useState(null);
+  const calculateWorkingCapital = () => {
+    const rec = parseFloat(receivables.replace(/\./g, "").replace(",", ".")) || 0;
+    const inv = parseFloat(inventory.replace(/\./g, "").replace(",", ".")) || 0;
+    const pay = parseFloat(payables.replace(/\./g, "").replace(",", ".")) || 0;
+    const workingCapital = rec + inv - pay;
+    setResult(workingCapital);
+  };
+  const formatCurrency = (value) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL"
+    }).format(value);
+  };
+  const handleCurrencyInput = (value, setter) => {
+    const numericValue = value.replace(/\D/g, "");
+    const floatValue = parseFloat(numericValue) / 100;
+    if (isNaN(floatValue)) {
+      setter("");
+      return;
+    }
+    setter(floatValue.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Capital de Giro - Quanto sua empresa precisa?",
+        description: "Sua empresa tem dinheiro para rodar? Calcule a Necessidade de Capital de Giro (NCG) e aprenda a gerenciar o fluxo de caixa para não quebrar.",
+        canonical: "/calculadoras/capital-de-giro"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Calculator, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Capital de Giro" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Lucro não é caixa. Descubra quanto dinheiro sua empresa precisa ter guardado." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold mb-6 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5 text-primary" }),
+                "Dados Financeiros"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Contas a Receber (+)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: receivables,
+                        onChange: (e) => handleCurrencyInput(e.target.value, setReceivables),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                        placeholder: "0,00"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Dinheiro na mão dos clientes (cartão, boletos)." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Valor em Estoque (+)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: inventory,
+                        onChange: (e) => handleCurrencyInput(e.target.value, setInventory),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                        placeholder: "0,00"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Dinheiro parado em mercadoria." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Contas a Pagar (-)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: payables,
+                        onChange: (e) => handleCurrencyInput(e.target.value, setPayables),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                        placeholder: "0,00"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "O que você deve aos fornecedores." })
+                ] }),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: calculateWorkingCapital,
+                    className: "w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20 mt-4",
+                    children: "Calcular Capital de Giro"
+                  }
+                )
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              result !== null && /* @__PURE__ */ jsxs("div", { className: `p-6 rounded-2xl border ${result > 0 ? "bg-yellow-500/10 border-yellow-500/20" : "bg-green-500/10 border-green-500/20"} animate-fade-in`, children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold text-gray-300 mb-2", children: "Necessidade de Capital de Giro" }),
+                /* @__PURE__ */ jsx("div", { className: `text-4xl font-bold mb-4 ${result > 0 ? "text-yellow-400" : "text-green-400"}`, children: formatCurrency(result) }),
+                /* @__PURE__ */ jsx("div", { className: "space-y-3", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
+                  result > 0 ? /* @__PURE__ */ jsx(TrendingDown, { className: "w-5 h-5 text-yellow-400 mt-1 shrink-0" }) : /* @__PURE__ */ jsx(TrendingUp, { className: "w-5 h-5 text-green-400 mt-1 shrink-0" }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("p", { className: "font-medium text-white mb-1", children: result > 0 ? "Sua empresa precisa de caixa." : "Seus fornecedores financiam sua operação." }),
+                    /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: result > 0 ? "O resultado positivo indica que você paga seus fornecedores antes de receber dos clientes. Você precisa ter esse valor em caixa para manter a operação rodando." : "O resultado negativo (ou zero) indica que você recebe dos clientes antes de pagar os fornecedores. É o melhor cenário para o fluxo de caixa!" })
+                  ] })
+                ] }) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Entenda o Cálculo"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm", children: [
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "A Fórmula:" }),
+                    /* @__PURE__ */ jsx("br", {}),
+                    "Capital de Giro = (Contas a Receber + Estoque) - Contas a Pagar"
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: 'O "Oxigênio" da Empresa:' }),
+                    /* @__PURE__ */ jsx("br", {}),
+                    "Capital de Giro é a reserva que garante que sua empresa continue respirando entre o momento em que o dinheiro sai (pagar fornecedor) e o momento em que ele volta (receber do cliente)."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Lightbulb, { className: "w-5 h-5" }),
+                  "Dica FinZap"
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+                  "A forma mais barata de aumentar seu capital de giro não é pegando empréstimo no banco, mas ",
+                  /* @__PURE__ */ jsx("strong", { children: "negociando prazos" }),
+                  ". Tente aumentar o prazo de pagamento com fornecedores e reduzir o prazo de recebimento dos clientes."
+                ] })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-12 space-y-8", children: [
+            /* @__PURE__ */ jsxs("section", { children: [
+              /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-4 text-white", children: "Sinais de Alerta" }),
+              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx(AlertCircle, { className: "w-8 h-8 text-red-400 mb-4" }),
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Antecipação Constante" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Você precisa antecipar recebíveis (desconto de duplicatas) todo mês para pagar a folha." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx(AlertCircle, { className: "w-8 h-8 text-red-400 mb-4" }),
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Descassamento de Prazos" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Você paga os fornecedores à vista, mas vende para o cliente em 10x sem juros." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx(AlertCircle, { className: "w-8 h-8 text-red-400 mb-4" }),
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Estoque Parado" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'Seu estoque está cheio de produtos encalhados há meses ("dinheiro na prateleira").' })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("section", { className: "bg-white/5 rounded-3xl p-8 border border-white/5", children: [
+              /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-6 text-white", children: "Perguntas Frequentes" }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "O que é Capital de Giro Líquido?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "É a diferença entre o Ativo Circulante (dinheiro em caixa + o que vai receber logo) e o Passivo Circulante (contas que vencem logo). Se o resultado for positivo, a empresa tem folga financeira." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Capital de Giro é a mesma coisa que Lucro?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "Não! Lucro é o que sobra depois de pagar tudo. Capital de Giro é o dinheiro necessário para movimentar o negócio. Você pode ter lucro contábil (vendeu bem), mas estar sem capital de giro (o dinheiro só vai entrar mês que vem)." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Estoque alto é bom ou ruim?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: 'Para o capital de giro, estoque alto é ruim. Estoque é "dinheiro parado" que não paga conta. O ideal é ter o giro de estoque mais rápido possível: o produto chega e já é vendido.' })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function ROICalculatorPage() {
+  const [revenue, setRevenue] = useState("");
+  const [cost, setCost] = useState("");
+  const [roi, setRoi] = useState(null);
+  const calculateROI = () => {
+    const rev = parseFloat(revenue.replace(/\./g, "").replace(",", ".")) || 0;
+    const cst = parseFloat(cost.replace(/\./g, "").replace(",", ".")) || 0;
+    if (cst === 0) {
+      setRoi(null);
+      return;
+    }
+    const roiValue = (rev - cst) / cst * 100;
+    setRoi(roiValue);
+  };
+  const formatPercentage = (value) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "percent",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(value / 100);
+  };
+  const handleCurrencyInput = (value, setter) => {
+    const numericValue = value.replace(/\D/g, "");
+    const floatValue = parseFloat(numericValue) / 100;
+    if (isNaN(floatValue)) {
+      setter("");
+      return;
+    }
+    setter(floatValue.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de ROI - Retorno Sobre Investimento (Marketing e Projetos)",
+        description: "Sua campanha deu lucro? Calcule o ROI (Return on Investment) de forma simples. Entenda a diferença entre ROI e ROAS e descubra a eficiência real do seu dinheiro.",
+        canonical: "/calculadoras/roi"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(BarChart3, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de ROI" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Sua campanha deu lucro ou prejuízo? Descubra a eficiência real dos seus investimentos." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold mb-6 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5 text-primary" }),
+                "Dados do Investimento"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Receita Gerada" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: revenue,
+                        onChange: (e) => handleCurrencyInput(e.target.value, setRevenue),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                        placeholder: "0,00"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Total arrecadado com a campanha/projeto." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Custo do Investimento" }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: cost,
+                        onChange: (e) => handleCurrencyInput(e.target.value, setCost),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-12 pr-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                        placeholder: "0,00"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1", children: "Soma de todos os custos (mídia, ferramentas, equipe, etc)." })
+                ] }),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: calculateROI,
+                    className: "w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20 mt-4",
+                    children: "Calcular ROI"
+                  }
+                )
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              roi !== null && /* @__PURE__ */ jsxs("div", { className: `p-6 rounded-2xl border ${roi > 0 ? "bg-green-500/10 border-green-500/20" : roi < 0 ? "bg-red-500/10 border-red-500/20" : "bg-gray-500/10 border-gray-500/20"} animate-fade-in`, children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold text-gray-300 mb-2", children: "Resultado do ROI" }),
+                /* @__PURE__ */ jsx("div", { className: `text-4xl font-bold mb-4 ${roi > 0 ? "text-green-400" : roi < 0 ? "text-red-400" : "text-gray-400"}`, children: formatPercentage(roi) }),
+                /* @__PURE__ */ jsx("div", { className: "space-y-3", children: /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
+                  roi > 0 ? /* @__PURE__ */ jsx(TrendingUp, { className: "w-5 h-5 text-green-400 mt-1 shrink-0" }) : roi < 0 ? /* @__PURE__ */ jsx(TrendingDown, { className: "w-5 h-5 text-red-400 mt-1 shrink-0" }) : /* @__PURE__ */ jsx(Target, { className: "w-5 h-5 text-gray-400 mt-1 shrink-0" }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("p", { className: "font-medium text-white mb-1", children: roi > 0 ? "O projeto deu lucro!" : roi < 0 ? "O projeto deu prejuízo." : "Ponto de equilíbrio (Zero a Zero)." }),
+                    /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: roi > 0 ? `Para cada R$ 1,00 investido, voltaram R$ ${(1 + roi / 100).toFixed(2)} (R$ 1,00 de custo + R$ ${(roi / 100).toFixed(2)} de lucro).` : roi < 0 ? `Para cada R$ 1,00 investido, você perdeu R$ ${(Math.abs(roi) / 100).toFixed(2)}.` : "Você recuperou exatamente o valor investido, sem lucro nem prejuízo." })
+                  ] })
+                ] }) })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Entenda o Cálculo"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm", children: [
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "A Fórmula:" }),
+                    /* @__PURE__ */ jsx("br", {}),
+                    "ROI = [(Receita - Custo) ÷ Custo] × 100"
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "ROI vs ROAS:" }),
+                    /* @__PURE__ */ jsx("br", {}),
+                    "ROAS mede o retorno apenas sobre anúncios (mídia). ROI mede o retorno sobre TODOS os custos (mídia, equipe, ferramentas, produto). O ROI é a métrica real de lucratividade."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Lightbulb, { className: "w-5 h-5" }),
+                  "Dica FinZap"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "É perfeitamente possível ter um ROAS positivo (vendeu bem nos anúncios) e um ROI negativo (a operação foi cara demais e comeu o lucro). Sempre olhe para o ROI final para ter a visão realista da saúde financeira." })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-12 space-y-8", children: [
+            /* @__PURE__ */ jsxs("section", { children: [
+              /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-4 text-white", children: "Como melhorar meu ROI?" }),
+              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx(TrendingUp, { className: "w-8 h-8 text-green-400 mb-4" }),
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Aumentar a Receita" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Melhorar a taxa de conversão, aumentar o preço (ticket médio) ou vender mais vezes para o mesmo cliente (LTV)." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx(TrendingDown, { className: "w-8 h-8 text-blue-400 mb-4" }),
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Diminuir o Custo" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Otimizar campanhas para baixar o custo por clique (CPC) ou negociar melhor com fornecedores e ferramentas." })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("section", { className: "bg-white/5 rounded-3xl p-8 border border-white/5", children: [
+              /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-6 text-white", children: "Perguntas Frequentes" }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Qual é um bom ROI?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "Depende do modelo de negócio. Em infoprodutos, 100% é considerado mínimo. No varejo físico, 20% a 30% pode ser excelente devido ao alto volume." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: 'O que entra no "Custo do Investimento"?' }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: 'Tudo! Valor pago aos anúncios, custo da agência/freelancer, ferramentas de e-mail marketing, Custo da Mercadoria Vendida (CMV), impostos, etc. Se esquecer custos, seu ROI será "mentiroso".' })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "ROI de 100% significa que ganhei nada?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "Não! Um ROI de 0% significa que você empatou. Um ROI de 100% significa que você recuperou o investimento E lucrou um valor igual. Você dobrou seu capital." })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function BarbecueCalculatorPage() {
+  const [men, setMen] = useState("");
+  const [women, setWomen] = useState("");
+  const [children, setChildren] = useState("");
+  const [duration, setDuration] = useState("standard");
+  const [result, setResult] = useState(null);
+  const calculateBarbecue = () => {
+    const numMen = parseInt(men) || 0;
+    const numWomen = parseInt(women) || 0;
+    const numChildren = parseInt(children) || 0;
+    if (numMen === 0 && numWomen === 0 && numChildren === 0) {
+      setResult(null);
+      return;
+    }
+    let meatMen = 0.4;
+    let meatWomen = 0.3;
+    let meatChildren = 0.15;
+    let beerAdults = 1.75;
+    let sodaPerson = 0.5;
+    if (duration === "long") {
+      const increase = 1.25;
+      meatMen *= increase;
+      meatWomen *= increase;
+      meatChildren *= increase;
+      beerAdults *= increase;
+      sodaPerson *= increase;
+    }
+    const totalMeat = numMen * meatMen + numWomen * meatWomen + numChildren * meatChildren;
+    const totalBeer = (numMen + numWomen) * beerAdults;
+    const totalSoda = (numMen + numWomen + numChildren) * sodaPerson;
+    const totalCharcoal = totalMeat / 6;
+    setResult({
+      meat: totalMeat,
+      beer: totalBeer,
+      soda: totalSoda,
+      charcoal: Math.ceil(totalCharcoal)
+      // Round up for bags
+    });
+  };
+  const handleNumberInput = (value, setter) => {
+    const numericValue = value.replace(/\D/g, "");
+    setter(numericValue);
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Churrasco - Quantidade de Carne e Bebida",
+        description: "Vai fazer churrasco? Calcule a quantidade certa de carne (picanha, linguiça), cerveja, refrigerante e carvão por pessoa. Evite desperdício e economize.",
+        canonical: "/calculadoras/churrasco"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Flame, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Churrasco" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Nunca mais deixe faltar carne. Calcule a quantidade ideal para sua festa." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold mb-6 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Users, { className: "w-5 h-5 text-primary" }),
+                "Convidados e Duração"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Homens" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: men,
+                        onChange: (e) => handleNumberInput(e.target.value, setMen),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                        placeholder: "0"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Mulheres" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: women,
+                        onChange: (e) => handleNumberInput(e.target.value, setWomen),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                        placeholder: "0"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Crianças" }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: children,
+                      onChange: (e) => handleNumberInput(e.target.value, setChildren),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                      placeholder: "0"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Duração da Festa" }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsxs(
+                      "button",
+                      {
+                        onClick: () => setDuration("standard"),
+                        className: `py-3 px-4 rounded-xl border transition-all flex flex-col items-center justify-center gap-1 ${duration === "standard" ? "bg-primary/20 border-primary text-white" : "bg-[#0a0a0a] border-white/10 text-gray-400 hover:bg-white/5"}`,
+                        children: [
+                          /* @__PURE__ */ jsx(Clock, { className: "w-4 h-4" }),
+                          /* @__PURE__ */ jsx("span", { className: "text-sm font-medium", children: "Até 4 horas" })
+                        ]
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs(
+                      "button",
+                      {
+                        onClick: () => setDuration("long"),
+                        className: `py-3 px-4 rounded-xl border transition-all flex flex-col items-center justify-center gap-1 ${duration === "long" ? "bg-primary/20 border-primary text-white" : "bg-[#0a0a0a] border-white/10 text-gray-400 hover:bg-white/5"}`,
+                        children: [
+                          /* @__PURE__ */ jsx(Clock, { className: "w-4 h-4" }),
+                          /* @__PURE__ */ jsx("span", { className: "text-sm font-medium", children: "Mais de 5h" })
+                        ]
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: calculateBarbecue,
+                    className: "w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20 mt-4",
+                    children: "Calcular Churrasco"
+                  }
+                )
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              result && /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5 animate-fade-in", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold text-white mb-6 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(ShoppingCart, { className: "w-5 h-5 text-primary" }),
+                  "Lista de Compras Sugerida"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between p-4 bg-[#0a0a0a] rounded-xl border border-white/5", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                      /* @__PURE__ */ jsx(Utensils, { className: "w-5 h-5 text-red-400" }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("p", { className: "font-medium text-white", children: "Carne Total" }),
+                        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: "Picanha, Linguiça, Frango" })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "text-right", children: /* @__PURE__ */ jsxs("p", { className: "text-xl font-bold text-white", children: [
+                      result.meat.toFixed(1).replace(".", ","),
+                      " kg"
+                    ] }) })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between p-4 bg-[#0a0a0a] rounded-xl border border-white/5", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                      /* @__PURE__ */ jsx(Beer, { className: "w-5 h-5 text-yellow-400" }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("p", { className: "font-medium text-white", children: "Cerveja" }),
+                        /* @__PURE__ */ jsxs("p", { className: "text-xs text-gray-400", children: [
+                          "Latas de 350ml: ~",
+                          Math.ceil(result.beer * 1e3 / 350)
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "text-right", children: /* @__PURE__ */ jsxs("p", { className: "text-xl font-bold text-white", children: [
+                      result.beer.toFixed(1).replace(".", ","),
+                      " L"
+                    ] }) })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between p-4 bg-[#0a0a0a] rounded-xl border border-white/5", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                      /* @__PURE__ */ jsx("div", { className: "w-5 h-5 rounded-full border-2 border-blue-400 flex items-center justify-center text-[10px] font-bold text-blue-400", children: "H2O" }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("p", { className: "font-medium text-white", children: "Refri / Água" }),
+                        /* @__PURE__ */ jsxs("p", { className: "text-xs text-gray-400", children: [
+                          "Garrafas de 2L: ~",
+                          Math.ceil(result.soda / 2)
+                        ] })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "text-right", children: /* @__PURE__ */ jsxs("p", { className: "text-xl font-bold text-white", children: [
+                      result.soda.toFixed(1).replace(".", ","),
+                      " L"
+                    ] }) })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between p-4 bg-[#0a0a0a] rounded-xl border border-white/5", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                      /* @__PURE__ */ jsx(Flame, { className: "w-5 h-5 text-orange-400" }),
+                      /* @__PURE__ */ jsxs("div", { children: [
+                        /* @__PURE__ */ jsx("p", { className: "font-medium text-white", children: "Carvão" }),
+                        /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: "Sacos de 5kg (aprox)" })
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsx("div", { className: "text-right", children: /* @__PURE__ */ jsxs("p", { className: "text-xl font-bold text-white", children: [
+                      result.charcoal,
+                      " kg"
+                    ] }) })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "A Regra dos 400g"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm", children: [
+                  /* @__PURE__ */ jsx("p", { children: "Para um churrasco padrão de até 4 horas, a conta segura é:" }),
+                  /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-4 space-y-1", children: [
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Homens:" }),
+                      " 400g a 500g de carne."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Mulheres:" }),
+                      " 300g a 400g de carne."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Crianças:" }),
+                      " 150g a 200g de carne."
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Lightbulb, { className: "w-5 h-5" }),
+                  "Dica de Mestre"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: 'Se o churrasco for durar o dia todo (mais de 5 horas), aumente a quantidade em 20% a 30%. As pessoas tendem a "beliscar" continuamente. Não esqueça dos acompanhamentos (pão de alho, farofa) para saciar a fome!' })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "mt-12 space-y-8", children: [
+            /* @__PURE__ */ jsxs("section", { children: [
+              /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-4 text-white", children: "Lista de Compras Inteligente" }),
+              /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx(Utensils, { className: "w-8 h-8 text-primary mb-4" }),
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "1. Entradas (Acalmam a fome)" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-2", children: "Servem para petiscar enquanto a carne principal assa." }),
+                  /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-4 text-sm text-gray-400", children: [
+                    /* @__PURE__ */ jsx("li", { children: "Linguiça Toscana" }),
+                    /* @__PURE__ */ jsx("li", { children: "Asinha de Frango (Tulipa)" }),
+                    /* @__PURE__ */ jsx("li", { children: "Coraçãozinho" }),
+                    /* @__PURE__ */ jsx("li", { children: "Pão de Alho e Queijo Coalho" })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx(Flame, { className: "w-8 h-8 text-orange-400 mb-4" }),
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "2. Prato Principal (As estrelas)" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-2", children: "As carnes nobres que todos esperam." }),
+                  /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-4 text-sm text-gray-400", children: [
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Grelha (Rápido):" }),
+                      " Picanha, Maminha, Contra-filé, Alcatra."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Assados (Lentos):" }),
+                      " Costela Gaúcha, Cupim, Costelinha BBQ."
+                    ] })
+                  ] })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("section", { className: "bg-white/5 rounded-3xl p-8 border border-white/5", children: [
+              /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-6 text-white", children: "Perguntas Frequentes" }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Quanto carvão eu preciso?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "Em média, 1 saco de 5kg de carvão é suficiente para assar 6kg de carne. Tenha sempre um saco extra de reserva, pois o vento influencia o consumo." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Como calcular a cerveja?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "Considere que cada adulto bebe, em média, 1,5 a 2 litros de cerveja (4 a 6 latas) em um churrasco de 4 horas. Se estiver muito calor, aumente essa margem." })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "O que servir de acompanhamento?" }),
+                  /* @__PURE__ */ jsx("p", { className: "text-gray-400", children: "Para economizar na carne sem deixar ninguém com fome, invista nos acompanhamentos: pão de alho, farofa, vinagrete, salada de maionese e arroz são essenciais." })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function BusinessDaysPage() {
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
+  const [includeStart, setIncludeStart] = useState(false);
+  const [result, setResult] = useState(null);
+  const getEasterSunday = (year) => {
+    const a = year % 19;
+    const b = Math.floor(year / 100);
+    const c = year % 100;
+    const d = Math.floor(b / 4);
+    const e = b % 4;
+    const f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4);
+    const k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7;
+    const m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const month = Math.floor((h + l - 7 * m + 114) / 31);
+    const day = (h + l - 7 * m + 114) % 31 + 1;
+    return new Date(year, month - 1, day);
+  };
+  const addDays = (date, days) => {
+    const result2 = new Date(date);
+    result2.setDate(result2.getDate() + days);
+    return result2;
+  };
+  const getHolidayName = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    if (day === 1 && month === 0) return "Confraternização Universal";
+    if (day === 21 && month === 3) return "Tiradentes";
+    if (day === 1 && month === 4) return "Dia do Trabalho";
+    if (day === 7 && month === 8) return "Independência do Brasil";
+    if (day === 12 && month === 9) return "Nossa Senhora Aparecida";
+    if (day === 2 && month === 10) return "Finados";
+    if (day === 15 && month === 10) return "Proclamação da República";
+    if (day === 25 && month === 11) return "Natal";
+    const easter = getEasterSunday(year);
+    const carnival = addDays(easter, -47);
+    const goodFriday = addDays(easter, -2);
+    const corpusChristi = addDays(easter, 60);
+    const checkMovable = (target, name) => {
+      return target.getDate() === day && target.getMonth() === month ? name : null;
+    };
+    if (checkMovable(carnival, "Carnaval")) return "Carnaval";
+    if (checkMovable(goodFriday, "Sexta-feira Santa")) return "Sexta-feira Santa";
+    if (checkMovable(corpusChristi, "Corpus Christi")) return "Corpus Christi";
+    return null;
+  };
+  const calculateDays = () => {
+    if (!startDate || !endDate) return;
+    const start = /* @__PURE__ */ new Date(startDate + "T00:00:00");
+    const end = /* @__PURE__ */ new Date(endDate + "T00:00:00");
+    if (start > end) {
+      alert("A data inicial deve ser anterior à data final.");
+      return;
+    }
+    let current = new Date(start);
+    if (!includeStart) {
+      current.setDate(current.getDate() + 1);
+    }
+    let businessDaysCount = 0;
+    const holidaysFound = [];
+    Math.abs(end.getTime() - start.getTime());
+    if (includeStart && start.getTime() === end.getTime()) ;
+    else if (!includeStart && start.getTime() === end.getTime()) ;
+    current = new Date(start);
+    if (!includeStart) {
+      current.setDate(current.getDate() + 1);
+    }
+    while (current <= end) {
+      const dayOfWeek = current.getDay();
+      const holiday = getHolidayName(current);
+      if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holiday) {
+        businessDaysCount++;
+      }
+      if (holiday) {
+        const formattedDate = current.toLocaleDateString("pt-BR");
+        if (!holidaysFound.includes(`${formattedDate} - ${holiday}`)) {
+          holidaysFound.push(`${formattedDate} - ${holiday}`);
+        }
+      }
+      current.setDate(current.getDate() + 1);
+    }
+    const oneDay = 24 * 60 * 60 * 1e3;
+    const diffDays = Math.round(Math.abs((end.getTime() - start.getTime()) / oneDay));
+    setResult({
+      businessDays: businessDaysCount,
+      totalDays: diffDays,
+      holidays: holidaysFound
+    });
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Dias Úteis Online - Contagem com Feriados",
+        description: "Precisa calcular um prazo? Conte os dias úteis entre duas datas, excluindo automaticamente fins de semana e feriados nacionais. Ideal para prazos bancários e judiciais.",
+        canonical: "/calculadoras/dias-uteis"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Calendar, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Dias Úteis" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Conte prazos excluindo fins de semana e feriados nacionais." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold mb-6 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Clock, { className: "w-5 h-5 text-primary" }),
+                "Período"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Data Inicial" }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "date",
+                      value: startDate,
+                      onChange: (e) => setStartDate(e.target.value),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsx("label", { className: "block text-sm font-medium text-gray-300 mb-2", children: "Data Final" }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "date",
+                      value: endDate,
+                      onChange: (e) => setEndDate(e.target.value),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 py-2", children: [
+                  /* @__PURE__ */ jsx(
+                    "button",
+                    {
+                      onClick: () => setIncludeStart(!includeStart),
+                      className: `w-6 h-6 rounded-lg border flex items-center justify-center transition-all ${includeStart ? "bg-primary border-primary" : "bg-[#0a0a0a] border-white/20"}`,
+                      children: includeStart && /* @__PURE__ */ jsx(CheckCircle, { className: "w-4 h-4 text-black" })
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-400 cursor-pointer", onClick: () => setIncludeStart(!includeStart), children: "Incluir data inicial na contagem?" })
+                ] }),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: calculateDays,
+                    className: "w-full bg-primary hover:bg-primary/90 text-black font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-primary/20 mt-4",
+                    children: "Calcular Dias Úteis"
+                  }
+                )
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              result && /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5 animate-fade-in", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold text-white mb-6", children: "Resultado" }),
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4 mb-6", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "bg-[#0a0a0a] p-4 rounded-xl border border-white/5 text-center", children: [
+                    /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-1", children: "Dias Úteis" }),
+                    /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-primary", children: result.businessDays })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "bg-[#0a0a0a] p-4 rounded-xl border border-white/5 text-center", children: [
+                    /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-1", children: "Dias Corridos" }),
+                    /* @__PURE__ */ jsx("p", { className: "text-3xl font-bold text-white", children: result.totalDays })
+                  ] })
+                ] }),
+                result.holidays.length > 0 ? /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm font-medium text-gray-300 mb-3 flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsx(XCircle, { className: "w-4 h-4 text-red-400" }),
+                    "Feriados no período:"
+                  ] }),
+                  /* @__PURE__ */ jsx("ul", { className: "space-y-2", children: result.holidays.map((holiday, index) => /* @__PURE__ */ jsx("li", { className: "text-sm text-gray-400 bg-[#0a0a0a] px-3 py-2 rounded-lg border border-white/5", children: holiday }, index)) })
+                ] }) : /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-500 italic", children: "Nenhum feriado nacional neste período." })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Como funciona?"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm", children: [
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Intervalo:" }),
+                    " Calculamos a diferença entre as datas."
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Fins de Semana:" }),
+                    " Excluímos sábados e domingos."
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Feriados:" }),
+                    " Descontamos feriados nacionais fixos e móveis (Carnaval, Páscoa, Corpus Christi)."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Lightbulb, { className: "w-5 h-5" }),
+                  "Dica Importante"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "Esta calculadora considera apenas feriados nacionais. Feriados estaduais ou municipais não são descontados automaticamente. Para contagens locais específicas, subtraia esses dias manualmente." })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "mt-12 space-y-8", children: /* @__PURE__ */ jsxs("section", { children: [
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-4 text-white", children: "Dúvidas Frequentes" }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "O sábado conta como dia útil?" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: "Depende. Para pagamentos bancários, não. Para prazos trabalhistas (CLT), sim. Nossa calculadora segue a regra bancária (exclui sábado)." })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "A calculadora inclui o dia do início?" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400", children: 'Por padrão, não (regra de prazos). Mas você pode marcar a opção "Incluir data inicial" se desejar contar o primeiro dia.' })
+              ] })
+            ] })
+          ] }) })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function RuleOfThreePage() {
+  const [valueA, setValueA] = useState("");
+  const [valueB, setValueB] = useState("");
+  const [valueC, setValueC] = useState("");
+  const [resultX, setResultX] = useState(null);
+  const [type, setType] = useState("direct");
+  const calculate = () => {
+    const a = parseFloat(valueA.replace(",", "."));
+    const b = parseFloat(valueB.replace(",", "."));
+    const c = parseFloat(valueC.replace(",", "."));
+    if (isNaN(a) || isNaN(b) || isNaN(c) || a === 0 || c === 0) {
+      setResultX(null);
+      return;
+    }
+    let x;
+    if (type === "direct") {
+      x = b * c / a;
+    } else {
+      x = a * b / c;
+    }
+    setResultX(x);
+  };
+  useEffect(() => {
+    calculate();
+  }, [valueA, valueB, valueC, type]);
+  const handleInput = (value, setter) => {
+    if (/^[\d.,]*$/.test(value)) {
+      setter(value);
+    }
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Regra de Três Simples - Direta e Inversa",
+        description: "Matemática sem dor de cabeça. Resolva problemas de proporção, porcentagem e conversões com nossa calculadora de Regra de Três online.",
+        canonical: "/calculadoras/regra-de-tres"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Divide, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Regra de Três" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Resolva problemas de proporção, porcentagem e conversões em segundos." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mb-6", children: [
+                /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-primary" }),
+                  "Calcular"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex bg-[#0a0a0a] rounded-lg p-1 border border-white/10", children: [
+                  /* @__PURE__ */ jsx(
+                    "button",
+                    {
+                      onClick: () => setType("direct"),
+                      className: `px-3 py-1.5 rounded-md text-sm font-medium transition-all ${type === "direct" ? "bg-primary text-black shadow-lg" : "text-gray-400 hover:text-white"}`,
+                      children: "Direta"
+                    }
+                  ),
+                  /* @__PURE__ */ jsx(
+                    "button",
+                    {
+                      onClick: () => setType("inverse"),
+                      className: `px-3 py-1.5 rounded-md text-sm font-medium transition-all ${type === "inverse" ? "bg-primary text-black shadow-lg" : "text-gray-400 hover:text-white"}`,
+                      children: "Inversa"
+                    }
+                  )
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-[1fr,auto,1fr] gap-4 items-center", children: [
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-xs text-gray-500 block text-center", children: "Valor A" }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: valueA,
+                      onChange: (e) => handleInput(e.target.value, setValueA),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white text-center focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                      placeholder: "A"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "text-gray-500 font-bold", children: "Está para" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-xs text-gray-500 block text-center", children: "Valor B" }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: valueB,
+                      onChange: (e) => handleInput(e.target.value, setValueB),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white text-center focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                      placeholder: "B"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "col-span-3 h-px bg-white/10 my-2 relative", children: /* @__PURE__ */ jsx("span", { className: "absolute left-1/2 -translate-x-1/2 -top-3 bg-[#131313] px-2 text-gray-500 text-xs", children: "Assim como" }) }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-xs text-gray-500 block text-center", children: "Valor C" }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: valueC,
+                      onChange: (e) => handleInput(e.target.value, setValueC),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white text-center focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all",
+                      placeholder: "C"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "text-gray-500 font-bold", children: "Está para" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsx("label", { className: "text-xs text-gray-500 block text-center", children: "Valor X" }),
+                  /* @__PURE__ */ jsx("div", { className: `w-full h-[50px] rounded-xl flex items-center justify-center font-bold text-lg border transition-all ${resultX !== null ? "bg-primary/20 border-primary text-primary" : "bg-[#0a0a0a] border-white/10 text-gray-600"}`, children: resultX !== null ? resultX.toLocaleString("pt-BR", { maximumFractionDigits: 4 }) : "X" })
+                ] })
+              ] }),
+              resultX !== null && /* @__PURE__ */ jsxs("div", { className: "mt-6 p-4 bg-[#0a0a0a] rounded-xl border border-white/5 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsx("p", { className: "mb-2 font-semibold text-white", children: "Fórmula usada:" }),
+                type === "direct" ? /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 flex-wrap", children: [
+                  /* @__PURE__ */ jsx("span", { children: "X = (B × C) ÷ A" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-gray-600", children: "→" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    "(",
+                    valueB,
+                    " × ",
+                    valueC,
+                    ") ÷ ",
+                    valueA
+                  ] }),
+                  /* @__PURE__ */ jsx("span", { className: "text-gray-600", children: "=" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-primary font-bold", children: resultX.toLocaleString("pt-BR", { maximumFractionDigits: 4 }) })
+                ] }) : /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 flex-wrap", children: [
+                  /* @__PURE__ */ jsx("span", { children: "X = (A × B) ÷ C" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-gray-600", children: "→" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    "(",
+                    valueA,
+                    " × ",
+                    valueB,
+                    ") ÷ ",
+                    valueC
+                  ] }),
+                  /* @__PURE__ */ jsx("span", { className: "text-gray-600", children: "=" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-primary font-bold", children: resultX.toLocaleString("pt-BR", { maximumFractionDigits: 4 }) })
+                ] })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Entenda a Lógica"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block mb-1", children: "Proporção Direta (Mais comum)" }),
+                    /* @__PURE__ */ jsx("p", { children: "Quando um lado aumenta, o outro também aumenta." }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs mt-1 text-gray-500", children: "Ex: Se 1kg custa R$40, 2kg custam R$80." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-4", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block mb-1", children: "Proporção Inversa" }),
+                    /* @__PURE__ */ jsx("p", { children: "Quando um lado aumenta, o outro diminui." }),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs mt-1 text-gray-500", children: "Ex: Mais velocidade = Menos tempo de viagem." })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Lightbulb, { className: "w-5 h-5" }),
+                  "Dica Prática"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: 'Na dúvida, faça a pergunta: "Se eu aumentar o primeiro valor, o segundo deve aumentar ou diminuir?". Se aumentar, é Direta. Se diminuir, é Inversa.' })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "mt-12 space-y-8", children: /* @__PURE__ */ jsxs("section", { children: [
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-4 text-white", children: "Exemplos do Dia a Dia" }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Porcentagem (Direta)" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-2", children: '"Se R$ 200 é 100%, quanto é 30%?"' }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-[#0a0a0a] p-3 rounded-lg text-xs font-mono text-gray-300", children: [
+                  "200 --- 100",
+                  /* @__PURE__ */ jsx("br", {}),
+                  "X --- 30"
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Velocidade (Inversa)" }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-2", children: '"A 100km/h levo 2h. A 50km/h levo quanto?"' }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-[#0a0a0a] p-3 rounded-lg text-xs font-mono text-gray-300", children: [
+                  "100 --- 2",
+                  /* @__PURE__ */ jsx("br", {}),
+                  "50 --- X"
+                ] })
+              ] })
+            ] })
+          ] }) })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function PercentageCalculatorPage() {
+  const [mode, setMode] = useState("percentageOf");
+  const [val1, setVal1] = useState("");
+  const [val2, setVal2] = useState("");
+  const [result, setResult] = useState(null);
+  const calculate = () => {
+    const v1 = parseFloat(val1.replace(",", "."));
+    const v2 = parseFloat(val2.replace(",", "."));
+    if (isNaN(v1) || isNaN(v2)) {
+      setResult(null);
+      return;
+    }
+    let res;
+    switch (mode) {
+      case "percentageOf":
+        res = v1 / 100 * v2;
+        break;
+      case "percentageChange":
+        if (v1 === 0) {
+          setResult(null);
+          return;
+        }
+        res = (v2 - v1) / v1 * 100;
+        break;
+      case "percentageRepresentation":
+        if (v2 === 0) {
+          setResult(null);
+          return;
+        }
+        res = v1 / v2 * 100;
+        break;
+    }
+    setResult(res);
+  };
+  useEffect(() => {
+    calculate();
+  }, [val1, val2, mode]);
+  const handleInput = (value, setter) => {
+    if (/^[\d.,-]*$/.test(value)) {
+      setter(value);
+    }
+  };
+  const getModeTitle = () => {
+    switch (mode) {
+      case "percentageOf":
+        return "Quanto é X% de Y?";
+      case "percentageChange":
+        return "Qual foi o aumento percentual?";
+      case "percentageRepresentation":
+        return "X representa quantos % de Y?";
+    }
+  };
+  const getModeDescription = () => {
+    switch (mode) {
+      case "percentageOf":
+        return "Descubra o valor correspondente a uma porcentagem.";
+      case "percentageChange":
+        return "Calcule a variação (aumento ou queda) entre dois valores.";
+      case "percentageRepresentation":
+        return "Descubra qual a proporção de um valor em relação ao total.";
+    }
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Porcentagem - Descontos e Aumentos Online",
+        description: "Quanto é X% de Y? Qual foi o aumento percentual? Calcule descontos, lucros e variações com nossa calculadora de porcentagem gratuita.",
+        canonical: "/calculadoras/porcentagem"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Percent$1, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Porcentagem" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Chega de dúvidas na hora da conta. Calcule descontos, aumentos e proporções." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap gap-2 mb-6", children: [
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    onClick: () => {
+                      setMode("percentageOf");
+                      setVal1("");
+                      setVal2("");
+                      setResult(null);
+                    },
+                    className: `px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${mode === "percentageOf" ? "bg-primary text-black shadow-lg" : "bg-[#0a0a0a] text-gray-400 hover:text-white border border-white/10"}`,
+                    children: [
+                      /* @__PURE__ */ jsx(Calculator, { className: "w-4 h-4" }),
+                      "% de Valor"
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    onClick: () => {
+                      setMode("percentageChange");
+                      setVal1("");
+                      setVal2("");
+                      setResult(null);
+                    },
+                    className: `px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${mode === "percentageChange" ? "bg-primary text-black shadow-lg" : "bg-[#0a0a0a] text-gray-400 hover:text-white border border-white/10"}`,
+                    children: [
+                      /* @__PURE__ */ jsx(TrendingUp, { className: "w-4 h-4" }),
+                      "Variação"
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    onClick: () => {
+                      setMode("percentageRepresentation");
+                      setVal1("");
+                      setVal2("");
+                      setResult(null);
+                    },
+                    className: `px-3 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${mode === "percentageRepresentation" ? "bg-primary text-black shadow-lg" : "bg-[#0a0a0a] text-gray-400 hover:text-white border border-white/10"}`,
+                    children: [
+                      /* @__PURE__ */ jsx(PieChart, { className: "w-4 h-4" }),
+                      "Representação"
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsx("h2", { className: "text-xl font-semibold mb-2", children: getModeTitle() }),
+              /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-400 mb-6", children: getModeDescription() }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+                mode === "percentageOf" && /* @__PURE__ */ jsxs(Fragment, { children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-medium", children: "Quanto é" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative flex-1", children: [
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "text",
+                          value: val1,
+                          onChange: (e) => handleInput(e.target.value, setVal1),
+                          className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                          placeholder: "20"
+                        }
+                      ),
+                      /* @__PURE__ */ jsx("span", { className: "absolute right-4 top-1/2 -translate-y-1/2 text-gray-500", children: "%" })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-medium", children: "de" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative flex-1", children: [
+                      /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "text",
+                          value: val2,
+                          onChange: (e) => handleInput(e.target.value, setVal2),
+                          className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 pl-10 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                          placeholder: "500,00"
+                        }
+                      )
+                    ] })
+                  ] })
+                ] }),
+                mode === "percentageChange" && /* @__PURE__ */ jsxs(Fragment, { children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-medium w-24", children: "Valor Inicial" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative flex-1", children: [
+                      /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "text",
+                          value: val1,
+                          onChange: (e) => handleInput(e.target.value, setVal1),
+                          className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 pl-10 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                          placeholder: "2000,00"
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-medium w-24", children: "Valor Final" }),
+                    /* @__PURE__ */ jsxs("div", { className: "relative flex-1", children: [
+                      /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                      /* @__PURE__ */ jsx(
+                        "input",
+                        {
+                          type: "text",
+                          value: val2,
+                          onChange: (e) => handleInput(e.target.value, setVal2),
+                          className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 pl-10 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                          placeholder: "2500,00"
+                        }
+                      )
+                    ] })
+                  ] })
+                ] }),
+                mode === "percentageRepresentation" && /* @__PURE__ */ jsxs(Fragment, { children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-medium", children: "O valor" }),
+                    /* @__PURE__ */ jsx("div", { className: "relative flex-1", children: /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: val1,
+                        onChange: (e) => handleInput(e.target.value, setVal1),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                        placeholder: "600"
+                      }
+                    ) })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3", children: [
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400 font-medium", children: "representa quantos % de" }),
+                    /* @__PURE__ */ jsx("div", { className: "relative flex-1", children: /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: val2,
+                        onChange: (e) => handleInput(e.target.value, setVal2),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center",
+                        placeholder: "3000"
+                      }
+                    ) })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Resultado" }),
+                  /* @__PURE__ */ jsx("div", { className: "text-4xl font-bold text-center text-primary", children: result !== null ? mode === "percentageOf" ? result.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : `${result > 0 && mode === "percentageChange" ? "+" : ""}${result.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%` : "---" }),
+                  result !== null && mode === "percentageChange" && /* @__PURE__ */ jsx("p", { className: `text-center text-sm mt-2 font-medium ${result > 0 ? "text-green-400" : result < 0 ? "text-red-400" : "text-gray-400"}`, children: result > 0 ? "Aumento" : result < 0 ? "Queda" : "Sem variação" })
+                ] })
+              ] }),
+              result !== null && /* @__PURE__ */ jsxs("div", { className: "mt-6 p-4 bg-[#0a0a0a] rounded-xl border border-white/5 text-sm text-gray-400", children: [
+                /* @__PURE__ */ jsx("p", { className: "mb-2 font-semibold text-white", children: "Cálculo realizado:" }),
+                mode === "percentageOf" && /* @__PURE__ */ jsxs("p", { children: [
+                  "(",
+                  val1,
+                  " ÷ 100) × ",
+                  val2,
+                  " = ",
+                  /* @__PURE__ */ jsx("span", { className: "text-primary font-bold", children: result.toLocaleString("pt-BR", { maximumFractionDigits: 2 }) })
+                ] }),
+                mode === "percentageChange" && /* @__PURE__ */ jsxs("p", { children: [
+                  "((",
+                  val2,
+                  " - ",
+                  val1,
+                  ") ÷ ",
+                  val1,
+                  ") × 100 = ",
+                  /* @__PURE__ */ jsxs("span", { className: "text-primary font-bold", children: [
+                    result.toLocaleString("pt-BR", { maximumFractionDigits: 2 }),
+                    "%"
+                  ] })
+                ] }),
+                mode === "percentageRepresentation" && /* @__PURE__ */ jsxs("p", { children: [
+                  "(",
+                  val1,
+                  " ÷ ",
+                  val2,
+                  ") × 100 = ",
+                  /* @__PURE__ */ jsxs("span", { className: "text-primary font-bold", children: [
+                    result.toLocaleString("pt-BR", { maximumFractionDigits: 2 }),
+                    "%"
+                  ] })
+                ] })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Entenda as Fórmulas"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block mb-1", children: "1. Quanto é X% de Y?" }),
+                    /* @__PURE__ */ jsx("p", { children: 'Clássico cálculo de "parte de um todo". Multiplique a porcentagem pelo valor e divida por 100.' })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-4", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block mb-1", children: "2. Aumento/Queda Percentual" }),
+                    /* @__PURE__ */ jsx("p", { children: "Descobre a variação entre dois valores. Subtraia o final pelo inicial, divida pelo inicial e multiplique por 100." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-4", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block mb-1", children: "3. Representação Percentual" }),
+                    /* @__PURE__ */ jsx("p", { children: "Quanto um valor representa do total. Divida a parte pelo todo e multiplique por 100." })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Lightbulb, { className: "w-5 h-5" }),
+                  "Dica de Compras"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: 'Vai comprar com desconto à vista? Use o "Fator de Multiplicação". Se o desconto é 15%, você paga 85%. Multiplique o preço por 0,85 para saber o valor final na hora.' })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsx("div", { className: "mt-12 space-y-8", children: /* @__PURE__ */ jsxs("section", { children: [
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold mb-4 text-white", children: "Exemplos Práticos" }),
+            /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Desconto" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                  "20% de R$ 500,00",
+                  /* @__PURE__ */ jsx("br", {}),
+                  "(20 ÷ 100) × 500 = ",
+                  /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "R$ 100,00" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Aumento Salarial" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                  "De R$ 2.000 para R$ 2.500",
+                  /* @__PURE__ */ jsx("br", {}),
+                  "(500 ÷ 2.000) × 100 = ",
+                  /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "25%" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "font-semibold text-white mb-2", children: "Orçamento" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-400", children: [
+                  "Gasto de 600 em ganho de 3.000",
+                  /* @__PURE__ */ jsx("br", {}),
+                  "(600 ÷ 3.000) × 100 = ",
+                  /* @__PURE__ */ jsx("strong", { className: "text-primary", children: "20%" })
+                ] })
+              ] })
+            ] })
+          ] }) })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function HoursCalculatorPage() {
+  const [rows, setRows] = useState([
+    { id: "1", operation: "add", value: "" },
+    { id: "2", operation: "add", value: "" }
+  ]);
+  const [result, setResult] = useState("00:00");
+  const [isNegative, setIsNegative] = useState(false);
+  const addRow = () => {
+    setRows([...rows, { id: Math.random().toString(36).substr(2, 9), operation: "add", value: "" }]);
+  };
+  const removeRow = (id) => {
+    if (rows.length > 2) {
+      setRows(rows.filter((row) => row.id !== id));
+    }
+  };
+  const updateRow = (id, field, value) => {
+    setRows(rows.map((row) => row.id === id ? { ...row, [field]: value } : row));
+  };
+  const reset = () => {
+    setRows([
+      { id: "1", operation: "add", value: "" },
+      { id: "2", operation: "add", value: "" }
+    ]);
+  };
+  const timeToMinutes = (time) => {
+    if (!time) return 0;
+    const [hours, minutes] = time.split(":").map(Number);
+    if (isNaN(hours) || isNaN(minutes)) return 0;
+    return hours * 60 + minutes;
+  };
+  const minutesToTime = (totalMinutes) => {
+    const absMinutes = Math.abs(totalMinutes);
+    const hours = Math.floor(absMinutes / 60);
+    const minutes = absMinutes % 60;
+    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+  };
+  useEffect(() => {
+    let totalMinutes = 0;
+    rows.forEach((row, index) => {
+      const minutes = timeToMinutes(row.value);
+      if (row.operation === "add") {
+        totalMinutes += minutes;
+      } else {
+        totalMinutes -= minutes;
+      }
+    });
+    setIsNegative(totalMinutes < 0);
+    setResult(minutesToTime(totalMinutes));
+  }, [rows]);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Horas Online - Soma e Subtração de Minutos",
+        description: "Precisa fechar a folha de ponto? Some e subtraia horas e minutos facilmente. Ferramenta gratuita para RH, funcionários e controle de banco de horas.",
+        canonical: "/calculadoras/horas"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Clock, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Horas" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Chega de errar a conta do ponto. Some ou subtraia horas sem complicação." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsx("div", { className: "space-y-4", children: rows.map((row, index) => /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 animate-in fade-in slide-in-from-left-4 duration-300", children: [
+                /* @__PURE__ */ jsxs(
+                  "select",
+                  {
+                    value: row.operation,
+                    onChange: (e) => updateRow(row.id, "operation", e.target.value),
+                    className: `bg-[#0a0a0a] border border-white/10 rounded-lg py-3 px-2 text-center focus:outline-none focus:border-primary/50 transition-all font-bold w-16 ${row.operation === "add" ? "text-green-400" : "text-red-400"}`,
+                    children: [
+                      /* @__PURE__ */ jsx("option", { value: "add", children: "+" }),
+                      /* @__PURE__ */ jsx("option", { value: "subtract", children: "-" })
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsx("div", { className: "relative flex-1", children: /* @__PURE__ */ jsx(
+                  "input",
+                  {
+                    type: "time",
+                    value: row.value,
+                    onChange: (e) => updateRow(row.id, "value", e.target.value),
+                    className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 transition-all text-center font-mono text-lg"
+                  }
+                ) }),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: () => removeRow(row.id),
+                    disabled: rows.length <= 2,
+                    className: `p-3 rounded-lg border border-white/5 transition-colors ${rows.length <= 2 ? "text-gray-600 cursor-not-allowed opacity-50" : "text-gray-400 hover:text-red-400 hover:bg-red-500/10 hover:border-red-500/20"}`,
+                    title: "Remover linha",
+                    children: /* @__PURE__ */ jsx(Trash2, { className: "w-5 h-5" })
+                  }
+                )
+              ] }, row.id)) }),
+              /* @__PURE__ */ jsxs("div", { className: "flex gap-3 mt-6", children: [
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    onClick: addRow,
+                    className: "flex-1 py-3 px-4 bg-[#0a0a0a] hover:bg-white/5 border border-white/10 rounded-xl text-sm font-medium transition-all flex items-center justify-center gap-2 text-gray-300 hover:text-white group",
+                    children: [
+                      /* @__PURE__ */ jsx(Plus, { className: "w-4 h-4 group-hover:scale-110 transition-transform" }),
+                      "Adicionar Linha"
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsx(
+                  "button",
+                  {
+                    onClick: reset,
+                    className: "py-3 px-4 bg-[#0a0a0a] hover:bg-white/5 border border-white/10 rounded-xl text-sm font-medium transition-all text-gray-300 hover:text-white",
+                    title: "Limpar tudo",
+                    children: /* @__PURE__ */ jsx(RotateCcw, { className: "w-4 h-4" })
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Resultado Total" }),
+                /* @__PURE__ */ jsxs("div", { className: `text-5xl font-bold text-center font-mono tracking-wider ${isNegative ? "text-red-400" : "text-primary"}`, children: [
+                  isNegative ? "-" : "",
+                  result
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-center text-sm text-gray-500 mt-2", children: isNegative ? "Saldo Negativo" : "Saldo Positivo" })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Por que usar esta calculadora?"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm leading-relaxed", children: [
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    "O sistema de tempo é ",
+                    /* @__PURE__ */ jsx("strong", { children: "sexagesimal" }),
+                    " (base 60), enquanto nossa matemática comum é decimal (base 10)."
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "bg-red-500/10 border border-red-500/20 p-4 rounded-xl", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-red-400 block mb-1", children: "O Erro Comum:" }),
+                    /* @__PURE__ */ jsxs("p", { children: [
+                      "Somar 8h50 + 20min na calculadora normal dá ",
+                      /* @__PURE__ */ jsx("strong", { children: "8,70" }),
+                      " (errado!)."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "bg-green-500/10 border border-green-500/20 p-4 rounded-xl", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-green-400 block mb-1", children: "O Jeito Certo:" }),
+                    /* @__PURE__ */ jsxs("p", { children: [
+                      "Nossa ferramenta converte os minutos corretamente: 08:50 + 00:20 = ",
+                      /* @__PURE__ */ jsx("strong", { children: "09:10" }),
+                      "."
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Lightbulb, { className: "w-5 h-5" }),
+                  "Dica de Ouro"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: 'O formato "8h30" é diferente de "8,5h". Se você precisa multiplicar as horas pelo valor em dinheiro (R$), use sempre o formato decimal (8,5).' })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4 text-white", children: "Exemplos de Uso" }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-3 text-sm text-gray-400", children: [
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                    /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("span", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Somar Horas:" }),
+                      " Ideal para fechar o total da semana."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                    /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("span", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Subtrair Horas:" }),
+                      " Calcule horas trabalhadas descontando o almoço."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-2", children: [
+                    /* @__PURE__ */ jsx("span", { className: "w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("span", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Banco de Horas:" }),
+                      " Descubra seu saldo positivo ou negativo."
+                    ] })
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function TileBricksCalculatorPage() {
+  const [mode, setMode] = useState("bricks");
+  const [wallWidth, setWallWidth] = useState("");
+  const [wallHeight, setWallHeight] = useState("");
+  const [totalArea, setTotalArea] = useState(null);
+  const [margin, setMargin] = useState("10");
+  const [brickType, setBrickType] = useState("baiano");
+  const [orientation, setOrientation] = useState("standing");
+  const [brickWidth, setBrickWidth] = useState("");
+  const [brickHeight, setBrickHeight] = useState("");
+  const [tileWidth, setTileWidth] = useState("");
+  const [tileLength, setTileLength] = useState("");
+  const [includeSkirting, setIncludeSkirting] = useState(false);
+  const [result, setResult] = useState(null);
+  useEffect(() => {
+    if (mode === "bricks") {
+      if (brickType === "baiano") {
+        if (orientation === "standing") {
+          setBrickWidth("19");
+          setBrickHeight("29");
+        } else {
+          setBrickWidth("14");
+          setBrickHeight("24");
+        }
+      } else if (brickType === "macico") {
+        if (orientation === "standing") {
+          setBrickWidth("5");
+          setBrickHeight("20");
+        } else {
+          setBrickWidth("10");
+          setBrickHeight("20");
+        }
+      }
+    }
+  }, [brickType, orientation, mode]);
+  useEffect(() => {
+    if (includeSkirting) {
+      setMargin("15");
+    } else {
+      setMargin("10");
+    }
+  }, [includeSkirting]);
+  const calculate = () => {
+    const w = parseFloat(wallWidth.replace(",", "."));
+    const h = parseFloat(wallHeight.replace(",", "."));
+    if (isNaN(w) || isNaN(h)) {
+      setTotalArea(null);
+      setResult(null);
+      return;
+    }
+    const area = w * h;
+    setTotalArea(area);
+    let unitArea = 0;
+    if (mode === "bricks") {
+      const bw = parseFloat(brickWidth.replace(",", "."));
+      const bh = parseFloat(brickHeight.replace(",", "."));
+      if (isNaN(bw) || isNaN(bh) || bw === 0 || bh === 0) return;
+      unitArea = bw / 100 * (bh / 100);
+    } else {
+      const tw = parseFloat(tileWidth.replace(",", "."));
+      const tl = parseFloat(tileLength.replace(",", "."));
+      if (isNaN(tw) || isNaN(tl) || tw === 0 || tl === 0) return;
+      unitArea = tw / 100 * (tl / 100);
+    }
+    if (unitArea > 0) {
+      const baseQty = area / unitArea;
+      const marginVal = parseFloat(margin) || 0;
+      const finalQty = baseQty * (1 + marginVal / 100);
+      setResult(Math.ceil(finalQty));
+    }
+  };
+  useEffect(() => {
+    calculate();
+  }, [wallWidth, wallHeight, brickWidth, brickHeight, tileWidth, tileLength, margin, mode]);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Tijolos e Pisos - Quantidade por M²",
+        description: "Evite desperdício na obra. Calcule quantos tijolos ou caixas de piso comprar, considerando a área total e a margem de quebra de 10%.",
+        canonical: "/calculadoras/tijolos-pisos"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Layers$1, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Materiais" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Tijolos e Pisos: descubra a quantidade exata e evite sobras." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex p-1 bg-[#0a0a0a] rounded-xl mb-6 border border-white/10", children: [
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    onClick: () => setMode("bricks"),
+                    className: `flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${mode === "bricks" ? "bg-primary text-black shadow-lg" : "text-gray-400 hover:text-white"}`,
+                    children: [
+                      /* @__PURE__ */ jsx(Grid, { className: "w-4 h-4" }),
+                      "Tijolos"
+                    ]
+                  }
+                ),
+                /* @__PURE__ */ jsxs(
+                  "button",
+                  {
+                    onClick: () => setMode("tiles"),
+                    className: `flex-1 py-2 px-4 rounded-lg text-sm font-medium transition-all flex items-center justify-center gap-2 ${mode === "tiles" ? "bg-primary text-black shadow-lg" : "text-gray-400 hover:text-white"}`,
+                    children: [
+                      /* @__PURE__ */ jsx(Layers$1, { className: "w-4 h-4" }),
+                      "Pisos"
+                    ]
+                  }
+                )
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 mb-6", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-sm font-medium text-gray-300 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Ruler, { className: "w-4 h-4 text-primary" }),
+                  "Dimensões da Área (Parede ou Chão)"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Largura (m)" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: wallWidth,
+                        onChange: (e) => setWallWidth(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center",
+                        placeholder: "3.00"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Altura/Comp. (m)" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: wallHeight,
+                        onChange: (e) => setWallHeight(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center",
+                        placeholder: "2.80"
+                      }
+                    )
+                  ] })
+                ] })
+              ] }),
+              mode === "bricks" && /* @__PURE__ */ jsxs("div", { className: "space-y-4 mb-6 animate-in fade-in slide-in-from-top-4 duration-300", children: [
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Tipo de Tijolo" }),
+                    /* @__PURE__ */ jsxs(
+                      "select",
+                      {
+                        value: brickType,
+                        onChange: (e) => setBrickType(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm",
+                        children: [
+                          /* @__PURE__ */ jsx("option", { value: "baiano", children: "Baiano (6 furos)" }),
+                          /* @__PURE__ */ jsx("option", { value: "macico", children: "Maciço (Barro)" }),
+                          /* @__PURE__ */ jsx("option", { value: "custom", children: "Outro" })
+                        ]
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Assentamento" }),
+                    /* @__PURE__ */ jsxs(
+                      "select",
+                      {
+                        value: orientation,
+                        onChange: (e) => setOrientation(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm",
+                        children: [
+                          /* @__PURE__ */ jsx("option", { value: "standing", children: "Em pé (fina)" }),
+                          /* @__PURE__ */ jsx("option", { value: "lying", children: "Deitado (grossa)" })
+                        ]
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Largura Peça (cm)" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: brickWidth,
+                        onChange: (e) => {
+                          setBrickWidth(e.target.value);
+                          setBrickType("custom");
+                        },
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Altura Peça (cm)" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: brickHeight,
+                        onChange: (e) => {
+                          setBrickHeight(e.target.value);
+                          setBrickType("custom");
+                        },
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center"
+                      }
+                    )
+                  ] })
+                ] })
+              ] }),
+              mode === "tiles" && /* @__PURE__ */ jsxs("div", { className: "space-y-4 mb-6 animate-in fade-in slide-in-from-top-4 duration-300", children: [
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Largura Peça (cm)" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: tileWidth,
+                        onChange: (e) => setTileWidth(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center",
+                        placeholder: "60"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Comp. Peça (cm)" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: tileLength,
+                        onChange: (e) => setTileLength(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center",
+                        placeholder: "60"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 bg-[#0a0a0a] p-3 rounded-xl border border-white/10", children: [
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "checkbox",
+                      id: "skirting",
+                      checked: includeSkirting,
+                      onChange: (e) => setIncludeSkirting(e.target.checked),
+                      className: "w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary bg-gray-800"
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("label", { htmlFor: "skirting", className: "text-sm text-gray-300 cursor-pointer select-none", children: "Incluir Rodapé (+5% margem)" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mb-6", children: [
+                /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Margem de Segurança (%)" }),
+                /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: margin,
+                      onChange: (e) => setMargin(e.target.value),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center"
+                    }
+                  ),
+                  /* @__PURE__ */ jsx("span", { className: "absolute right-4 top-1/2 -translate-y-1/2 text-gray-500", children: "%" })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Quantidade Estimada" }),
+                /* @__PURE__ */ jsx("div", { className: "text-5xl font-bold text-center text-primary", children: result !== null ? result : "---" }),
+                /* @__PURE__ */ jsxs("p", { className: "text-center text-sm text-gray-500 mt-2", children: [
+                  "unidades ",
+                  totalArea ? `(para ${totalArea.toLocaleString("pt-BR")} m²)` : ""
+                ] })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Como calcular sem erro?"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm leading-relaxed", children: [
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    "O segredo é entender a relação entre a ",
+                    /* @__PURE__ */ jsx("strong", { children: "Área Total" }),
+                    " e a ",
+                    /* @__PURE__ */ jsx("strong", { children: "Área da Peça" }),
+                    ", nunca esquecendo da margem de quebra."
+                  ] }),
+                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 list-disc pl-4", children: [
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Área Total:" }),
+                      " Largura x Altura da parede (ou chão)."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Área da Peça:" }),
+                      " Largura x Altura do tijolo/piso (em metros)."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Divisão:" }),
+                      " Área Total ÷ Área da Peça."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Margem:" }),
+                      " Adicione 10% (ou mais para recortes)."
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-yellow-400", children: [
+                  /* @__PURE__ */ jsx(Info, { className: "w-5 h-5" }),
+                  "Dica de Rodapé"
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+                  "Se você vai usar o próprio piso para fazer o rodapé, aumente a margem de segurança para ",
+                  /* @__PURE__ */ jsx("strong", { children: "15% a 20%" }),
+                  " para cobrir os recortes lineares."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4 text-white", children: "Rendimento Médio" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-3 text-sm text-gray-400", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Tijolo Baiano (6 furos)" }),
+                    /* @__PURE__ */ jsx("p", { children: "Em pé (parede 15cm): 25 a 28 peças/m²" }),
+                    /* @__PURE__ */ jsx("p", { children: "Deitado (parede 25cm): 38 a 42 peças/m²" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-3", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Tijolo Maciço" }),
+                    /* @__PURE__ */ jsx("p", { children: "Espelho (em pé): 40 a 45 peças/m²" }),
+                    /* @__PURE__ */ jsx("p", { children: "Deitado (parede grossa): 80 a 90 peças/m²" })
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function TravelCostCalculatorPage() {
+  const [distance, setDistance] = useState("");
+  const [consumption, setConsumption] = useState("");
+  const [fuelPrice, setFuelPrice] = useState("");
+  const [tolls, setTolls] = useState("");
+  const [isRoundTrip, setIsRoundTrip] = useState(false);
+  const [passengers, setPassengers] = useState("1");
+  const [totalCost, setTotalCost] = useState(null);
+  const [fuelCost, setFuelCost] = useState(null);
+  const [costPerPerson, setCostPerPerson] = useState(null);
+  const [litersNeeded, setLitersNeeded] = useState(null);
+  const calculate = () => {
+    const dist = parseFloat(distance.replace(",", "."));
+    const cons = parseFloat(consumption.replace(",", "."));
+    const price = parseFloat(fuelPrice.replace(",", "."));
+    const tollCost = parseFloat(tolls.replace(",", ".")) || 0;
+    const pass = parseInt(passengers) || 1;
+    if (isNaN(dist) || isNaN(cons) || isNaN(price) || dist === 0 || cons === 0) {
+      setTotalCost(null);
+      return;
+    }
+    const effectiveDistance = isRoundTrip ? dist * 2 : dist;
+    const effectiveTolls = isRoundTrip ? tollCost * 2 : tollCost;
+    const liters = effectiveDistance / cons;
+    const costFuel = liters * price;
+    const total = costFuel + effectiveTolls;
+    const perPerson = total / pass;
+    setLitersNeeded(liters);
+    setFuelCost(costFuel);
+    setTotalCost(total);
+    setCostPerPerson(perPerson);
+  };
+  useEffect(() => {
+    calculate();
+  }, [distance, consumption, fuelPrice, tolls, isRoundTrip, passengers]);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Viagem - Custo de Combustível e Pedágio",
+        description: "Vai viajar de carro? Simule o custo total da viagem. Calcule o gasto com gasolina, etanol e pedágios para planejar suas férias sem sustos.",
+        canonical: "/calculadoras/custo-viagem"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Car, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Viagem" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Planeje seu orçamento: combustível, pedágios e divisão de custos." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsx("div", { className: "space-y-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 mb-6", children: [
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx(MapPin, { className: "w-3 h-3" }),
+                    " Distância (km)"
+                  ] }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: distance,
+                      onChange: (e) => setDistance(e.target.value),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all",
+                      placeholder: "Ex: 400"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(Fuel, { className: "w-3 h-3" }),
+                      " Consumo (km/l)"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: consumption,
+                        onChange: (e) => setConsumption(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all",
+                        placeholder: "Ex: 10"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(DollarSign, { className: "w-3 h-3" }),
+                      " Preço (R$/l)"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: fuelPrice,
+                        onChange: (e) => setFuelPrice(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all",
+                        placeholder: "Ex: 5.50"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx(DollarSign, { className: "w-3 h-3" }),
+                    " Total Pedágios (R$)"
+                  ] }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      value: tolls,
+                      onChange: (e) => setTolls(e.target.value),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all",
+                      placeholder: "Ex: 50.00"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between bg-[#0a0a0a] p-3 rounded-xl border border-white/10", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "checkbox",
+                        id: "roundTrip",
+                        checked: isRoundTrip,
+                        onChange: (e) => setIsRoundTrip(e.target.checked),
+                        className: "w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary bg-gray-800"
+                      }
+                    ),
+                    /* @__PURE__ */ jsx("label", { htmlFor: "roundTrip", className: "text-sm text-gray-300 cursor-pointer select-none", children: "Ida e Volta" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsx(Users, { className: "w-4 h-4 text-gray-500" }),
+                    /* @__PURE__ */ jsx(
+                      "select",
+                      {
+                        value: passengers,
+                        onChange: (e) => setPassengers(e.target.value),
+                        className: "bg-transparent text-sm text-gray-300 focus:outline-none text-right",
+                        children: [1, 2, 3, 4, 5].map((n) => /* @__PURE__ */ jsxs("option", { value: n, children: [
+                          n,
+                          " passageiro",
+                          n > 1 ? "s" : ""
+                        ] }, n))
+                      }
+                    )
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Custo Total da Viagem" }),
+                /* @__PURE__ */ jsx("div", { className: "text-5xl font-bold text-center text-primary mb-2", children: totalCost !== null ? `R$ ${totalCost.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : "---" }),
+                totalCost !== null && /* @__PURE__ */ jsxs("div", { className: "space-y-2 mt-6 text-sm", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-gray-400", children: [
+                    /* @__PURE__ */ jsxs("span", { children: [
+                      "Combustível (",
+                      litersNeeded == null ? void 0 : litersNeeded.toFixed(1),
+                      "L):"
+                    ] }),
+                    /* @__PURE__ */ jsxs("span", { className: "text-white", children: [
+                      "R$ ",
+                      fuelCost == null ? void 0 : fuelCost.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-gray-400", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Pedágios:" }),
+                    /* @__PURE__ */ jsxs("span", { className: "text-white", children: [
+                      "R$ ",
+                      (isRoundTrip ? (parseFloat(tolls.replace(",", ".")) || 0) * 2 : parseFloat(tolls.replace(",", ".")) || 0).toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                    ] })
+                  ] }),
+                  parseInt(passengers) > 1 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-primary font-medium pt-2 border-t border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Por pessoa:" }),
+                    /* @__PURE__ */ jsxs("span", { children: [
+                      "R$ ",
+                      costPerPerson == null ? void 0 : costPerPerson.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                    ] })
+                  ] })
+                ] })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Como funciona o cálculo?"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm leading-relaxed", children: [
+                  /* @__PURE__ */ jsx("p", { children: "Para chegar ao valor final, cruzamos três informações essenciais:" }),
+                  /* @__PURE__ */ jsxs("ul", { className: "space-y-2 list-disc pl-4", children: [
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Consumo:" }),
+                      " Distância ÷ Autonomia (km/l) = Litros Necessários."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Combustível:" }),
+                      " Litros × Preço Médio."
+                    ] }),
+                    /* @__PURE__ */ jsxs("li", { children: [
+                      /* @__PURE__ */ jsx("strong", { children: "Pedágios:" }),
+                      " Soma de todas as tarifas do trajeto."
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-green-500/10 p-6 rounded-2xl border border-green-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-green-400", children: [
+                  /* @__PURE__ */ jsx(DollarSign, { className: "w-5 h-5" }),
+                  "Dicas de Economia"
+                ] }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-300", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("strong", { children: "Calibre os Pneus:" }),
+                    " Pneus murchos aumentam o consumo em até 3%."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("strong", { children: "Ar vs. Janelas:" }),
+                    " Na estrada, prefira o ar condicionado para evitar resistência aerodinâmica."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("strong", { children: "Tags de Pedágio:" }),
+                    " Muitas oferecem 5% de desconto na tarifa."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4 text-white", children: "Dúvidas Frequentes" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-3 text-sm text-gray-400", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Etanol ou Gasolina?" }),
+                    /* @__PURE__ */ jsx("p", { children: "Na estrada, gasolina costuma ser melhor pela autonomia (rende ~30% mais), evitando paradas." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-3", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Divisão de Custos" }),
+                    /* @__PURE__ */ jsx("p", { children: 'A etiqueta da "carona amiga" sugere dividir apenas os custos variáveis (Combustível + Pedágio).' })
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function IMCCalculatorPage() {
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [imc, setImc] = useState(null);
+  const [classification, setClassification] = useState("");
+  const [colorClass, setColorClass] = useState("");
+  const calculate = () => {
+    const w = parseFloat(weight.replace(",", "."));
+    const hCm = parseFloat(height.replace(",", "."));
+    if (isNaN(w) || isNaN(hCm) || w === 0 || hCm === 0) {
+      setImc(null);
+      setClassification("");
+      setColorClass("");
+      return;
+    }
+    const hM = hCm / 100;
+    const calculatedImc = w / (hM * hM);
+    setImc(calculatedImc);
+    if (calculatedImc < 18.5) {
+      setClassification("Magreza");
+      setColorClass("text-blue-400");
+    } else if (calculatedImc < 24.9) {
+      setClassification("Normal");
+      setColorClass("text-green-400");
+    } else if (calculatedImc < 29.9) {
+      setClassification("Sobrepeso (Grau I)");
+      setColorClass("text-yellow-400");
+    } else if (calculatedImc < 39.9) {
+      setClassification("Obesidade (Grau II)");
+      setColorClass("text-orange-400");
+    } else {
+      setClassification("Obesidade Grave (Grau III)");
+      setColorClass("text-red-500");
+    }
+  };
+  useEffect(() => {
+    calculate();
+  }, [weight, height]);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de IMC Online - Índice de Massa Corporal",
+        description: "Calcule seu IMC gratuitamente. Descubra se você está no peso ideal, acima do peso ou com obesidade segundo a tabela oficial da OMS.",
+        canonical: "/calculadoras/imc"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Activity$1, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de IMC" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Índice de Massa Corporal: descubra se seu peso está ideal." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 mb-6", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(Scale, { className: "w-3 h-3" }),
+                      " Peso (kg)"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: weight,
+                        onChange: (e) => setWeight(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg",
+                        placeholder: "Ex: 80"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(Ruler, { className: "w-3 h-3" }),
+                      " Altura (cm)"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: height,
+                        onChange: (e) => setHeight(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg",
+                        placeholder: "Ex: 175"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Seu IMC é" }),
+                  /* @__PURE__ */ jsx("div", { className: `text-6xl font-bold text-center mb-2 ${colorClass || "text-gray-600"}`, children: imc !== null ? imc.toFixed(1) : "--.-" }),
+                  /* @__PURE__ */ jsx("p", { className: `text-center text-lg font-medium ${colorClass || "text-gray-500"}`, children: classification || "Aguardando dados..." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-sm font-semibold mb-4 text-gray-300 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Info, { className: "w-4 h-4" }),
+                  "Tabela de Classificação (OMS)"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-sm", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-blue-500/10 text-blue-300 border border-blue-500/20", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Menor que 18,5" }),
+                    /* @__PURE__ */ jsx("span", { children: "Magreza" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-green-500/10 text-green-300 border border-green-500/20", children: [
+                    /* @__PURE__ */ jsx("span", { children: "18,5 a 24,9" }),
+                    /* @__PURE__ */ jsx("span", { children: "Normal" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-yellow-500/10 text-yellow-300 border border-yellow-500/20", children: [
+                    /* @__PURE__ */ jsx("span", { children: "25,0 a 29,9" }),
+                    /* @__PURE__ */ jsx("span", { children: "Sobrepeso" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-orange-500/10 text-orange-300 border border-orange-500/20", children: [
+                    /* @__PURE__ */ jsx("span", { children: "30,0 a 39,9" }),
+                    /* @__PURE__ */ jsx("span", { children: "Obesidade II" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-red-500/10 text-red-300 border border-red-500/20", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Maior que 40,0" }),
+                    /* @__PURE__ */ jsx("span", { children: "Obesidade III" })
+                  ] })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "O que é o IMC?"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm leading-relaxed", children: [
+                  /* @__PURE__ */ jsx("p", { children: "O Índice de Massa Corporal (IMC) é a medida internacional usada pela OMS para avaliar se uma pessoa está no peso ideal." }),
+                  /* @__PURE__ */ jsx("p", { children: "É um cálculo simples que relaciona seu peso com a sua altura. Embora não meça diretamente a gordura corporal, é o melhor indicador inicial para riscos de saúde." }),
+                  /* @__PURE__ */ jsxs("div", { className: "bg-black/20 p-4 rounded-xl border border-white/5", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "block text-white mb-1", children: "Fórmula:" }),
+                    /* @__PURE__ */ jsx("code", { className: "text-primary", children: "IMC = Peso ÷ (Altura × Altura)" })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-yellow-400", children: [
+                  /* @__PURE__ */ jsx(User, { className: "w-5 h-5" }),
+                  "Limitações do IMC"
+                ] }),
+                /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300 mb-2", children: "O IMC é uma ferramenta de triagem, não um diagnóstico completo. Ele pode falhar em alguns casos:" }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-1 text-sm text-gray-400 list-disc pl-4", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Atletas:" }),
+                    " Músculos pesam mais que gordura."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Idosos:" }),
+                    " IMC levemente menor/maior pode ser normal."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Gestantes:" }),
+                    " Tabela padrão não se aplica."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Crianças:" }),
+                    " Usam curvas de crescimento específicas."
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4 text-white", children: "Dúvidas Frequentes" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-3 text-sm text-gray-400", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Qual o peso ideal?" }),
+                    /* @__PURE__ */ jsx("p", { children: "É uma faixa, não um número único. Para 1,70m, o peso saudável varia entre 53,5kg e 72kg." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-3", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "IMC alto é perigoso?" }),
+                    /* @__PURE__ */ jsx("p", { children: "Estatisticamente sim. Está ligado a riscos de diabetes, hipertensão e problemas cardíacos." })
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function WaterIntakeCalculatorPage() {
+  const [weight, setWeight] = useState("");
+  const [exerciseHours, setExerciseHours] = useState("");
+  const [waterGoal, setWaterGoal] = useState(null);
+  const [baseIntake, setBaseIntake] = useState(null);
+  const [exerciseExtra, setExerciseExtra] = useState(null);
+  const calculate = () => {
+    const w = parseFloat(weight.replace(",", "."));
+    const hours = parseFloat(exerciseHours.replace(",", ".")) || 0;
+    if (isNaN(w) || w === 0) {
+      setWaterGoal(null);
+      setBaseIntake(null);
+      setExerciseExtra(null);
+      return;
+    }
+    const base = w * 35;
+    const extra = hours * 500;
+    const total = base + extra;
+    setBaseIntake(base);
+    setExerciseExtra(extra);
+    setWaterGoal(total);
+  };
+  useEffect(() => {
+    calculate();
+  }, [weight, exerciseHours]);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Água Diária - Quantos litros devo beber?",
+        description: "Hidratação na medida certa. Calcule a quantidade ideal de água para o seu corpo com base no seu peso (Regra dos 35ml) e rotina de exercícios.",
+        canonical: "/calculadoras/agua"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(Droplets$1, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Calculadora de Água" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Descubra a meta diária exata para o seu corpo." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 mb-6", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(Scale, { className: "w-3 h-3" }),
+                      " Peso (kg)"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: weight,
+                        onChange: (e) => setWeight(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg",
+                        placeholder: "Ex: 70"
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                      /* @__PURE__ */ jsx(Timer, { className: "w-3 h-3" }),
+                      " Exercício Diário (horas)"
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: exerciseHours,
+                        onChange: (e) => setExerciseHours(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg",
+                        placeholder: "Ex: 1 (para 1 hora)"
+                      }
+                    ),
+                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-1 text-center", children: "Deixe em branco se não treinar." })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Sua Meta Diária" }),
+                  /* @__PURE__ */ jsx("div", { className: "text-5xl font-bold text-center text-blue-400 mb-2", children: waterGoal !== null ? `${(waterGoal / 1e3).toFixed(2)} Litros` : "---" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-center text-sm text-gray-500", children: [
+                    "ou ",
+                    waterGoal !== null ? Math.ceil(waterGoal) : "---",
+                    " ml"
+                  ] }),
+                  waterGoal !== null && /* @__PURE__ */ jsxs("div", { className: "mt-6 space-y-2 text-sm", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-gray-400", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Base (Peso x 35ml):" }),
+                      /* @__PURE__ */ jsxs("span", { className: "text-white", children: [
+                        baseIntake,
+                        " ml"
+                      ] })
+                    ] }),
+                    exerciseExtra && exerciseExtra > 0 ? /* @__PURE__ */ jsxs("div", { className: "flex justify-between text-gray-400", children: [
+                      /* @__PURE__ */ jsx("span", { children: "Extra (Exercício):" }),
+                      /* @__PURE__ */ jsxs("span", { className: "text-white", children: [
+                        "+",
+                        exerciseExtra,
+                        " ml"
+                      ] })
+                    ] }) : null
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-blue-400", children: [
+                  /* @__PURE__ */ jsx(Info, { className: "w-5 h-5" }),
+                  "Benefícios Imediatos"
+                ] }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-2 text-sm text-gray-300", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("strong", { children: "Desinchaço:" }),
+                    " O corpo para de reter líquido."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("strong", { children: "Foco:" }),
+                    " Melhora a concentração e energia."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    "• ",
+                    /* @__PURE__ */ jsx("strong", { children: "Pele:" }),
+                    " Mais hidratação e viço."
+                  ] })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "A Fórmula dos 35ml"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm leading-relaxed", children: [
+                  /* @__PURE__ */ jsx("p", { children: "A recomendação mais aceita para adultos saudáveis é simples:" }),
+                  /* @__PURE__ */ jsxs("div", { className: "bg-black/20 p-4 rounded-xl border border-white/5 text-center", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "block text-white mb-1 text-lg", children: "Peso (kg) × 35ml" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-primary", children: "= Meta Diária" })
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { children: "Exemplo: Uma pessoa de 70kg deve beber 2.450ml (2,45 Litros) por dia." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4 text-white", children: "Dúvidas Frequentes" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-3 text-sm text-gray-400", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "A regra de 2 litros vale para todos?" }),
+                    /* @__PURE__ */ jsx("p", { children: "Não! É uma média imprecisa. Uma pessoa de 50kg precisa de muito menos que uma de 100kg." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-3", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Quem treina precisa beber mais?" }),
+                    /* @__PURE__ */ jsx("p", { children: "Sim. Adicionamos cerca de 500ml a 1 litro extra para cada hora de atividade intensa." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-3", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Suco substitui água?" }),
+                    /* @__PURE__ */ jsx("p", { children: "Não. Sucos têm calorias e açúcar. Água pura deve ser a base da hidratação." })
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+const INGREDIENTS = [
+  { id: "water", name: "Água / Leite / Líquidos", density: 1 },
+  { id: "flour", name: "Farinha de Trigo", density: 120 / 240 },
+  // 120g per 240ml cup
+  { id: "sugar_refined", name: "Açúcar Refinado", density: 180 / 240 },
+  { id: "sugar_brown", name: "Açúcar Mascavo", density: 150 / 240 },
+  { id: "cocoa", name: "Chocolate em Pó", density: 90 / 240 },
+  { id: "cornstarch", name: "Amido de Milho (Maizena)", density: 150 / 240 },
+  { id: "oats", name: "Aveia em Flocos", density: 80 / 240 },
+  { id: "butter", name: "Manteiga", density: 200 / 240 },
+  { id: "rice", name: "Arroz Cru", density: 185 / 240 }
+];
+const UNITS = [
+  { id: "cup", name: "Xícara (240ml)", ml: 240, type: "volume" },
+  { id: "tbsp", name: "Colher de Sopa (15ml)", ml: 15, type: "volume" },
+  { id: "dsp", name: "Colher de Sobremesa (10ml)", ml: 10, type: "volume" },
+  { id: "tsp", name: "Colher de Chá (5ml)", ml: 5, type: "volume" },
+  { id: "ml", name: "Mililitros (ml)", ml: 1, type: "volume" },
+  { id: "g", name: "Gramas (g)", ml: 0, type: "weight" }
+  // Special handling
+];
+function CulinaryConverterPage() {
+  var _a2;
+  const [ingredientId, setIngredientId] = useState("flour");
+  const [amount, setAmount] = useState("1");
+  const [fromUnitId, setFromUnitId] = useState("cup");
+  const [toUnitId, setToUnitId] = useState("g");
+  const [result, setResult] = useState("---");
+  const calculate = () => {
+    const val = parseFloat(amount.replace(",", "."));
+    if (isNaN(val)) {
+      setResult("---");
+      return;
+    }
+    const ingredient = INGREDIENTS.find((i) => i.id === ingredientId);
+    const fromUnit = UNITS.find((u) => u.id === fromUnitId);
+    const toUnit = UNITS.find((u) => u.id === toUnitId);
+    if (!ingredient || !fromUnit || !toUnit) return;
+    let grams = 0;
+    if (fromUnit.type === "weight") {
+      grams = val;
+    } else {
+      grams = val * fromUnit.ml * ingredient.density;
+    }
+    let finalValue = 0;
+    if (toUnit.type === "weight") {
+      finalValue = grams;
+    } else {
+      finalValue = grams / ingredient.density / toUnit.ml;
+    }
+    if (toUnit.id === "g" || toUnit.id === "ml") {
+      setResult(Math.round(finalValue).toString());
+    } else {
+      setResult(finalValue.toFixed(2).replace(".00", ""));
+    }
+  };
+  useEffect(() => {
+    calculate();
+  }, [ingredientId, amount, fromUnitId, toUnitId]);
+  const handleSwap = () => {
+    setFromUnitId(toUnitId);
+    setToUnitId(fromUnitId);
+  };
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Conversor de Medidas Culinárias - Xícaras para Gramas e ML",
+        description: "Não erre a receita! Converta xícaras, colheres de sopa e chá para gramas ou mililitros. Tabelas precisas para farinha, açúcar, manteiga e líquidos.",
+        canonical: "/calculadoras/conversor-culinario"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-primary/10 rounded-2xl", children: /* @__PURE__ */ jsx(ChefHat$1, { className: "w-8 h-8 text-primary" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Conversor Culinário" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Xícaras para gramas, colheres para ml. Precisão de chef." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 mb-6", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Ingrediente" }),
+                    /* @__PURE__ */ jsx(
+                      "select",
+                      {
+                        value: ingredientId,
+                        onChange: (e) => setIngredientId(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all",
+                        children: INGREDIENTS.map((i) => /* @__PURE__ */ jsx("option", { value: i.id, children: i.name }, i.id))
+                      }
+                    )
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-[1fr,auto,1fr] gap-2 items-end", children: [
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "De" }),
+                      /* @__PURE__ */ jsx(
+                        "select",
+                        {
+                          value: fromUnitId,
+                          onChange: (e) => setFromUnitId(e.target.value),
+                          className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm",
+                          children: UNITS.map((u) => /* @__PURE__ */ jsx("option", { value: u.id, children: u.name }, u.id))
+                        }
+                      )
+                    ] }),
+                    /* @__PURE__ */ jsx(
+                      "button",
+                      {
+                        onClick: handleSwap,
+                        className: "p-3 bg-white/5 rounded-xl hover:bg-white/10 transition-colors mb-[1px]",
+                        title: "Inverter unidades",
+                        children: /* @__PURE__ */ jsx(ArrowRightLeft, { className: "w-4 h-4 text-primary" })
+                      }
+                    ),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Para" }),
+                      /* @__PURE__ */ jsx(
+                        "select",
+                        {
+                          value: toUnitId,
+                          onChange: (e) => setToUnitId(e.target.value),
+                          className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-sm",
+                          children: UNITS.map((u) => /* @__PURE__ */ jsx("option", { value: u.id, children: u.name }, u.id))
+                        }
+                      )
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("label", { className: "block text-xs text-gray-500 mb-1", children: "Quantidade" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        value: amount,
+                        onChange: (e) => setAmount(e.target.value),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-primary/50 transition-all text-center text-lg",
+                        placeholder: "Ex: 1"
+                      }
+                    )
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Resultado" }),
+                  /* @__PURE__ */ jsxs("div", { className: "text-5xl font-bold text-center text-primary mb-2", children: [
+                    result,
+                    " ",
+                    /* @__PURE__ */ jsx("span", { className: "text-2xl text-gray-500", children: (_a2 = UNITS.find((u) => u.id === toUnitId)) == null ? void 0 : _a2.name.split("(")[0].trim() })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-yellow-400", children: [
+                  /* @__PURE__ */ jsx(Info, { className: "w-5 h-5" }),
+                  "Dica de Ouro"
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+                  "Ao medir farinha em xícaras, ",
+                  /* @__PURE__ */ jsx("strong", { children: "nunca compacte o pó" }),
+                  " batendo a xícara na mesa! Isso faz caber mais farinha do que a receita pede, deixando a massa pesada. O correto é encher soltinho e nivelar com uma faca."
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(HelpCircle, { className: "w-5 h-5 text-primary" }),
+                  "Peso vs. Volume"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm leading-relaxed", children: [
+                  /* @__PURE__ */ jsx("p", { children: 'Na cozinha, precisão é tudo. O maior erro é achar que "1 xícara" é sempre a mesma coisa.' }),
+                  /* @__PURE__ */ jsx("p", { children: "Para sólidos, a densidade muda tudo: 1 xícara de farinha pesa muito menos que 1 xícara de açúcar. Se trocar sem converter, o bolo sola ou fica doce demais." })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Beaker, { className: "w-5 h-5 text-primary" }),
+                  "Tabela Rápida (1 Xícara)"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-sm", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-white/5 border border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Farinha de Trigo" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: "120g" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-white/5 border border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Açúcar Refinado" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: "180g" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-white/5 border border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Chocolate em Pó" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: "90g" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-white/5 border border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "Manteiga" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-white font-bold", children: "200g" })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4 text-white", children: "Dúvidas Frequentes" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-3 text-sm text-gray-400", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Quanto vale 1 xícara em ml?" }),
+                    /* @__PURE__ */ jsx("p", { children: "No padrão brasileiro, 1 xícara de chá equivale a 240ml." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-3", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Quantos ml tem uma colher de sopa?" }),
+                    /* @__PURE__ */ jsx("p", { children: "A medida padrão mundial é 15ml. A de chá tem 5ml." })
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
+function GestationalAgeCalculatorPage() {
+  const [dum, setDum] = useState("");
+  const [result, setResult] = useState(null);
+  const calculate = () => {
+    if (!dum) {
+      setResult(null);
+      return;
+    }
+    const dumDate = new Date(dum);
+    if (isNaN(dumDate.getTime())) return;
+    const dppDate = new Date(dumDate);
+    dppDate.setDate(dumDate.getDate() + 280);
+    const today = /* @__PURE__ */ new Date();
+    const diffTime = Math.abs(today.getTime() - dumDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1e3 * 60 * 60 * 24));
+    const weeks = Math.floor(diffDays / 7);
+    const days = diffDays % 7;
+    let months = 0;
+    if (weeks <= 4) months = 1;
+    else if (weeks <= 8) months = 2;
+    else if (weeks <= 13) months = 3;
+    else if (weeks <= 17) months = 4;
+    else if (weeks <= 21) months = 5;
+    else if (weeks <= 26) months = 6;
+    else if (weeks <= 30) months = 7;
+    else if (weeks <= 35) months = 8;
+    else months = 9;
+    let trimester = 1;
+    if (weeks >= 14 && weeks <= 26) trimester = 2;
+    if (weeks >= 27) trimester = 3;
+    setResult({
+      dpp: dppDate.toLocaleDateString("pt-BR"),
+      weeks,
+      days,
+      months,
+      trimester
+    });
+  };
+  useEffect(() => {
+    calculate();
+  }, [dum]);
+  return /* @__PURE__ */ jsxs("div", { className: "min-h-screen bg-[#000000] text-white selection:bg-primary/20 selection:text-primary", children: [
+    /* @__PURE__ */ jsx(
+      SEO,
+      {
+        title: "Calculadora de Idade Gestacional - Data Provável do Parto (DPP)",
+        description: "Estou grávida de quanto tempo? Calcule sua Idade Gestacional pela DUM, descubra a Data Provável do Parto e acompanhe as semanas e meses da gravidez.",
+        canonical: "/calculadoras/idade-gestacional"
+      }
+    ),
+    /* @__PURE__ */ jsxs("div", { className: "container mx-auto px-4 py-8 max-w-4xl", children: [
+      /* @__PURE__ */ jsxs(Link, { to: "/calculadoras", className: "inline-flex items-center text-gray-400 hover:text-primary transition-colors mb-8 group", children: [
+        /* @__PURE__ */ jsx(ArrowLeft, { className: "w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" }),
+        "Voltar para Calculadoras"
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a] rounded-3xl p-8 border border-white/5 shadow-2xl relative overflow-hidden", children: [
+        /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-64 h-64 bg-pink-500/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none" }),
+        /* @__PURE__ */ jsxs("div", { className: "relative z-10", children: [
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4 mb-2", children: [
+            /* @__PURE__ */ jsx("div", { className: "p-3 bg-pink-500/10 rounded-2xl", children: /* @__PURE__ */ jsx(Baby$1, { className: "w-8 h-8 text-pink-400" }) }),
+            /* @__PURE__ */ jsxs("div", { children: [
+              /* @__PURE__ */ jsx("h1", { className: "text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400", children: "Idade Gestacional (DPP)" }),
+              /* @__PURE__ */ jsx("p", { className: "text-gray-400 mt-1", children: "Descubra de quantas semanas você está e quando o bebê nasce." })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-12 mt-8", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("div", { className: "space-y-4 mb-6", children: /* @__PURE__ */ jsxs("div", { children: [
+                  /* @__PURE__ */ jsxs("label", { className: "block text-xs text-gray-500 mb-1 flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
+                    " Data da Última Menstruação (DUM)"
+                  ] }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "date",
+                      value: dum,
+                      onChange: (e) => setDum(e.target.value),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-pink-500/50 transition-all text-center text-lg [color-scheme:dark]"
+                    }
+                  )
+                ] }) }),
+                /* @__PURE__ */ jsxs("div", { className: "mt-8 pt-6 border-t border-white/5", children: [
+                  /* @__PURE__ */ jsx("p", { className: "text-center text-gray-400 mb-2", children: "Data Provável do Parto" }),
+                  /* @__PURE__ */ jsx("div", { className: "text-4xl font-bold text-center text-pink-400 mb-4", children: result ? result.dpp : "--/--/----" }),
+                  result && /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl text-center", children: [
+                      /* @__PURE__ */ jsx("span", { className: "block text-xs text-gray-500 mb-1", children: "Tempo de Gestação" }),
+                      /* @__PURE__ */ jsxs("span", { className: "text-xl font-bold text-white", children: [
+                        result.weeks,
+                        " sem e ",
+                        result.days,
+                        " dias"
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl text-center", children: [
+                      /* @__PURE__ */ jsx("span", { className: "block text-xs text-gray-500 mb-1", children: "Mês Aproximado" }),
+                      /* @__PURE__ */ jsxs("span", { className: "text-xl font-bold text-white", children: [
+                        result.months,
+                        "º Mês"
+                      ] })
+                    ] }),
+                    /* @__PURE__ */ jsxs("div", { className: "col-span-2 bg-pink-500/10 p-4 rounded-xl text-center border border-pink-500/20", children: [
+                      /* @__PURE__ */ jsx("span", { className: "block text-xs text-pink-300 mb-1 uppercase tracking-wider font-bold", children: "Trimestre Atual" }),
+                      /* @__PURE__ */ jsxs("span", { className: "text-2xl font-bold text-pink-400", children: [
+                        result.trimester,
+                        "º Trimestre"
+                      ] })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-white", children: [
+                  /* @__PURE__ */ jsx(Info, { className: "w-5 h-5" }),
+                  "Tabela: Semanas x Meses"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2 text-sm", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-white/5 border border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "1º Trimestre" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "1 a 13 semanas" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-white/5 border border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "2º Trimestre" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "14 a 26 semanas" })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 rounded bg-white/5 border border-white/5", children: [
+                    /* @__PURE__ */ jsx("span", { children: "3º Trimestre" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-gray-400", children: "27 a 40+ semanas" })
+                  ] })
+                ] })
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Heart, { className: "w-5 h-5 text-pink-400" }),
+                  "Como funciona o cálculo?"
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 text-sm leading-relaxed", children: [
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    "A medicina utiliza a ",
+                    /* @__PURE__ */ jsx("strong", { children: "Regra de Naegele" }),
+                    ", baseada no ciclo de 28 dias."
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { children: "A gestação dura oficialmente 280 dias (40 semanas) a partir do primeiro dia da sua última menstruação (DUM)." }),
+                  /* @__PURE__ */ jsxs("div", { className: "bg-black/20 p-4 rounded-xl border border-white/5", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "block text-white mb-2", children: "A Regra:" }),
+                    /* @__PURE__ */ jsxs("ul", { className: "list-disc pl-4 space-y-1", children: [
+                      /* @__PURE__ */ jsx("li", { children: "Pegue a data da DUM" }),
+                      /* @__PURE__ */ jsx("li", { children: "Adicione 7 dias" }),
+                      /* @__PURE__ */ jsx("li", { children: "Subtraia 3 meses" }),
+                      /* @__PURE__ */ jsx("li", { children: "Adicione 1 ano" })
+                    ] })
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-yellow-500/10 p-6 rounded-2xl border border-yellow-500/20", children: [
+                /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 text-yellow-400 flex items-center gap-2", children: [
+                  /* @__PURE__ */ jsx(Clock, { className: "w-5 h-5" }),
+                  "Nota Médica"
+                ] }),
+                /* @__PURE__ */ jsxs("p", { className: "text-sm text-gray-300", children: [
+                  "A DPP é uma estimativa estatística. Apenas 5% dos bebês nascem na data exata. O parto é considerado normal entre ",
+                  /* @__PURE__ */ jsx("strong", { children: "37 e 42 semanas" }),
+                  "."
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-2xl border border-white/5", children: [
+                /* @__PURE__ */ jsx("h3", { className: "text-lg font-semibold mb-4 text-white", children: "Dúvidas Frequentes" }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-3 text-sm text-gray-400", children: [
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "E se eu não lembrar a data?" }),
+                    /* @__PURE__ */ jsx("p", { children: "O cálculo mais confiável será feito pela primeira ultrassonografia (entre 6 e 12 semanas)." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "border-t border-white/5 pt-3", children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "São 9 meses ou 40 semanas?" }),
+                    /* @__PURE__ */ jsx("p", { children: "O padrão médico é 40 semanas. Isso equivale a 10 meses lunares ou 9 meses e meio solares." })
+                  ] })
+                ] })
+              ] })
+            ] })
+          ] })
+        ] })
+      ] })
+    ] })
+  ] });
+}
 const crc16ccitt = (payload) => {
   let crc = 65535;
   for (let i = 0; i < payload.length; i++) {
@@ -10770,35 +18307,13 @@ const WebStoryPage = () => {
   const { storyId } = useParams();
   const navigate = useNavigate();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const story = storiesData.find((s) => s.slug === storyId) || null;
   const currentSlide = story == null ? void 0 : story.slides[currentSlideIndex];
   useEffect(() => {
     if (!story) return;
-    setProgress(0);
-    const duration = ((currentSlide == null ? void 0 : currentSlide.duration) || 5) * 1e3;
-    let startTime = Date.now();
-    let animationFrameId;
-    const updateProgress = () => {
-      if (isPaused) {
-        startTime = Date.now() - progress / 100 * duration;
-        animationFrameId = requestAnimationFrame(updateProgress);
-        return;
-      }
-      const elapsed = Date.now() - startTime;
-      const newProgress = Math.min(elapsed / duration * 100, 100);
-      setProgress(newProgress);
-      if (newProgress >= 100) {
-        goNext();
-      } else {
-        animationFrameId = requestAnimationFrame(updateProgress);
-      }
-    };
-    animationFrameId = requestAnimationFrame(updateProgress);
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [currentSlideIndex, isPaused, story]);
+  }, [story]);
   const goNext = () => {
     if (story && currentSlideIndex < story.slides.length - 1) {
       setCurrentSlideIndex((prev) => prev + 1);
@@ -10853,110 +18368,149 @@ const WebStoryPage = () => {
         }
       }) })
     ] }),
-    /* @__PURE__ */ jsxs("div", { className: "relative w-full h-full md:w-[400px] md:h-[90vh] md:rounded-2xl overflow-hidden bg-gray-900 shadow-2xl", children: [
-      /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-0 w-full px-2 flex gap-1 z-30", children: story.slides.map((slide, index) => /* @__PURE__ */ jsx("div", { className: "h-1 flex-1 bg-white/30 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx(
-        "div",
-        {
-          className: "h-full bg-white transition-all duration-100 ease-linear",
-          style: {
-            width: index < currentSlideIndex ? "100%" : index === currentSlideIndex ? `${progress}%` : "0%"
+    /* @__PURE__ */ jsxs(
+      motion.div,
+      {
+        className: "relative w-full h-full md:w-[400px] md:h-[90vh] md:rounded-2xl overflow-hidden bg-gray-900 shadow-2xl",
+        drag: "y",
+        dragConstraints: { top: 0, bottom: 0 },
+        dragElastic: { top: 0, bottom: 0.6 },
+        onDragEnd: (_, info) => {
+          if (info.offset.y > 100 || info.velocity.y > 200) {
+            if (window.history.length > 1) {
+              navigate(-1);
+            } else {
+              navigate("/");
+            }
           }
-        }
-      ) }, slide.id)) }),
-      /* @__PURE__ */ jsxs("div", { className: "absolute top-8 left-4 flex items-center gap-2 z-30", children: [
-        /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-gray-200 overflow-hidden border border-white/20", children: /* @__PURE__ */ jsx("img", { src: story.publisherLogo, alt: story.publisher, className: "w-full h-full object-cover" }) }),
-        /* @__PURE__ */ jsx("span", { className: "text-white text-sm font-medium drop-shadow-md", children: story.publisher })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "absolute top-8 right-4 flex gap-4 z-30 text-white", children: [
-        /* @__PURE__ */ jsx("button", { onClick: () => setIsMuted(!isMuted), children: isMuted ? /* @__PURE__ */ jsx(VolumeX, { className: "w-6 h-6 drop-shadow-md" }) : /* @__PURE__ */ jsx(Volume2, { className: "w-6 h-6 drop-shadow-md" }) }),
-        /* @__PURE__ */ jsx("button", { onClick: () => {
-          if (window.history.length > 1) {
-            navigate(-1);
-          } else {
-            navigate("/");
-          }
-        }, children: /* @__PURE__ */ jsx(X, { className: "w-6 h-6 drop-shadow-md" }) })
-      ] }),
-      /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-20 flex", children: [
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "w-1/3 h-full",
-            onClick: goPrev,
-            onTouchStart: () => setIsPaused(true),
-            onTouchEnd: () => setIsPaused(false),
-            onMouseDown: () => setIsPaused(true),
-            onMouseUp: () => setIsPaused(false)
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          "div",
-          {
-            className: "w-2/3 h-full",
-            onClick: goNext,
-            onTouchStart: () => setIsPaused(true),
-            onTouchEnd: () => setIsPaused(false),
-            onMouseDown: () => setIsPaused(true),
-            onMouseUp: () => setIsPaused(false)
-          }
-        )
-      ] }),
-      /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsxs(
-        motion.div,
-        {
-          initial: { opacity: 0, scale: 1.05 },
-          animate: { opacity: 1, scale: 1 },
-          exit: { opacity: 0 },
-          transition: { duration: 0.4 },
-          className: "absolute inset-0 w-full h-full",
-          children: [
-            (currentSlide == null ? void 0 : currentSlide.media.type) === "video" ? /* @__PURE__ */ jsx(
-              "video",
-              {
-                src: currentSlide.media.url,
-                poster: currentSlide.media.poster,
-                className: "w-full h-full object-cover",
-                autoPlay: true,
-                loop: true,
-                muted: isMuted,
-                playsInline: true
+        },
+        children: [
+          /* @__PURE__ */ jsx("div", { className: "absolute top-4 left-0 w-full px-2 flex gap-1 z-30", children: story.slides.map((slide, index) => /* @__PURE__ */ jsx("div", { className: "h-1 flex-1 bg-white/30 rounded-full overflow-hidden", children: /* @__PURE__ */ jsx(
+            "div",
+            {
+              className: "h-full bg-white",
+              style: {
+                width: index < currentSlideIndex ? "100%" : index > currentSlideIndex ? "0%" : "auto",
+                animation: index === currentSlideIndex ? `story-progress ${(currentSlide == null ? void 0 : currentSlide.duration) || 5}s linear forwards` : "none",
+                animationPlayState: isPaused ? "paused" : "running"
+              },
+              onAnimationEnd: () => {
+                if (index === currentSlideIndex) {
+                  goNext();
+                }
               }
-            ) : /* @__PURE__ */ jsx(
-              "img",
+            }
+          ) }, slide.id)) }),
+          /* @__PURE__ */ jsxs("div", { className: "absolute top-8 left-4 flex items-center gap-2 z-30", children: [
+            /* @__PURE__ */ jsx(
+              "button",
               {
-                src: currentSlide == null ? void 0 : currentSlide.media.url,
-                alt: (currentSlide == null ? void 0 : currentSlide.text) || story.title,
-                className: "w-full h-full object-cover"
+                onClick: () => {
+                  if (window.history.length > 1) {
+                    navigate(-1);
+                  } else {
+                    navigate("/");
+                  }
+                },
+                className: "text-white",
+                children: /* @__PURE__ */ jsx(ChevronLeft, { className: "w-8 h-8 drop-shadow-md" })
               }
             ),
-            /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80" }),
-            /* @__PURE__ */ jsxs("div", { className: "absolute bottom-0 left-0 w-full p-6 pb-12 z-10 flex flex-col items-center text-center", children: [
-              (currentSlide == null ? void 0 : currentSlide.text) && /* @__PURE__ */ jsx("p", { className: "text-white text-xl font-bold mb-6 drop-shadow-lg leading-relaxed", children: currentSlide.text }),
-              (currentSlide == null ? void 0 : currentSlide.cta) && /* @__PURE__ */ jsx(
-                motion.div,
-                {
-                  initial: { y: 20, opacity: 0 },
-                  animate: { y: 0, opacity: 1 },
-                  transition: { delay: 0.5 },
-                  children: /* @__PURE__ */ jsxs(
-                    Link,
+            /* @__PURE__ */ jsx("div", { className: "w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20", children: /* @__PURE__ */ jsx(Wallet, { className: "w-4 h-4 text-primary" }) }),
+            /* @__PURE__ */ jsx("span", { className: "text-white text-sm font-medium drop-shadow-md", children: story.publisher })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "absolute top-8 right-4 flex gap-4 z-30 text-white", children: [
+            /* @__PURE__ */ jsx("button", { onClick: () => setIsMuted(!isMuted), children: isMuted ? /* @__PURE__ */ jsx(VolumeX, { className: "w-6 h-6 drop-shadow-md" }) : /* @__PURE__ */ jsx(Volume2, { className: "w-6 h-6 drop-shadow-md" }) }),
+            /* @__PURE__ */ jsx("button", { onClick: () => {
+              if (window.history.length > 1) {
+                navigate(-1);
+              } else {
+                navigate("/");
+              }
+            }, children: /* @__PURE__ */ jsx(X, { className: "w-6 h-6 drop-shadow-md" }) })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 z-20 flex", children: [
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "w-1/3 h-full",
+                onClick: goPrev,
+                onTouchStart: () => setIsPaused(true),
+                onTouchEnd: () => setIsPaused(false),
+                onMouseDown: () => setIsPaused(true),
+                onMouseUp: () => setIsPaused(false)
+              }
+            ),
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: "w-2/3 h-full",
+                onClick: goNext,
+                onTouchStart: () => setIsPaused(true),
+                onTouchEnd: () => setIsPaused(false),
+                onMouseDown: () => setIsPaused(true),
+                onMouseUp: () => setIsPaused(false)
+              }
+            )
+          ] }),
+          /* @__PURE__ */ jsx(AnimatePresence, { mode: "wait", children: /* @__PURE__ */ jsxs(
+            motion.div,
+            {
+              initial: { opacity: 0, scale: 1.05 },
+              animate: { opacity: 1, scale: 1 },
+              exit: { opacity: 0 },
+              transition: { duration: 0.4 },
+              className: "absolute inset-0 w-full h-full",
+              children: [
+                (currentSlide == null ? void 0 : currentSlide.media.type) === "video" ? /* @__PURE__ */ jsx(
+                  "video",
+                  {
+                    src: currentSlide.media.url,
+                    poster: currentSlide.media.poster,
+                    className: "w-full h-full object-cover",
+                    autoPlay: true,
+                    loop: true,
+                    muted: isMuted,
+                    playsInline: true
+                  }
+                ) : /* @__PURE__ */ jsx(
+                  "img",
+                  {
+                    src: currentSlide == null ? void 0 : currentSlide.media.url,
+                    alt: (currentSlide == null ? void 0 : currentSlide.text) || story.title,
+                    className: "w-full h-full object-cover"
+                  }
+                ),
+                /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80" }),
+                /* @__PURE__ */ jsxs("div", { className: "absolute bottom-0 left-0 w-full p-6 pb-12 z-10 flex flex-col items-center text-center", children: [
+                  (currentSlide == null ? void 0 : currentSlide.text) && /* @__PURE__ */ jsx("p", { className: "text-white text-xl font-bold mb-6 drop-shadow-lg leading-relaxed", children: currentSlide.text }),
+                  (currentSlide == null ? void 0 : currentSlide.cta) && /* @__PURE__ */ jsx(
+                    motion.div,
                     {
-                      to: currentSlide.cta.url,
-                      className: "bg-primary text-black font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-2",
-                      children: [
-                        currentSlide.cta.label,
-                        /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4" })
-                      ]
+                      initial: { y: 20, opacity: 0 },
+                      animate: { y: 0, opacity: 1 },
+                      transition: { delay: 0.5 },
+                      children: /* @__PURE__ */ jsxs(
+                        Link,
+                        {
+                          to: currentSlide.cta.url,
+                          className: "bg-primary text-black font-bold py-3 px-8 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center gap-2",
+                          children: [
+                            currentSlide.cta.label,
+                            /* @__PURE__ */ jsx(ChevronRight, { className: "w-4 h-4" })
+                          ]
+                        }
+                      )
                     }
                   )
-                }
-              )
-            ] })
-          ]
-        },
-        currentSlide == null ? void 0 : currentSlide.id
-      ) })
-    ] })
+                ] })
+              ]
+            },
+            currentSlide == null ? void 0 : currentSlide.id
+          ) })
+        ]
+      }
+    )
   ] });
 };
 const StoriesGallery = () => {
@@ -11019,58 +18573,6 @@ const StoriesGallery = () => {
     ] })
   ] });
 };
-const CategoryBadge = ({ category, className = "" }) => {
-  return /* @__PURE__ */ jsx(
-    Link,
-    {
-      to: `/blog/${category.slug}`,
-      className: `inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary hover:bg-primary/20 transition-colors border border-primary/20 whitespace-nowrap ${className}`,
-      children: category.name
-    }
-  );
-};
-const PostCard = ({ post }) => {
-  var _a2, _b2, _c, _d, _e;
-  return /* @__PURE__ */ jsxs("article", { className: "group relative flex flex-col h-full bg-[#0d0d0d] rounded-2xl border border-white/5 overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-[0_0_30px_rgba(71,255,183,0.1)]", children: [
-    /* @__PURE__ */ jsx(Link, { to: `/blog/${((_a2 = post.category) == null ? void 0 : _a2.slug) || "geral"}/${post.slug}`, className: "block overflow-hidden aspect-video", children: /* @__PURE__ */ jsx(
-      "img",
-      {
-        src: post.cover_image,
-        alt: post.cover_image_alt,
-        className: "w-full h-full object-cover transition-transform duration-500 group-hover:scale-105",
-        loading: "lazy"
-      }
-    ) }),
-    /* @__PURE__ */ jsxs("div", { className: "flex flex-col flex-1 p-6", children: [
-      /* @__PURE__ */ jsxs("div", { className: "flex flex-col items-start gap-3 mb-4", children: [
-        post.category && /* @__PURE__ */ jsx(CategoryBadge, { category: post.category }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center text-xs text-gray-400 gap-2", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
-            /* @__PURE__ */ jsx(Calendar, { className: "w-3 h-3" }),
-            /* @__PURE__ */ jsx("time", { dateTime: post.published_at, children: format(new Date(post.published_at), "d 'de' MMM, yyyy", { locale: ptBR }) })
-          ] }),
-          /* @__PURE__ */ jsx("span", { className: "w-1 h-1 rounded-full bg-gray-600" }),
-          /* @__PURE__ */ jsxs("span", { children: [
-            post.reading_time || 5,
-            " min de leitura"
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors line-clamp-2", children: /* @__PURE__ */ jsx(Link, { to: `/blog/${((_b2 = post.category) == null ? void 0 : _b2.slug) || "geral"}/${post.slug}`, children: post.title }) }),
-      /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-6 line-clamp-3 flex-1", children: post.excerpt }),
-      /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-between mt-auto pt-4 border-t border-white/5", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2", children: [
-          ((_c = post.author) == null ? void 0 : _c.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-6 h-6 rounded-full" }),
-          /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: (_d = post.author) == null ? void 0 : _d.name })
-        ] }),
-        /* @__PURE__ */ jsxs(Link, { to: `/blog/${((_e = post.category) == null ? void 0 : _e.slug) || "geral"}/${post.slug}`, className: "text-primary text-sm font-medium flex items-center gap-1 group-hover:gap-2 transition-all", children: [
-          "Ler artigo ",
-          /* @__PURE__ */ jsx(ArrowRight, { className: "w-4 h-4" })
-        ] })
-      ] })
-    ] })
-  ] });
-};
 const CategoryList = ({ categories }) => {
   return /* @__PURE__ */ jsxs("div", { className: "flex flex-wrap justify-center gap-3 mb-12", children: [
     /* @__PURE__ */ jsx(
@@ -11121,55 +18623,6 @@ const StoryList = ({ stories }) => {
       story.slug
     )) })
   ] });
-};
-const supabaseUrl = "https://cfbwntkyygkqbottkktc.supabase.co";
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNmYndudGt5eWdrcWJvdHRra3RjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4MDExOTAsImV4cCI6MjA3NDM3NzE5MH0.08-1PNyvfi6YsG8z3EpAkoLLYzRMcZg8jAJSKkYVfzM";
-const supabase = createClient(
-  supabaseUrl,
-  supabaseAnonKey
-);
-const blogService = {
-  async getPosts() {
-    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories(*)").eq("published", true).order("published_at", { ascending: false });
-    if (error) {
-      console.error("Error fetching posts:", error);
-      return [];
-    }
-    return data.map((post) => ({
-      ...post,
-      reading_time: Math.ceil(post.content.split(" ").length / 200)
-    }));
-  },
-  async getPostBySlug(slug) {
-    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories(*)").eq("slug", slug).eq("published", true).single();
-    if (error) {
-      console.error(`Error fetching post with slug ${slug}:`, error);
-      return null;
-    }
-    return {
-      ...data,
-      reading_time: Math.ceil(data.content.split(" ").length / 200)
-    };
-  },
-  async getPostsByCategory(categorySlug) {
-    const { data, error } = await supabase.from("posts").select("*, author:authors(*), category:categories!inner(*)").eq("category.slug", categorySlug).eq("published", true).order("published_at", { ascending: false });
-    if (error) {
-      console.error(`Error fetching posts for category ${categorySlug}:`, error);
-      return [];
-    }
-    return data.map((post) => ({
-      ...post,
-      reading_time: Math.ceil(post.content.split(" ").length / 200)
-    }));
-  },
-  async getAllCategories() {
-    const { data, error } = await supabase.from("categories").select("*").order("name");
-    if (error) {
-      console.error("Error fetching categories:", error);
-      return [];
-    }
-    return data;
-  }
 };
 const BlogIndex = () => {
   const [posts, setPosts] = useState([]);
@@ -11417,22 +18870,24 @@ const BlogPost = () => {
         ...post.category ? [{ label: post.category.name, href: `/blog/${post.category.slug}` }] : [],
         { label: post.title, href: `/blog/${((_e = post.category) == null ? void 0 : _e.slug) || "geral"}/${post.slug}` }
       ] }),
-      /* @__PURE__ */ jsxs("header", { className: "mb-12 text-center", children: [
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center gap-4 text-sm text-gray-400 mb-6", children: [
+      /* @__PURE__ */ jsxs("header", { className: "mb-12 text-left", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex flex-col md:flex-row items-start justify-start gap-4 text-sm text-gray-400 mb-6", children: [
           post.category && /* @__PURE__ */ jsx("span", { className: "px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20", children: post.category.name }),
-          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
-            /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4" }),
-            format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })
-          ] }),
-          /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
-            /* @__PURE__ */ jsx(BookOpen, { className: "w-4 h-4" }),
-            post.reading_time || 5,
-            " min de leitura"
+          /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-4", children: [
+            /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(Calendar, { className: "w-4 h-4" }),
+              format(new Date(post.published_at), "d 'de' MMMM, yyyy", { locale: ptBR })
+            ] }),
+            /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-1", children: [
+              /* @__PURE__ */ jsx(BookOpen, { className: "w-4 h-4" }),
+              post.reading_time || 5,
+              " min de leitura"
+            ] })
           ] })
         ] }),
         /* @__PURE__ */ jsx("h1", { className: "text-3xl md:text-5xl font-bold text-white mb-6 leading-tight", children: post.title }),
-        /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed", children: post.excerpt }),
-        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-center md:justify-start gap-3 mt-8", children: [
+        /* @__PURE__ */ jsx("p", { className: "text-xl text-gray-300 max-w-2xl mr-auto leading-relaxed", children: post.excerpt }),
+        /* @__PURE__ */ jsxs("div", { className: "flex items-center justify-start gap-3 mt-8", children: [
           ((_f = post.author) == null ? void 0 : _f.avatar_url) && /* @__PURE__ */ jsx("img", { src: post.author.avatar_url, alt: post.author.name, className: "w-10 h-10 rounded-full border border-white/10" }),
           /* @__PURE__ */ jsxs("div", { className: "text-left", children: [
             /* @__PURE__ */ jsx("p", { className: "text-white font-medium", children: (_g = post.author) == null ? void 0 : _g.name }),
@@ -11515,9 +18970,9 @@ const NotFound = () => {
     ] })
   ] });
 };
-const Terms = lazy(() => import("./assets/Terms-B2Uyhcmm.js").then((module) => ({ default: module.Terms })));
-const Privacy = lazy(() => import("./assets/Privacy-B8I55MW0.js").then((module) => ({ default: module.Privacy })));
-const Support = lazy(() => import("./assets/Support-CkPPx7wI.js").then((module) => ({ default: module.Support })));
+const Terms = lazy(() => import("./assets/Terms-BQHgiGob.js").then((module) => ({ default: module.Terms })));
+const Privacy = lazy(() => import("./assets/Privacy-zoKxadq7.js").then((module) => ({ default: module.Privacy })));
+const Support = lazy(() => import("./assets/Support-D9DxTyiq.js").then((module) => ({ default: module.Support })));
 function App() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(ScrollToTop, {}),
@@ -11547,6 +19002,30 @@ function App() {
         /* @__PURE__ */ jsx(Route, { path: "/calculadoras/uber-ou-carro", element: /* @__PURE__ */ jsx(UberVsCarPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/calculadoras/primeiro-milhao", element: /* @__PURE__ */ jsx(FirstMillionPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-moedas", element: /* @__PURE__ */ jsx(CurrencyConverterPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/poder-de-compra", element: /* @__PURE__ */ jsx(PurchasingPowerPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/regra-50-30-20", element: /* @__PURE__ */ jsx(Budget503020Page, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/financiamento-veiculos", element: /* @__PURE__ */ jsx(VehicleFinancingPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/financiamento-imobiliario", element: /* @__PURE__ */ jsx(RealEstateFinancingPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/quitacao-antecipada", element: /* @__PURE__ */ jsx(EarlyRepaymentPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-efetivo-total", element: /* @__PURE__ */ jsx(CETCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/divida-cartao-credito", element: /* @__PURE__ */ jsx(CreditCardDebtPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/das-mei", element: /* @__PURE__ */ jsx(MEIDasPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/markup", element: /* @__PURE__ */ jsx(MarkupPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/ponto-de-equilibrio", element: /* @__PURE__ */ jsx(BreakEvenPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/simples-vs-presumido", element: /* @__PURE__ */ jsx(SimplesVsPresumidoPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/capital-de-giro", element: /* @__PURE__ */ jsx(WorkingCapitalPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/roi", element: /* @__PURE__ */ jsx(ROICalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/churrasco", element: /* @__PURE__ */ jsx(BarbecueCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/dias-uteis", element: /* @__PURE__ */ jsx(BusinessDaysPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/regra-de-tres", element: /* @__PURE__ */ jsx(RuleOfThreePage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/porcentagem", element: /* @__PURE__ */ jsx(PercentageCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/horas", element: /* @__PURE__ */ jsx(HoursCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/tijolos-pisos", element: /* @__PURE__ */ jsx(TileBricksCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-viagem", element: /* @__PURE__ */ jsx(TravelCostCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/imc", element: /* @__PURE__ */ jsx(IMCCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/agua", element: /* @__PURE__ */ jsx(WaterIntakeCalculatorPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-culinario", element: /* @__PURE__ */ jsx(CulinaryConverterPage, {}) }),
+        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/idade-gestacional", element: /* @__PURE__ */ jsx(GestationalAgeCalculatorPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/ferramentas/gerador-pix", element: /* @__PURE__ */ jsx(PixGeneratorPage, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/blog", element: /* @__PURE__ */ jsx(BlogIndex, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/blog/:category/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),

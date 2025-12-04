@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe } from 'lucide-react';
+import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe, History, PieChart, CreditCard, FileText, Tag, Scale, Divide } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
 import { SEO } from './SEO';
@@ -450,6 +450,510 @@ export const Calculators: React.FC = () => {
                         </div>
                     </Link>
 
+                    <Link to="/calculadoras/regra-50-30-20" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <PieChart className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Regra 50-30-20</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Organize suas finanças. Descubra quanto gastar com necessidades, lazer e investimentos.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/das-mei" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6 border border-blue-500/20 group-hover:scale-110 transition-transform">
+                                    <Building2 className="text-blue-400 w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora DAS MEI</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Calcule o valor atualizado da sua guia e monitore o limite de faturamento.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-blue-400 font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/markup" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6 border border-purple-500/20 group-hover:scale-110 transition-transform">
+                                    <Tag className="text-purple-400 w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Markup</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra o preço de venda exato para cobrir custos e garantir lucro real.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-purple-400 font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/ponto-de-equilibrio" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center mb-6 border border-cyan-500/20 group-hover:scale-110 transition-transform">
+                                    <Scale className="text-cyan-400 w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Ponto de Equilíbrio</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra quanto sua empresa precisa vender para começar a lucrar.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-cyan-400 font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/simples-vs-presumido" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6 border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                                    <Building2 className="text-emerald-400 w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Simples vs Presumido</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Simule qual regime tributário é mais barato para a sua empresa.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-emerald-400 font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/divida-cartao-credito" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform">
+                                    <CreditCard className="text-red-400 w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Dívida de Cartão</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Simule o "Efeito Bola de Neve" dos juros rotativos.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-red-400 font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/custo-efetivo-total" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <FileText className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Custo Efetivo Total (CET)</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra os juros reais e taxas ocultas do seu empréstimo.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/quitacao-antecipada" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <PiggyBank className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Quitação Antecipada</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra o desconto ao antecipar parcelas do seu financiamento.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/financiamento-imobiliario" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Home className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Financiamento Imobiliário</h2>
+                                <p className="text-gray-400 mb-6">
+                                    SAC ou Price? Compare as tabelas e descubra qual paga menos juros.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/financiamento-veiculos" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Car className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Financiamento de Veículos</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Simule parcelas de carro ou moto e descubra os juros reais (CET).
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/poder-de-compra" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <History className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Poder de Compra</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Quanto valia R$ 100 em 1994? Corrija valores pela inflação (IPCA/IGP-M).
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/das-mei" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Building2 className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora DAS MEI</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Calcule o valor do seu DAS MEI atualizado e evite multas.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/markup" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Tag className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Markup</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Defina o preço de venda ideal para garantir seu lucro.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/ponto-de-equilibrio" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Scale className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Ponto de Equilíbrio</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra quanto você precisa vender para não ter prejuízo.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/simples-vs-presumido" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <FileText className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Simples vs Presumido</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Compare e descubra o melhor regime tributário para sua empresa.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/capital-de-giro" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <DollarSign className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Capital de Giro</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra quanto dinheiro sua empresa precisa ter em caixa para manter as portas abertas.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/roi" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <BarChart3 className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de ROI</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra a eficiência real dos seus investimentos em marketing e projetos.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/churrasco" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Flame className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Churrasco</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Calcule a quantidade ideal de carne e bebida para sua festa.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/dias-uteis" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Calendar className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Dias Úteis</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Conte prazos excluindo fins de semana e feriados nacionais.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/regra-de-tres" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Divide className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Regra de Três</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Resolva problemas de proporção, porcentagem e conversões em segundos.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/porcentagem" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Percent className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Porcentagem</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Calcule descontos, aumentos e proporções de forma instantânea.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/horas" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Clock className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Horas</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Some e subtraia horas e minutos facilmente. Ideal para folha de ponto.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/tijolos-pisos" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Layers className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Tijolos e Pisos</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Calcule a quantidade exata de material para sua obra e evite desperdícios.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/custo-viagem" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Car className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Custo de Viagem</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Planeje seu orçamento de viagem somando combustível e pedágios.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/imc" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Activity className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de IMC</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra se seu peso está ideal segundo a OMS.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/agua" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <Droplets className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Calculadora de Água</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra a meta diária exata para o seu corpo.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/conversor-culinario" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-primary/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 border border-primary/20 group-hover:scale-110 transition-transform">
+                                    <ChefHat className="text-primary w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Conversor Culinário</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Xícaras para gramas, colheres para ml. Precisão de chef.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-primary font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/calculadoras/idade-gestacional" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-pink-500/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-pink-500/10 rounded-xl flex items-center justify-center mb-6 border border-pink-500/20 group-hover:scale-110 transition-transform">
+                                    <Baby className="text-pink-400 w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Idade Gestacional</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Descubra a data provável do parto e acompanhe sua gravidez.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-pink-400 font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
                 </div>
 
                 {/* SEO Content Section */}
@@ -543,6 +1047,6 @@ export const Calculators: React.FC = () => {
                     </p>
                 </div>
             </div>
-        </section>
+        </section >
     );
 };

@@ -9,10 +9,10 @@ import "invariant";
 import "shallowequal";
 import "framer-motion";
 import "@google/genai";
-import "qrcode.react";
+import "@supabase/supabase-js";
 import "date-fns";
 import "date-fns/locale";
-import "@supabase/supabase-js";
+import "qrcode.react";
 const Support = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
@@ -91,4 +91,4 @@ const Support = () => {
 export {
   Support
 };
-//# sourceMappingURL=Support-CkPPx7wI.js.map
+//# sourceMappingURL=Support-D9DxTyiq.js.map

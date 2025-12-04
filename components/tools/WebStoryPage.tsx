@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, X, Volume2, VolumeX } from 'lucide-react';
+import { ChevronRight, X, Volume2, VolumeX, ChevronLeft, Wallet } from 'lucide-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import storiesData from '../../data/stories.json';
@@ -35,7 +35,6 @@ export const WebStoryPage: React.FC = () => {
     const { storyId } = useParams<{ storyId: string }>();
     const navigate = useNavigate();
     const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-    const [progress, setProgress] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
     const [isMuted, setIsMuted] = useState(true);
 
@@ -45,37 +44,8 @@ export const WebStoryPage: React.FC = () => {
 
     useEffect(() => {
         if (!story) return;
-
-        // Reset progress on slide change
-        setProgress(0);
-
-        const duration = (currentSlide?.duration || 5) * 1000;
-        let startTime = Date.now();
-        let animationFrameId: number;
-
-        const updateProgress = () => {
-            if (isPaused) {
-                startTime = Date.now() - (progress / 100) * duration; // Adjust start time to account for pause
-                animationFrameId = requestAnimationFrame(updateProgress);
-                return;
-            }
-
-            const elapsed = Date.now() - startTime;
-            const newProgress = Math.min((elapsed / duration) * 100, 100);
-
-            setProgress(newProgress);
-
-            if (newProgress >= 100) {
-                goNext();
-            } else {
-                animationFrameId = requestAnimationFrame(updateProgress);
-            }
-        };
-
-        animationFrameId = requestAnimationFrame(updateProgress);
-
-        return () => cancelAnimationFrame(animationFrameId);
-    }, [currentSlideIndex, isPaused, story]);
+        // Reset logic if needed when story changes, but CSS animation handles slide changes automatically via key prop
+    }, [story]);
 
     const goNext = () => {
         if (story && currentSlideIndex < story.slides.length - 1) {
@@ -139,17 +109,39 @@ export const WebStoryPage: React.FC = () => {
             </Helmet>
 
             {/* Container Mobile (9:16) */}
-            <div className="relative w-full h-full md:w-[400px] md:h-[90vh] md:rounded-2xl overflow-hidden bg-gray-900 shadow-2xl">
+            <motion.div
+                className="relative w-full h-full md:w-[400px] md:h-[90vh] md:rounded-2xl overflow-hidden bg-gray-900 shadow-2xl"
+                drag="y"
+                dragConstraints={{ top: 0, bottom: 0 }}
+                dragElastic={{ top: 0, bottom: 0.6 }}
+                onDragEnd={(_, info) => {
+                    if (info.offset.y > 100 || info.velocity.y > 200) {
+                        if (window.history.length > 1) {
+                            navigate(-1);
+                        } else {
+                            navigate('/');
+                        }
+                    }
+                }}
+            >
 
                 {/* Barras de Progresso */}
                 <div className="absolute top-4 left-0 w-full px-2 flex gap-1 z-30">
                     {story.slides.map((slide, index) => (
                         <div key={slide.id} className="h-1 flex-1 bg-white/30 rounded-full overflow-hidden">
                             <div
-                                className="h-full bg-white transition-all duration-100 ease-linear"
+                                className="h-full bg-white"
                                 style={{
-                                    width: index < currentSlideIndex ? '100%' :
-                                        index === currentSlideIndex ? `${progress}%` : '0%'
+                                    width: index < currentSlideIndex ? '100%' : index > currentSlideIndex ? '0%' : 'auto',
+                                    animation: index === currentSlideIndex
+                                        ? `story-progress ${(currentSlide?.duration || 5)}s linear forwards`
+                                        : 'none',
+                                    animationPlayState: isPaused ? 'paused' : 'running'
+                                }}
+                                onAnimationEnd={() => {
+                                    if (index === currentSlideIndex) {
+                                        goNext();
+                                    }
                                 }}
                             />
                         </div>
@@ -158,8 +150,20 @@ export const WebStoryPage: React.FC = () => {
 
                 {/* Header (Autor) */}
                 <div className="absolute top-8 left-4 flex items-center gap-2 z-30">
-                    <div className="w-8 h-8 rounded-full bg-gray-200 overflow-hidden border border-white/20">
-                        <img src={story.publisherLogo} alt={story.publisher} className="w-full h-full object-cover" />
+                    <button
+                        onClick={() => {
+                            if (window.history.length > 1) {
+                                navigate(-1);
+                            } else {
+                                navigate('/');
+                            }
+                        }}
+                        className="text-white"
+                    >
+                        <ChevronLeft className="w-8 h-8 drop-shadow-md" />
+                    </button>
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20">
+                        <Wallet className="w-4 h-4 text-primary" />
                     </div>
                     <span className="text-white text-sm font-medium drop-shadow-md">{story.publisher}</span>
                 </div>
@@ -258,7 +262,7 @@ export const WebStoryPage: React.FC = () => {
                         </div>
                     </motion.div>
                 </AnimatePresence>
-            </div>
+            </motion.div>
         </div>
     );
 };
