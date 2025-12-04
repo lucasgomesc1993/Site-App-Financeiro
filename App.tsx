@@ -59,6 +59,7 @@ import { IMCCalculatorPage } from './components/tools/IMCCalculatorPage';
 import { WaterIntakeCalculatorPage } from './components/tools/WaterIntakeCalculatorPage';
 import { CulinaryConverterPage } from './components/tools/CulinaryConverterPage';
 import { GestationalAgeCalculatorPage } from './components/tools/GestationalAgeCalculatorPage';
+import { SecretSantaPage } from './components/tools/SecretSantaPage';
 import { PixGeneratorPage } from './components/tools/PixGeneratorPage';
 import { WebStoryPage } from './components/tools/WebStoryPage';
 import { StoriesGallery } from './components/StoriesGallery';
@@ -123,6 +124,7 @@ function App() {
               <Route path="/calculadoras/agua" element={<WaterIntakeCalculatorPage />} />
               <Route path="/calculadoras/conversor-culinario" element={<CulinaryConverterPage />} />
               <Route path="/calculadoras/idade-gestacional" element={<GestationalAgeCalculatorPage />} />
+              <Route path="/ferramentas/amigo-secreto" element={<SecretSantaPage />} />
               <Route path="/ferramentas/gerador-pix" element={<PixGeneratorPage />} />
               <Route path="/blog" element={<BlogIndex />} />
               <Route path="/blog/:category/:slug" element={<BlogPost />} />

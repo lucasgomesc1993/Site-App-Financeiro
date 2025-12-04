@@ -1,5 +1,5 @@
 import React, { Suspense, lazy } from 'react';
-import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe, History, PieChart, CreditCard, FileText, Tag, Scale, Divide } from 'lucide-react';
+import { Calculator, Plane, TrendingUp, ArrowRight, Zap, Fuel, DollarSign, Calendar, Clock, Briefcase, AlertCircle, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Home, Key, Car, Smartphone, Gem, Globe, History, PieChart, CreditCard, FileText, Tag, Scale, Divide, Layers, MapPin, Users, Activity, Droplets, ChefHat, Baby, Gift } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb } from './Breadcrumb';
 import { SEO } from './SEO';
@@ -948,6 +948,24 @@ export const Calculators: React.FC = () => {
                                     Descubra a data provável do parto e acompanhe sua gravidez.
                                 </p>
                                 <span className="inline-flex items-center gap-2 text-pink-400 font-bold group-hover:gap-3 transition-all">
+                                    Acessar ferramenta <ArrowRight className="w-4 h-4" />
+                                </span>
+                            </div>
+                        </div>
+                    </Link>
+
+                    <Link to="/ferramentas/amigo-secreto" className="group">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 hover:bg-[#1a1a1a]/80 transition-all duration-300 hover:border-red-500/30 h-full relative overflow-hidden hover:scale-[1.02] active:scale-[0.98]">
+                            <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="relative z-10">
+                                <div className="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center mb-6 border border-red-500/20 group-hover:scale-110 transition-transform">
+                                    <Gift className="text-red-500 w-6 h-6" />
+                                </div>
+                                <h2 className="text-2xl font-bold text-white mb-3">Amigo Secreto</h2>
+                                <p className="text-gray-400 mb-6">
+                                    Sorteio rápido, imparcial e sem papelzinhos.
+                                </p>
+                                <span className="inline-flex items-center gap-2 text-red-500 font-bold group-hover:gap-3 transition-all">
                                     Acessar ferramenta <ArrowRight className="w-4 h-4" />
                                 </span>
                             </div>

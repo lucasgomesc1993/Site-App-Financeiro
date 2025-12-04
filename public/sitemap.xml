@@ -257,6 +257,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/ferramentas/amigo-secreto</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/ferramentas/gerador-pix</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
