@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 // Lê o arquivo de dados
 const storiesDataPath = path.join(__dirname, '../data/stories.json');
-const outputDir = path.join(__dirname, '../public/stories');
+const outputDir = path.join(__dirname, '../public/amp-stories');
 
 if (!fs.existsSync(storiesDataPath)) {
   console.error('❌ Arquivo data/stories.json não encontrado.');
@@ -28,7 +28,7 @@ const generateAMPHTML = (story) => {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
     <title>${story.title}</title>
-    <link rel="canonical" href="https://junny.com.br/stories/${story.slug}.html">
+    <link rel="canonical" href="https://junny.com.br/stories/${story.slug}">
     
     <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
     

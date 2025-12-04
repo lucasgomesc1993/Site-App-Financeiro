@@ -18607,7 +18607,7 @@ const WebStoryPage = () => {
         " | Web Stories"
       ] }),
       /* @__PURE__ */ jsx("meta", { name: "theme-color", content: "#000000" }),
-      /* @__PURE__ */ jsx("link", { rel: "amphtml", href: `https://junny.com.br/stories/${story.slug}.html` }),
+      /* @__PURE__ */ jsx("link", { rel: "amphtml", href: `https://junny.com.br/amp-stories/${story.slug}.html` }),
       /* @__PURE__ */ jsx("script", { type: "application/ld+json", children: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "CreativeWork",

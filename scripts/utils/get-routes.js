@@ -32,11 +32,11 @@ export async function getRoutes() {
     const blogRoutes = await getBlogRoutes();
     routes.push(...blogRoutes);
 
-    // Add Story Routes
-    const storiesDir = path.resolve(__dirname, '../../public/stories');
-    if (fs.existsSync(storiesDir)) {
-        const storyFiles = fs.readdirSync(storiesDir).filter(file => file.endsWith('.html'));
-        const storyRoutes = storyFiles.map(file => ({ path: `/stories/${file}` }));
+    // Add Story Routes (React)
+    const storiesPath = path.resolve(__dirname, '../../data/stories.json');
+    if (fs.existsSync(storiesPath)) {
+        const storiesData = JSON.parse(fs.readFileSync(storiesPath, 'utf-8'));
+        const storyRoutes = storiesData.map(story => ({ path: `/stories/${story.slug}` }));
         routes.push(...storyRoutes);
     }
 
