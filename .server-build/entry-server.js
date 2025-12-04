@@ -9,7 +9,7 @@ import { useNavigate, useLocation, Link, useParams, Routes, Route, StaticRouter 
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
-import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, Calendar, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, DollarSign, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Gem, PieChart, History, Car, FileText, CreditCard, Tag, Scale, QrCode, Gift, Fuel, Layers, ChefHat, Divide, Percent, Activity, Droplets, Baby, LineChart, User, AlertCircle, TrendingDown, Timer, AlertTriangle, Building, Users, Trophy, Target, RefreshCw, Key, AlertOctagon, ShoppingCart, CalendarDays, HelpCircle, RotateCcw, Info, Ruler, Grid, MapPin, Heart, GlassWater, Plus, Trash2, Shuffle, EyeOff, Eye, Copy, Download, VolumeX, Volume2, Search, BookOpen, ArrowLeft } from "lucide-react";
+import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, ChevronLeft, Video, Phone, MoreVertical, CheckCheck, Loader2, Smile, Paperclip, Camera, Send, Mic, Check, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, ArrowRight, Play, Calendar, ChevronUp, ChevronDown, Home as Home$1, Calculator, Plane, DollarSign, Clock, Briefcase, Moon, PiggyBank, Building2, Award, Flame, BarChart3, Gem, PieChart, History, Car, FileText, CreditCard, Tag, Scale, QrCode, Gift, Fuel, Layers, ChefHat, Divide, Percent, Activity, Droplets, Baby, Info, AlertCircle, LineChart, User, TrendingDown, Timer, AlertTriangle, Building, Users, Trophy, Target, RefreshCw, Key, AlertOctagon, ShoppingCart, CalendarDays, HelpCircle, RotateCcw, Ruler, Grid, MapPin, Heart, GlassWater, Plus, Trash2, Shuffle, EyeOff, Eye, Copy, Download, VolumeX, Volume2, Search, BookOpen, ArrowLeft } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { GoogleGenAI, Type } from "@google/genai";
 import { createClient } from "@supabase/supabase-js";
@@ -2701,16 +2701,24 @@ const AppPromoBanner$2 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.de
 }, Symbol.toStringTag, { value: "Module" }));
 const INVESTMENT_FAQS = [
   {
-    question: "Qual o melhor investimento hoje?",
-    answer: "Não existe um 'melhor' universal. Depende do seu objetivo e prazo. Para reserva de emergência, Tesouro Selic ou CDB com liquidez diária. Para longo prazo, ações ou Tesouro IPCA+."
+    question: "Quanto rende R$ 1.000,00 investidos hoje?",
+    answer: "O rendimento depende da taxa contratada. Em um cenário de Renda Fixa pagando 100% do CDI (com a Selic próxima a 10,75% ou mais), R$ 1.000,00 renderiam aproximadamente R$ 107,50 brutos em um ano. Lembre-se que há desconto de Imposto de Renda sobre o lucro, que varia de 22,5% a 15% dependendo do prazo."
   },
   {
-    question: "O que é CDI?",
-    answer: "Certificado de Depósito Interbancário. É a taxa que os bancos usam para emprestar dinheiro entre si. A maioria dos investimentos de Renda Fixa (CDB, LCI, LCA) rende uma porcentagem do CDI."
+    question: "Qual a diferença entre CDB e LCI/LCA?",
+    answer: "A principal diferença é a tributação. O CDB (Certificado de Depósito Bancário) tem incidência de Imposto de Renda, enquanto as LCIs (Letras de Crédito Imobiliário) e LCAs (Letras de Crédito do Agronegócio) são isentas de IR para pessoas físicas. Por isso, uma LCI que rende 90% do CDI pode valer mais a pena que um CDB que rende 110% do CDI, dependendo do prazo."
   },
   {
-    question: "LCI e LCA são isentos de IR?",
-    answer: "Sim! Para pessoas físicas, LCI (Letra de Crédito Imobiliário) e LCA (Letra de Crédito do Agronegócio) são isentos de Imposto de Renda, o que aumenta a rentabilidade líquida."
+    question: "Onde investir meu dinheiro com segurança em 2025?",
+    answer: "Os investimentos mais seguros do Brasil são os títulos do Tesouro Direto (garantidos pelo Governo Federal) e produtos bancários como CDBs, LCIs e LCAs que contam com a proteção do FGC (Fundo Garantidor de Créditos) até o limite de R$ 250 mil por CPF e por instituição."
+  },
+  {
+    question: "Como calcular o rendimento mensal de um investimento?",
+    answer: "Para transformar uma taxa anual em mensal de forma simples (juros compostos), a conta não é apenas dividir por 12. A fórmula correta é: (1 + taxa anual)^(1/12) - 1. Porém, para estimativas rápidas em nossa calculadora, você pode focar na taxa anual, que é o padrão do mercado financeiro."
+  },
+  {
+    question: "Vale a pena investir pouco dinheiro por mês?",
+    answer: 'Sim, absolutamente. O fator "tempo" é mais poderoso que o fator "dinheiro". Começar com R$ 100,00 hoje é infinitamente melhor do que esperar ter R$ 1.000,00 daqui a cinco anos. Use a calculadora para ver como pequenos aportes, somados à disciplina, criam grandes patrimônios.'
   }
 ];
 function InvestmentPage() {
@@ -2759,8 +2767,8 @@ function InvestmentPage() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Simulador de Investimentos",
-    "description": "Simule o rendimento de seus investimentos em Renda Fixa (CDB, LCI, LCA, Tesouro Direto) e veja seu patrimônio crescer.",
+    "name": "Calculadora de Investimentos",
+    "description": "Descubra quanto seu dinheiro pode render. Use nossa Calculadora de Investimentos gratuita para simular juros compostos, aportes mensais e planejar sua liberdade financeira.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
     "offers": {
@@ -2773,8 +2781,8 @@ function InvestmentPage() {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Simulador de Investimentos - Renda Fixa e Juros Compostos",
-        description: "Veja quanto seu dinheiro pode render. Simule investimentos em CDB, Tesouro Direto, LCI e LCA com nossa calculadora de juros compostos.",
+        title: "Calculadora de Investimentos: Simule Rendimentos e Juros Reais",
+        description: "Descubra quanto seu dinheiro pode render. Use nossa Calculadora de Investimentos gratuita para simular juros compostos, aportes mensais e planejar sua liberdade financeira.",
         canonical: "/calculadoras/investimentos"
       }
     ),
@@ -2797,7 +2805,7 @@ function InvestmentPage() {
       /* @__PURE__ */ jsxs("div", { className: "mb-8", children: [
         /* @__PURE__ */ jsx(Breadcrumb, { items: [
           { label: "Calculadoras", href: "/calculadoras" },
-          { label: "Simulador de Investimentos", href: "/calculadoras/investimentos" }
+          { label: "Calculadora de Investimentos", href: "/calculadoras/investimentos" }
         ] }),
         /* @__PURE__ */ jsxs(
           motion.div,
@@ -2812,15 +2820,28 @@ function InvestmentPage() {
                 /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Investimentos e Planejamento" })
               ] }),
               /* @__PURE__ */ jsxs("h1", { className: "text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight", children: [
-                "Simulador de ",
+                "Calculadora de ",
                 /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-green-500", children: "Investimentos" })
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Projete seu futuro financeiro. Compare rentabilidades e veja o poder dos juros compostos." })
+              /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto text-lg text-gray-400 space-y-4", children: [
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "Você já parou para pensar que o dinheiro parado na conta corrente está, na verdade, encolhendo por causa da inflação? ",
+                  /* @__PURE__ */ jsx("strong", { className: "text-gray-200", children: "Investir não é apenas para quem tem muito dinheiro" }),
+                  ", é a única forma comprovada de proteger seu patrimônio e garantir um futuro tranquilo."
+                ] }),
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "Nossa ",
+                  /* @__PURE__ */ jsx("strong", { className: "text-gray-200", children: "Calculadora de Investimentos" }),
+                  ' foi projetada para eliminar o "achismo". Com ela, você visualiza exatamente o poder dos juros compostos trabalhando a seu favor ao longo do tempo. Seja para comprar um imóvel, planejar a aposentadoria ou alcançar o ',
+                  /* @__PURE__ */ jsx(Link, { to: "/calculadoras/primeiro-milhao", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30 transition-colors", children: "primeiro milhão" }),
+                  ", a matemática financeira é sua maior aliada."
+                ] })
+              ] })
             ]
           }
         )
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-8 mb-24", children: [
+      /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-8 mb-16", children: [
         /* @__PURE__ */ jsx(
           motion.div,
           {
@@ -2828,7 +2849,7 @@ function InvestmentPage() {
             animate: { opacity: 1, x: 0 },
             transition: { duration: 0.6, delay: 0.2 },
             className: "lg:col-span-7",
-            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full", children: [
               /* @__PURE__ */ jsx("div", { className: "flex items-center justify-between mb-8", children: /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold flex items-center gap-2 text-white", children: [
                 /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-emerald-500" }),
                 "Simular Rendimento"
@@ -2923,19 +2944,128 @@ function InvestmentPage() {
             animate: { opacity: 1, x: 0 },
             transition: { duration: 0.6, delay: 0.4 },
             className: "lg:col-span-5 space-y-6",
-            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6", children: [
-              /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-white", children: [
-                /* @__PURE__ */ jsx(LineChart, { className: "w-5 h-5 text-emerald-500" }),
-                "O Poder dos Juros Compostos"
+            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold mb-6 flex items-center gap-2 text-white", children: [
+                /* @__PURE__ */ jsx(Info, { className: "w-5 h-5 text-emerald-500" }),
+                "Como usar o simulador"
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-sm text-gray-400", children: [
-                /* @__PURE__ */ jsx("p", { children: 'Albert Einstein chamou os juros compostos de "a oitava maravilha do mundo". Aquele que entende, ganha. Aquele que não entende, paga.' }),
-                /* @__PURE__ */ jsxs("div", { className: "p-3 rounded-xl bg-white/5 border border-white/5", children: [
-                  /* @__PURE__ */ jsx("strong", { className: "text-white block mb-1", children: "Dica de Investidor" }),
-                  "O tempo é seu maior aliado. Comece cedo, mesmo que com pouco. A constância dos aportes mensais é mais importante que a rentabilidade no curto prazo."
+              /* @__PURE__ */ jsxs("div", { className: "space-y-6 text-gray-400", children: [
+                /* @__PURE__ */ jsx("p", { children: "Para obter um resultado preciso, você precisa preencher os campos com dados realistas. Veja o que cada um significa:" }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Valor Inicial" }),
+                      "O montante que você já tem guardado hoje. Se for começar do zero, basta deixar zerado."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Valor Mensal" }),
+                      "Quanto você consegue poupar do seu ",
+                      /* @__PURE__ */ jsx(Link, { to: "/calculadoras/salario-liquido", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "salário líquido" }),
+                      " para investir todos os meses. A constância aqui é mais importante que a quantia."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Taxa de Juros Anual" }),
+                      "A rentabilidade esperada. Em cenários de Selic alta, investimentos de Renda Fixa podem oferecer entre 10% a 13% ao ano. Para projeções conservadoras de longo prazo, utilize entre 6% e 8% acima da inflação."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Período (Anos)" }),
+                      "O tempo que o dinheiro ficará rendendo."
+                    ] })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20", children: [
+                  /* @__PURE__ */ jsxs("strong", { className: "text-emerald-400 block mb-2 flex items-center gap-2", children: [
+                    /* @__PURE__ */ jsx(AlertCircle, { className: "w-4 h-4" }),
+                    "Dica de Especialista"
+                  ] }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm text-emerald-100/80", children: [
+                    "Se você tem dúvidas sobre quanto separar do seu orçamento, utilize a ",
+                    /* @__PURE__ */ jsx(Link, { to: "/calculadoras/regra-50-30-20", className: "text-white hover:underline", children: "Regra 50-30-20" }),
+                    " para definir o valor ideal dos seus aportes mensais antes de simular."
+                  ] })
                 ] })
               ] })
             ] })
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8 mb-24", children: [
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            transition: { duration: 0.6 },
+            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8",
+            children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(LineChart, { className: "w-6 h-6 text-emerald-500" }),
+                "A Mágica dos Juros Compostos"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 leading-relaxed", children: [
+                /* @__PURE__ */ jsxs("p", { children: [
+                  'Albert Einstein supostamente chamou os juros compostos de "a oitava maravilha do mundo". Exageros à parte, o conceito é sólido: você ganha juros sobre o dinheiro que investiu ',
+                  /* @__PURE__ */ jsx("strong", { className: "text-gray-200", children: "e também sobre os juros que esse dinheiro já rendeu" }),
+                  "."
+                ] }),
+                /* @__PURE__ */ jsx("p", { children: 'É o famoso "juros sobre juros". No curto prazo, a diferença parece pequena. Mas, após 10 ou 20 anos, a curva de crescimento se torna exponencial. É nesse ponto que sua renda passiva pode superar seu salário do trabalho.' }),
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "Para entender a matemática detalhada por trás dessa multiplicação, acesse nossa explicação completa sobre ",
+                  /* @__PURE__ */ jsx(Link, { to: "/calculadoras/juros-compostos", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "juros compostos" }),
+                  "."
+                ] })
+              ] })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            transition: { duration: 0.6, delay: 0.2 },
+            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8",
+            children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-6 h-6 text-emerald-500" }),
+                "Taxa Nominal vs. Taxa Real"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 leading-relaxed", children: [
+                /* @__PURE__ */ jsx("p", { children: "Um erro comum ao usar simuladores é esquecer a inflação." }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Taxa Nominal:" }),
+                    " É o número que você vê na corretora (ex: CDB rendendo 12% ao ano)."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Taxa Real:" }),
+                    " É quanto seu dinheiro cresceu de verdade, descontando a inflação (IPCA)."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "Se o seu investimento rende 12% e a inflação foi de 5%, seu ganho real é de aproximadamente 7%. Ao fazer simulações para prazos muito longos (como 20 ou 30 anos), prefira usar uma ",
+                  /* @__PURE__ */ jsx("strong", { className: "text-gray-200", children: "taxa de juros real" }),
+                  " (ex: 5% ou 6%) para ter uma noção mais fiel do poder de compra futuro do seu dinheiro."
+                ] }),
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "Você pode ler mais análises profundas sobre o mercado em nosso ",
+                  /* @__PURE__ */ jsx(Link, { to: "/blog/investimentos", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "blog sobre investimentos" }),
+                  "."
+                ] })
+              ] })
+            ]
           }
         )
       ] }),
@@ -2943,7 +3073,7 @@ function InvestmentPage() {
         FAQ,
         {
           items: INVESTMENT_FAQS,
-          title: "Dúvidas sobre Investimentos",
+          title: "Perguntas Frequentes sobre Investimentos (FAQs)",
           className: "py-12",
           showSocialProof: false
         }
@@ -6288,23 +6418,35 @@ function PLRPage() {
 }
 const FIRE_FAQS = [
   {
-    question: "O que é o movimento FIRE?",
-    answer: "FIRE significa 'Financial Independence, Retire Early' (Independência Financeira, Aposentadoria Antecipada). É um estilo de vida focado em economizar agressivamente para se aposentar jovem."
+    question: "Quanto dinheiro preciso para viver de renda no Brasil?",
+    answer: "Você precisa de aproximadamente 300 vezes o seu custo mensal. Se você gasta R$ 4.000 mensais, precisará de R$ 1.200.000 investidos. Esse cálculo considera uma retirada segura de 4% ao ano. Se seus investimentos renderem mais que a inflação de forma consistente, esse valor pode ser menor."
   },
   {
-    question: "O que é a Regra dos 4%?",
-    answer: "É uma regra prática que diz que você pode retirar 4% do seu patrimônio investido anualmente sem que o dinheiro acabe, considerando a inflação e rendimentos históricos."
+    question: "A regra dos 4% funciona no Brasil?",
+    answer: "Sim, e pode ser até mais eficiente. Nos EUA, a regra depende muito do mercado de ações. No Brasil, devido às altas taxas de juros na Renda Fixa (Tesouro IPCA+, por exemplo), é possível construir carteiras mais seguras com rentabilidade real acima de 5%, o que favorece o aposentado brasileiro."
   },
   {
-    question: "Onde devo investir para o FIRE?",
-    answer: "Geralmente em uma carteira diversificada com ações (para crescimento) e renda fixa (para segurança), focando no longo prazo e juros compostos."
+    question: "Onde devo investir para atingir o FIRE?",
+    answer: "A diversificação é chave. Uma carteira FIRE típica no Brasil combina Renda Fixa atrelada à inflação (para garantir poder de compra e segurança) e Renda Variável (Ações e Fundos Imobiliários) para crescimento patrimonial. Evite a poupança, pois ela perde para a inflação."
+  },
+  {
+    question: "Preciso ter um salário alto para ser FIRE?",
+    answer: "Não. O fator mais importante é a taxa de poupança, não o valor absoluto do salário. Alguém que ganha R$ 5.000 e poupa 50% (vivendo com R$ 2.500) atingirá a independência financeira mais rápido do que alguém que ganha R$ 20.000 mas gasta tudo o que recebe."
+  },
+  {
+    question: "O que é Taxa de Retirada Segura (SWR)?",
+    answer: "É a porcentagem do seu patrimônio que você pode sacar anualmente para pagar suas contas sem esgotar seu dinheiro antes de morrer. A taxa padrão é 4%, mas deve ser ajustada conforme a realidade econômica e sua expectativa de vida."
+  },
+  {
+    question: "Devo considerar a inflação no cálculo?",
+    answer: "Sim. A nossa calculadora considera a taxa de juros real (rentabilidade menos inflação). Se você projetar ganhos nominais sem descontar a inflação, terá uma falsa sensação de riqueza, mas seu dinheiro comprará menos no futuro."
   }
 ];
 function FIREPage() {
   const [monthlyExpense, setMonthlyExpense] = useState("");
   const [currentSavings, setCurrentSavings] = useState("");
   const [monthlyContribution, setMonthlyContribution] = useState("");
-  const [annualReturn, setAnnualReturn] = useState("8");
+  const [annualReturn, setAnnualReturn] = useState("5");
   const [result, setResult] = useState(null);
   const calculate = () => {
     const expense = parseFloat(monthlyExpense.replace(/\./g, "").replace(",", "."));
@@ -6346,8 +6488,8 @@ function FIREPage() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calculadora FIRE - Independência Financeira",
-    "description": "Descubra seu número FIRE e quanto tempo falta para você atingir a independência financeira e se aposentar cedo.",
+    "name": "Calculadora FIRE: Quando Você Vai Atingir a Independência Financeira?",
+    "description": "Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada hoje.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
     "offers": {
@@ -6360,8 +6502,8 @@ function FIREPage() {
     /* @__PURE__ */ jsx(
       SEO,
       {
-        title: "Calculadora FIRE - Independência Financeira",
-        description: "Quer se aposentar cedo? Calcule seu 'Número FIRE' e descubra quanto tempo falta para atingir a liberdade financeira.",
+        title: "Calculadora FIRE: Quando Você Vai Atingir a Independência Financeira?",
+        description: "Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada hoje.",
         canonical: "/calculadoras/fire"
       }
     ),
@@ -6402,12 +6544,20 @@ function FIREPage() {
                 "Calculadora ",
                 /* @__PURE__ */ jsx("span", { className: "text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-orange-500", children: "FIRE" })
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-lg text-gray-400 max-w-2xl mx-auto", children: "Financial Independence, Retire Early. Descubra quanto você precisa para viver de renda." })
+              /* @__PURE__ */ jsxs("div", { className: "max-w-3xl mx-auto text-lg text-gray-400 space-y-4", children: [
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "Você já imaginou não depender mais do seu salário para pagar as contas? Isso não é apenas um sonho, é uma estratégia matemática chamada ",
+                  /* @__PURE__ */ jsx("strong", { className: "text-gray-200", children: "FIRE (Financial Independence, Retire Early)" }),
+                  "."
+                ] }),
+                /* @__PURE__ */ jsx("p", { children: "Ao contrário da aposentadoria tradicional, onde você espera até os 65 anos, o movimento FIRE foca na acumulação agressiva de patrimônio para que você possa viver de renda muito antes disso — seja aos 40, 50 ou até 30 anos." }),
+                /* @__PURE__ */ jsx("p", { children: 'Esta calculadora faz as contas complexas para você. Descubra exatamente quanto dinheiro você precisa acumular (seu "Número Mágico") e em quanto tempo alcançará sua liberdade.' })
+              ] })
             ]
           }
         )
       ] }),
-      /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-8 mb-24", children: [
+      /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-8 mb-16", children: [
         /* @__PURE__ */ jsx(
           motion.div,
           {
@@ -6415,14 +6565,14 @@ function FIREPage() {
             animate: { opacity: 1, x: 0 },
             transition: { duration: 0.6, delay: 0.2 },
             className: "lg:col-span-7",
-            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8", children: [
+            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full", children: [
               /* @__PURE__ */ jsx("div", { className: "flex items-center justify-between mb-8", children: /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold flex items-center gap-2 text-white", children: [
                 /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-emerald-500" }),
                 "Calcular Liberdade"
               ] }) }),
               /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
                 /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Gasto Mensal Desejado na Aposentadoria" }),
+                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Despesas Mensais (Gasto Desejado)" }),
                   /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                     /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
                     /* @__PURE__ */ jsx(
@@ -6435,7 +6585,8 @@ function FIREPage() {
                         placeholder: "0,00"
                       }
                     )
-                  ] })
+                  ] }),
+                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500", children: "Quanto você gasta para viver? (Seja realista, inclua lazer e saúde)." })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
                   /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
@@ -6472,7 +6623,7 @@ function FIREPage() {
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Rentabilidade Real Anual Esperada (%)" }),
+                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Taxa de Juros Anual (Real) %" }),
                   /* @__PURE__ */ jsx(
                     "input",
                     {
@@ -6480,19 +6631,22 @@ function FIREPage() {
                       value: annualReturn,
                       onChange: (e) => handleNumberInput(e.target.value, setAnnualReturn),
                       className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all",
-                      placeholder: "Ex: 8"
+                      placeholder: "Ex: 5"
                     }
                   ),
-                  /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500", children: "Acima da inflação. Média histórica do mercado de ações é ~7-10%." })
+                  /* @__PURE__ */ jsxs("p", { className: "text-xs text-gray-500", children: [
+                    "Quanto seus investimentos rendem ",
+                    /* @__PURE__ */ jsx("strong", { children: "acima da inflação" }),
+                    ". No Brasil, 4% a 6% é conservador."
+                  ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "pt-6 border-t border-white/5", children: [
                   /* @__PURE__ */ jsxs("div", { className: "bg-emerald-500/10 p-6 rounded-2xl border border-emerald-500/20 text-center mb-4", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-sm text-emerald-400 block mb-2", children: "Seu Número FIRE" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-white", children: result ? `R$ ${result.fireNumber.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mt-2", children: "Este é o valor que você precisa acumular." })
+                    /* @__PURE__ */ jsx("span", { className: "text-sm text-emerald-400 block mb-2", children: "Seu Número FIRE (Patrimônio Necessário)" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-white", children: result ? `R$ ${result.fireNumber.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" })
                   ] }),
                   /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5 text-center", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400 block mb-1", children: "Tempo Estimado" }),
+                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400 block mb-1", children: "Tempo Estimado para Liberdade" }),
                     /* @__PURE__ */ jsx("span", { className: "text-2xl font-bold text-white", children: result ? `${result.yearsToFire.toFixed(1)} anos` : "---" })
                   ] })
                 ] })
@@ -6507,29 +6661,205 @@ function FIREPage() {
             animate: { opacity: 1, x: 0 },
             transition: { duration: 0.6, delay: 0.4 },
             className: "lg:col-span-5 space-y-6",
-            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6", children: [
-              /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center gap-2 text-white", children: [
-                /* @__PURE__ */ jsx(TrendingUp, { className: "w-5 h-5 text-emerald-500" }),
-                "Como funciona?"
+            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full", children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold mb-6 flex items-center gap-2 text-white", children: [
+                /* @__PURE__ */ jsx(Info, { className: "w-5 h-5 text-emerald-500" }),
+                "Como Usar a Calculadora"
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-sm text-gray-400", children: [
-                /* @__PURE__ */ jsx("p", { children: 'O cálculo baseia-se na "Regra dos 4%". Estudos mostram que se você retirar 4% do seu portfólio inicial por ano (ajustado pela inflação), seu dinheiro tem altíssima probabilidade de durar 30 anos ou mais.' }),
-                /* @__PURE__ */ jsxs("div", { className: "p-3 rounded-xl bg-white/5 border border-white/5", children: [
-                  /* @__PURE__ */ jsx("strong", { className: "text-white block mb-1", children: "Fórmula Simples" }),
-                  "Pegue seu custo de vida mensal e multiplique por 300. Esse é o seu objetivo.",
-                  /* @__PURE__ */ jsx("br", {}),
-                  "Ex: R$ 5.000 x 300 = R$ 1.500.000."
+              /* @__PURE__ */ jsxs("div", { className: "space-y-6 text-gray-400", children: [
+                /* @__PURE__ */ jsx("p", { children: "Para obter um resultado preciso, insira dados honestos sobre sua vida financeira:" }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-4", children: [
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Despesas Mensais" }),
+                      "Quanto você gasta para viver? (Seja realista, inclua lazer e saúde)."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Patrimônio Atual" }),
+                      "Quanto você já tem investido hoje."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Aporte Mensal" }),
+                      "Quanto você consegue guardar e investir todo mês. Se você usa a ",
+                      /* @__PURE__ */ jsx(Link, { to: "/calculadoras/regra-50-30-20", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "regra 50-30-20" }),
+                      ", este valor deve ser, no mínimo, 20% da sua renda."
+                    ] })
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { className: "flex gap-3", children: [
+                    /* @__PURE__ */ jsx("div", { className: "w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" }),
+                    /* @__PURE__ */ jsxs("div", { children: [
+                      /* @__PURE__ */ jsx("strong", { className: "text-white block", children: "Taxa de Juros Anual (Real)" }),
+                      "Quanto seus investimentos rendem ",
+                      /* @__PURE__ */ jsx("strong", { children: "acima da inflação" }),
+                      ". No Brasil, uma estimativa conservadora para o longo prazo gira em torno de 4% a 6% ao ano."
+                    ] })
+                  ] })
                 ] })
               ] })
             ] })
           }
         )
       ] }),
+      /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-8 mb-16", children: [
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            transition: { duration: 0.6 },
+            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8",
+            children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(Flame, { className: "w-6 h-6 text-orange-500" }),
+                "O Que é o Movimento FIRE?"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 leading-relaxed", children: [
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "FIRE é a sigla em inglês para ",
+                  /* @__PURE__ */ jsx("em", { children: "Independência Financeira, Aposentadoria Antecipada" }),
+                  ". A premissa é simples: gastar muito menos do que ganha e investir a diferença com sabedoria até que os rendimentos dos seus investimentos cubram 100% das suas despesas anuais."
+                ] }),
+                /* @__PURE__ */ jsx("p", { children: "Existem variações do movimento, dependendo do seu estilo de vida:" }),
+                /* @__PURE__ */ jsxs("ul", { className: "space-y-2 list-disc pl-5", children: [
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Lean FIRE:" }),
+                    " Para quem busca uma vida frugal e custos baixos."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Fat FIRE:" }),
+                    " Para quem deseja manter um alto padrão de vida na aposentadoria."
+                  ] }),
+                  /* @__PURE__ */ jsxs("li", { children: [
+                    /* @__PURE__ */ jsx("strong", { className: "text-white", children: "Barista FIRE:" }),
+                    " Para quem atinge a independência parcial e trabalha apenas por benefícios ou prazer."
+                  ] })
+                ] })
+              ] })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxs(
+          motion.div,
+          {
+            initial: { opacity: 0, y: 20 },
+            whileInView: { opacity: 1, y: 0 },
+            viewport: { once: true },
+            transition: { duration: 0.6, delay: 0.2 },
+            className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8",
+            children: [
+              /* @__PURE__ */ jsxs("h2", { className: "text-2xl font-bold text-white mb-4 flex items-center gap-2", children: [
+                /* @__PURE__ */ jsx(TrendingUp, { className: "w-6 h-6 text-emerald-500" }),
+                "A Regra dos 4%"
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "space-y-4 text-gray-400 leading-relaxed", children: [
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "O cálculo base do FIRE fundamenta-se na ",
+                  /* @__PURE__ */ jsx("strong", { children: "Regra dos 4%" }),
+                  ", originada do Estudo da Universidade Trinity."
+                ] }),
+                /* @__PURE__ */ jsxs("p", { children: [
+                  "A lógica é que, se você tiver investido ",
+                  /* @__PURE__ */ jsx("strong", { children: "25 vezes o seu custo anual" }),
+                  ", você pode retirar 4% desse valor todos os anos para viver, ajustando pela inflação, sem que o dinheiro acabe por pelo menos 30 anos."
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5", children: [
+                  /* @__PURE__ */ jsx("strong", { className: "text-white block mb-2", children: "Exemplo Prático:" }),
+                  /* @__PURE__ */ jsxs("p", { className: "text-sm", children: [
+                    "Se você gasta ",
+                    /* @__PURE__ */ jsx("strong", { children: "R$ 5.000,00 por mês" }),
+                    ", seu custo anual é de R$ 60.000,00.",
+                    /* @__PURE__ */ jsx("br", {}),
+                    "Cálculo: R$ 60.000 x 25 = R$ 1.500.000.",
+                    /* @__PURE__ */ jsx("br", {}),
+                    "Seu objetivo de patrimônio é ",
+                    /* @__PURE__ */ jsx("strong", { children: "1,5 milhão de reais" }),
+                    "."
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "flex gap-2 items-start text-sm text-emerald-400/80", children: [
+                  /* @__PURE__ */ jsx(AlertCircle, { className: "w-4 h-4 mt-0.5 flex-shrink-0" }),
+                  /* @__PURE__ */ jsxs("p", { children: [
+                    /* @__PURE__ */ jsx("strong", { children: "Nota para o Brasil:" }),
+                    " No cenário brasileiro, temos uma vantagem histórica de juros reais altos. Estudos locais sugerem que, com uma carteira focada em renda fixa, a taxa de retirada segura pode chegar a ",
+                    /* @__PURE__ */ jsx("strong", { children: "5%" }),
+                    ", acelerando sua jornada."
+                  ] })
+                ] })
+              ] })
+            ]
+          }
+        )
+      ] }),
+      /* @__PURE__ */ jsxs(
+        motion.div,
+        {
+          initial: { opacity: 0, y: 20 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true },
+          transition: { duration: 0.6 },
+          className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24",
+          children: [
+            /* @__PURE__ */ jsx("h2", { className: "text-2xl font-bold text-white mb-6 text-center", children: "Acelerando Sua Jornada" }),
+            /* @__PURE__ */ jsxs("p", { className: "text-gray-400 text-center max-w-2xl mx-auto mb-8", children: [
+              "O segredo para atingir o FIRE não é apenas ganhar mais, mas sim aumentar sua ",
+              /* @__PURE__ */ jsx("strong", { className: "text-gray-200", children: "taxa de poupança" }),
+              "."
+            ] }),
+            /* @__PURE__ */ jsx("div", { className: "overflow-x-auto", children: /* @__PURE__ */ jsxs("table", { className: "w-full text-left border-collapse", children: [
+              /* @__PURE__ */ jsx("thead", { children: /* @__PURE__ */ jsxs("tr", { className: "border-b border-white/10", children: [
+                /* @__PURE__ */ jsx("th", { className: "p-4 text-white font-semibold", children: "Taxa de Poupança" }),
+                /* @__PURE__ */ jsx("th", { className: "p-4 text-white font-semibold", children: "Anos para se Aposentar (aprox.)" })
+              ] }) }),
+              /* @__PURE__ */ jsxs("tbody", { className: "text-gray-400", children: [
+                /* @__PURE__ */ jsxs("tr", { className: "border-b border-white/5 hover:bg-white/5 transition-colors", children: [
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "10%" }),
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "51 anos" })
+                ] }),
+                /* @__PURE__ */ jsxs("tr", { className: "border-b border-white/5 hover:bg-white/5 transition-colors", children: [
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "20%" }),
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "37 anos" })
+                ] }),
+                /* @__PURE__ */ jsxs("tr", { className: "border-b border-white/5 hover:bg-white/5 transition-colors", children: [
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "50%" }),
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "17 anos" })
+                ] }),
+                /* @__PURE__ */ jsxs("tr", { className: "hover:bg-white/5 transition-colors", children: [
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "70%" }),
+                  /* @__PURE__ */ jsx("td", { className: "p-4", children: "8,5 anos" })
+                ] })
+              ] })
+            ] }) }),
+            /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-4 text-center", children: "Considerando retorno real de 5% a.a. partindo do zero." }),
+            /* @__PURE__ */ jsxs("div", { className: "mt-8 text-center text-gray-400", children: [
+              /* @__PURE__ */ jsxs("p", { children: [
+                "Se você está começando agora, utilize nossa ferramenta do ",
+                /* @__PURE__ */ jsx(Link, { to: "/calculadoras/primeiro-milhao", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "primeiro milhão" }),
+                " para traçar metas intermediárias. Lembre-se também de proteger seu patrimônio da inflação para manter seu ",
+                /* @__PURE__ */ jsx(Link, { to: "/calculadoras/poder-de-compra", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "poder de compra" }),
+                " ao longo das décadas."
+              ] }),
+              /* @__PURE__ */ jsxs("p", { className: "mt-4", children: [
+                "O efeito dos ",
+                /* @__PURE__ */ jsx(Link, { to: "/calculadoras/juros-compostos", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "juros compostos" }),
+                " é o motor do FIRE. Quanto mais cedo você começar, menos esforço terá que fazer."
+              ] })
+            ] })
+          ]
+        }
+      ),
       /* @__PURE__ */ jsx(
         FAQ,
         {
           items: FIRE_FAQS,
-          title: "Dúvidas sobre FIRE",
+          title: "Perguntas Frequentes (FAQ)",
           className: "py-12",
           showSocialProof: false
         }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flame, Calculator, HelpCircle, TrendingUp, ArrowRight } from 'lucide-react';
+import { Flame, Calculator, TrendingUp, ArrowRight, Info, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -10,16 +10,28 @@ import { FAQItem } from '../../types';
 
 const FIRE_FAQS: FAQItem[] = [
     {
-        question: "O que é o movimento FIRE?",
-        answer: "FIRE significa 'Financial Independence, Retire Early' (Independência Financeira, Aposentadoria Antecipada). É um estilo de vida focado em economizar agressivamente para se aposentar jovem."
+        question: "Quanto dinheiro preciso para viver de renda no Brasil?",
+        answer: "Você precisa de aproximadamente 300 vezes o seu custo mensal. Se você gasta R$ 4.000 mensais, precisará de R$ 1.200.000 investidos. Esse cálculo considera uma retirada segura de 4% ao ano. Se seus investimentos renderem mais que a inflação de forma consistente, esse valor pode ser menor."
     },
     {
-        question: "O que é a Regra dos 4%?",
-        answer: "É uma regra prática que diz que você pode retirar 4% do seu patrimônio investido anualmente sem que o dinheiro acabe, considerando a inflação e rendimentos históricos."
+        question: "A regra dos 4% funciona no Brasil?",
+        answer: "Sim, e pode ser até mais eficiente. Nos EUA, a regra depende muito do mercado de ações. No Brasil, devido às altas taxas de juros na Renda Fixa (Tesouro IPCA+, por exemplo), é possível construir carteiras mais seguras com rentabilidade real acima de 5%, o que favorece o aposentado brasileiro."
     },
     {
-        question: "Onde devo investir para o FIRE?",
-        answer: "Geralmente em uma carteira diversificada com ações (para crescimento) e renda fixa (para segurança), focando no longo prazo e juros compostos."
+        question: "Onde devo investir para atingir o FIRE?",
+        answer: "A diversificação é chave. Uma carteira FIRE típica no Brasil combina Renda Fixa atrelada à inflação (para garantir poder de compra e segurança) e Renda Variável (Ações e Fundos Imobiliários) para crescimento patrimonial. Evite a poupança, pois ela perde para a inflação."
+    },
+    {
+        question: "Preciso ter um salário alto para ser FIRE?",
+        answer: "Não. O fator mais importante é a taxa de poupança, não o valor absoluto do salário. Alguém que ganha R$ 5.000 e poupa 50% (vivendo com R$ 2.500) atingirá a independência financeira mais rápido do que alguém que ganha R$ 20.000 mas gasta tudo o que recebe."
+    },
+    {
+        question: "O que é Taxa de Retirada Segura (SWR)?",
+        answer: "É a porcentagem do seu patrimônio que você pode sacar anualmente para pagar suas contas sem esgotar seu dinheiro antes de morrer. A taxa padrão é 4%, mas deve ser ajustada conforme a realidade econômica e sua expectativa de vida."
+    },
+    {
+        question: "Devo considerar a inflação no cálculo?",
+        answer: "Sim. A nossa calculadora considera a taxa de juros real (rentabilidade menos inflação). Se você projetar ganhos nominais sem descontar a inflação, terá uma falsa sensação de riqueza, mas seu dinheiro comprará menos no futuro."
     }
 ];
 
@@ -27,7 +39,7 @@ export function FIREPage() {
     const [monthlyExpense, setMonthlyExpense] = useState('');
     const [currentSavings, setCurrentSavings] = useState('');
     const [monthlyContribution, setMonthlyContribution] = useState('');
-    const [annualReturn, setAnnualReturn] = useState('8'); // Default 8% real return
+    const [annualReturn, setAnnualReturn] = useState('5'); // Default 5% real return for Brazil context
     const [result, setResult] = useState<{ fireNumber: number; yearsToFire: number } | null>(null);
 
     const calculate = () => {
@@ -90,8 +102,8 @@ export function FIREPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora FIRE - Independência Financeira",
-        "description": "Descubra seu número FIRE e quanto tempo falta para você atingir a independência financeira e se aposentar cedo.",
+        "name": "Calculadora FIRE: Quando Você Vai Atingir a Independência Financeira?",
+        "description": "Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada hoje.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -104,8 +116,8 @@ export function FIREPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora FIRE - Independência Financeira"
-                description="Quer se aposentar cedo? Calcule seu 'Número FIRE' e descubra quanto tempo falta para atingir a liberdade financeira."
+                title="Calculadora FIRE: Quando Você Vai Atingir a Independência Financeira?"
+                description="Descubra o valor exato para parar de trabalhar. Use nossa Calculadora FIRE gratuita, entenda a Regra dos 4% e planeje sua aposentadoria antecipada hoje."
                 canonical="/calculadoras/fire"
             />
             <script type="application/ld+json">
@@ -150,13 +162,21 @@ export function FIREPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-orange-500">FIRE</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Financial Independence, Retire Early. Descubra quanto você precisa para viver de renda.
-                        </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
+                            <p>
+                                Você já imaginou não depender mais do seu salário para pagar as contas? Isso não é apenas um sonho, é uma estratégia matemática chamada <strong className="text-gray-200">FIRE (Financial Independence, Retire Early)</strong>.
+                            </p>
+                            <p>
+                                Ao contrário da aposentadoria tradicional, onde você espera até os 65 anos, o movimento FIRE foca na acumulação agressiva de patrimônio para que você possa viver de renda muito antes disso — seja aos 40, 50 ou até 30 anos.
+                            </p>
+                            <p>
+                                Esta calculadora faz as contas complexas para você. Descubra exatamente quanto dinheiro você precisa acumular (seu "Número Mágico") e em quanto tempo alcançará sua liberdade.
+                            </p>
+                        </div>
                     </motion.div>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-8 mb-24">
+                <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -164,7 +184,7 @@ export function FIREPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -174,7 +194,7 @@ export function FIREPage() {
 
                             <div className="space-y-6">
                                 <div className="space-y-2">
-                                    <label className="text-sm text-gray-400">Gasto Mensal Desejado na Aposentadoria</label>
+                                    <label className="text-sm text-gray-400">Despesas Mensais (Gasto Desejado)</label>
                                     <div className="relative">
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
@@ -185,6 +205,7 @@ export function FIREPage() {
                                             placeholder="0,00"
                                         />
                                     </div>
+                                    <p className="text-xs text-gray-500">Quanto você gasta para viver? (Seja realista, inclua lazer e saúde).</p>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-6">
@@ -217,27 +238,26 @@ export function FIREPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-sm text-gray-400">Rentabilidade Real Anual Esperada (%)</label>
+                                    <label className="text-sm text-gray-400">Taxa de Juros Anual (Real) %</label>
                                     <input
                                         type="text"
                                         value={annualReturn}
                                         onChange={(e) => handleNumberInput(e.target.value, setAnnualReturn)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
-                                        placeholder="Ex: 8"
+                                        placeholder="Ex: 5"
                                     />
-                                    <p className="text-xs text-gray-500">Acima da inflação. Média histórica do mercado de ações é ~7-10%.</p>
+                                    <p className="text-xs text-gray-500">Quanto seus investimentos rendem <strong>acima da inflação</strong>. No Brasil, 4% a 6% é conservador.</p>
                                 </div>
 
                                 <div className="pt-6 border-t border-white/5">
                                     <div className="bg-emerald-500/10 p-6 rounded-2xl border border-emerald-500/20 text-center mb-4">
-                                        <span className="text-sm text-emerald-400 block mb-2">Seu Número FIRE</span>
+                                        <span className="text-sm text-emerald-400 block mb-2">Seu Número FIRE (Patrimônio Necessário)</span>
                                         <span className="text-4xl font-bold text-white">
                                             {result ? `R$ ${result.fireNumber.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
                                         </span>
-                                        <p className="text-xs text-gray-400 mt-2">Este é o valor que você precisa acumular.</p>
                                     </div>
                                     <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
-                                        <span className="text-xs text-gray-400 block mb-1">Tempo Estimado</span>
+                                        <span className="text-xs text-gray-400 block mb-1">Tempo Estimado para Liberdade</span>
                                         <span className="text-2xl font-bold text-white">
                                             {result ? `${result.yearsToFire.toFixed(1)} anos` : '---'}
                                         </span>
@@ -247,36 +267,177 @@ export function FIREPage() {
                         </div>
                     </motion.div>
 
-                    {/* Sidebar Info */}
+                    {/* Sidebar Info - How to use */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="lg:col-span-5 space-y-6"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <TrendingUp className="w-5 h-5 text-emerald-500" />
-                                Como funciona?
-                            </h3>
-                            <div className="space-y-4 text-sm text-gray-400">
-                                <p>
-                                    O cálculo baseia-se na "Regra dos 4%". Estudos mostram que se você retirar 4% do seu portfólio inicial por ano (ajustado pela inflação), seu dinheiro tem altíssima probabilidade de durar 30 anos ou mais.
-                                </p>
-                                <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-                                    <strong className="text-white block mb-1">Fórmula Simples</strong>
-                                    Pegue seu custo de vida mensal e multiplique por 300. Esse é o seu objetivo.
-                                    <br />
-                                    Ex: R$ 5.000 x 300 = R$ 1.500.000.
-                                </div>
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full">
+                            <h2 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
+                                <Info className="w-5 h-5 text-emerald-500" />
+                                Como Usar a Calculadora
+                            </h2>
+                            <div className="space-y-6 text-gray-400">
+                                <p>Para obter um resultado preciso, insira dados honestos sobre sua vida financeira:</p>
+
+                                <ul className="space-y-4">
+                                    <li className="flex gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                                        <div>
+                                            <strong className="text-white block">Despesas Mensais</strong>
+                                            Quanto você gasta para viver? (Seja realista, inclua lazer e saúde).
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                                        <div>
+                                            <strong className="text-white block">Patrimônio Atual</strong>
+                                            Quanto você já tem investido hoje.
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                                        <div>
+                                            <strong className="text-white block">Aporte Mensal</strong>
+                                            Quanto você consegue guardar e investir todo mês. Se você usa a <Link to="/calculadoras/regra-50-30-20" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">regra 50-30-20</Link>, este valor deve ser, no mínimo, 20% da sua renda.
+                                        </div>
+                                    </li>
+                                    <li className="flex gap-3">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                                        <div>
+                                            <strong className="text-white block">Taxa de Juros Anual (Real)</strong>
+                                            Quanto seus investimentos rendem <strong>acima da inflação</strong>. No Brasil, uma estimativa conservadora para o longo prazo gira em torno de 4% a 6% ao ano.
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </motion.div>
                 </div>
 
+                {/* Additional Content */}
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
+                    >
+                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <Flame className="w-6 h-6 text-orange-500" />
+                            O Que é o Movimento FIRE?
+                        </h2>
+                        <div className="space-y-4 text-gray-400 leading-relaxed">
+                            <p>
+                                FIRE é a sigla em inglês para <em>Independência Financeira, Aposentadoria Antecipada</em>. A premissa é simples: gastar muito menos do que ganha e investir a diferença com sabedoria até que os rendimentos dos seus investimentos cubram 100% das suas despesas anuais.
+                            </p>
+                            <p>
+                                Existem variações do movimento, dependendo do seu estilo de vida:
+                            </p>
+                            <ul className="space-y-2 list-disc pl-5">
+                                <li><strong className="text-white">Lean FIRE:</strong> Para quem busca uma vida frugal e custos baixos.</li>
+                                <li><strong className="text-white">Fat FIRE:</strong> Para quem deseja manter um alto padrão de vida na aposentadoria.</li>
+                                <li><strong className="text-white">Barista FIRE:</strong> Para quem atinge a independência parcial e trabalha apenas por benefícios ou prazer.</li>
+                            </ul>
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
+                    >
+                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                            <TrendingUp className="w-6 h-6 text-emerald-500" />
+                            A Regra dos 4%
+                        </h2>
+                        <div className="space-y-4 text-gray-400 leading-relaxed">
+                            <p>
+                                O cálculo base do FIRE fundamenta-se na <strong>Regra dos 4%</strong>, originada do Estudo da Universidade Trinity.
+                            </p>
+                            <p>
+                                A lógica é que, se você tiver investido <strong>25 vezes o seu custo anual</strong>, você pode retirar 4% desse valor todos os anos para viver, ajustando pela inflação, sem que o dinheiro acabe por pelo menos 30 anos.
+                            </p>
+                            <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                                <strong className="text-white block mb-2">Exemplo Prático:</strong>
+                                <p className="text-sm">
+                                    Se você gasta <strong>R$ 5.000,00 por mês</strong>, seu custo anual é de R$ 60.000,00.
+                                    <br />
+                                    Cálculo: R$ 60.000 x 25 = R$ 1.500.000.
+                                    <br />
+                                    Seu objetivo de patrimônio é <strong>1,5 milhão de reais</strong>.
+                                </p>
+                            </div>
+                            <div className="flex gap-2 items-start text-sm text-emerald-400/80">
+                                <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                                <p>
+                                    <strong>Nota para o Brasil:</strong> No cenário brasileiro, temos uma vantagem histórica de juros reais altos. Estudos locais sugerem que, com uma carteira focada em renda fixa, a taxa de retirada segura pode chegar a <strong>5%</strong>, acelerando sua jornada.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24"
+                >
+                    <h2 className="text-2xl font-bold text-white mb-6 text-center">Acelerando Sua Jornada</h2>
+                    <p className="text-gray-400 text-center max-w-2xl mx-auto mb-8">
+                        O segredo para atingir o FIRE não é apenas ganhar mais, mas sim aumentar sua <strong className="text-gray-200">taxa de poupança</strong>.
+                    </p>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="border-b border-white/10">
+                                    <th className="p-4 text-white font-semibold">Taxa de Poupança</th>
+                                    <th className="p-4 text-white font-semibold">Anos para se Aposentar (aprox.)</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-gray-400">
+                                <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                    <td className="p-4">10%</td>
+                                    <td className="p-4">51 anos</td>
+                                </tr>
+                                <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                    <td className="p-4">20%</td>
+                                    <td className="p-4">37 anos</td>
+                                </tr>
+                                <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                                    <td className="p-4">50%</td>
+                                    <td className="p-4">17 anos</td>
+                                </tr>
+                                <tr className="hover:bg-white/5 transition-colors">
+                                    <td className="p-4">70%</td>
+                                    <td className="p-4">8,5 anos</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-4 text-center">Considerando retorno real de 5% a.a. partindo do zero.</p>
+
+                    <div className="mt-8 text-center text-gray-400">
+                        <p>
+                            Se você está começando agora, utilize nossa ferramenta do <Link to="/calculadoras/primeiro-milhao" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">primeiro milhão</Link> para traçar metas intermediárias. Lembre-se também de proteger seu patrimônio da inflação para manter seu <Link to="/calculadoras/poder-de-compra" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">poder de compra</Link> ao longo das décadas.
+                        </p>
+                        <p className="mt-4">
+                            O efeito dos <Link to="/calculadoras/juros-compostos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">juros compostos</Link> é o motor do FIRE. Quanto mais cedo você começar, menos esforço terá que fazer.
+                        </p>
+                    </div>
+                </motion.div>
+
                 <FAQ
                     items={FIRE_FAQS}
-                    title="Dúvidas sobre FIRE"
+                    title="Perguntas Frequentes (FAQ)"
                     className="py-12"
                     showSocialProof={false}
                 />
