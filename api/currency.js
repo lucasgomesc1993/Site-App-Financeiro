@@ -14,7 +14,7 @@ export default async function handler(request, response) {
 
         const data = await awesomeApiResponse.json();
 
-        // Set CORS headers just in case, though same-origin usage doesn't strictly need it
+        // Set CORS headers
         response.setHeader('Access-Control-Allow-Origin', '*');
         response.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate'); // Cache for 1 hour
 
