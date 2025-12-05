@@ -5,7 +5,7 @@ import { Breadcrumb } from './Breadcrumb';
 import { SEO } from './SEO';
 import { FAQ } from './FAQ';
 
-const AppPromoBanner = lazy(() => import('./AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
+import { AppPromoBanner } from './AppPromoBanner';
 
 type CalculatorItem = {
     title: string;
@@ -280,9 +280,7 @@ export const Calculators: React.FC = () => {
                     />
                 </div>
 
-                <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
-                    <AppPromoBanner />
-                </Suspense>
+                <AppPromoBanner />
 
                 {/* Disclaimer */}
                 <div className="mt-16 max-w-4xl mx-auto text-center border-t border-white/5 pt-12">

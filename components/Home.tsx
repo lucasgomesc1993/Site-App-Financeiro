@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Hero } from './Hero';
 import { SEO } from './SEO';
-import { Hook } from './Hook';
+// import { Hook } from './Hook'; // Lazy loaded below
 import { Modules } from './Modules';
 import { Certificate } from './Certificate';
 import { Community } from './Community';
@@ -10,6 +10,8 @@ import { Price } from './Price';
 import { RecentStories } from './RecentStories';
 import { LatestPosts } from './LatestPosts';
 import { FAQ } from './FAQ';
+
+const Hook = lazy(() => import('./Hook').then(module => ({ default: module.Hook })));
 
 export const Home: React.FC = () => {
     return (
@@ -31,7 +33,9 @@ export const Home: React.FC = () => {
                 })}
             </script>
             <Hero />
-            <Hook />
+            <Suspense fallback={<div className="h-96 flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
+                <Hook />
+            </Suspense>
             <Modules />
             <Certificate />
             <Community />

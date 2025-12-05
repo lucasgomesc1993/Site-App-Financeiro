@@ -8,11 +8,9 @@ import "react-fast-compare";
 import "invariant";
 import "shallowequal";
 import "framer-motion";
-import "@google/genai";
 import "@supabase/supabase-js";
 import "date-fns";
 import "date-fns/locale";
-import "qrcode.react";
 const Terms = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen pt-32 pb-24 px-4 overflow-hidden", children: [
     /* @__PURE__ */ jsx(
@@ -91,4 +89,4 @@ const Terms = () => {
 export {
   Terms
 };
-//# sourceMappingURL=Terms-BQHgiGob.js.map
+//# sourceMappingURL=Terms-C7mFtWL5.js.map
