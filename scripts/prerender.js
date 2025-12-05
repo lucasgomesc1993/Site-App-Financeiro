@@ -44,7 +44,7 @@ const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SU
             initialData = data;
         }
 
-        const appHtml = render({ path: url, context: {}, initialData });
+        const appHtml = await render({ path: url, context: {}, initialData });
 
         let finalHtml = template.replace(`<!--app-html-->`, appHtml.html);
 

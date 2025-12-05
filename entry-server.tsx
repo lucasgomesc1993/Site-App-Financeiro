@@ -1,8 +1,9 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import { renderToPipeableStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { ServerDataProvider } from './context/ServerContext';
+import { Writable } from 'stream';
 import App from './App';
 import './index.css';
 
@@ -12,20 +13,40 @@ interface RenderOptions {
     initialData?: any;
 }
 
-export function render({ path, context = {}, initialData = null }: RenderOptions) {
+export async function render({ path, context = {}, initialData = null }: RenderOptions) {
     const helmetContext = {};
 
-    const html = ReactDOMServer.renderToString(
-        <React.StrictMode>
-            <StaticRouter location={path}>
-                <HelmetProvider context={helmetContext}>
-                    <ServerDataProvider value={initialData}>
-                        <App />
-                    </ServerDataProvider>
-                </HelmetProvider>
-            </StaticRouter>
-        </React.StrictMode>
-    );
+    return new Promise((resolve, reject) => {
+        let html = '';
+        const stream = new Writable({
+            write(chunk, _encoding, callback) {
+                html += chunk.toString();
+                callback();
+            }
+        });
 
-    return { html, helmetContext };
+        const { pipe } = renderToPipeableStream(
+            <React.StrictMode>
+                <StaticRouter location={path}>
+                    <HelmetProvider context={helmetContext}>
+                        <ServerDataProvider value={initialData}>
+                            <App />
+                        </ServerDataProvider>
+                    </HelmetProvider>
+                </StaticRouter>
+            </React.StrictMode>,
+            {
+                onAllReady() {
+                    pipe(stream);
+                },
+                onError(error) {
+                    reject(error);
+                }
+            }
+        );
+
+        stream.on('finish', () => {
+            resolve({ html, helmetContext });
+        });
+    });
 }

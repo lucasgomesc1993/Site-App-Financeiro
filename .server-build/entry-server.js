@@ -4,11 +4,12 @@ var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "sy
 var _a, _b;
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
 import React, { Component, createContext, useContext, useState, useEffect, lazy, Suspense } from "react";
-import ReactDOMServer from "react-dom/server";
+import { renderToPipeableStream } from "react-dom/server";
 import { useNavigate, useLocation, Link, Routes, Route, StaticRouter } from "react-router-dom";
 import fastCompare from "react-fast-compare";
 import invariant from "invariant";
 import shallowEqual from "shallowequal";
+import { Writable } from "stream";
 import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, Check, ArrowRight, Play, Calendar, ChevronUp, ChevronDown } from "lucide-react";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { createClient } from "@supabase/supabase-js";
@@ -2079,62 +2080,62 @@ const PromoPopup = () => {
     }
   ) });
 };
-const Terms = lazy(() => import("./assets/Terms-C7mFtWL5.js").then((module) => ({ default: module.Terms })));
-const Privacy = lazy(() => import("./assets/Privacy-CIItOUGQ.js").then((module) => ({ default: module.Privacy })));
-const Support = lazy(() => import("./assets/Support-CYA3E9eE.js").then((module) => ({ default: module.Support })));
-const Calculators = lazy(() => import("./assets/Calculators-BxPIhWJr.js").then((module) => ({ default: module.Calculators })));
-const InvestmentPage = lazy(() => import("./assets/InvestmentPage-dB04mRaI.js").then((module) => ({ default: module.InvestmentPage })));
-const VacationPage = lazy(() => import("./assets/VacationPage-DFI7kydv.js").then((module) => ({ default: module.VacationPage })));
-const EnergyPage = lazy(() => import("./assets/EnergyPage-CUgpYBFZ.js").then((module) => ({ default: module.EnergyPage })));
-const FuelPage = lazy(() => import("./assets/FuelPage-D4W-moKi.js").then((module) => ({ default: module.FuelPage })));
-const TerminationPage = lazy(() => import("./assets/TerminationPage-bjCjUjT-.js").then((module) => ({ default: module.TerminationPage })));
-const INSSPage = lazy(() => import("./assets/INSSPage-BwpFyuR0.js").then((module) => ({ default: module.INSSPage })));
-const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-CqIiEIub.js").then((module) => ({ default: module.NetSalaryPage })));
-const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-DTu_Gzy5.js").then((module) => ({ default: module.ThirteenthSalaryPage })));
-const OvertimePage = lazy(() => import("./assets/OvertimePage-DVO4IS3Z.js").then((module) => ({ default: module.OvertimePage })));
-const UnemploymentInsurancePage = lazy(() => import("./assets/UnemploymentInsurancePage-DWXBZJRx.js").then((module) => ({ default: module.UnemploymentInsurancePage })));
-const NightShiftPage = lazy(() => import("./assets/NightShiftPage-Bzt9ykJE.js").then((module) => ({ default: module.NightShiftPage })));
-const FGTSPage = lazy(() => import("./assets/FGTSPage-jGICRsvk.js").then((module) => ({ default: module.FGTSPage })));
-const EmployeeCostPage = lazy(() => import("./assets/EmployeeCostPage-y5Sd2Vl9.js").then((module) => ({ default: module.EmployeeCostPage })));
-const PLRPage = lazy(() => import("./assets/PLRPage-BPN04uR2.js").then((module) => ({ default: module.PLRPage })));
-const FIREPage = lazy(() => import("./assets/FIREPage-BNb0sGdX.js").then((module) => ({ default: module.FIREPage })));
-const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-COIgh9Z0.js").then((module) => ({ default: module.CompoundInterestPage })));
-const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-CZdKdOfa.js").then((module) => ({ default: module.RentVsBuyPage })));
-const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-XbLyiZvO.js").then((module) => ({ default: module.UberVsCarPage })));
-const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-DYoVjp25.js").then((module) => ({ default: module.FirstMillionPage })));
-const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-7vDz-xTr.js").then((module) => ({ default: module.CurrencyConverterPage })));
-const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-emJv3VTE.js").then((module) => ({ default: module.PurchasingPowerPage })));
-const Budget503020Page = lazy(() => import("./assets/Budget503020Page-xJv9x62O.js").then((module) => ({ default: module.Budget503020Page })));
-const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-DCA6Two9.js").then((module) => ({ default: module.VehicleFinancingPage })));
-const RealEstateFinancingPage = lazy(() => import("./assets/RealEstateFinancingPage-CnVqr1zc.js").then((module) => ({ default: module.RealEstateFinancingPage })));
-const EarlyRepaymentPage = lazy(() => import("./assets/EarlyRepaymentPage-DaqSZ-RE.js").then((module) => ({ default: module.EarlyRepaymentPage })));
-const CETCalculatorPage = lazy(() => import("./assets/CETCalculatorPage-CBy4HiQq.js").then((module) => ({ default: module.CETCalculatorPage })));
-const CreditCardDebtPage = lazy(() => import("./assets/CreditCardDebtPage-PxF8g8fO.js").then((module) => ({ default: module.CreditCardDebtPage })));
-const MEIDasPage = lazy(() => import("./assets/MEIDasPage-LDbCBv9n.js").then((module) => ({ default: module.MEIDasPage })));
-const MarkupPage = lazy(() => import("./assets/MarkupPage-D1UZf5qX.js").then((module) => ({ default: module.MarkupPage })));
-const BreakEvenPage = lazy(() => import("./assets/BreakEvenPage-BJ5FXteV.js").then((module) => ({ default: module.BreakEvenPage })));
-const SimplesVsPresumidoPage = lazy(() => import("./assets/SimplesVsPresumidoPage-CBtHSgtO.js").then((module) => ({ default: module.SimplesVsPresumidoPage })));
-const WorkingCapitalPage = lazy(() => import("./assets/WorkingCapitalPage-DQjmrA0M.js").then((module) => ({ default: module.WorkingCapitalPage })));
-const ROICalculatorPage = lazy(() => import("./assets/ROICalculatorPage-3gNtkCIC.js").then((module) => ({ default: module.ROICalculatorPage })));
-const BarbecueCalculatorPage = lazy(() => import("./assets/BarbecueCalculatorPage-DDKsHkmX.js").then((module) => ({ default: module.BarbecueCalculatorPage })));
-const BusinessDaysPage = lazy(() => import("./assets/BusinessDaysPage-CpgS5jsU.js").then((module) => ({ default: module.BusinessDaysPage })));
-const RuleOfThreePage = lazy(() => import("./assets/RuleOfThreePage-gNPFRYi6.js").then((module) => ({ default: module.RuleOfThreePage })));
-const PercentageCalculatorPage = lazy(() => import("./assets/PercentageCalculatorPage-B2dMYYsA.js").then((module) => ({ default: module.PercentageCalculatorPage })));
-const HoursCalculatorPage = lazy(() => import("./assets/HoursCalculatorPage-oA1oWmon.js").then((module) => ({ default: module.HoursCalculatorPage })));
-const TileBricksCalculatorPage = lazy(() => import("./assets/TileBricksCalculatorPage--3X886Ee.js").then((module) => ({ default: module.TileBricksCalculatorPage })));
-const TravelCostCalculatorPage = lazy(() => import("./assets/TravelCostCalculatorPage-BAFFscm3.js").then((module) => ({ default: module.TravelCostCalculatorPage })));
-const IMCCalculatorPage = lazy(() => import("./assets/IMCCalculatorPage-C00nshsR.js").then((module) => ({ default: module.IMCCalculatorPage })));
-const WaterIntakeCalculatorPage = lazy(() => import("./assets/WaterIntakeCalculatorPage-VRDU0dfG.js").then((module) => ({ default: module.WaterIntakeCalculatorPage })));
-const CulinaryConverterPage = lazy(() => import("./assets/CulinaryConverterPage-BWU75azg.js").then((module) => ({ default: module.CulinaryConverterPage })));
-const GestationalAgeCalculatorPage = lazy(() => import("./assets/GestationalAgeCalculatorPage-nDV9juJu.js").then((module) => ({ default: module.GestationalAgeCalculatorPage })));
-const SecretSantaPage = lazy(() => import("./assets/SecretSantaPage-DlwmGcsc.js").then((module) => ({ default: module.SecretSantaPage })));
-const PixGeneratorPage = lazy(() => import("./assets/PixGeneratorPage-BBsvl1TX.js").then((module) => ({ default: module.PixGeneratorPage })));
-const WebStoryPage = lazy(() => import("./assets/WebStoryPage-w7Rq3UxZ.js").then((module) => ({ default: module.WebStoryPage })));
-const StoriesGallery = lazy(() => import("./assets/StoriesGallery-CrsGpzaL.js").then((module) => ({ default: module.StoriesGallery })));
-const BlogIndex = lazy(() => import("./assets/BlogIndex-CsnyQcNw.js").then((module) => ({ default: module.BlogIndex })));
-const CategoryPage = lazy(() => import("./assets/CategoryPage-BvBYbPUR.js").then((module) => ({ default: module.CategoryPage })));
-const BlogPost = lazy(() => import("./assets/BlogPost-BGHzaazM.js").then((module) => ({ default: module.BlogPost })));
-const NotFound = lazy(() => import("./assets/NotFound-DmXIZbe4.js").then((module) => ({ default: module.NotFound })));
+const Terms = lazy(() => import("./assets/Terms-Dqwge8vJ.js").then((module) => ({ default: module.Terms })));
+const Privacy = lazy(() => import("./assets/Privacy-BBTeFlEV.js").then((module) => ({ default: module.Privacy })));
+const Support = lazy(() => import("./assets/Support-Dv-GP8Xw.js").then((module) => ({ default: module.Support })));
+const Calculators = lazy(() => import("./assets/Calculators-Barjj1K5.js").then((module) => ({ default: module.Calculators })));
+const InvestmentPage = lazy(() => import("./assets/InvestmentPage-CVyhVOSv.js").then((module) => ({ default: module.InvestmentPage })));
+const VacationPage = lazy(() => import("./assets/VacationPage-CaV_ULfG.js").then((module) => ({ default: module.VacationPage })));
+const EnergyPage = lazy(() => import("./assets/EnergyPage-BC4XxPIq.js").then((module) => ({ default: module.EnergyPage })));
+const FuelPage = lazy(() => import("./assets/FuelPage-OvVugsRF.js").then((module) => ({ default: module.FuelPage })));
+const TerminationPage = lazy(() => import("./assets/TerminationPage-CLcliyv-.js").then((module) => ({ default: module.TerminationPage })));
+const INSSPage = lazy(() => import("./assets/INSSPage-CzcQURzD.js").then((module) => ({ default: module.INSSPage })));
+const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-CoAJwcja.js").then((module) => ({ default: module.NetSalaryPage })));
+const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-DLWgIUk1.js").then((module) => ({ default: module.ThirteenthSalaryPage })));
+const OvertimePage = lazy(() => import("./assets/OvertimePage-DQ-LWP0L.js").then((module) => ({ default: module.OvertimePage })));
+const UnemploymentInsurancePage = lazy(() => import("./assets/UnemploymentInsurancePage-Beevu42b.js").then((module) => ({ default: module.UnemploymentInsurancePage })));
+const NightShiftPage = lazy(() => import("./assets/NightShiftPage-C0Vz39XO.js").then((module) => ({ default: module.NightShiftPage })));
+const FGTSPage = lazy(() => import("./assets/FGTSPage-DCIrrlRP.js").then((module) => ({ default: module.FGTSPage })));
+const EmployeeCostPage = lazy(() => import("./assets/EmployeeCostPage-6IpZeLng.js").then((module) => ({ default: module.EmployeeCostPage })));
+const PLRPage = lazy(() => import("./assets/PLRPage-EV_4PivX.js").then((module) => ({ default: module.PLRPage })));
+const FIREPage = lazy(() => import("./assets/FIREPage-WfPVyy_V.js").then((module) => ({ default: module.FIREPage })));
+const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-BnjHLNQz.js").then((module) => ({ default: module.CompoundInterestPage })));
+const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-DsHt2OhM.js").then((module) => ({ default: module.RentVsBuyPage })));
+const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-CZ_90ptq.js").then((module) => ({ default: module.UberVsCarPage })));
+const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-DGXlrcnx.js").then((module) => ({ default: module.FirstMillionPage })));
+const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-XhVcwbfJ.js").then((module) => ({ default: module.CurrencyConverterPage })));
+const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-Dic7p5fO.js").then((module) => ({ default: module.PurchasingPowerPage })));
+const Budget503020Page = lazy(() => import("./assets/Budget503020Page-DPv--XwU.js").then((module) => ({ default: module.Budget503020Page })));
+const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-v6mZuW8m.js").then((module) => ({ default: module.VehicleFinancingPage })));
+const RealEstateFinancingPage = lazy(() => import("./assets/RealEstateFinancingPage-DwghVxoG.js").then((module) => ({ default: module.RealEstateFinancingPage })));
+const EarlyRepaymentPage = lazy(() => import("./assets/EarlyRepaymentPage-gncZMPbx.js").then((module) => ({ default: module.EarlyRepaymentPage })));
+const CETCalculatorPage = lazy(() => import("./assets/CETCalculatorPage-BZ4UR38S.js").then((module) => ({ default: module.CETCalculatorPage })));
+const CreditCardDebtPage = lazy(() => import("./assets/CreditCardDebtPage-CA73Jhy4.js").then((module) => ({ default: module.CreditCardDebtPage })));
+const MEIDasPage = lazy(() => import("./assets/MEIDasPage-CGVmX-29.js").then((module) => ({ default: module.MEIDasPage })));
+const MarkupPage = lazy(() => import("./assets/MarkupPage-DXhgHo-V.js").then((module) => ({ default: module.MarkupPage })));
+const BreakEvenPage = lazy(() => import("./assets/BreakEvenPage-Bjaw4Wxl.js").then((module) => ({ default: module.BreakEvenPage })));
+const SimplesVsPresumidoPage = lazy(() => import("./assets/SimplesVsPresumidoPage-DFhXHglH.js").then((module) => ({ default: module.SimplesVsPresumidoPage })));
+const WorkingCapitalPage = lazy(() => import("./assets/WorkingCapitalPage-CmVPoJBR.js").then((module) => ({ default: module.WorkingCapitalPage })));
+const ROICalculatorPage = lazy(() => import("./assets/ROICalculatorPage-D_cOS2gw.js").then((module) => ({ default: module.ROICalculatorPage })));
+const BarbecueCalculatorPage = lazy(() => import("./assets/BarbecueCalculatorPage-CzX6wY1P.js").then((module) => ({ default: module.BarbecueCalculatorPage })));
+const BusinessDaysPage = lazy(() => import("./assets/BusinessDaysPage-B32nua16.js").then((module) => ({ default: module.BusinessDaysPage })));
+const RuleOfThreePage = lazy(() => import("./assets/RuleOfThreePage-BXKsXlxL.js").then((module) => ({ default: module.RuleOfThreePage })));
+const PercentageCalculatorPage = lazy(() => import("./assets/PercentageCalculatorPage-cesywrzy.js").then((module) => ({ default: module.PercentageCalculatorPage })));
+const HoursCalculatorPage = lazy(() => import("./assets/HoursCalculatorPage-BjsMIpUc.js").then((module) => ({ default: module.HoursCalculatorPage })));
+const TileBricksCalculatorPage = lazy(() => import("./assets/TileBricksCalculatorPage-CcwZQ6_I.js").then((module) => ({ default: module.TileBricksCalculatorPage })));
+const TravelCostCalculatorPage = lazy(() => import("./assets/TravelCostCalculatorPage-B47wEv89.js").then((module) => ({ default: module.TravelCostCalculatorPage })));
+const IMCCalculatorPage = lazy(() => import("./assets/IMCCalculatorPage-nYbgzBgz.js").then((module) => ({ default: module.IMCCalculatorPage })));
+const WaterIntakeCalculatorPage = lazy(() => import("./assets/WaterIntakeCalculatorPage-yKG4VNUw.js").then((module) => ({ default: module.WaterIntakeCalculatorPage })));
+const CulinaryConverterPage = lazy(() => import("./assets/CulinaryConverterPage-Cu-5h5rK.js").then((module) => ({ default: module.CulinaryConverterPage })));
+const GestationalAgeCalculatorPage = lazy(() => import("./assets/GestationalAgeCalculatorPage-Bf3DJRAL.js").then((module) => ({ default: module.GestationalAgeCalculatorPage })));
+const SecretSantaPage = lazy(() => import("./assets/SecretSantaPage-DMbzHd9N.js").then((module) => ({ default: module.SecretSantaPage })));
+const PixGeneratorPage = lazy(() => import("./assets/PixGeneratorPage-CaY7GcSF.js").then((module) => ({ default: module.PixGeneratorPage })));
+const WebStoryPage = lazy(() => import("./assets/WebStoryPage-CL3v85VQ.js").then((module) => ({ default: module.WebStoryPage })));
+const StoriesGallery = lazy(() => import("./assets/StoriesGallery-DSuS1noP.js").then((module) => ({ default: module.StoriesGallery })));
+const BlogIndex = lazy(() => import("./assets/BlogIndex-CKd0CEwE.js").then((module) => ({ default: module.BlogIndex })));
+const CategoryPage = lazy(() => import("./assets/CategoryPage-9uOpxHwe.js").then((module) => ({ default: module.CategoryPage })));
+const BlogPost = lazy(() => import("./assets/BlogPost-CpiSzHSI.js").then((module) => ({ default: module.BlogPost })));
+const NotFound = lazy(() => import("./assets/NotFound-_vcpeVlV.js").then((module) => ({ default: module.NotFound })));
 function App() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(ScrollToTop, {}),
@@ -2204,12 +2205,31 @@ function App() {
     ] })
   ] });
 }
-function render({ path, context = {}, initialData = null }) {
+async function render({ path, context = {}, initialData = null }) {
   const helmetContext = {};
-  const html = ReactDOMServer.renderToString(
-    /* @__PURE__ */ jsx(React.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) })
-  );
-  return { html, helmetContext };
+  return new Promise((resolve, reject) => {
+    let html = "";
+    const stream = new Writable({
+      write(chunk, _encoding, callback) {
+        html += chunk.toString();
+        callback();
+      }
+    });
+    const { pipe } = renderToPipeableStream(
+      /* @__PURE__ */ jsx(React.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) }),
+      {
+        onAllReady() {
+          pipe(stream);
+        },
+        onError(error) {
+          reject(error);
+        }
+      }
+    );
+    stream.on("finish", () => {
+      resolve({ html, helmetContext });
+    });
+  });
 }
 export {
   FAQ as F,
