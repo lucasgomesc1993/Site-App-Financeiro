@@ -316,9 +316,17 @@ export function CurrencyConverterPage() {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Conversor de Moedas: Dólar, Euro e Libra Hoje (Tabela IOF 2025)",
+        "url": "https://www.junny.com.br/calculadoras/conversor-moedas",
         "description": "Converta Dólar, Euro e Libra em tempo real. Veja o cronograma IOF 2025 (3,38%), entenda o Spread bancário, o VET e compare o poder de compra.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Firefox, Edge.",
+        "featureList": [
+            "Cotação em Tempo Real",
+            "Cálculo de IOF 2025",
+            "Comparativo Dólar Comercial vs Turismo",
+            "Tabela de Poder de Compra"
+        ],
         "offers": {
             "@type": "Offer",
             "price": "0",
