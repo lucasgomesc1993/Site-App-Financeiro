@@ -331,7 +331,7 @@ const CurrencyChart = () => {
       /* @__PURE__ */ jsx(TrendingUp, { className: "w-5 h-5 text-emerald-500" }),
       "Evolução das Moedas"
     ] }) }),
-    /* @__PURE__ */ jsxs("div", { className: "flex-1 w-full min-h-[200px] min-w-0 relative", children: [
+    /* @__PURE__ */ jsxs("div", { className: "w-full h-[400px] min-w-0 relative", children: [
       isLoading && /* @__PURE__ */ jsx("div", { className: "absolute inset-0 flex items-center justify-center bg-[#1a1a1a]/50 z-10 backdrop-blur-sm rounded-xl", children: /* @__PURE__ */ jsx(RefreshCw, { className: "w-6 h-6 text-emerald-500 animate-spin" }) }),
       /* @__PURE__ */ jsx(ChartContainer, { config: chartConfig, className: "h-full w-full aspect-auto min-w-0", children: /* @__PURE__ */ jsxs(
         AreaChart,
@@ -433,4 +433,4 @@ const CurrencyChart = () => {
 export {
   CurrencyChart as default
 };
-//# sourceMappingURL=CurrencyChart-E_gp61Yn.js.map
+//# sourceMappingURL=CurrencyChart-yDOhwxlt.js.map

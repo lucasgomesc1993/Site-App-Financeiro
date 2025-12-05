@@ -32,7 +32,7 @@ const CURRENCY_FAQS = [
     answer: "Sim, mas gradualmente. O governo estabeleceu um cronograma de redução de 1% ao ano. Em 2025, a taxa é de 3,38%. Ela cairá para 2,38% em 2026, 1,38% em 2027 e será totalmente zerada (0%) apenas em 2028."
   }
 ];
-const CurrencyChart = lazy(() => import("./CurrencyChart-E_gp61Yn.js"));
+const CurrencyChart = lazy(() => import("./CurrencyChart-yDOhwxlt.js"));
 function CurrencyConverterPage() {
   const [amount, setAmount] = useState("");
   const [fromCurrency, setFromCurrency] = useState("BRL");
@@ -535,4 +535,4 @@ function CurrencyConverterPage() {
 export {
   CurrencyConverterPage
 };
-//# sourceMappingURL=CurrencyConverterPage-NgGqvWDY.js.map
+//# sourceMappingURL=CurrencyConverterPage-CKMEQmKD.js.map
