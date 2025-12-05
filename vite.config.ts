@@ -10,6 +10,16 @@ export default defineConfig(({ mode }) => {
     server: {
       port: 3000,
       host: '0.0.0.0',
+      proxy: {
+        '/api/daily': {
+          target: 'https://economia.awesomeapi.com.br/json/daily',
+          changeOrigin: true,
+          rewrite: (path) => {
+            // Transform /api/daily/USD-BRL/30 -> /USD-BRL/30
+            return path.replace(/^\/api\/daily/, '');
+          }
+        }
+      }
     },
     plugins: [react()],
     define: {

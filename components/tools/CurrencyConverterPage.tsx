@@ -74,9 +74,9 @@ const EvolutionChart = () => {
                 if (timeRange === '1Y') days = 360;
 
                 const [usdRes, eurRes, gbpRes] = await Promise.all([
-                    fetch(`https://economia.awesomeapi.com.br/json/daily/USD-BRL/${days}`),
-                    fetch(`https://economia.awesomeapi.com.br/json/daily/EUR-BRL/${days}`),
-                    fetch(`https://economia.awesomeapi.com.br/json/daily/GBP-BRL/${days}`)
+                    fetch(`/api/daily/USD-BRL/${days}`),
+                    fetch(`/api/daily/EUR-BRL/${days}`),
+                    fetch(`/api/daily/GBP-BRL/${days}`)
                 ]);
 
                 const [usdData, eurData, gbpData]: [AwesomeAPIResponse[], AwesomeAPIResponse[], AwesomeAPIResponse[]] = await Promise.all([
