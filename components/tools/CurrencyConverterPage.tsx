@@ -1,6 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Globe, Calculator, RefreshCw, Info, TrendingUp, DollarSign, CreditCard, AlertCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 
@@ -147,12 +146,7 @@ export function CurrencyConverterPage() {
                         { label: 'Conversor de Moedas', href: '/calculadoras/conversor-moedas' }
                     ]} />
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center mb-12"
-                    >
+                    <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                             <Globe className="w-4 h-4 text-emerald-500" />
                             <span className="text-sm text-gray-300">Investimentos e Planejamento</span>
@@ -163,17 +157,12 @@ export function CurrencyConverterPage() {
                         <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
                             {/* Description moved below calculator */}
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="lg:col-span-7"
-                    >
+                    <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
@@ -251,25 +240,20 @@ export function CurrencyConverterPage() {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
 
 
                     {/* Chart */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="lg:col-span-5 h-full"
-                    >
+                    <div className="lg:col-span-5 h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
                         <Suspense fallback={
-                            <div className="h-full w-full bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center">
+                            <div className="h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center">
                                 <RefreshCw className="w-8 h-8 text-emerald-500 animate-spin" />
                             </div>
                         }>
                             <CurrencyChart />
                         </Suspense>
-                    </motion.div>
+                    </div>
                 </div>
 
                 <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4 text-center mb-12">
@@ -279,13 +263,7 @@ export function CurrencyConverterPage() {
                 </div>
 
                 {/* Cronograma IOF */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12"
-                >
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                         <CreditCard className="w-6 h-6 text-emerald-500" />
                         Cronograma de Redução do IOF (Cartão de Crédito)
@@ -342,16 +320,10 @@ export function CurrencyConverterPage() {
                             Para saber o impacto real desses juros e taxas no valor final da sua compra, use a <Link to="/calculadoras/custo-efetivo-total" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Custo Efetivo Total</Link>.
                         </p>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Poder de Compra */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12"
-                >
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                         <Globe className="w-6 h-6 text-emerald-500" />
                         Poder de Compra: Quanto vale US$ 100 e € 100 hoje?
@@ -439,16 +411,10 @@ export function CurrencyConverterPage() {
                             </div>
                         </div>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Dicionário de Taxas */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12"
-                >
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                         <Info className="w-6 h-6 text-emerald-500" />
                         Dicionário de Taxas: VET, Spread e PTAX
@@ -476,17 +442,11 @@ export function CurrencyConverterPage() {
                             </p>
                         </div>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Comercial vs Turismo & Simulação */}
                 <div className="grid md:grid-cols-2 gap-8 mb-12">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
-                    >
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                             <DollarSign className="w-6 h-6 text-emerald-500" />
                             Comercial vs. Turismo: Qual a diferença?
@@ -522,15 +482,9 @@ export function CurrencyConverterPage() {
                                 *Nota para Empreendedores: Se você importa produtos pagando em Dólar Comercial para revenda no Brasil, utilize a calculadora de <Link to="/calculadoras/markup" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Markup</Link> para precificar seus itens corretamente.
                             </p>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
-                    >
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
                         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                             <Calculator className="w-6 h-6 text-emerald-500" />
                             Simulação: Qual a melhor forma de levar dinheiro?
@@ -575,17 +529,11 @@ export function CurrencyConverterPage() {
                                 Está planejando as férias? Use nossa <Link to="/calculadoras/custo-viagem" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Custo de Viagem</Link> para somar passagens, hospedagem e alimentação.
                             </p>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
 
                 {/* O que faz o Dólar subir */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24"
-                >
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
                         <TrendingUp className="w-6 h-6 text-emerald-500" />
                         O que faz o Dólar subir ou descer?
@@ -628,7 +576,7 @@ export function CurrencyConverterPage() {
                             <strong>Dica de Ouro:</strong> O dólar disparou antes do fechamento da fatura? Use nossa <Link to="/calculadoras/quitacao-antecipada" className="text-yellow-400 hover:text-yellow-300 underline decoration-yellow-400/30">Calculadora de Quitação Antecipada</Link> para ver se vale a pena adiantar o pagamento e travar o câmbio do dia.
                         </p>
                     </div>
-                </motion.div>
+                </div>
 
                 <FAQ
                     items={CURRENCY_FAQS}

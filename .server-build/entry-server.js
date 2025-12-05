@@ -2030,7 +2030,7 @@ const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-VF
 const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-F13WezeT.js").then((module) => ({ default: module.RentVsBuyPage })));
 const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-DD8SM1cA.js").then((module) => ({ default: module.UberVsCarPage })));
 const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-BlDy8c3w.js").then((module) => ({ default: module.FirstMillionPage })));
-const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-DswdToDO.js").then((module) => ({ default: module.CurrencyConverterPage })));
+const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-NgGqvWDY.js").then((module) => ({ default: module.CurrencyConverterPage })));
 const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-E5Zid8gj.js").then((module) => ({ default: module.PurchasingPowerPage })));
 const Budget503020Page = lazy(() => import("./assets/Budget503020Page-DyXyGr5Q.js").then((module) => ({ default: module.Budget503020Page })));
 const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-DOG-lHSw.js").then((module) => ({ default: module.VehicleFinancingPage })));
@@ -2064,6 +2064,13 @@ const CategoryPage = lazy(() => import("./assets/CategoryPage-9uOpxHwe.js").then
 const BlogPost = lazy(() => import("./assets/BlogPost-CXsl6WbF.js").then((module) => ({ default: module.BlogPost })));
 const NotFound = lazy(() => import("./assets/NotFound-_vcpeVlV.js").then((module) => ({ default: module.NotFound })));
 function App() {
+  const [isPopupMounted, setIsPopupMounted] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPopupMounted(true);
+    }, 4e3);
+    return () => clearTimeout(timer);
+  }, []);
   return /* @__PURE__ */ jsxs(Fragment, { children: [
     /* @__PURE__ */ jsx(ScrollToTop, {}),
     /* @__PURE__ */ jsxs("div", { className: "bg-background min-h-screen text-white font-sans selection:bg-primary/30 selection:text-primary", children: [
@@ -2128,7 +2135,7 @@ function App() {
         /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFound, {}) })
       ] }) }) }),
       /* @__PURE__ */ jsx(Footer, {}),
-      /* @__PURE__ */ jsx(Suspense, { fallback: null, children: /* @__PURE__ */ jsx(PromoPopup, {}) })
+      /* @__PURE__ */ jsx(Suspense, { fallback: null, children: isPopupMounted && /* @__PURE__ */ jsx(PromoPopup, {}) })
     ] })
   ] });
 }

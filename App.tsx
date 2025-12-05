@@ -1,4 +1,4 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { Header } from './components/Header';
@@ -68,6 +68,15 @@ const BlogPost = lazy(() => import('./pages/blog/BlogPost').then(module => ({ de
 const NotFound = lazy(() => import('./components/NotFound').then(module => ({ default: module.NotFound })));
 
 function App() {
+  const [isPopupMounted, setIsPopupMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPopupMounted(true);
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <ScrollToTop />
@@ -138,7 +147,7 @@ function App() {
         </main>
         <Footer />
         <Suspense fallback={null}>
-          <PromoPopup />
+          {isPopupMounted && <PromoPopup />}
         </Suspense>
       </div>
     </>
