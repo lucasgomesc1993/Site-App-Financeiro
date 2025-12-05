@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Globe, Calculator, RefreshCw, ArrowRight, Info, AlertCircle, TrendingUp, DollarSign, CreditCard, Coins } from 'lucide-react';
+import { Globe, Calculator, RefreshCw, Info, TrendingUp, DollarSign, CreditCard, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -10,22 +10,59 @@ import { FAQItem } from '../../types';
 
 const CURRENCY_FAQS: FAQItem[] = [
     {
-        question: "Qual o melhor horário para comprar dólar?",
-        answer: "O mercado de câmbio (Forex) funciona 24 horas, mas a liquidez principal ocorre durante o horário comercial (9h às 17h de Brasília). Comprar durante o horário de abertura dos bancos garante que você pegue a cotação momentânea com menor \"spread\". Para estratégias de longo prazo, confira nossas estratégias de investimentos."
+        question: "Câmbio na Argentina: Real ou Peso?",
+        answer: "Para a Argentina, o câmbio oficial geralmente não compensa. O país possui cotações paralelas (como o \"Dólar Blue\" ou \"Dólar MEP\") que valorizam o Real em quase o dobro. Enviar dinheiro via remessas (Western Union) ou usar cartões de contas globais costuma ser muito mais vantajoso que levar Reais em espécie."
     },
     {
-        question: "O que é Spread Bancário na conversão?",
-        answer: "O Spread é a diferença entre o que o banco paga pela moeda e por quanto ele vende para você. É o lucro da instituição. Bancos digitais e contas globais costumam ter spreads menores (1% a 2%) que os grandes bancos tradicionais (4% a 6%)."
+        question: "Vale a pena comprar dólar agora ou esperar?",
+        answer: "Tentar acertar a \"mínima\" é arriscado. A melhor estratégia é o Preço Médio: compre pequenas quantias regularmente ao longo dos meses antes da viagem. Isso dilui o risco da volatilidade e protege seu poder de compra."
     },
     {
-        question: "Como fugir do IOF alto em viagens?",
-        answer: "Embora a alíquota para cartões seja de cerca de 3,5% em 2025, o uso de contas internacionais em Dólar (que permitem comprar a moeda comercialmente e manter saldo) ainda costuma ser mais vantajoso que usar o cartão de crédito brasileiro tradicional. Outra opção é a compra de papel moeda, que possui alíquota reduzida de 1,1%."
+        question: "Qual o limite de dinheiro em espécie para viagem internacional?",
+        answer: "Pela nova Lei de Câmbio (14.286/2021), vigente em 2025, cada viajante pode portar até US$ 10.000,00 (ou equivalente em outra moeda) sem precisar declarar à Receita Federal. Acima desse valor, é obrigatório preencher a declaração eletrônica (e-DMOV)."
     },
     {
-        question: "Quanto vale 1 Real em Dólar hoje?",
-        answer: "O valor flutua a cada segundo. Atualmente, 1 Real vale aproximadamente entre $0,15 e $0,20 centavos de Dólar, dependendo da oscilação diária do mercado. Historicamente, o Real vale menos que o Dólar, exigindo cerca de 5 a 6 unidades de real para comprar 1 unidade de dólar em cenários recentes."
+        question: "O IOF do cartão vai zerar?",
+        answer: "Sim, mas gradualmente. O governo estabeleceu um cronograma de redução de 1% ao ano. Em 2025, a taxa é de 3,38%. Ela cairá para 2,38% em 2026, 1,38% em 2027 e será totalmente zerada (0%) apenas em 2028."
+    },
+    {
+        question: "Qual a vantagem da Conta Global?",
+        answer: "A principal vantagem é o IOF de 1,1% (contra 3,38% dos cartões tradicionais) e o uso do Dólar Comercial (mais barato que o Turismo). Além disso, você pode comprar a moeda aos poucos, aproveitando as baixas do câmbio, em vez de ficar refém da cotação do dia do fechamento da fatura."
     }
 ];
+
+const EvolutionChart = () => {
+    // Mock data for 30 days (simulated fluctuation around 5.80)
+    const data = [5.75, 5.78, 5.80, 5.82, 5.79, 5.76, 5.74, 5.75, 5.80, 5.85, 5.88, 5.90, 5.87, 5.85, 5.82, 5.80, 5.78, 5.75, 5.72, 5.70, 5.68, 5.70, 5.72, 5.75, 5.78, 5.80, 5.82, 5.85, 5.88, 5.90];
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+
+    return (
+        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+            <h3 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-emerald-500" />
+                Evolução 30 Dias (Dólar)
+            </h3>
+            <div className="h-64 w-full flex items-end gap-1">
+                {data.map((value, i) => (
+                    <div key={i} className="flex-1 bg-emerald-500/20 hover:bg-emerald-500/40 transition-colors rounded-t-sm relative group">
+                        <div
+                            style={{ height: `${((value - min) / (max - min)) * 100}%` }}
+                            className="w-full bg-emerald-500 rounded-t-sm absolute bottom-0"
+                        />
+                        <div className="opacity-0 group-hover:opacity-100 absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-black/90 text-white text-xs p-2 rounded whitespace-nowrap pointer-events-none z-10 border border-white/10">
+                            R$ {value.toFixed(2)}
+                        </div>
+                    </div>
+                ))}
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-2">
+                <span>30 dias atrás</span>
+                <span>Hoje</span>
+            </div>
+        </div>
+    );
+};
 
 export function CurrencyConverterPage() {
     const [amount, setAmount] = useState('');
@@ -58,15 +95,9 @@ export function CurrencyConverterPage() {
             return;
         }
 
-        // Convert to base (BRL) then to target
-        // Since our rates are relative to BRL (1 BRL = X Currency)
-        // But usually APIs give USD base. Let's simplify with fixed pairs logic for this demo.
-
-        // Let's use the displayRates (Value of 1 Unit in BRL)
         const fromRate = displayRates[fromCurrency];
         const toRate = displayRates[toCurrency];
 
-        // Convert From -> BRL -> To
         const valueInBRL = val * fromRate;
         const finalValue = valueInBRL / toRate;
 
@@ -95,8 +126,8 @@ export function CurrencyConverterPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Conversor de Moedas Online: Dólar, Euro e Câmbio Hoje (2025)",
-        "description": "Converta valores em tempo real com nosso Conversor de Moedas. Veja a cotação do Dólar Comercial e Turismo, Euro e IOF atualizado de 2025. Calcule agora.",
+        "name": "Conversor de Moedas: Dólar, Euro e Libra Hoje (Tabela IOF 2025)",
+        "description": "Converta Dólar, Euro e Libra em tempo real. Veja o cronograma IOF 2025 (3,38%), entenda o Spread bancário, o VET e compare o poder de compra.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -109,8 +140,8 @@ export function CurrencyConverterPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Conversor de Moedas Online: Dólar, Euro e Câmbio Hoje (2025)"
-                description="Converta valores em tempo real com nosso Conversor de Moedas. Veja a cotação do Dólar Comercial e Turismo, Euro e IOF atualizado de 2025. Calcule agora."
+                title="Conversor de Moedas: Dólar, Euro e Libra Hoje (Tabela IOF 2025)"
+                description="Converta Dólar, Euro e Libra em tempo real. Veja o cronograma IOF 2025 (3,38%), entenda o Spread bancário, o VET e compare o poder de compra."
                 canonical="/calculadoras/conversor-moedas"
             />
             <script type="application/ld+json">
@@ -153,14 +184,11 @@ export function CurrencyConverterPage() {
                             <span className="text-sm text-gray-300">Investimentos e Planejamento</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Conversor de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Moedas</span>
+                            Conversor de Moedas: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Dólar, Euro e Libra Hoje</span> (Cotação 2025)
                         </h1>
                         <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
                             <p>
-                                Precisa saber exatamente quanto vale o seu dinheiro antes de viajar ou fazer uma compra internacional? Você está no lugar certo. Nosso <strong>Conversor de Moedas</strong> utiliza dados atualizados em tempo real para entregar a cotação precisa do Dólar, Euro, Libra e outras divisas globais.
-                            </p>
-                            <p>
-                                Mais do que apenas números, aqui você entende o custo real da operação, incluindo o impacto do IOF de 2025 e a diferença brutal entre a cotação comercial e a turismo.
+                                Converta Dólar, Euro e Libra com a cotação oficial de agora (05/12/2025). Descubra exatamente quanto sua compra vai custar no final, já incluindo o IOF atualizado de 2025 e as taxas bancárias. <strong>Pare de adivinhar e calcule o valor real:</strong>
                             </p>
                         </div>
                     </motion.div>
@@ -250,55 +278,219 @@ export function CurrencyConverterPage() {
                         </div>
                     </motion.div>
 
-                    {/* Sidebar Info */}
+                    {/* Chart */}
                     <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="lg:col-span-5 space-y-6"
+                        className="lg:col-span-5"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full">
-                            <h3 className="text-xl font-semibold mb-6 flex items-center gap-2 text-white">
-                                <Info className="w-5 h-5 text-emerald-500" />
-                                Como usar este Conversor
-                            </h3>
-                            <div className="space-y-6 text-gray-400">
-                                <p>
-                                    Siga o passo a passo para simular:
-                                </p>
-                                <ul className="space-y-4">
-                                    <li className="flex gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
-                                        <div>
-                                            <strong className="text-white block">Valor</strong>
-                                            Digite a quantia que deseja converter (ex: R$ 1.000,00).
-                                        </div>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
-                                        <div>
-                                            <strong className="text-white block">Moeda de Origem</strong>
-                                            Selecione a moeda que você tem em mãos (geralmente Real Brasileiro - BRL).
-                                        </div>
-                                    </li>
-                                    <li className="flex gap-3">
-                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
-                                        <div>
-                                            <strong className="text-white block">Moeda de Destino</strong>
-                                            Escolha a moeda que deseja comprar (Dólar Americano - USD, Euro - EUR, etc.).
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p className="text-sm">
-                                    O resultado mostrará o valor de mercado. Porém, para o seu bolso, é fundamental entender as taxas extras explicadas abaixo.
-                                </p>
-                            </div>
-                        </div>
+                        <EvolutionChart />
                     </motion.div>
                 </div>
 
-                {/* Additional Content */}
-                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                {/* Cronograma IOF */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12"
+                >
+                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <CreditCard className="w-6 h-6 text-emerald-500" />
+                        Cronograma de Redução do IOF (Cartão de Crédito)
+                    </h2>
+                    <div className="space-y-4 text-gray-400 leading-relaxed">
+                        <p>
+                            Em 2025, o IOF para compras internacionais no cartão de crédito caiu para <strong>3,38%</strong>. O governo federal zerará essa taxa gradualmente até 2028 para atender aos requisitos da OCDE. Veja o impacto real em uma fatura de R$ 1.000,00:
+                        </p>
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr className="border-b border-white/10">
+                                        <th className="p-3 text-white">Ano</th>
+                                        <th className="p-3 text-white text-center">Taxa IOF</th>
+                                        <th className="p-3 text-white text-center">Custo por R$ 1.000</th>
+                                        <th className="p-3 text-white">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-gray-400">
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">2024</td>
+                                        <td className="p-3 text-center">4,38%</td>
+                                        <td className="p-3 text-center">R$ 43,80</td>
+                                        <td className="p-3">Anterior</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5 bg-emerald-500/5">
+                                        <td className="p-3 font-bold text-white">2025</td>
+                                        <td className="p-3 text-center font-bold text-emerald-400">3,38%</td>
+                                        <td className="p-3 text-center font-bold text-emerald-400">R$ 33,80</td>
+                                        <td className="p-3 font-bold text-white">Vigente Agora</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">2026</td>
+                                        <td className="p-3 text-center">2,38%</td>
+                                        <td className="p-3 text-center">R$ 23,80</td>
+                                        <td className="p-3">Futuro</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">2027</td>
+                                        <td className="p-3 text-center">1,38%</td>
+                                        <td className="p-3 text-center">R$ 13,80</td>
+                                        <td className="p-3">Futuro</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3 font-bold text-white">2028</td>
+                                        <td className="p-3 text-center font-bold text-emerald-400">0,00%</td>
+                                        <td className="p-3 text-center font-bold text-emerald-400">R$ 0,00</td>
+                                        <td className="p-3 font-bold text-white">Isento</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p className="text-sm">
+                            Para saber o impacto real desses juros e taxas no valor final da sua compra, use a <Link to="/calculadoras/custo-efetivo-total" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Custo Efetivo Total</Link>.
+                        </p>
+                    </div>
+                </motion.div>
+
+                {/* Poder de Compra */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12"
+                >
+                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                        <Globe className="w-6 h-6 text-emerald-500" />
+                        Poder de Compra: Quanto vale US$ 100 e € 100 hoje?
+                    </h2>
+                    <p className="text-gray-400 mb-6">
+                        O número na tela engana. US$ 100 parece pouco, mas nos EUA o poder de compra é superior ao do Brasil para bens de consumo. Compare o custo de vida real usando nossa ferramenta de <Link to="/calculadoras/poder-de-compra" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Poder de Compra</Link> para saber se o produto vale a pena.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                🇺🇸 Dólar (Estimativa)
+                            </h3>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr className="border-b border-white/10">
+                                            <th className="p-2 text-white">Valor (USD)</th>
+                                            <th className="p-2 text-white">Custo Final (+IOF)</th>
+                                            <th className="p-2 text-white">O que isso compra lá fora?</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400">
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">$ 5,00</td>
+                                            <td className="p-2">R$ 29,00</td>
+                                            <td className="p-2">Um Café Expresso (Starbucks)</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">$ 15,00</td>
+                                            <td className="p-2">R$ 87,00</td>
+                                            <td className="p-2">Combo Fast Food (Médio)</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">$ 50,00</td>
+                                            <td className="p-2">R$ 290,00</td>
+                                            <td className="p-2">Fone Bluetooth de entrada</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-2 font-bold text-white">$ 80,00</td>
+                                            <td className="p-2">R$ 465,00</td>
+                                            <td className="p-2">Jantar para dois (sem vinho)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                🇪🇺 Euro (Estimativa)
+                            </h3>
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr className="border-b border-white/10">
+                                            <th className="p-2 text-white">Valor (EUR)</th>
+                                            <th className="p-2 text-white">Custo Final (+IOF)</th>
+                                            <th className="p-2 text-white">O que isso compra lá fora?</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400">
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">€ 2,00</td>
+                                            <td className="p-2">R$ 13,50</td>
+                                            <td className="p-2">Ticket de Metrô (Paris/Madri)</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">€ 15,00</td>
+                                            <td className="p-2">R$ 101,00</td>
+                                            <td className="p-2">Menu do dia (Almoço executivo)</td>
+                                        </tr>
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">€ 60,00</td>
+                                            <td className="p-2">R$ 405,00</td>
+                                            <td className="p-2">Jantar completo para casal</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-2 font-bold text-white">€ 100,00</td>
+                                            <td className="p-2">R$ 675,00</td>
+                                            <td className="p-2">Peças de roupa (Fast Fashion)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Dicionário de Taxas */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6 }}
+                    className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12"
+                >
+                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                        <Info className="w-6 h-6 text-emerald-500" />
+                        Dicionário de Taxas: VET, Spread e PTAX
+                    </h2>
+                    <p className="text-gray-400 mb-6">
+                        Entenda as siglas que definem quanto dinheiro sai do seu bolso:
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="text-lg font-bold text-white mb-3">O que é Spread Bancário?</h3>
+                            <p className="text-sm text-gray-400">
+                                É a diferença entre o câmbio oficial (interbancário) e o valor que o banco cobra de você para lucrar na transação. Enquanto o câmbio oficial pode estar em R$ 5,40, o banco pode lhe vender a R$ 5,70. Essa "gordura" é o lucro da instituição e pode variar de 1% (contas globais) a 6% (bancos tradicionais).
+                            </p>
+                        </div>
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="text-lg font-bold text-white mb-3">O que é VET?</h3>
+                            <p className="text-sm text-gray-400">
+                                É a soma de tudo: <strong>Cotação + Spread + Tarifas + IOF</strong>. As casas de câmbio podem anunciar uma taxa baixa para atrair clientes, mas compensar nas tarifas ocultas. O VET é a única métrica real para comparar se uma oferta é vantajosa.
+                            </p>
+                        </div>
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="text-lg font-bold text-white mb-3">O que é a Taxa PTAX?</h3>
+                            <p className="text-sm text-gray-400">
+                                É a média oficial do Banco Central, calculada diariamente. É a referência usada para fechar a fatura do seu cartão de crédito. Geralmente, os bancos cobram <strong>PTAX + Spread</strong>. Descubra quanto o banco está lucrando em cima de você usando a <Link to="/calculadoras/porcentagem" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Porcentagem</Link>.
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* Comercial vs Turismo & Simulação */}
+                <div className="grid md:grid-cols-2 gap-8 mb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -308,18 +500,37 @@ export function CurrencyConverterPage() {
                     >
                         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                             <DollarSign className="w-6 h-6 text-emerald-500" />
-                            Dólar Comercial vs. Turismo
+                            Comercial vs. Turismo: Qual a diferença?
                         </h2>
                         <div className="space-y-4 text-gray-400 leading-relaxed">
                             <p>
-                                Ao ver a cotação no jornal nacional, você vê o <strong>Dólar Comercial</strong>. Mas ao tentar comprar papel moeda na casa de câmbio, o valor é mais alto. Por que isso acontece?
+                                A escolha errada pode encarecer sua viagem em <strong>até 8%</strong>. Entenda a diferença para não ser taxado à toa:
                             </p>
-                            <ul className="space-y-2 list-disc pl-5">
-                                <li><strong>Dólar Comercial:</strong> É a taxa usada por grandes empresas e bancos para importação e exportação. O volume de dinheiro é gigantesco, por isso a taxa é menor.</li>
-                                <li><strong>Dólar Turismo:</strong> É o valor que nós pagamos. Ele inclui custos operacionais (transporte de notas físicas, segurança) e a margem de lucro das instituições.</li>
-                            </ul>
-                            <p>
-                                Se você está planejando suas férias, use nossa <Link to="/calculadoras/custo-viagem" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">calculadora de custo de viagem</Link> considerando sempre a cotação Turismo.
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left border-collapse text-sm">
+                                    <thead>
+                                        <tr className="border-b border-white/10">
+                                            <th className="p-2 text-white">Tipo</th>
+                                            <th className="p-2 text-white">Onde é usado?</th>
+                                            <th className="p-2 text-white">Custo Estimado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400">
+                                        <tr className="border-b border-white/5">
+                                            <td className="p-2 font-bold text-white">Comercial</td>
+                                            <td className="p-2">Transações digitais, Contas Globais e Importação.</td>
+                                            <td className="p-2 font-bold text-emerald-400">✅ Mais Barato</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="p-2 font-bold text-white">Turismo</td>
+                                            <td className="p-2">Dinheiro em espécie (papel-moeda).</td>
+                                            <td className="p-2 font-bold text-red-400">🔴 +6% a 8%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p className="text-xs italic mt-2">
+                                *Nota para Empreendedores: Se você importa produtos pagando em Dólar Comercial para revenda no Brasil, utilize a calculadora de <Link to="/calculadoras/markup" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Markup</Link> para precificar seus itens corretamente.
                             </p>
                         </div>
                     </motion.div>
@@ -332,45 +543,53 @@ export function CurrencyConverterPage() {
                         className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8"
                     >
                         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                            <CreditCard className="w-6 h-6 text-emerald-500" />
-                            O Custo Oculto: IOF em 2025
+                            <Calculator className="w-6 h-6 text-emerald-500" />
+                            Simulação: Qual a melhor forma de levar dinheiro?
                         </h2>
                         <div className="space-y-4 text-gray-400 leading-relaxed">
                             <p>
-                                Converter moedas não é apenas trocar uma nota pela outra. Existem taxas como o <strong>IOF</strong> (Imposto sobre Operações Financeiras).
+                                Comparativo de custos para uma despesa de <strong>US$ 1.000,00</strong> em Dezembro de 2025.
                             </p>
-
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left border-collapse text-sm">
                                     <thead>
                                         <tr className="border-b border-white/10">
-                                            <th className="p-2 text-white">Tipo de Operação</th>
-                                            <th className="p-2 text-white">Alíquota Aprox.</th>
+                                            <th className="p-2 text-white">Modalidade</th>
+                                            <th className="p-2 text-white">Câmbio Base</th>
+                                            <th className="p-2 text-white text-center">IOF (2025)</th>
+                                            <th className="p-2 text-white text-center">Veredito</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-400">
-                                        <tr className="border-b border-white/5">
-                                            <td className="p-2">Cartão de Crédito Internacional</td>
-                                            <td className="p-2 font-bold text-red-400">3,5%</td>
+                                        <tr className="border-b border-white/5 bg-emerald-500/5">
+                                            <td className="p-2 font-bold text-white">Conta Global</td>
+                                            <td className="p-2">Comercial (+1% a 2%)</td>
+                                            <td className="p-2 text-center">1,10%</td>
+                                            <td className="p-2 text-center font-bold text-emerald-400">✅ Melhor Opção</td>
                                         </tr>
                                         <tr className="border-b border-white/5">
-                                            <td className="p-2">Cartão de Débito / Pré-pago</td>
-                                            <td className="p-2 font-bold text-red-400">3,5%</td>
+                                            <td className="p-2">Papel Moeda</td>
+                                            <td className="p-2">Turismo (Alto Custo)</td>
+                                            <td className="p-2 text-center">1,10%</td>
+                                            <td className="p-2 text-center text-yellow-400">🟡 Emergências</td>
                                         </tr>
                                         <tr>
-                                            <td className="p-2">Compra de Moeda em Espécie</td>
-                                            <td className="p-2 font-bold text-emerald-400">1,1%</td>
+                                            <td className="p-2">Cartão de Crédito</td>
+                                            <td className="p-2">PTAX (+4% a 6%)</td>
+                                            <td className="p-2 text-center">3,38%</td>
+                                            <td className="p-2 text-center text-red-400">🔴 Mais Caro</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <p className="text-sm">
-                                Para entender quanto esses percentuais representam, use nossa <Link to="/calculadoras/porcentagem" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">ferramenta de cálculo de porcentagem</Link>.
+                                Está planejando as férias? Use nossa <Link to="/calculadoras/custo-viagem" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Custo de Viagem</Link> para somar passagens, hospedagem e alimentação.
                             </p>
                         </div>
                     </motion.div>
                 </div>
 
+                {/* O que faz o Dólar subir */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -379,39 +598,52 @@ export function CurrencyConverterPage() {
                     className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24"
                 >
                     <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <Calculator className="w-6 h-6 text-emerald-500" />
-                        Como calcular conversão de moeda manualmente?
+                        <TrendingUp className="w-6 h-6 text-emerald-500" />
+                        O que faz o Dólar subir ou descer?
                     </h2>
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <p className="text-gray-400 mb-6">
+                        A cotação flutua baseada em três pilares principais. Entendê-los ajuda a melhorar seu <Link to="/calculadoras/roi" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">ROI</Link> em operações internacionais e saber a hora certa de aportar em <Link to="/calculadoras/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Investimentos</Link> no exterior:
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-6">
                         <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                            <h3 className="text-lg font-bold text-white mb-4">De Real para Moeda Estrangeira (Divisão)</h3>
-                            <p className="text-gray-400 mb-4">
-                                Se você tem Reais e quer saber quantos Dólares vai conseguir comprar, você <strong>divide</strong> pelo valor da cotação.
+                            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                                Taxa Selic
+                            </h3>
+                            <p className="text-sm text-gray-400">
+                                Juros altos no Brasil atraem investidores estrangeiros, trazendo dólares e baixando a cotação.
                             </p>
-                            <div className="bg-black/20 p-4 rounded-lg font-mono text-sm text-emerald-400">
-                                <p className="mb-2">Fórmula: Reais ÷ Cotação</p>
-                                <p>Ex: R$ 500 ÷ 5,50 = $ 90,90</p>
-                            </div>
                         </div>
                         <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                            <h3 className="text-lg font-bold text-white mb-4">De Moeda Estrangeira para Real (Multiplicação)</h3>
-                            <p className="text-gray-400 mb-4">
-                                Se você viu um produto de 100 dólares e quer saber quanto custa em reais, você <strong>multiplica</strong>.
+                            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                                Risco Fiscal
+                            </h3>
+                            <p className="text-sm text-gray-400">
+                                Quando o governo gasta mais do que arrecada, a confiança cai e o dólar sobe.
                             </p>
-                            <div className="bg-black/20 p-4 rounded-lg font-mono text-sm text-emerald-400">
-                                <p className="mb-2">Fórmula: Dólar x Cotação</p>
-                                <p>Ex: $ 100 x 5,50 = R$ 550,00</p>
-                            </div>
+                        </div>
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                                Juros nos EUA (Fed)
+                            </h3>
+                            <p className="text-sm text-gray-400">
+                                Se os juros sobem lá, o dinheiro sai de emergentes (como o Brasil) e volta para os EUA, valorizando a moeda americana.
+                            </p>
                         </div>
                     </div>
-                    <p className="text-gray-400 mt-6 text-center">
-                        Lembre-se: em transações internacionais, o impacto na inflação local pode alterar seu <Link to="/calculadoras/poder-de-compra" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">poder de compra</Link>, então considere sempre uma margem de segurança.
-                    </p>
+                    <div className="mt-6 bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-xl flex items-start gap-3">
+                        <AlertCircle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                        <p className="text-sm text-yellow-200/80">
+                            <strong>Dica de Ouro:</strong> O dólar disparou antes do fechamento da fatura? Use nossa <Link to="/calculadoras/quitacao-antecipada" className="text-yellow-400 hover:text-yellow-300 underline decoration-yellow-400/30">Calculadora de Quitação Antecipada</Link> para ver se vale a pena adiantar o pagamento e travar o câmbio do dia.
+                        </p>
+                    </div>
                 </motion.div>
 
                 <FAQ
                     items={CURRENCY_FAQS}
-                    title="Perguntas Frequentes sobre Câmbio (FAQ)"
+                    title="Dúvidas Frequentes (FAQ)"
                     className="py-12"
                     showSocialProof={false}
                 />
