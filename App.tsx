@@ -5,9 +5,9 @@ import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { Home } from './components/Home';
 import { ScrollToTop } from './components/ScrollToTop';
-import { PromoPopup } from './components/PromoPopup';
 
 // Lazy load non-critical routes
+const PromoPopup = lazy(() => import('./components/PromoPopup').then(module => ({ default: module.PromoPopup })));
 const Terms = lazy(() => import('./components/Terms').then(module => ({ default: module.Terms })));
 const Privacy = lazy(() => import('./components/Privacy').then(module => ({ default: module.Privacy })));
 const Support = lazy(() => import('./components/Support').then(module => ({ default: module.Support })));
@@ -137,7 +137,9 @@ function App() {
           </Suspense>
         </main>
         <Footer />
-        <PromoPopup />
+        <Suspense fallback={null}>
+          <PromoPopup />
+        </Suspense>
       </div>
     </>
   );

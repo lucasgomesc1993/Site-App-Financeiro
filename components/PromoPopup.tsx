@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Zap, ArrowRight } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
@@ -7,32 +7,50 @@ export const PromoPopup: React.FC = () => {
     const location = useLocation();
     const [isVisible, setIsVisible] = useState(false);
     const [isDismissed, setIsDismissed] = useState(false);
-    const buttonControls = useAnimation();
+    const [hasInteracted, setHasInteracted] = useState(false);
+    const [hasScrolled, setHasScrolled] = useState(false);
 
     useEffect(() => {
-        // Show popup only on calculator pages and if not dismissed
-        if ((location.pathname.startsWith('/calculadoras') || location.pathname.startsWith('/blog')) && !isDismissed) {
-            const timer = setTimeout(() => setIsVisible(true), 2000); // Delay for better UX
-            return () => clearTimeout(timer);
-        } else {
+        // Only run logic on target pages and if not dismissed
+        if (!((location.pathname.startsWith('/calculadoras') || location.pathname.startsWith('/blog')) && !isDismissed)) {
             setIsVisible(false);
+            return;
         }
+
+        const handleInteraction = () => {
+            setHasInteracted(true);
+        };
+
+        const handleScroll = () => {
+            const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            if (scrollPercent > 30) {
+                setHasScrolled(true);
+            }
+            // Scrolling also counts as interaction
+            setHasInteracted(true);
+        };
+
+        // Add listeners for interaction
+        window.addEventListener('mousemove', handleInteraction, { once: true });
+        window.addEventListener('mousedown', handleInteraction, { once: true });
+        window.addEventListener('keydown', handleInteraction, { once: true });
+        window.addEventListener('touchstart', handleInteraction, { once: true });
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('mousemove', handleInteraction);
+            window.removeEventListener('mousedown', handleInteraction);
+            window.removeEventListener('keydown', handleInteraction);
+            window.removeEventListener('touchstart', handleInteraction);
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, [location, isDismissed]);
 
     useEffect(() => {
-        if (isVisible) {
-            const sequence = async () => {
-                while (true) {
-                    await new Promise(resolve => setTimeout(resolve, 10000)); // Wait 10s
-                    await buttonControls.start({
-                        y: [0, -6, 0],
-                        transition: { duration: 0.5, ease: "easeInOut" }
-                    });
-                }
-            };
-            sequence();
+        if (hasInteracted && hasScrolled && !isDismissed && (location.pathname.startsWith('/calculadoras') || location.pathname.startsWith('/blog'))) {
+            setIsVisible(true);
         }
-    }, [isVisible, buttonControls]);
+    }, [hasInteracted, hasScrolled, isDismissed, location]);
 
     const handleDismiss = () => {
         setIsVisible(false);
@@ -51,7 +69,7 @@ export const PromoPopup: React.FC = () => {
                         bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 
                         md:w-[380px] w-auto"
                 >
-                    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d]/90 backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] p-5">
+                    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d] md:bg-[#0d0d0d]/90 md:backdrop-blur-xl shadow-xl md:shadow-[0_0_40px_rgba(0,0,0,0.5)] p-5">
                         {/* Background Effects - Subtle */}
                         <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -83,7 +101,16 @@ export const PromoPopup: React.FC = () => {
                                 href="https://junny.com.br/criar-conta"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                animate={buttonControls}
+                                animate={{
+                                    y: [0, -4, 0],
+                                    scale: [1, 1.02, 1]
+                                }}
+                                transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    repeatDelay: 3,
+                                    ease: "easeInOut"
+                                }}
                                 className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
                             >
                                 Testar Grátis Agora

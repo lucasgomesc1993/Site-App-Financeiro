@@ -11,7 +11,7 @@ import invariant from "invariant";
 import shallowEqual from "shallowequal";
 import { Writable } from "stream";
 import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, Check, ArrowRight, Play, Calendar, ChevronUp, ChevronDown } from "lucide-react";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { createClient } from "@supabase/supabase-js";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -1203,8 +1203,8 @@ const Footer = () => {
 };
 const Hero = () => {
   return /* @__PURE__ */ jsxs("section", { className: "relative min-h-screen flex flex-col items-center justify-center pt-36 pb-24 md:pt-48 md:pb-32 px-4 overflow-hidden max-w-[100vw]", children: [
-    /* @__PURE__ */ jsx("div", { className: "absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
-    /* @__PURE__ */ jsx("div", { className: "absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "hidden md:block absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
+    /* @__PURE__ */ jsx("div", { className: "hidden md:block absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-accent/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" }),
     /* @__PURE__ */ jsxs("div", { className: "relative z-10 max-w-5xl mx-auto flex flex-col items-center gap-10 text-center", children: [
       /* @__PURE__ */ jsxs(
         motion.div,
@@ -2006,83 +2006,7 @@ const ScrollToTop = () => {
   }, [pathname]);
   return null;
 };
-const PromoPopup = () => {
-  const location = useLocation();
-  const [isVisible, setIsVisible] = useState(false);
-  const [isDismissed, setIsDismissed] = useState(false);
-  const buttonControls = useAnimation();
-  useEffect(() => {
-    if ((location.pathname.startsWith("/calculadoras") || location.pathname.startsWith("/blog")) && !isDismissed) {
-      const timer = setTimeout(() => setIsVisible(true), 2e3);
-      return () => clearTimeout(timer);
-    } else {
-      setIsVisible(false);
-    }
-  }, [location, isDismissed]);
-  useEffect(() => {
-    if (isVisible) {
-      const sequence = async () => {
-        while (true) {
-          await new Promise((resolve) => setTimeout(resolve, 1e4));
-          await buttonControls.start({
-            y: [0, -6, 0],
-            transition: { duration: 0.5, ease: "easeInOut" }
-          });
-        }
-      };
-      sequence();
-    }
-  }, [isVisible, buttonControls]);
-  const handleDismiss = () => {
-    setIsVisible(false);
-    setIsDismissed(true);
-  };
-  return /* @__PURE__ */ jsx(AnimatePresence, { children: isVisible && /* @__PURE__ */ jsx(
-    motion.div,
-    {
-      initial: { opacity: 0, y: 50, scale: 0.9 },
-      animate: { opacity: 1, y: 0, scale: 1 },
-      exit: { opacity: 0, y: 50, scale: 0.9 },
-      transition: { type: "spring", damping: 20, stiffness: 300 },
-      className: "fixed z-50 \r\n                        bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 \r\n                        md:w-[380px] w-auto",
-      children: /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d]/90 backdrop-blur-xl shadow-[0_0_40px_rgba(0,0,0,0.5)] p-5", children: [
-        /* @__PURE__ */ jsx("div", { className: "absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none" }),
-        /* @__PURE__ */ jsx(
-          "button",
-          {
-            onClick: handleDismiss,
-            "aria-label": "Fechar popup",
-            className: "absolute top-3 right-3 text-gray-500 hover:text-white transition-colors",
-            children: /* @__PURE__ */ jsx(X, { className: "w-4 h-4" })
-          }
-        ),
-        /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3", children: [
-          /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-3", children: [
-            /* @__PURE__ */ jsx("div", { className: "w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0", children: /* @__PURE__ */ jsx(Zap, { className: "w-5 h-5 text-primary" }) }),
-            /* @__PURE__ */ jsxs("div", { children: [
-              /* @__PURE__ */ jsx("h3", { className: "text-base font-bold text-white leading-tight mb-1", children: "Controle Financeiro Inteligente" }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 leading-relaxed", children: "Organize suas finanças automaticamente pelo WhatsApp com nossa IA." })
-            ] })
-          ] }),
-          /* @__PURE__ */ jsxs(
-            motion.a,
-            {
-              href: "https://junny.com.br/criar-conta",
-              target: "_blank",
-              rel: "noopener noreferrer",
-              animate: buttonControls,
-              className: "flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap",
-              children: [
-                "Testar Grátis Agora",
-                /* @__PURE__ */ jsx(ArrowRight, { className: "w-3.5 h-3.5" })
-              ]
-            }
-          )
-        ] })
-      ] })
-    }
-  ) });
-};
+const PromoPopup = lazy(() => import("./assets/PromoPopup-BfFjKrIy.js").then((module) => ({ default: module.PromoPopup })));
 const Terms = lazy(() => import("./assets/Terms-Dqwge8vJ.js").then((module) => ({ default: module.Terms })));
 const Privacy = lazy(() => import("./assets/Privacy-BBTeFlEV.js").then((module) => ({ default: module.Privacy })));
 const Support = lazy(() => import("./assets/Support-Dv-GP8Xw.js").then((module) => ({ default: module.Support })));
@@ -2106,7 +2030,7 @@ const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-VF
 const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-F13WezeT.js").then((module) => ({ default: module.RentVsBuyPage })));
 const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-DD8SM1cA.js").then((module) => ({ default: module.UberVsCarPage })));
 const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-BlDy8c3w.js").then((module) => ({ default: module.FirstMillionPage })));
-const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-ewYuHTb5.js").then((module) => ({ default: module.CurrencyConverterPage })));
+const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-Ba-STXq_.js").then((module) => ({ default: module.CurrencyConverterPage })));
 const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-E5Zid8gj.js").then((module) => ({ default: module.PurchasingPowerPage })));
 const Budget503020Page = lazy(() => import("./assets/Budget503020Page-DyXyGr5Q.js").then((module) => ({ default: module.Budget503020Page })));
 const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-DOG-lHSw.js").then((module) => ({ default: module.VehicleFinancingPage })));
@@ -2204,7 +2128,7 @@ function App() {
         /* @__PURE__ */ jsx(Route, { path: "*", element: /* @__PURE__ */ jsx(NotFound, {}) })
       ] }) }) }),
       /* @__PURE__ */ jsx(Footer, {}),
-      /* @__PURE__ */ jsx(PromoPopup, {})
+      /* @__PURE__ */ jsx(Suspense, { fallback: null, children: /* @__PURE__ */ jsx(PromoPopup, {}) })
     ] })
   ] });
 }
