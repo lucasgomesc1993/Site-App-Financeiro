@@ -294,11 +294,9 @@ const EvolutionChart = () => {
         if (timeRange === "7D") days = 7;
         if (timeRange === "30D") days = 30;
         if (timeRange === "1Y") days = 360;
-        const [usdRes, eurRes, gbpRes] = await Promise.all([
-          fetch(`/api/currency?pair=USD-BRL&days=${days}`),
-          fetch(`/api/currency?pair=EUR-BRL&days=${days}`),
-          fetch(`/api/currency?pair=GBP-BRL&days=${days}`)
-        ]);
+        const usdRes = await fetch(`/api/currency?pair=USD-BRL&days=${days}`);
+        const eurRes = await fetch(`/api/currency?pair=EUR-BRL&days=${days}`);
+        const gbpRes = await fetch(`/api/currency?pair=GBP-BRL&days=${days}`);
         const [usdData, eurData, gbpData] = await Promise.all([
           usdRes.json(),
           eurRes.json(),
@@ -1052,4 +1050,4 @@ function CurrencyConverterPage() {
 export {
   CurrencyConverterPage
 };
-//# sourceMappingURL=CurrencyConverterPage-Ba-STXq_.js.map
+//# sourceMappingURL=CurrencyConverterPage-DTXz_3qA.js.map

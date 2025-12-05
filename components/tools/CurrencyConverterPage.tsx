@@ -73,11 +73,10 @@ const EvolutionChart = () => {
                 if (timeRange === '30D') days = 30;
                 if (timeRange === '1Y') days = 360;
 
-                const [usdRes, eurRes, gbpRes] = await Promise.all([
-                    fetch(`/api/currency?pair=USD-BRL&days=${days}`),
-                    fetch(`/api/currency?pair=EUR-BRL&days=${days}`),
-                    fetch(`/api/currency?pair=GBP-BRL&days=${days}`)
-                ]);
+                // Sequential fetches to avoid hitting potential rate limits on backend/upstream
+                const usdRes = await fetch(`/api/currency?pair=USD-BRL&days=${days}`);
+                const eurRes = await fetch(`/api/currency?pair=EUR-BRL&days=${days}`);
+                const gbpRes = await fetch(`/api/currency?pair=GBP-BRL&days=${days}`);
 
                 const [usdData, eurData, gbpData]: [AwesomeAPIResponse[], AwesomeAPIResponse[], AwesomeAPIResponse[]] = await Promise.all([
                     usdRes.json(),

@@ -2030,7 +2030,7 @@ const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-VF
 const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-F13WezeT.js").then((module) => ({ default: module.RentVsBuyPage })));
 const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-DD8SM1cA.js").then((module) => ({ default: module.UberVsCarPage })));
 const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-BlDy8c3w.js").then((module) => ({ default: module.FirstMillionPage })));
-const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-Ba-STXq_.js").then((module) => ({ default: module.CurrencyConverterPage })));
+const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-DTXz_3qA.js").then((module) => ({ default: module.CurrencyConverterPage })));
 const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-E5Zid8gj.js").then((module) => ({ default: module.PurchasingPowerPage })));
 const Budget503020Page = lazy(() => import("./assets/Budget503020Page-DyXyGr5Q.js").then((module) => ({ default: module.Budget503020Page })));
 const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-DOG-lHSw.js").then((module) => ({ default: module.VehicleFinancingPage })));
