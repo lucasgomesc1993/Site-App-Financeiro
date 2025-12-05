@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartConfig, ChartContainer, ChartTooltip } from "../ui/chart";
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, TrendingUp } from 'lucide-react';
 
 const chartConfig = {
     usd: {

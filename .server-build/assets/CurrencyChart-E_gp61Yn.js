@@ -5,7 +5,7 @@ import * as RechartsPrimitive from "recharts";
 import { AreaChart, CartesianGrid, XAxis, YAxis, Area } from "recharts";
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { RefreshCw } from "lucide-react";
+import { TrendingUp, RefreshCw } from "lucide-react";
 function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
@@ -433,4 +433,4 @@ const CurrencyChart = () => {
 export {
   CurrencyChart as default
 };
-//# sourceMappingURL=CurrencyChart-CVdvqHFS.js.map
+//# sourceMappingURL=CurrencyChart-E_gp61Yn.js.map
