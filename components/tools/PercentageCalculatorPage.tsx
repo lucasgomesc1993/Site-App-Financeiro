@@ -140,8 +140,8 @@ export function PercentageCalculatorPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">Porcentagem</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Calcule descontos, aumentos e variações percentuais em segundos.
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
+                            {/* Description moved below calculator */}
                         </p>
                     </motion.div>
                 </div>
@@ -152,7 +152,7 @@ export function PercentageCalculatorPage() {
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="lg:col-span-7 space-y-6"
+                        className="lg:col-span-7 space-y-6 min-h-[600px]"
                     >
                         {/* Calc 1 */}
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
@@ -282,6 +282,12 @@ export function PercentageCalculatorPage() {
                             </div>
                         </div>
                     </motion.div>
+                </div>
+
+                <div className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 text-center mb-12">
+                    <p>
+                        Calcule descontos, aumentos e variações percentuais em segundos.
+                    </p>
                 </div>
 
                 <FAQ

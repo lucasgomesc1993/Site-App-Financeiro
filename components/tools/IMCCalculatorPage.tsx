@@ -127,8 +127,8 @@ export function IMCCalculatorPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500">IMC</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Monitore sua saúde. Calcule seu Índice de Massa Corporal em segundos.
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
+                            {/* Description moved below calculator */}
                         </p>
                     </motion.div>
                 </div>
@@ -141,7 +141,7 @@ export function IMCCalculatorPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-cyan-500" />
@@ -180,8 +180,8 @@ export function IMCCalculatorPage() {
                                     </div>
                                     {result !== null && (
                                         <div className={`inline-block px-4 py-1 rounded-full text-sm font-bold ${classification === 'Peso Normal' ? 'bg-green-500/20 text-green-400' :
-                                                classification === 'Abaixo do Peso' ? 'bg-yellow-500/20 text-yellow-400' :
-                                                    'bg-red-500/20 text-red-400'
+                                            classification === 'Abaixo do Peso' ? 'bg-yellow-500/20 text-yellow-400' :
+                                                'bg-red-500/20 text-red-400'
                                             }`}>
                                             {classification}
                                         </div>
@@ -229,6 +229,14 @@ export function IMCCalculatorPage() {
                     </motion.div>
                 </div>
 
+
+
+                <div className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 text-center mb-12">
+                    <p>
+                        Monitore sua saúde. Calcule seu Índice de Massa Corporal em segundos.
+                    </p>
+                </div>
+
                 <FAQ
                     items={IMC_FAQS}
                     title="Dúvidas sobre IMC"
@@ -238,6 +246,6 @@ export function IMCCalculatorPage() {
 
                 <AppPromoBanner />
             </div>
-        </section>
+        </section >
     );
 }

@@ -151,13 +151,8 @@ export function InvestmentPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-green-500">Investimentos</span>
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
-                            <p>
-                                Deixar dinheiro parado na conta corrente é o jeito mais rápido de perder poder de compra para a inflação. <strong>Investir é a única estratégia comprovada</strong> para proteger seu patrimônio e garantir um futuro tranquilo, independentemente de quanto você ganha hoje.
-                            </p>
-                            <p>
-                                Nossa <strong>Calculadora de Investimentos</strong> elimina as suposições. Com ela, você projeta o crescimento do seu capital e vê a matemática financeira acelerando seus resultados ao longo do tempo. Seja para comprar uma casa, planejar a aposentadoria ou atingir o <Link to="/calculadoras/primeiro-milhao" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">primeiro milhão</Link>, os números jogam no seu time.
-                            </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
+                            {/* Description moved below calculator for mobile UX */}
                         </div>
                     </motion.div>
                 </div>
@@ -170,7 +165,7 @@ export function InvestmentPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -254,6 +249,15 @@ export function InvestmentPage() {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
+                            <p>
+                                Deixar dinheiro parado na conta corrente é o jeito mais rápido de perder poder de compra para a inflação. <strong>Investir é a única estratégia comprovada</strong> para proteger seu patrimônio e garantir um futuro tranquilo, independentemente de quanto você ganha hoje.
+                            </p>
+                            <p>
+                                Nossa <strong>Calculadora de Investimentos</strong> elimina as suposições. Com ela, você projeta o crescimento do seu capital e vê a matemática financeira acelerando seus resultados ao longo do tempo. Seja para comprar uma casa, planejar a aposentadoria ou atingir o <Link to="/calculadoras/primeiro-milhao" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">primeiro milhão</Link>, os números jogam no seu time.
+                            </p>
                         </div>
                     </motion.div>
 

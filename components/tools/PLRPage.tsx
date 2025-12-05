@@ -133,8 +133,8 @@ export function PLRPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-yellow-500">PLR</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Participação nos Lucros e Resultados. Veja quanto sobra líquido para você.
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
+                            {/* Description moved below calculator */}
                         </p>
                     </motion.div>
                 </div>
@@ -147,7 +147,7 @@ export function PLRPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-blue-500" />
@@ -219,6 +219,12 @@ export function PLRPage() {
                             </div>
                         </div>
                     </motion.div>
+                </div>
+
+                <div className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 text-center mb-12">
+                    <p>
+                        Participação nos Lucros e Resultados. Veja quanto sobra líquido para você.
+                    </p>
                 </div>
 
                 <FAQ

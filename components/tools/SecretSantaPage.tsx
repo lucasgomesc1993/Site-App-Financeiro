@@ -162,8 +162,8 @@ export function SecretSantaPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Sorteador de <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">Amigo Secreto</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Organize a troca de presentes da família ou empresa em segundos. Sem papelzinhos, sem repetições.
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
+                            {/* Description moved below calculator */}
                         </p>
                     </motion.div>
                 </div>
@@ -176,7 +176,7 @@ export function SecretSantaPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 min-h-[600px]">
                             {!isDrawComplete ? (
                                 <>
                                     <div className="mb-6">
@@ -331,6 +331,12 @@ export function SecretSantaPage() {
                             </div>
                         </div>
                     </motion.div>
+                </div>
+
+                <div className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 text-center mb-12">
+                    <p>
+                        Organize a troca de presentes da família ou empresa em segundos. Sem papelzinhos, sem repetições.
+                    </p>
                 </div>
 
                 <FAQ

@@ -162,16 +162,8 @@ export function FIREPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-orange-500">FIRE</span>: Planeje sua Independência Financeira
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
-                            <p>
-                                Você já imaginou não depender mais do seu salário para pagar as contas? Isso não é apenas um sonho, é uma estratégia matemática chamada <strong className="text-gray-200">FIRE (Financial Independence, Retire Early)</strong>.
-                            </p>
-                            <p>
-                                Ao contrário da aposentadoria tradicional, onde você espera até os 65 anos, o movimento FIRE foca na acumulação agressiva de patrimônio para que você possa viver de renda muito antes disso — seja aos 40, 50 ou até 30 anos.
-                            </p>
-                            <p>
-                                Esta calculadora faz as contas complexas para você. Descubra exatamente quanto dinheiro você precisa acumular (seu "Número Mágico") e em quanto tempo alcançará sua liberdade.
-                            </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
+                            {/* Description moved below calculator */}
                         </div>
                     </motion.div>
                 </div>
@@ -184,7 +176,7 @@ export function FIREPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -315,6 +307,18 @@ export function FIREPage() {
                             </div>
                         </div>
                     </motion.div>
+                </div>
+
+                <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4 mb-16">
+                    <p>
+                        Você já imaginou não depender mais do seu salário para pagar as contas? Isso não é apenas um sonho, é uma estratégia matemática chamada <strong className="text-gray-200">FIRE (Financial Independence, Retire Early)</strong>.
+                    </p>
+                    <p>
+                        Ao contrário da aposentadoria tradicional, onde você espera até os 65 anos, o movimento FIRE foca na acumulação agressiva de patrimônio para que você possa viver de renda muito antes disso — seja aos 40, 50 ou até 30 anos.
+                    </p>
+                    <p>
+                        Esta calculadora faz as contas complexas para você. Descubra exatamente quanto dinheiro você precisa acumular (seu "Número Mágico") e em quanto tempo alcançará sua liberdade.
+                    </p>
                 </div>
 
                 {/* Additional Content */}

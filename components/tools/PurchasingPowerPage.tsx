@@ -142,13 +142,8 @@ export function PurchasingPowerPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-red-500">Poder de Compra</span>
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
-                            <p>
-                                Você já percebeu que <strong>R$ 100,00</strong> hoje não enchem o carrinho de compras como faziam há 10 anos? Isso não é apenas uma impressão; é a corrosão do seu dinheiro causada pela inflação.
-                            </p>
-                            <p>
-                                Nossa <strong>Calculadora de Poder de Compra</strong> revela a verdade financeira: ela atualiza valores do passado para o presente usando índices oficiais (como o IPCA), mostrando exatamente quanto você precisaria ganhar hoje para manter o mesmo padrão de vida de anos atrás.
-                            </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
+                            {/* Description moved below calculator */}
                         </div>
                     </motion.div>
                 </div>
@@ -161,7 +156,7 @@ export function PurchasingPowerPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -275,6 +270,15 @@ export function PurchasingPowerPage() {
                             </div>
                         </div>
                     </motion.div>
+                </div>
+
+                <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4 text-center mb-12">
+                    <p>
+                        Você já percebeu que <strong>R$ 100,00</strong> hoje não enchem o carrinho de compras como faziam há 10 anos? Isso não é apenas uma impressão; é a corrosão do seu dinheiro causada pela inflação.
+                    </p>
+                    <p>
+                        Nossa <strong>Calculadora de Poder de Compra</strong> revela a verdade financeira: ela atualiza valores do passado para o presente usando índices oficiais (como o IPCA), mostrando exatamente quanto você precisaria ganhar hoje para manter o mesmo padrão de vida de anos atrás.
+                    </p>
                 </div>
 
                 {/* Additional Content */}

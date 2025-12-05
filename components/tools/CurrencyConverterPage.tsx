@@ -186,10 +186,8 @@ export function CurrencyConverterPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Conversor de Moedas: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Dólar, Euro e Libra Hoje</span> (Cotação 2025)
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
-                            <p>
-                                Converta Dólar, Euro e Libra com a cotação oficial de agora (05/12/2025). Descubra exatamente quanto sua compra vai custar no final, já incluindo o IOF atualizado de 2025 e as taxas bancárias. <strong>Pare de adivinhar e calcule o valor real:</strong>
-                            </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
+                            {/* Description moved below calculator */}
                         </div>
                     </motion.div>
                 </div>
@@ -202,7 +200,7 @@ export function CurrencyConverterPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -277,6 +275,12 @@ export function CurrencyConverterPage() {
                             </div>
                         </div>
                     </motion.div>
+
+                    <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
+                        <p>
+                            Converta Dólar, Euro e Libra com a cotação oficial de agora (05/12/2025). Descubra exatamente quanto sua compra vai custar no final, já incluindo o IOF atualizado de 2025 e as taxas bancárias. <strong>Pare de adivinhar e calcule o valor real:</strong>
+                        </p>
+                    </div>
 
                     {/* Chart */}
                     <motion.div

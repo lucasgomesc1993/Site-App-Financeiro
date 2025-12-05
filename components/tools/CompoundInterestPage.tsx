@@ -160,13 +160,8 @@ export function CompoundInterestPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-teal-500">Juros Compostos</span> Online
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
-                            <p>
-                                Esta ferramenta é essencial para <strong>planejar sua liberdade financeira</strong>. Ao contrário dos juros simples, onde o dinheiro cresce de forma linear, aqui o seu rendimento gera novos rendimentos, criando um efeito de acúmulo acelerado a seu favor.
-                            </p>
-                            <p>
-                                Use a calculadora abaixo para projetar seus ganhos reais com CDBs, Tesouro Direto ou qualquer aplicação de renda fixa e variável, ajustando o tempo e os depósitos mensais.
-                            </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
+                            {/* Description moved below calculator */}
                         </div>
                     </motion.div>
                 </div>
@@ -179,7 +174,7 @@ export function CompoundInterestPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -285,6 +280,15 @@ export function CompoundInterestPage() {
                             </div>
                         </div>
                     </motion.div>
+
+                    <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
+                        <p>
+                            Esta ferramenta é essencial para <strong>planejar sua liberdade financeira</strong>. Ao contrário dos juros simples, onde o dinheiro cresce de forma linear, aqui o seu rendimento gera novos rendimentos, criando um efeito de acúmulo acelerado a seu favor.
+                        </p>
+                        <p>
+                            Use a calculadora abaixo para projetar seus ganhos reais com CDBs, Tesouro Direto ou qualquer aplicação de renda fixa e variável, ajustando o tempo e os depósitos mensais.
+                        </p>
+                    </div>
 
                     {/* Sidebar Info - How to use */}
                     <motion.div

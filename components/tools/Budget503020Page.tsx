@@ -126,13 +126,8 @@ export function Budget503020Page() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Regra 50-30-20</span>
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
-                            <p>
-                                Você chega ao fim do mês e se pergunta para onde foi o seu dinheiro? A sensação de trabalhar muito e não ver a cor da grana é mais comum do que parece. A <strong>Regra 50-30-20</strong> não é mágica, é matemática simples aplicada à vida real para acabar com esse ciclo de "pagar boletos e ficar zerado".
-                            </p>
-                            <p>
-                                Criado pela senadora norte-americana e especialista em falências Elizabeth Warren, no livro <em>All Your Worth</em>, este método divide sua renda em três caixas lógicas. O objetivo é tirar o peso da decisão de cada pequena compra e automatizar seu sucesso financeiro.
-                            </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
+                            {/* Description moved below calculator */}
                         </div>
                     </motion.div>
                 </div>
@@ -145,7 +140,7 @@ export function Budget503020Page() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -208,6 +203,15 @@ export function Budget503020Page() {
                             </div>
                         </div>
                     </motion.div>
+
+                    <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
+                        <p>
+                            Você chega ao fim do mês e se pergunta para onde foi o seu dinheiro? A sensação de trabalhar muito e não ver a cor da grana é mais comum do que parece. A <strong>Regra 50-30-20</strong> não é mágica, é matemática simples aplicada à vida real para acabar com esse ciclo de "pagar boletos e ficar zerado".
+                        </p>
+                        <p>
+                            Criado pela senadora norte-americana e especialista em falências Elizabeth Warren, no livro <em>All Your Worth</em>, este método divide sua renda em três caixas lógicas. O objetivo é tirar o peso da decisão de cada pequena compra e automatizar seu sucesso financeiro.
+                        </p>
+                    </div>
 
                     {/* Sidebar Info */}
                     <motion.div

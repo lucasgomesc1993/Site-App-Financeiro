@@ -116,8 +116,8 @@ export const FuelPage: React.FC = () => {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">Álcool ou Gasolina</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Descubra qual combustível compensa mais para o seu bolso agora mesmo. Simples, rápido e direto.
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
+                            {/* Description moved below calculator */}
                         </p>
                     </motion.div>
                 </div>
@@ -127,7 +127,7 @@ export const FuelPage: React.FC = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className="grid lg:grid-cols-12 gap-8 mb-24"
+                    className="grid lg:grid-cols-12 gap-8 mb-24 min-h-[600px]"
                 >
                     {/* Controls */}
                     <div className="lg:col-span-5 space-y-6">
@@ -216,6 +216,12 @@ export const FuelPage: React.FC = () => {
                         </div>
                     </div>
                 </motion.div>
+
+                <div className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 text-center mb-12">
+                    <p>
+                        Descubra qual combustível compensa mais para o seu bolso agora mesmo. Simples, rápido e direto.
+                    </p>
+                </div>
 
                 {/* SEO Content */}
                 <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">

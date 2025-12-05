@@ -153,10 +153,8 @@ export function FirstMillionPage() {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora do <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-yellow-500">Primeiro Milhão</span>
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4">
-                            <p>
-                                A <strong>Calculadora do Primeiro Milhão</strong> é uma ferramenta que projeta o tempo exato para atingir R$ 1 milhão com base em juros compostos e aportes mensais. Esta simulação utiliza a fórmula de valor futuro (FV) para calcular o crescimento exponencial do patrimônio, mostrando o impacto real do tempo sobre o dinheiro investido.
-                            </p>
+                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
+                            {/* Description moved below calculator */}
                         </div>
                     </motion.div>
                 </div>
@@ -169,7 +167,7 @@ export function FirstMillionPage() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="lg:col-span-7"
                     >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full min-h-[600px]">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -265,6 +263,12 @@ export function FirstMillionPage() {
                             </div>
                         </div>
                     </motion.div>
+                </div>
+
+                <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4 mb-16">
+                    <p>
+                        A <strong>Calculadora do Primeiro Milhão</strong> é uma ferramenta que projeta o tempo exato para atingir R$ 1 milhão com base em juros compostos e aportes mensais. Esta simulação utiliza a fórmula de valor futuro (FV) para calcular o crescimento exponencial do patrimônio, mostrando o impacto real do tempo sobre o dinheiro investido.
+                    </p>
                 </div>
 
                 {/* Additional Content */}

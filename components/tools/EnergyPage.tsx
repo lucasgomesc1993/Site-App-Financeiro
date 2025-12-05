@@ -91,8 +91,8 @@ export const EnergyPage: React.FC = () => {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 to-pink-500">Consumo de Energia</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora da Junny.
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
+                            {/* Description moved below calculator */}
                         </p>
                     </motion.div>
                 </div>
@@ -101,9 +101,16 @@ export const EnergyPage: React.FC = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
+                    className="min-h-[600px]"
                 >
                     <EnergyCalculator />
                 </motion.div>
+
+                <div className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 text-center">
+                    <p>
+                        Descubra quanto seus aparelhos domésticos consomem e economize na conta de luz com a calculadora da Junny.
+                    </p>
+                </div>
 
                 {/* SEO Content */}
                 <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">

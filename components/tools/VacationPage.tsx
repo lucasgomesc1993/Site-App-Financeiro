@@ -57,8 +57,8 @@ export const VacationPage: React.FC = () => {
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-500">Férias</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Calcule o valor exato das suas férias, incluindo 1/3 constitucional, abono pecuniário e descontos de INSS/IRRF.
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
+                            {/* Description moved below calculator */}
                         </p>
                     </motion.div>
                 </div>
@@ -68,7 +68,12 @@ export const VacationPage: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    <VacationCalculator />
+                    <div className="min-h-[600px]">
+                        <VacationCalculator />
+                    </div>
+                    <p className="text-lg text-gray-400 max-w-2xl mx-auto text-center mt-8 mb-12">
+                        Calcule o valor exato das suas férias, incluindo 1/3 constitucional, abono pecuniário e descontos de INSS/IRRF.
+                    </p>
                 </motion.div>
 
                 {/* SEO Content */}
