@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { FAQS } from '../constants';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { FAQItem } from '../types';
 
@@ -74,21 +74,20 @@ export const FAQ: React.FC<FAQProps> = ({ items, title = "Dúvidas frequentes", 
                                             <span className={`text-lg md:text-xl font-medium transition-colors duration-300 ${isOpen ? 'text-white' : 'text-gray-300 group-hover:text-white'}`}>
                                                 {faq.question}
                                             </span>
-                                            <AnimatePresence>
-                                                {isOpen && (
-                                                    <motion.div
-                                                        initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                                                        animate={{ height: 'auto', opacity: 1, marginTop: 8 }}
-                                                        exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                                                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                                                        className="overflow-hidden"
-                                                    >
-                                                        <p className="text-gray-400 text-base leading-relaxed pr-4 md:pr-12 font-light">
-                                                            {faq.answer}
-                                                        </p>
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
+                                            <motion.div
+                                                initial={false}
+                                                animate={{
+                                                    height: isOpen ? 'auto' : 0,
+                                                    opacity: isOpen ? 1 : 0,
+                                                    marginTop: isOpen ? 8 : 0
+                                                }}
+                                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                                className="overflow-hidden"
+                                            >
+                                                <p className="text-gray-400 text-base leading-relaxed pr-4 md:pr-12 font-light">
+                                                    {faq.answer}
+                                                </p>
+                                            </motion.div>
                                         </div>
 
                                         {/* Toggle Icon - Specific styling requested */}

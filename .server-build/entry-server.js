@@ -1934,17 +1934,20 @@ const FAQ = ({ items, title = "Dúvidas frequentes", className = "py-24 md:py-32
           children: [
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 flex-1 pt-1", children: [
               /* @__PURE__ */ jsx("span", { className: `text-lg md:text-xl font-medium transition-colors duration-300 ${isOpen ? "text-white" : "text-gray-300 group-hover:text-white"}`, children: faq.question }),
-              /* @__PURE__ */ jsx(AnimatePresence, { children: isOpen && /* @__PURE__ */ jsx(
+              /* @__PURE__ */ jsx(
                 motion.div,
                 {
-                  initial: { height: 0, opacity: 0, marginTop: 0 },
-                  animate: { height: "auto", opacity: 1, marginTop: 8 },
-                  exit: { height: 0, opacity: 0, marginTop: 0 },
+                  initial: false,
+                  animate: {
+                    height: isOpen ? "auto" : 0,
+                    opacity: isOpen ? 1 : 0,
+                    marginTop: isOpen ? 8 : 0
+                  },
                   transition: { duration: 0.3, ease: "easeInOut" },
                   className: "overflow-hidden",
                   children: /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-base leading-relaxed pr-4 md:pr-12 font-light", children: faq.answer })
                 }
-              ) })
+              )
             ] }),
             /* @__PURE__ */ jsx(
               "div",
