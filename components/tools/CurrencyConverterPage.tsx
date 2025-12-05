@@ -159,7 +159,7 @@ const EvolutionChart = () => {
     };
 
     return (
-        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col">
+        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col min-h-[600px]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <h3 className="text-xl font-semibold text-white flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-emerald-500" />
@@ -167,14 +167,14 @@ const EvolutionChart = () => {
                 </h3>
             </div>
 
-            <div className="flex-1 w-full min-h-[200px] relative">
+            <div className="flex-1 w-full min-h-[200px] min-w-0 relative">
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a]/50 z-10 backdrop-blur-sm rounded-xl">
                         <RefreshCw className="w-6 h-6 text-emerald-500 animate-spin" />
                     </div>
                 )}
 
-                <ChartContainer config={chartConfig} className="h-full w-full aspect-auto">
+                <ChartContainer config={chartConfig} className="h-full w-full aspect-auto min-w-0">
                     <AreaChart
                         accessibilityLayer
                         data={data}
@@ -475,7 +475,7 @@ export function CurrencyConverterPage() {
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.4 }}
-                        className="lg:col-span-5"
+                        className="lg:col-span-5 h-full"
                     >
                         <EvolutionChart />
                     </motion.div>
