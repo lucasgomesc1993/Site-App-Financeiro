@@ -1,5 +1,5 @@
 import { jsx, jsxs } from "react/jsx-runtime";
-import React, { useState, useEffect } from "react";
+import React__default, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { B as Breadcrumb } from "./Breadcrumb-B-PV_K4y.js";
 import { AppPromoBanner } from "./AppPromoBanner-BHihqQwm.js";
@@ -15,8 +15,8 @@ import "shallowequal";
 import "stream";
 import "@supabase/supabase-js";
 const PostContent = ({ content }) => {
-  const contentRef = React.useRef(null);
-  React.useEffect(() => {
+  const contentRef = React__default.useRef(null);
+  React__default.useEffect(() => {
     if (!contentRef.current) return;
     const links = contentRef.current.getElementsByTagName("a");
     for (let i = 0; i < links.length; i++) {
@@ -191,4 +191,4 @@ const BlogPost = () => {
 export {
   BlogPost
 };
-//# sourceMappingURL=BlogPost-CpiSzHSI.js.map
+//# sourceMappingURL=BlogPost-CXsl6WbF.js.map

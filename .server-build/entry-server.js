@@ -3,7 +3,7 @@ var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { en
 var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 var _a, _b;
 import { jsx, jsxs, Fragment } from "react/jsx-runtime";
-import React, { Component, createContext, useContext, useState, useEffect, lazy, Suspense } from "react";
+import React__default, { Component, createContext, useContext, useState, useEffect, lazy, Suspense } from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import { useNavigate, useLocation, Link, Routes, Route, StaticRouter } from "react-router-dom";
 import fastCompare from "react-fast-compare";
@@ -327,7 +327,7 @@ var generateTitleAsReactComponent = (_type, title, attributes) => {
     [HELMET_ATTRIBUTE]: true
   };
   const props = convertElementAttributesToReactProps(attributes, initProps);
-  return [React.createElement("title", props, title)];
+  return [React__default.createElement("title", props, title)];
 };
 var generateTagsAsReactComponent = (type, tags) => tags.map((tag, i) => {
   const mappedTag = {
@@ -344,7 +344,7 @@ var generateTagsAsReactComponent = (type, tags) => tags.map((tag, i) => {
       mappedTag[mappedAttribute] = tag[attribute];
     }
   });
-  return React.createElement(type, mappedTag);
+  return React__default.createElement(type, mappedTag);
 });
 var getMethodsForTag = (type, tags, encode = true) => {
   switch (type) {
@@ -468,7 +468,7 @@ var HelmetData = class {
   }
 };
 var defaultValue = {};
-var Context = React.createContext(defaultValue);
+var Context = React__default.createContext(defaultValue);
 var HelmetProvider = (_a = class extends Component {
   constructor(props) {
     super(props);
@@ -476,7 +476,7 @@ var HelmetProvider = (_a = class extends Component {
     this.helmetData = new HelmetData(this.props.context || {}, _a.canUseDOM);
   }
   render() {
-    return /* @__PURE__ */ React.createElement(Context.Provider, { value: this.helmetData.value }, this.props.children);
+    return /* @__PURE__ */ React__default.createElement(Context.Provider, { value: this.helmetData.value }, this.props.children);
   }
 }, __publicField(_a, "canUseDOM", isDocument), _a);
 var updateTags = (type, tags) => {
@@ -760,7 +760,7 @@ var Helmet = (_b = class extends Component {
   }
   mapChildrenToProps(children, newProps) {
     let arrayTypeChildren = {};
-    React.Children.forEach(children, (child) => {
+    React__default.Children.forEach(children, (child) => {
       if (!child || !child.props) {
         return;
       }
@@ -810,7 +810,7 @@ var Helmet = (_b = class extends Component {
       helmetData = new HelmetData(data.context, true);
       delete newProps.helmetData;
     }
-    return helmetData ? /* @__PURE__ */ React.createElement(HelmetDispatcher, { ...newProps, context: helmetData.value }) : /* @__PURE__ */ React.createElement(Context.Consumer, null, (context) => /* @__PURE__ */ React.createElement(HelmetDispatcher, { ...newProps, context }));
+    return helmetData ? /* @__PURE__ */ React__default.createElement(HelmetDispatcher, { ...newProps, context: helmetData.value }) : /* @__PURE__ */ React__default.createElement(Context.Consumer, null, (context) => /* @__PURE__ */ React__default.createElement(HelmetDispatcher, { ...newProps, context }));
   }
 }, __publicField(_b, "defaultProps", {
   defer: true,
@@ -2106,7 +2106,7 @@ const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-VF
 const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-F13WezeT.js").then((module) => ({ default: module.RentVsBuyPage })));
 const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-DD8SM1cA.js").then((module) => ({ default: module.UberVsCarPage })));
 const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-BlDy8c3w.js").then((module) => ({ default: module.FirstMillionPage })));
-const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-DeLIUDBA.js").then((module) => ({ default: module.CurrencyConverterPage })));
+const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-ewYuHTb5.js").then((module) => ({ default: module.CurrencyConverterPage })));
 const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-E5Zid8gj.js").then((module) => ({ default: module.PurchasingPowerPage })));
 const Budget503020Page = lazy(() => import("./assets/Budget503020Page-DyXyGr5Q.js").then((module) => ({ default: module.Budget503020Page })));
 const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-DOG-lHSw.js").then((module) => ({ default: module.VehicleFinancingPage })));
@@ -2137,7 +2137,7 @@ const WebStoryPage = lazy(() => import("./assets/WebStoryPage-CL3v85VQ.js").then
 const StoriesGallery = lazy(() => import("./assets/StoriesGallery-DSuS1noP.js").then((module) => ({ default: module.StoriesGallery })));
 const BlogIndex = lazy(() => import("./assets/BlogIndex-CKd0CEwE.js").then((module) => ({ default: module.BlogIndex })));
 const CategoryPage = lazy(() => import("./assets/CategoryPage-9uOpxHwe.js").then((module) => ({ default: module.CategoryPage })));
-const BlogPost = lazy(() => import("./assets/BlogPost-CpiSzHSI.js").then((module) => ({ default: module.BlogPost })));
+const BlogPost = lazy(() => import("./assets/BlogPost-CXsl6WbF.js").then((module) => ({ default: module.BlogPost })));
 const NotFound = lazy(() => import("./assets/NotFound-_vcpeVlV.js").then((module) => ({ default: module.NotFound })));
 function App() {
   return /* @__PURE__ */ jsxs(Fragment, { children: [
@@ -2219,7 +2219,7 @@ async function render({ path, context = {}, initialData = null }) {
       }
     });
     const { pipe } = renderToPipeableStream(
-      /* @__PURE__ */ jsx(React.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) }),
+      /* @__PURE__ */ jsx(React__default.StrictMode, { children: /* @__PURE__ */ jsx(StaticRouter, { location: path, children: /* @__PURE__ */ jsx(HelmetProvider, { context: helmetContext, children: /* @__PURE__ */ jsx(ServerDataProvider, { value: initialData, children: /* @__PURE__ */ jsx(App, {}) }) }) }) }),
       {
         onAllReady() {
           pipe(stream);
