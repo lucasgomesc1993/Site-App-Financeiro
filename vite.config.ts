@@ -56,8 +56,9 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: isSSR ? undefined : {
-            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-            'framer': ['framer-motion'],
+            'recharts': ['recharts'],
+            'framer-motion': ['framer-motion'],
+            'ui-vendor': ['react', 'react-dom', 'react-router-dom'],
             'ui-libs': ['lucide-react']
           }
         }
