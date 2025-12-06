@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy, useRef } from 'react';
-import { Globe, Calculator, RefreshCw, Info, TrendingUp, DollarSign, CreditCard, AlertCircle } from 'lucide-react';
+import { Globe, Calculator, RefreshCw, Info, TrendingUp, DollarSign, CreditCard, AlertCircle, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 
@@ -48,9 +48,9 @@ function useOnScreen(ref: React.RefObject<HTMLElement>) {
 const CurrencyChart = lazy(() => import('./CurrencyChart'));
 
 export function CurrencyConverterPage() {
-    const [amount, setAmount] = useState('');
-    const [fromCurrency, setFromCurrency] = useState('BRL');
-    const [toCurrency, setToCurrency] = useState('USD');
+    const [amount, setAmount] = useState('1,00');
+    const [fromCurrency, setFromCurrency] = useState('USD');
+    const [toCurrency, setToCurrency] = useState('BRL');
     const [result, setResult] = useState<number | null>(null);
     const [rate, setRate] = useState<number | null>(null);
 
@@ -207,17 +207,20 @@ export function CurrencyConverterPage() {
                                 <div className="grid grid-cols-[1fr_auto_1fr] gap-4 items-end">
                                     <div className="space-y-2">
                                         <label htmlFor="fromCurrency" className="text-sm text-gray-400">De</label>
-                                        <select
-                                            id="fromCurrency"
-                                            value={fromCurrency}
-                                            onChange={(e) => setFromCurrency(e.target.value)}
-                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
-                                        >
-                                            <option value="BRL">Real (BRL)</option>
-                                            <option value="USD">Dólar (USD)</option>
-                                            <option value="EUR">Euro (EUR)</option>
-                                            <option value="GBP">Libra (GBP)</option>
-                                        </select>
+                                        <div className="relative">
+                                            <select
+                                                id="fromCurrency"
+                                                value={fromCurrency}
+                                                onChange={(e) => setFromCurrency(e.target.value)}
+                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-4 pr-10 text-white focus:outline-none focus:border-emerald-500/50 transition-all appearance-none cursor-pointer"
+                                            >
+                                                <option value="BRL">Real (BRL)</option>
+                                                <option value="USD">Dólar (USD)</option>
+                                                <option value="EUR">Euro (EUR)</option>
+                                                <option value="GBP">Libra (GBP)</option>
+                                            </select>
+                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                                        </div>
                                     </div>
 
                                     <button
@@ -230,17 +233,20 @@ export function CurrencyConverterPage() {
 
                                     <div className="space-y-2">
                                         <label htmlFor="toCurrency" className="text-sm text-gray-400">Para</label>
-                                        <select
-                                            id="toCurrency"
-                                            value={toCurrency}
-                                            onChange={(e) => setToCurrency(e.target.value)}
-                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
-                                        >
-                                            <option value="BRL">Real (BRL)</option>
-                                            <option value="USD">Dólar (USD)</option>
-                                            <option value="EUR">Euro (EUR)</option>
-                                            <option value="GBP">Libra (GBP)</option>
-                                        </select>
+                                        <div className="relative">
+                                            <select
+                                                id="toCurrency"
+                                                value={toCurrency}
+                                                onChange={(e) => setToCurrency(e.target.value)}
+                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-4 pr-10 text-white focus:outline-none focus:border-emerald-500/50 transition-all appearance-none cursor-pointer"
+                                            >
+                                                <option value="BRL">Real (BRL)</option>
+                                                <option value="USD">Dólar (USD)</option>
+                                                <option value="EUR">Euro (EUR)</option>
+                                                <option value="GBP">Libra (GBP)</option>
+                                            </select>
+                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                                        </div>
                                     </div>
                                 </div>
 
