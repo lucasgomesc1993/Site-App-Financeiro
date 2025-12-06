@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { NAV_ITEMS } from '../constants';
 import { Menu, X, Wallet, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+// import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -186,53 +186,47 @@ export const Header: React.FC = () => {
       </div>
 
       {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
-            className="fixed inset-0 z-40 bg-[#000000] flex flex-col pt-32 px-6 pb-10 overflow-y-auto min-h-screen"
+      <div
+        className={`fixed inset-0 z-40 bg-[#000000] flex flex-col pt-32 px-6 pb-10 overflow-y-auto min-h-screen transition-all duration-500 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-full pointer-events-none'}`}
+      >
+        {/* Background Effects */}
+        <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+
+        <div className="flex flex-col gap-2 relative z-10 max-w-lg mx-auto w-full">
+          {NAV_ITEMS.map((item, i) => (
+            <a
+              key={item.label}
+              href={item.href}
+              onClick={(e) => handleLinkClick(e, item.href)}
+              style={{ transitionDelay: isMobileMenuOpen ? `${i * 50}ms` : '0ms' }}
+              className={`group flex items-center justify-between p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300 ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+            >
+              <span className="text-2xl font-medium text-gray-300 group-hover:text-white tracking-tight">
+                {item.label}
+              </span>
+              <ChevronRight className="text-gray-600 group-hover:text-primary transition-colors" size={20} />
+            </a>
+          ))}
+
+          <div
+            className={`mt-8 transition-all duration-500 delay-300 ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
-            {/* Background Effects */}
-            <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-0 left-0 w-[200px] h-[200px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" />
+            <a
+              href="https://junny.com.br/criar-conta"
+              className="flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]"
+            >
+              Começar Grátis
+            </a>
+          </div>
 
-            <div className="flex flex-col gap-2 relative z-10 max-w-lg mx-auto w-full">
-              {NAV_ITEMS.map((item, i) => (
-                <motion.a
-                  key={item.label}
-                  variants={itemVariants}
-                  href={item.href}
-                  onClick={(e) => handleLinkClick(e, item.href)}
-                  className="group flex items-center justify-between p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300"
-                >
-                  <span className="text-2xl font-medium text-gray-300 group-hover:text-white tracking-tight">
-                    {item.label}
-                  </span>
-                  <ChevronRight className="text-gray-600 group-hover:text-primary transition-colors" size={20} />
-                </motion.a>
-              ))}
-
-              <motion.div variants={itemVariants} className="mt-8">
-                <a
-                  href="https://junny.com.br/criar-conta"
-                  className="flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]"
-                >
-                  Começar Grátis
-                </a>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="mt-auto pt-10 text-center">
-                <p className="text-gray-500 text-sm">
-                  © 2025 Junny AI. <br /> Todos os direitos reservados.
-                </p>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          <div className={`mt-auto pt-10 text-center transition-all duration-500 delay-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0'}`}>
+            <p className="text-gray-500 text-sm">
+              © 2025 Junny AI. <br /> Todos os direitos reservados.
+            </p>
+          </div>
+        </div>
+      </div>
     </header>
   );
 };

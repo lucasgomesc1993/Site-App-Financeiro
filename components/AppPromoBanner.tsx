@@ -1,15 +1,11 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import { MessageCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 export const AppPromoBanner: React.FC = () => {
     return (
-        <motion.div
-            initial={{ y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="w-full mt-24 mb-12"
+        <div
+            className="w-full mt-24 mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700"
         >
             <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0d0d0d]/80 backdrop-blur-xl p-8 md:p-12 group shadow-[0_0_50px_rgba(0,0,0,0.5)]">
 
@@ -73,6 +69,6 @@ export const AppPromoBanner: React.FC = () => {
 
                 </div>
             </div>
-        </motion.div>
+        </div>
     );
 };

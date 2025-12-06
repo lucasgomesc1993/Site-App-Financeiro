@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { FAQS } from '../constants';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { FAQItem } from '../types';
 
@@ -74,20 +74,13 @@ export const FAQ: React.FC<FAQProps> = ({ items, title = "Dúvidas frequentes", 
                                             <span className={`text-lg md:text-xl font-medium transition-colors duration-300 ${isOpen ? 'text-white' : 'text-gray-300 group-hover:text-white'}`}>
                                                 {faq.question}
                                             </span>
-                                            <motion.div
-                                                initial={false}
-                                                animate={{
-                                                    height: isOpen ? 'auto' : 0,
-                                                    opacity: isOpen ? 1 : 0,
-                                                    marginTop: isOpen ? 8 : 0
-                                                }}
-                                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                                                className="overflow-hidden"
+                                            <div
+                                                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100 mt-2' : 'max-h-0 opacity-0 mt-0'}`}
                                             >
                                                 <p className="text-gray-400 text-base leading-relaxed pr-4 md:pr-12 font-light">
                                                     {faq.answer}
                                                 </p>
-                                            </motion.div>
+                                            </div>
                                         </div>
 
                                         {/* Toggle Icon - Specific styling requested */}

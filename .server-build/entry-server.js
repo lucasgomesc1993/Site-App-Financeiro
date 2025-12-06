@@ -11,7 +11,7 @@ import invariant from "invariant";
 import shallowEqual from "shallowequal";
 import { Writable } from "stream";
 import { Wallet, X, Menu, ChevronRight, Instagram, Youtube, Linkedin, MessageCircle, Zap, CheckCircle2, ShieldCheck, Smartphone, TrendingUp, Globe, Quote, Check, ArrowRight, Play, Calendar, ChevronUp, ChevronDown } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { createClient } from "@supabase/supabase-js";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
@@ -1043,32 +1043,6 @@ const Header = () => {
       }
     }
   };
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      y: "-100%",
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-        staggerChildren: 0.05,
-        staggerDirection: -1
-      }
-    },
-    open: {
-      opacity: 1,
-      y: "0%",
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-        staggerChildren: 0.07,
-        delayChildren: 0.2
-      }
-    }
-  };
-  const itemVariants = {
-    closed: { opacity: 0, y: 20 },
-    open: { opacity: 1, y: 0 }
-  };
   return /* @__PURE__ */ jsxs(
     "header",
     {
@@ -1127,25 +1101,21 @@ const Header = () => {
             }
           )
         ] }),
-        /* @__PURE__ */ jsx(AnimatePresence, { children: isMobileMenuOpen && /* @__PURE__ */ jsxs(
-          motion.div,
+        /* @__PURE__ */ jsxs(
+          "div",
           {
-            initial: "closed",
-            animate: "open",
-            exit: "closed",
-            variants: menuVariants,
-            className: "fixed inset-0 z-40 bg-[#000000] flex flex-col pt-32 px-6 pb-10 overflow-y-auto min-h-screen",
+            className: `fixed inset-0 z-40 bg-[#000000] flex flex-col pt-32 px-6 pb-10 overflow-y-auto min-h-screen transition-all duration-500 ease-in-out ${isMobileMenuOpen ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-full pointer-events-none"}`,
             children: [
               /* @__PURE__ */ jsx("div", { className: "absolute top-0 right-0 w-[300px] h-[300px] bg-primary/10 rounded-full blur-[120px] pointer-events-none" }),
               /* @__PURE__ */ jsx("div", { className: "absolute bottom-0 left-0 w-[200px] h-[200px] bg-accent/10 rounded-full blur-[100px] pointer-events-none" }),
               /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-2 relative z-10 max-w-lg mx-auto w-full", children: [
                 NAV_ITEMS.map((item, i) => /* @__PURE__ */ jsxs(
-                  motion.a,
+                  "a",
                   {
-                    variants: itemVariants,
                     href: item.href,
                     onClick: (e) => handleLinkClick(e, item.href),
-                    className: "group flex items-center justify-between p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300",
+                    style: { transitionDelay: isMobileMenuOpen ? `${i * 50}ms` : "0ms" },
+                    className: `group flex items-center justify-between p-4 rounded-2xl hover:bg-white/5 border border-transparent hover:border-white/10 transition-all duration-300 ${isMobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`,
                     children: [
                       /* @__PURE__ */ jsx("span", { className: "text-2xl font-medium text-gray-300 group-hover:text-white tracking-tight", children: item.label }),
                       /* @__PURE__ */ jsx(ChevronRight, { className: "text-gray-600 group-hover:text-primary transition-colors", size: 20 })
@@ -1153,15 +1123,21 @@ const Header = () => {
                   },
                   item.label
                 )),
-                /* @__PURE__ */ jsx(motion.div, { variants: itemVariants, className: "mt-8", children: /* @__PURE__ */ jsx(
-                  "a",
+                /* @__PURE__ */ jsx(
+                  "div",
                   {
-                    href: "https://junny.com.br/criar-conta",
-                    className: "flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]",
-                    children: "Começar Grátis"
+                    className: `mt-8 transition-all duration-500 delay-300 ${isMobileMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`,
+                    children: /* @__PURE__ */ jsx(
+                      "a",
+                      {
+                        href: "https://junny.com.br/criar-conta",
+                        className: "flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]",
+                        children: "Começar Grátis"
+                      }
+                    )
                   }
-                ) }),
-                /* @__PURE__ */ jsx(motion.div, { variants: itemVariants, className: "mt-auto pt-10 text-center", children: /* @__PURE__ */ jsxs("p", { className: "text-gray-500 text-sm", children: [
+                ),
+                /* @__PURE__ */ jsx("div", { className: `mt-auto pt-10 text-center transition-all duration-500 delay-500 ${isMobileMenuOpen ? "opacity-100" : "opacity-0"}`, children: /* @__PURE__ */ jsxs("p", { className: "text-gray-500 text-sm", children: [
                   "© 2025 Junny AI. ",
                   /* @__PURE__ */ jsx("br", {}),
                   " Todos os direitos reservados."
@@ -1169,7 +1145,7 @@ const Header = () => {
               ] })
             ]
           }
-        ) })
+        )
       ]
     }
   );
@@ -1935,16 +1911,9 @@ const FAQ = ({ items, title = "Dúvidas frequentes", className = "py-24 md:py-32
             /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 flex-1 pt-1", children: [
               /* @__PURE__ */ jsx("span", { className: `text-lg md:text-xl font-medium transition-colors duration-300 ${isOpen ? "text-white" : "text-gray-300 group-hover:text-white"}`, children: faq.question }),
               /* @__PURE__ */ jsx(
-                motion.div,
+                "div",
                 {
-                  initial: false,
-                  animate: {
-                    height: isOpen ? "auto" : 0,
-                    opacity: isOpen ? 1 : 0,
-                    marginTop: isOpen ? 8 : 0
-                  },
-                  transition: { duration: 0.3, ease: "easeInOut" },
-                  className: "overflow-hidden",
+                  className: `overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[500px] opacity-100 mt-2" : "max-h-0 opacity-0 mt-0"}`,
                   children: /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-base leading-relaxed pr-4 md:pr-12 font-light", children: faq.answer })
                 }
               )
@@ -2010,58 +1979,58 @@ const PromoPopup = lazy(() => import("./assets/PromoPopup-BfFjKrIy.js").then((mo
 const Terms = lazy(() => import("./assets/Terms-Dqwge8vJ.js").then((module) => ({ default: module.Terms })));
 const Privacy = lazy(() => import("./assets/Privacy-BBTeFlEV.js").then((module) => ({ default: module.Privacy })));
 const Support = lazy(() => import("./assets/Support-Dv-GP8Xw.js").then((module) => ({ default: module.Support })));
-const Calculators = lazy(() => import("./assets/Calculators-Barjj1K5.js").then((module) => ({ default: module.Calculators })));
-const InvestmentPage = lazy(() => import("./assets/InvestmentPage-C5pUCOu5.js").then((module) => ({ default: module.InvestmentPage })));
-const VacationPage = lazy(() => import("./assets/VacationPage-Ekyx2KLS.js").then((module) => ({ default: module.VacationPage })));
-const EnergyPage = lazy(() => import("./assets/EnergyPage-BPJ2dEFt.js").then((module) => ({ default: module.EnergyPage })));
-const FuelPage = lazy(() => import("./assets/FuelPage-DepAHicb.js").then((module) => ({ default: module.FuelPage })));
-const TerminationPage = lazy(() => import("./assets/TerminationPage-00b0AS3p.js").then((module) => ({ default: module.TerminationPage })));
-const INSSPage = lazy(() => import("./assets/INSSPage-DN4KMIXX.js").then((module) => ({ default: module.INSSPage })));
-const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-D2SHxgi7.js").then((module) => ({ default: module.NetSalaryPage })));
-const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-DLWgIUk1.js").then((module) => ({ default: module.ThirteenthSalaryPage })));
-const OvertimePage = lazy(() => import("./assets/OvertimePage-CSjrLa8-.js").then((module) => ({ default: module.OvertimePage })));
-const UnemploymentInsurancePage = lazy(() => import("./assets/UnemploymentInsurancePage-DP8a_NIw.js").then((module) => ({ default: module.UnemploymentInsurancePage })));
-const NightShiftPage = lazy(() => import("./assets/NightShiftPage-j9hx6iDS.js").then((module) => ({ default: module.NightShiftPage })));
-const FGTSPage = lazy(() => import("./assets/FGTSPage-BT7um9m9.js").then((module) => ({ default: module.FGTSPage })));
-const EmployeeCostPage = lazy(() => import("./assets/EmployeeCostPage-C7VgYTfm.js").then((module) => ({ default: module.EmployeeCostPage })));
-const PLRPage = lazy(() => import("./assets/PLRPage-BghczQcu.js").then((module) => ({ default: module.PLRPage })));
-const FIREPage = lazy(() => import("./assets/FIREPage-BtupOpXG.js").then((module) => ({ default: module.FIREPage })));
-const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-VFgkJdYj.js").then((module) => ({ default: module.CompoundInterestPage })));
-const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-F13WezeT.js").then((module) => ({ default: module.RentVsBuyPage })));
-const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-DD8SM1cA.js").then((module) => ({ default: module.UberVsCarPage })));
-const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-BlDy8c3w.js").then((module) => ({ default: module.FirstMillionPage })));
-const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-FnTDCIFR.js").then((module) => ({ default: module.CurrencyConverterPage })));
-const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-E5Zid8gj.js").then((module) => ({ default: module.PurchasingPowerPage })));
-const Budget503020Page = lazy(() => import("./assets/Budget503020Page-DyXyGr5Q.js").then((module) => ({ default: module.Budget503020Page })));
-const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-DOG-lHSw.js").then((module) => ({ default: module.VehicleFinancingPage })));
-const RealEstateFinancingPage = lazy(() => import("./assets/RealEstateFinancingPage-DQVvNCJf.js").then((module) => ({ default: module.RealEstateFinancingPage })));
-const EarlyRepaymentPage = lazy(() => import("./assets/EarlyRepaymentPage-CD3lxU5N.js").then((module) => ({ default: module.EarlyRepaymentPage })));
-const CETCalculatorPage = lazy(() => import("./assets/CETCalculatorPage-J4bnJ96R.js").then((module) => ({ default: module.CETCalculatorPage })));
-const CreditCardDebtPage = lazy(() => import("./assets/CreditCardDebtPage-3pFjvVfe.js").then((module) => ({ default: module.CreditCardDebtPage })));
-const MEIDasPage = lazy(() => import("./assets/MEIDasPage-DsErcaUq.js").then((module) => ({ default: module.MEIDasPage })));
-const MarkupPage = lazy(() => import("./assets/MarkupPage-3rJajpBp.js").then((module) => ({ default: module.MarkupPage })));
-const BreakEvenPage = lazy(() => import("./assets/BreakEvenPage-BKZWDid5.js").then((module) => ({ default: module.BreakEvenPage })));
-const SimplesVsPresumidoPage = lazy(() => import("./assets/SimplesVsPresumidoPage-DCW0WKoW.js").then((module) => ({ default: module.SimplesVsPresumidoPage })));
-const WorkingCapitalPage = lazy(() => import("./assets/WorkingCapitalPage-DH0ZBozL.js").then((module) => ({ default: module.WorkingCapitalPage })));
-const ROICalculatorPage = lazy(() => import("./assets/ROICalculatorPage-BpbNA3lS.js").then((module) => ({ default: module.ROICalculatorPage })));
-const BarbecueCalculatorPage = lazy(() => import("./assets/BarbecueCalculatorPage-Cf-I7sEp.js").then((module) => ({ default: module.BarbecueCalculatorPage })));
-const BusinessDaysPage = lazy(() => import("./assets/BusinessDaysPage-BM0i37dW.js").then((module) => ({ default: module.BusinessDaysPage })));
-const RuleOfThreePage = lazy(() => import("./assets/RuleOfThreePage-DI4So-qY.js").then((module) => ({ default: module.RuleOfThreePage })));
-const PercentageCalculatorPage = lazy(() => import("./assets/PercentageCalculatorPage-C3kjhOrs.js").then((module) => ({ default: module.PercentageCalculatorPage })));
-const HoursCalculatorPage = lazy(() => import("./assets/HoursCalculatorPage-DKqnsXsq.js").then((module) => ({ default: module.HoursCalculatorPage })));
-const TileBricksCalculatorPage = lazy(() => import("./assets/TileBricksCalculatorPage-B1o5Kegc.js").then((module) => ({ default: module.TileBricksCalculatorPage })));
-const TravelCostCalculatorPage = lazy(() => import("./assets/TravelCostCalculatorPage-DqJYgFYl.js").then((module) => ({ default: module.TravelCostCalculatorPage })));
-const IMCCalculatorPage = lazy(() => import("./assets/IMCCalculatorPage-BZL_pRvX.js").then((module) => ({ default: module.IMCCalculatorPage })));
-const WaterIntakeCalculatorPage = lazy(() => import("./assets/WaterIntakeCalculatorPage-DZCgkxzK.js").then((module) => ({ default: module.WaterIntakeCalculatorPage })));
-const CulinaryConverterPage = lazy(() => import("./assets/CulinaryConverterPage-C3P08hkO.js").then((module) => ({ default: module.CulinaryConverterPage })));
-const GestationalAgeCalculatorPage = lazy(() => import("./assets/GestationalAgeCalculatorPage-Dx1iKuMK.js").then((module) => ({ default: module.GestationalAgeCalculatorPage })));
-const SecretSantaPage = lazy(() => import("./assets/SecretSantaPage-yu400QKO.js").then((module) => ({ default: module.SecretSantaPage })));
-const PixGeneratorPage = lazy(() => import("./assets/PixGeneratorPage-B9BQB3au.js").then((module) => ({ default: module.PixGeneratorPage })));
+const Calculators = lazy(() => import("./assets/Calculators-B79XsXHO.js").then((module) => ({ default: module.Calculators })));
+const InvestmentPage = lazy(() => import("./assets/InvestmentPage-Bl8Qlokt.js").then((module) => ({ default: module.InvestmentPage })));
+const VacationPage = lazy(() => import("./assets/VacationPage-Dc2V35TA.js").then((module) => ({ default: module.VacationPage })));
+const EnergyPage = lazy(() => import("./assets/EnergyPage-3aqqf7ee.js").then((module) => ({ default: module.EnergyPage })));
+const FuelPage = lazy(() => import("./assets/FuelPage-C59bnIZb.js").then((module) => ({ default: module.FuelPage })));
+const TerminationPage = lazy(() => import("./assets/TerminationPage-Cs6yPsS9.js").then((module) => ({ default: module.TerminationPage })));
+const INSSPage = lazy(() => import("./assets/INSSPage-Uhr8YMKH.js").then((module) => ({ default: module.INSSPage })));
+const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-CEWtyNpG.js").then((module) => ({ default: module.NetSalaryPage })));
+const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-DHiQMh6d.js").then((module) => ({ default: module.ThirteenthSalaryPage })));
+const OvertimePage = lazy(() => import("./assets/OvertimePage-CY_aZURx.js").then((module) => ({ default: module.OvertimePage })));
+const UnemploymentInsurancePage = lazy(() => import("./assets/UnemploymentInsurancePage-o7W_cQr-.js").then((module) => ({ default: module.UnemploymentInsurancePage })));
+const NightShiftPage = lazy(() => import("./assets/NightShiftPage-V5mNF1oo.js").then((module) => ({ default: module.NightShiftPage })));
+const FGTSPage = lazy(() => import("./assets/FGTSPage-nPP5K75I.js").then((module) => ({ default: module.FGTSPage })));
+const EmployeeCostPage = lazy(() => import("./assets/EmployeeCostPage-CCQGthcn.js").then((module) => ({ default: module.EmployeeCostPage })));
+const PLRPage = lazy(() => import("./assets/PLRPage-Cuwjxg6L.js").then((module) => ({ default: module.PLRPage })));
+const FIREPage = lazy(() => import("./assets/FIREPage-Nljhhfqa.js").then((module) => ({ default: module.FIREPage })));
+const CompoundInterestPage = lazy(() => import("./assets/CompoundInterestPage-ad1_4ygs.js").then((module) => ({ default: module.CompoundInterestPage })));
+const RentVsBuyPage = lazy(() => import("./assets/RentVsBuyPage-D3T73I76.js").then((module) => ({ default: module.RentVsBuyPage })));
+const UberVsCarPage = lazy(() => import("./assets/UberVsCarPage-DdVIo-p6.js").then((module) => ({ default: module.UberVsCarPage })));
+const FirstMillionPage = lazy(() => import("./assets/FirstMillionPage-B4S_f6EK.js").then((module) => ({ default: module.FirstMillionPage })));
+const CurrencyConverterPage = lazy(() => import("./assets/CurrencyConverterPage-BF0ZMU_d.js").then((module) => ({ default: module.CurrencyConverterPage })));
+const PurchasingPowerPage = lazy(() => import("./assets/PurchasingPowerPage-yTFz_471.js").then((module) => ({ default: module.PurchasingPowerPage })));
+const Budget503020Page = lazy(() => import("./assets/Budget503020Page-D1DoB4jZ.js").then((module) => ({ default: module.Budget503020Page })));
+const VehicleFinancingPage = lazy(() => import("./assets/VehicleFinancingPage-BPC4rpv4.js").then((module) => ({ default: module.VehicleFinancingPage })));
+const RealEstateFinancingPage = lazy(() => import("./assets/RealEstateFinancingPage-La1mhu-D.js").then((module) => ({ default: module.RealEstateFinancingPage })));
+const EarlyRepaymentPage = lazy(() => import("./assets/EarlyRepaymentPage-Cu9cNiVu.js").then((module) => ({ default: module.EarlyRepaymentPage })));
+const CETCalculatorPage = lazy(() => import("./assets/CETCalculatorPage-BjIWXOt1.js").then((module) => ({ default: module.CETCalculatorPage })));
+const CreditCardDebtPage = lazy(() => import("./assets/CreditCardDebtPage-C3bGWaBL.js").then((module) => ({ default: module.CreditCardDebtPage })));
+const MEIDasPage = lazy(() => import("./assets/MEIDasPage-DmL_M1PU.js").then((module) => ({ default: module.MEIDasPage })));
+const MarkupPage = lazy(() => import("./assets/MarkupPage-Dx17d43l.js").then((module) => ({ default: module.MarkupPage })));
+const BreakEvenPage = lazy(() => import("./assets/BreakEvenPage-BSqS-wIX.js").then((module) => ({ default: module.BreakEvenPage })));
+const SimplesVsPresumidoPage = lazy(() => import("./assets/SimplesVsPresumidoPage-n2spgAY-.js").then((module) => ({ default: module.SimplesVsPresumidoPage })));
+const WorkingCapitalPage = lazy(() => import("./assets/WorkingCapitalPage-C876otx6.js").then((module) => ({ default: module.WorkingCapitalPage })));
+const ROICalculatorPage = lazy(() => import("./assets/ROICalculatorPage-36O8ffEV.js").then((module) => ({ default: module.ROICalculatorPage })));
+const BarbecueCalculatorPage = lazy(() => import("./assets/BarbecueCalculatorPage-BO858rKI.js").then((module) => ({ default: module.BarbecueCalculatorPage })));
+const BusinessDaysPage = lazy(() => import("./assets/BusinessDaysPage-BO2PJvcL.js").then((module) => ({ default: module.BusinessDaysPage })));
+const RuleOfThreePage = lazy(() => import("./assets/RuleOfThreePage-BuyPZU0d.js").then((module) => ({ default: module.RuleOfThreePage })));
+const PercentageCalculatorPage = lazy(() => import("./assets/PercentageCalculatorPage-ChQ8VAp9.js").then((module) => ({ default: module.PercentageCalculatorPage })));
+const HoursCalculatorPage = lazy(() => import("./assets/HoursCalculatorPage-DjEP_E9J.js").then((module) => ({ default: module.HoursCalculatorPage })));
+const TileBricksCalculatorPage = lazy(() => import("./assets/TileBricksCalculatorPage-CozczkK-.js").then((module) => ({ default: module.TileBricksCalculatorPage })));
+const TravelCostCalculatorPage = lazy(() => import("./assets/TravelCostCalculatorPage-CltR1Kpx.js").then((module) => ({ default: module.TravelCostCalculatorPage })));
+const IMCCalculatorPage = lazy(() => import("./assets/IMCCalculatorPage-Cet0TTsU.js").then((module) => ({ default: module.IMCCalculatorPage })));
+const WaterIntakeCalculatorPage = lazy(() => import("./assets/WaterIntakeCalculatorPage-BOTYGxbl.js").then((module) => ({ default: module.WaterIntakeCalculatorPage })));
+const CulinaryConverterPage = lazy(() => import("./assets/CulinaryConverterPage-DCeUwwuV.js").then((module) => ({ default: module.CulinaryConverterPage })));
+const GestationalAgeCalculatorPage = lazy(() => import("./assets/GestationalAgeCalculatorPage-sE1ff1k9.js").then((module) => ({ default: module.GestationalAgeCalculatorPage })));
+const SecretSantaPage = lazy(() => import("./assets/SecretSantaPage-g1E86jd_.js").then((module) => ({ default: module.SecretSantaPage })));
+const PixGeneratorPage = lazy(() => import("./assets/PixGeneratorPage-CVW-6tt-.js").then((module) => ({ default: module.PixGeneratorPage })));
 const WebStoryPage = lazy(() => import("./assets/WebStoryPage-CL3v85VQ.js").then((module) => ({ default: module.WebStoryPage })));
 const StoriesGallery = lazy(() => import("./assets/StoriesGallery-DSuS1noP.js").then((module) => ({ default: module.StoriesGallery })));
-const BlogIndex = lazy(() => import("./assets/BlogIndex-CKd0CEwE.js").then((module) => ({ default: module.BlogIndex })));
-const CategoryPage = lazy(() => import("./assets/CategoryPage-9uOpxHwe.js").then((module) => ({ default: module.CategoryPage })));
-const BlogPost = lazy(() => import("./assets/BlogPost-CXsl6WbF.js").then((module) => ({ default: module.BlogPost })));
+const BlogIndex = lazy(() => import("./assets/BlogIndex-Dl-T-wM0.js").then((module) => ({ default: module.BlogIndex })));
+const CategoryPage = lazy(() => import("./assets/CategoryPage-DRMYYYQp.js").then((module) => ({ default: module.CategoryPage })));
+const BlogPost = lazy(() => import("./assets/BlogPost-BOXQ1XP5.js").then((module) => ({ default: module.BlogPost })));
 const NotFound = lazy(() => import("./assets/NotFound-_vcpeVlV.js").then((module) => ({ default: module.NotFound })));
 function App() {
   const [isPopupMounted, setIsPopupMounted] = useState(false);
