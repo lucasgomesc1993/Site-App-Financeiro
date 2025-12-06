@@ -54,13 +54,13 @@ const BusinessDaysPage = lazy(() => import('./components/tools/BusinessDaysPage'
 const RuleOfThreePage = lazy(() => import('./components/tools/RuleOfThreePage').then(module => ({ default: module.RuleOfThreePage })));
 const PercentageCalculatorPage = lazy(() => import('./components/tools/PercentageCalculatorPage').then(module => ({ default: module.PercentageCalculatorPage })));
 const HoursCalculatorPage = lazy(() => import('./components/tools/HoursCalculatorPage').then(module => ({ default: module.HoursCalculatorPage })));
-const TileBricksCalculatorPage = lazy(() => import('./components/tools/TileBricksCalculatorPage').then(module => ({ default: module.TileBricksCalculatorPage })));
+
 const TravelCostCalculatorPage = lazy(() => import('./components/tools/TravelCostCalculatorPage').then(module => ({ default: module.TravelCostCalculatorPage })));
-const IMCCalculatorPage = lazy(() => import('./components/tools/IMCCalculatorPage').then(module => ({ default: module.IMCCalculatorPage })));
-const WaterIntakeCalculatorPage = lazy(() => import('./components/tools/WaterIntakeCalculatorPage').then(module => ({ default: module.WaterIntakeCalculatorPage })));
-const CulinaryConverterPage = lazy(() => import('./components/tools/CulinaryConverterPage').then(module => ({ default: module.CulinaryConverterPage })));
-const GestationalAgeCalculatorPage = lazy(() => import('./components/tools/GestationalAgeCalculatorPage').then(module => ({ default: module.GestationalAgeCalculatorPage })));
 const SecretSantaPage = lazy(() => import('./components/tools/SecretSantaPage').then(module => ({ default: module.SecretSantaPage })));
+const CLTVsPJPage = lazy(() => import('./components/tools/CLTVsPJPage').then(module => ({ default: module.CLTVsPJPage })));
+const MonetaryCorrectionPage = lazy(() => import('./components/tools/MonetaryCorrectionPage').then(module => ({ default: module.MonetaryCorrectionPage })));
+const ImportTaxPage = lazy(() => import('./components/tools/ImportTaxPage').then(module => ({ default: module.ImportTaxPage })));
+const AbusiveInterestPage = lazy(() => import('./components/tools/AbusiveInterestPage').then(module => ({ default: module.AbusiveInterestPage })));
 const PixGeneratorPage = lazy(() => import('./components/tools/PixGeneratorPage').then(module => ({ default: module.PixGeneratorPage })));
 const WebStoryPage = lazy(() => import('./components/tools/WebStoryPage').then(module => ({ default: module.WebStoryPage })));
 const StoriesGallery = lazy(() => import('./components/StoriesGallery').then(module => ({ default: module.StoriesGallery })));
@@ -128,13 +128,13 @@ function App() {
                 <Route path="/calculadoras/regra-de-tres" element={<RuleOfThreePage />} />
                 <Route path="/calculadoras/porcentagem" element={<PercentageCalculatorPage />} />
                 <Route path="/calculadoras/horas" element={<HoursCalculatorPage />} />
-                <Route path="/calculadoras/tijolos-pisos" element={<TileBricksCalculatorPage />} />
+
                 <Route path="/calculadoras/custo-viagem" element={<TravelCostCalculatorPage />} />
-                <Route path="/calculadoras/imc" element={<IMCCalculatorPage />} />
-                <Route path="/calculadoras/agua" element={<WaterIntakeCalculatorPage />} />
-                <Route path="/calculadoras/conversor-culinario" element={<CulinaryConverterPage />} />
-                <Route path="/calculadoras/idade-gestacional" element={<GestationalAgeCalculatorPage />} />
                 <Route path="/calculadoras/amigo-secreto" element={<SecretSantaPage />} />
+                <Route path="/calculadoras/clt-vs-pj" element={<CLTVsPJPage />} />
+                <Route path="/calculadoras/correcao-monetaria" element={<MonetaryCorrectionPage />} />
+                <Route path="/calculadoras/impostos-importacao" element={<ImportTaxPage />} />
+                <Route path="/calculadoras/juros-abusivos" element={<AbusiveInterestPage />} />
                 <Route path="/calculadoras/gerador-pix" element={<PixGeneratorPage />} />
                 <Route path="/blog" element={<BlogIndex />} />
                 <Route path="/blog/:category/:slug" element={<BlogPost />} />

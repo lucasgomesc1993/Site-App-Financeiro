@@ -37,11 +37,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://junny.com.br/calculadoras/agua</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://junny.com.br/calculadoras/alugar-ou-financiar</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -62,17 +57,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://junny.com.br/calculadoras/clt-vs-pj</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://junny.com.br/calculadoras/combustivel</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://junny.com.br/calculadoras/conversor-culinario</loc>
+    <loc>https://junny.com.br/calculadoras/conversor-moedas</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://junny.com.br/calculadoras/conversor-moedas</loc>
+    <loc>https://junny.com.br/calculadoras/correcao-monetaria</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -157,12 +157,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://junny.com.br/calculadoras/idade-gestacional</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://junny.com.br/calculadoras/imc</loc>
+    <loc>https://junny.com.br/calculadoras/impostos-importacao</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -173,6 +168,11 @@
   </url>
   <url>
     <loc>https://junny.com.br/calculadoras/investimentos</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://junny.com.br/calculadoras/juros-abusivos</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
