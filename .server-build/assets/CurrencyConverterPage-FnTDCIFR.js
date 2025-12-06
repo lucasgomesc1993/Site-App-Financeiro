@@ -1,5 +1,5 @@
 import { jsxs, jsx } from "react/jsx-runtime";
-import { useState, useEffect, Suspense, lazy } from "react";
+import { useState, useEffect, useRef, Suspense, lazy } from "react";
 import { Globe, Calculator, RefreshCw, CreditCard, Info, DollarSign, TrendingUp, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { S as SEO, F as FAQ } from "../entry-server.js";
@@ -32,6 +32,20 @@ const CURRENCY_FAQS = [
     answer: "Sim, mas gradualmente. O governo estabeleceu um cronograma de redução de 1% ao ano. Em 2025, a taxa é de 3,38%. Ela cairá para 2,38% em 2026, 1,38% em 2027 e será totalmente zerada (0%) apenas em 2028."
   }
 ];
+function useOnScreen(ref) {
+  const [isIntersecting, setIntersecting] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIntersecting(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: "200px" });
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref]);
+  return isIntersecting;
+}
 const CurrencyChart = lazy(() => import("./CurrencyChart-yDOhwxlt.js"));
 function CurrencyConverterPage() {
   const [amount, setAmount] = useState("");
@@ -217,7 +231,7 @@ function CurrencyConverterPage() {
             ] }) })
           ] })
         ] }) }),
-        /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-400", children: /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center", children: /* @__PURE__ */ jsx(RefreshCw, { className: "w-8 h-8 text-emerald-500 animate-spin" }) }), children: /* @__PURE__ */ jsx(CurrencyChart, {}) }) })
+        /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-400", children: /* @__PURE__ */ jsx(ChartLazyWrapper, {}) })
       ] }),
       /* @__PURE__ */ jsx("div", { className: "mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4 text-center mb-12", children: /* @__PURE__ */ jsxs("p", { children: [
         "Converta Dólar, Euro e Libra com a cotação oficial de agora (05/12/2025). Descubra exatamente quanto sua compra vai custar no final, já incluindo o IOF atualizado de 2025 e as taxas bancárias. ",
@@ -532,7 +546,18 @@ function CurrencyConverterPage() {
     ] })
   ] });
 }
+function ChartLazyWrapper() {
+  const ref = useRef(null);
+  const isVisible = useOnScreen(ref);
+  return /* @__PURE__ */ jsx("div", { ref, className: "h-full min-h-[600px] w-full", children: isVisible ? /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsxs("div", { className: "h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center", children: [
+    /* @__PURE__ */ jsx(RefreshCw, { className: "w-8 h-8 text-emerald-500 animate-spin" }),
+    /* @__PURE__ */ jsx("span", { className: "ml-3 text-gray-400 text-sm", children: "Carregando gráfico..." })
+  ] }), children: /* @__PURE__ */ jsx(CurrencyChart, {}) }) : (
+    // Placeholder leve antes do usuário rolar até aqui
+    /* @__PURE__ */ jsx("div", { className: "h-full w-full min-h-[600px] bg-[#1a1a1a]/20 rounded-3xl" })
+  ) });
+}
 export {
   CurrencyConverterPage
 };
-//# sourceMappingURL=CurrencyConverterPage-CKMEQmKD.js.map
+//# sourceMappingURL=CurrencyConverterPage-FnTDCIFR.js.map

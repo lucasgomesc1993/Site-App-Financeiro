@@ -56,10 +56,16 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: isSSR ? undefined : {
+            // Separa o Recharts (pesado)
             'recharts': ['recharts'],
+            // Separa Framer Motion (animações)
             'framer-motion': ['framer-motion'],
+            // Separa o React Core
             'ui-vendor': ['react', 'react-dom', 'react-router-dom'],
-            'ui-libs': ['lucide-react']
+            // CRÍTICO: Isola o Supabase para não carregar em páginas públicas simples
+            'supabase-vendor': ['@supabase/supabase-js', '@supabase/auth-js', '@supabase/realtime-js'],
+            // Utilitários de UI e Ícones
+            'ui-utils': ['lucide-react', 'clsx', 'tailwind-merge', 'date-fns']
           }
         }
       }

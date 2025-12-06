@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from 'react';
+import React, { useState, useEffect, Suspense, lazy, useRef } from 'react';
 import { Globe, Calculator, RefreshCw, Info, TrendingUp, DollarSign, CreditCard, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -26,6 +26,24 @@ const CURRENCY_FAQS: FAQItem[] = [
         answer: "Sim, mas gradualmente. O governo estabeleceu um cronograma de redução de 1% ao ano. Em 2025, a taxa é de 3,38%. Ela cairá para 2,38% em 2026, 1,38% em 2027 e será totalmente zerada (0%) apenas em 2028."
     }
 ];
+
+// Hook simples para detectar visibilidade sem instalar novas libs
+function useOnScreen(ref: React.RefObject<HTMLElement>) {
+    const [isIntersecting, setIntersecting] = useState(false);
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            // Se aparecer na tela, marca como visível e desconecta o observador
+            if (entry.isIntersecting) {
+                setIntersecting(true);
+                observer.disconnect();
+            }
+        }, { rootMargin: "200px" }); // Carrega 200px antes de chegar no elemento
+
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, [ref]);
+    return isIntersecting;
+}
 
 const CurrencyChart = lazy(() => import('./CurrencyChart'));
 
@@ -244,15 +262,9 @@ export function CurrencyConverterPage() {
 
 
 
-                    {/* Chart */}
+                    {/* Chart - OTIMIZADO PARA MOBILE */}
                     <div className="lg:col-span-5 h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
-                        <Suspense fallback={
-                            <div className="h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center">
-                                <RefreshCw className="w-8 h-8 text-emerald-500 animate-spin" />
-                            </div>
-                        }>
-                            <CurrencyChart />
-                        </Suspense>
+                        <ChartLazyWrapper />
                     </div>
                 </div>
 
@@ -588,5 +600,28 @@ export function CurrencyConverterPage() {
                 <AppPromoBanner />
             </div>
         </section>
+    );
+}
+
+function ChartLazyWrapper() {
+    const ref = useRef<HTMLDivElement>(null);
+    const isVisible = useOnScreen(ref);
+
+    return (
+        <div ref={ref} className="h-full min-h-[600px] w-full">
+            {isVisible ? (
+                <Suspense fallback={
+                    <div className="h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center">
+                        <RefreshCw className="w-8 h-8 text-emerald-500 animate-spin" />
+                        <span className="ml-3 text-gray-400 text-sm">Carregando gráfico...</span>
+                    </div>
+                }>
+                    <CurrencyChart />
+                </Suspense>
+            ) : (
+                // Placeholder leve antes do usuário rolar até aqui
+                <div className="h-full w-full min-h-[600px] bg-[#1a1a1a]/20 rounded-3xl" />
+            )}
+        </div>
     );
 }
