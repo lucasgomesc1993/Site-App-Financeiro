@@ -56,7 +56,7 @@ export const AppPromoBanner: React.FC = () => {
                             <img
                                 src="/hero.webp"
                                 srcSet="/hero-mobile.webp 600w, /hero-medium.webp 900w, /hero.webp 1200w"
-                                alt="Junny App Dashboard"
+                                alt="Dashboard do app de controle financeiro pessoal Junny"
                                 width={1200}
                                 height={563}
                                 loading="lazy"
