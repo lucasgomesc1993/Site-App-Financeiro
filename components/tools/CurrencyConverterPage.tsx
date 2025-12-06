@@ -471,7 +471,7 @@ export function CurrencyConverterPage() {
 
                 {/* Comercial vs Turismo & Simulação */}
                 <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-12">
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 min-w-0">
                         <div className="flex items-start gap-4 mb-5">
                             <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
                                 <DollarSign className="w-6 h-6 text-emerald-500" />
@@ -484,7 +484,7 @@ export function CurrencyConverterPage() {
                             <p className="text-sm md:text-base">
                                 A escolha errada pode encarecer sua viagem em <strong>até 8%</strong>. Entenda a diferença para não ser taxado à toa:
                             </p>
-                            <div className="overflow-x-auto w-full pb-2">
+                            <div className="overflow-x-auto w-full max-w-full pb-2">
                                 <table className="w-full text-left border-collapse text-sm min-w-[320px]">
                                     <thead>
                                         <tr className="border-b border-white/10">
@@ -513,7 +513,7 @@ export function CurrencyConverterPage() {
                         </div>
                     </div>
 
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200 min-w-0">
                         <div className="flex items-start gap-4 mb-5">
                             <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
                                 <Calculator className="w-6 h-6 text-emerald-500" />
@@ -526,7 +526,7 @@ export function CurrencyConverterPage() {
                             <p className="text-sm md:text-base">
                                 Comparativo para <strong>US$ 1.000,00</strong> em Dezembro de 2025.
                             </p>
-                            <div className="overflow-x-auto w-full pb-2">
+                            <div className="overflow-x-auto w-full max-w-full pb-2">
                                 <table className="w-full text-left border-collapse text-sm min-w-[340px]">
                                     <thead>
                                         <tr className="border-b border-white/10">
