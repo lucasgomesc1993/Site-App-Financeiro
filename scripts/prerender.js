@@ -64,6 +64,10 @@ const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.VITE_SU
         // Inject the app content
         finalHtml = finalHtml.replace(`<div id="root"></div>`, `<div id="root">${appHtml.html}</div>`);
 
+        // AGGRESSIVE OPTIMIZATION: Remove any modulepreload links that might have slipped in
+        // This ensures NO lazy chunks (like recharts) are preloaded/prefetched
+        finalHtml = finalHtml.replace(/<link rel="modulepreload".*?>/g, '');
+
         // Inject initial data for client-side hydration
         if (initialData) {
             const scriptTag = `<script>window.__INITIAL_DATA__ = ${JSON.stringify(initialData)}</script>`;
