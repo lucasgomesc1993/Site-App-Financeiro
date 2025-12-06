@@ -30,20 +30,6 @@ const CURRENCY_FAQS = [
     answer: "Sim, mas gradualmente. O governo estabeleceu um cronograma de redução de 1% ao ano. Em 2025, a taxa é de 3,38%. Ela cairá para 2,38% em 2026, 1,38% em 2027 e será totalmente zerada (0%) apenas em 2028."
   }
 ];
-function useOnScreen(ref) {
-  const [isIntersecting, setIntersecting] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setIntersecting(true);
-        observer.disconnect();
-      }
-    }, { rootMargin: "200px" });
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [ref]);
-  return isIntersecting;
-}
 const CurrencyChart = lazy(() => import("./CurrencyChart-yDOhwxlt.js"));
 function CurrencyConverterPage() {
   const [amount, setAmount] = useState("");
@@ -545,17 +531,30 @@ function CurrencyConverterPage() {
   ] });
 }
 function ChartLazyWrapper() {
+  const [shouldLoad, setShouldLoad] = useState(false);
   const ref = useRef(null);
-  const isVisible = useOnScreen(ref);
-  return /* @__PURE__ */ jsx("div", { ref, className: "h-full min-h-[600px] w-full", children: isVisible ? /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsxs("div", { className: "h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center", children: [
+  return /* @__PURE__ */ jsx("div", { ref, className: "h-full min-h-[600px] w-full flex flex-col relative", children: !shouldLoad ? /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 bg-[#1a1a1a]/20 backdrop-blur-sm rounded-3xl border border-white/5 flex flex-col items-center justify-center p-6 text-center z-10 transition-all", children: [
+    /* @__PURE__ */ jsx(TrendingUp, { className: "w-12 h-12 text-emerald-500/50 mb-4" }),
+    /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Gráfico de Cotação" }),
+    /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-6 max-w-xs", children: "Visualize o histórico do Dólar, Euro e Libra nos últimos 30 dias." }),
+    /* @__PURE__ */ jsxs(
+      "button",
+      {
+        onClick: () => setShouldLoad(true),
+        className: "group flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-bold rounded-lg transition-all transform hover:scale-105",
+        children: [
+          /* @__PURE__ */ jsx(RefreshCw, { className: "w-4 h-4 group-hover:rotate-180 transition-transform duration-500" }),
+          "Carregar Gráfico"
+        ]
+      }
+    ),
+    /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-4", children: "(Carregamento sob demanda para economizar dados)" })
+  ] }) : /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsxs("div", { className: "h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center", children: [
     /* @__PURE__ */ jsx(RefreshCw, { className: "w-8 h-8 text-emerald-500 animate-spin" }),
-    /* @__PURE__ */ jsx("span", { className: "ml-3 text-gray-400 text-sm", children: "Carregando gráfico..." })
-  ] }), children: /* @__PURE__ */ jsx(CurrencyChart, {}) }) : (
-    // Placeholder leve antes do usuário rolar até aqui
-    /* @__PURE__ */ jsx("div", { className: "h-full w-full min-h-[600px] bg-[#1a1a1a]/20 rounded-3xl" })
-  ) });
+    /* @__PURE__ */ jsx("span", { className: "ml-3 text-gray-400 text-sm", children: "Carregando dados..." })
+  ] }), children: /* @__PURE__ */ jsx(CurrencyChart, {}) }) });
 }
 export {
   CurrencyConverterPage
 };
-//# sourceMappingURL=CurrencyConverterPage-BsqNWM-u.js.map
+//# sourceMappingURL=CurrencyConverterPage-BrSAj3Cy.js.map
