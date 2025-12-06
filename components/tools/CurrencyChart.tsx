@@ -140,7 +140,7 @@ const CurrencyChart = () => {
                 </h3>
             </div>
 
-            <div className="w-full h-[400px] min-w-0 relative [&_.recharts-wrapper]:!outline-none [&_.recharts-surface]:!outline-none">
+            <div className="w-full h-[400px] min-w-0 relative [&_.recharts-wrapper]:outline-none [&_.recharts-wrapper_*]:outline-none [&_*:focus]:outline-none [&_*:focus-visible]:outline-none">
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a]/50 z-10 backdrop-blur-sm rounded-xl">
                         <RefreshCw className="w-6 h-6 text-emerald-500 animate-spin" />
