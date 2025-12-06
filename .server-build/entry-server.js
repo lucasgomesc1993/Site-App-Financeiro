@@ -1185,7 +1185,7 @@ const ScrollToTop = () => {
   return null;
 };
 const Home = lazy(() => import("./assets/Home-CtSvHr64.js").then((module) => ({ default: module.Home })));
-const PromoPopup = lazy(() => import("./assets/PromoPopup-BfFjKrIy.js").then((module) => ({ default: module.PromoPopup })));
+const PromoPopup = lazy(() => import("./assets/PromoPopup-BnieH2wJ.js").then((module) => ({ default: module.PromoPopup })));
 const Terms = lazy(() => import("./assets/Terms-YSqiFku8.js").then((module) => ({ default: module.Terms })));
 const Privacy = lazy(() => import("./assets/Privacy-DCE6GYjt.js").then((module) => ({ default: module.Privacy })));
 const Support = lazy(() => import("./assets/Support-CURYQMXr.js").then((module) => ({ default: module.Support })));

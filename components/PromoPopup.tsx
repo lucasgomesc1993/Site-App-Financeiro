@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+// import { motion, AnimatePresence } from 'framer-motion';
 import { X, Zap, ArrowRight } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
 
@@ -58,16 +58,12 @@ export const PromoPopup: React.FC = () => {
     };
 
     return (
-        <AnimatePresence>
+        <>
             {isVisible && (
-                <motion.div
-                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 50, scale: 0.9 }}
-                    transition={{ type: "spring", damping: 20, stiffness: 300 }}
+                <div
                     className="fixed z-50 
                         bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 
-                        md:w-[380px] w-auto"
+                        md:w-[380px] w-auto animate-in fade-in slide-in-from-bottom-8 duration-700"
                 >
                     <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d] md:bg-[#0d0d0d]/90 md:backdrop-blur-xl shadow-xl md:shadow-[0_0_40px_rgba(0,0,0,0.5)] p-5">
                         {/* Background Effects - Subtle */}
@@ -97,29 +93,19 @@ export const PromoPopup: React.FC = () => {
                                 </div>
                             </div>
 
-                            <motion.a
+                            <a
                                 href="https://junny.com.br/criar-conta"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                animate={{
-                                    y: [0, -4, 0],
-                                    scale: [1, 1.02, 1]
-                                }}
-                                transition={{
-                                    duration: 2,
-                                    repeat: Infinity,
-                                    repeatDelay: 3,
-                                    ease: "easeInOut"
-                                }}
                                 className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
                             >
                                 Testar Grátis Agora
                                 <ArrowRight className="w-3.5 h-3.5" />
-                            </motion.a>
+                            </a>
                         </div>
                     </div>
-                </motion.div>
+                </div>
             )}
-        </AnimatePresence>
+        </>
     );
 };

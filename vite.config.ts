@@ -52,6 +52,7 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: true,
       cssCodeSplit: true,
+      modulePreload: false, // OTIMIZAÇÃO CRÍTICA: Desativa preload agressivo para carregar chunks (como Recharts) SÓ quando necessário
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {

@@ -1,6 +1,5 @@
-import { jsx, jsxs } from "react/jsx-runtime";
+import { jsx, Fragment, jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { X, Zap, ArrowRight } from "lucide-react";
 import { useLocation } from "react-router-dom";
 const PromoPopup = () => {
@@ -46,14 +45,10 @@ const PromoPopup = () => {
     setIsVisible(false);
     setIsDismissed(true);
   };
-  return /* @__PURE__ */ jsx(AnimatePresence, { children: isVisible && /* @__PURE__ */ jsx(
-    motion.div,
+  return /* @__PURE__ */ jsx(Fragment, { children: isVisible && /* @__PURE__ */ jsx(
+    "div",
     {
-      initial: { opacity: 0, y: 50, scale: 0.9 },
-      animate: { opacity: 1, y: 0, scale: 1 },
-      exit: { opacity: 0, y: 50, scale: 0.9 },
-      transition: { type: "spring", damping: 20, stiffness: 300 },
-      className: "fixed z-50 \r\n                        bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 \r\n                        md:w-[380px] w-auto",
+      className: "fixed z-50 \r\n                        bottom-4 left-4 right-4 md:left-auto md:right-8 md:bottom-8 \r\n                        md:w-[380px] w-auto animate-in fade-in slide-in-from-bottom-8 duration-700",
       children: /* @__PURE__ */ jsxs("div", { className: "relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d] md:bg-[#0d0d0d]/90 md:backdrop-blur-xl shadow-xl md:shadow-[0_0_40px_rgba(0,0,0,0.5)] p-5", children: [
         /* @__PURE__ */ jsx("div", { className: "absolute -top-20 -right-20 w-40 h-40 bg-primary/5 rounded-full blur-3xl pointer-events-none" }),
         /* @__PURE__ */ jsx(
@@ -74,21 +69,11 @@ const PromoPopup = () => {
             ] })
           ] }),
           /* @__PURE__ */ jsxs(
-            motion.a,
+            "a",
             {
               href: "https://junny.com.br/criar-conta",
               target: "_blank",
               rel: "noopener noreferrer",
-              animate: {
-                y: [0, -4, 0],
-                scale: [1, 1.02, 1]
-              },
-              transition: {
-                duration: 2,
-                repeat: Infinity,
-                repeatDelay: 3,
-                ease: "easeInOut"
-              },
               className: "flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap",
               children: [
                 "Testar Grátis Agora",
@@ -104,4 +89,4 @@ const PromoPopup = () => {
 export {
   PromoPopup
 };
-//# sourceMappingURL=PromoPopup-BfFjKrIy.js.map
+//# sourceMappingURL=PromoPopup-BnieH2wJ.js.map
