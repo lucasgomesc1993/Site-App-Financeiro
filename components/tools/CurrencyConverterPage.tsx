@@ -275,11 +275,15 @@ export function CurrencyConverterPage() {
                 </div>
 
                 {/* Cronograma IOF */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                        <CreditCard className="w-6 h-6 text-emerald-500" />
-                        Cronograma de Redução do IOF (Cartão de Crédito)
-                    </h2>
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                            <CreditCard className="w-6 h-6 text-emerald-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Cronograma de Redução do IOF (Cartão de Crédito)
+                        </h2>
+                    </div>
                     <div className="space-y-4 text-gray-400 leading-relaxed">
                         <p>
                             Em 2025, o IOF para compras internacionais no cartão de crédito caiu para <strong>3,38%</strong>. O governo federal zerará essa taxa gradualmente até 2028 para atender aos requisitos da OCDE. Veja o impacto real em uma fatura de R$ 1.000,00:
@@ -335,11 +339,15 @@ export function CurrencyConverterPage() {
                 </div>
 
                 {/* Poder de Compra */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                        <Globe className="w-6 h-6 text-emerald-500" />
-                        Poder de Compra: Quanto vale US$ 100 e € 100 hoje?
-                    </h2>
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                            <Globe className="w-6 h-6 text-emerald-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Poder de Compra: Quanto vale US$ 100 e € 100 hoje?
+                        </h2>
+                    </div>
                     <p className="text-gray-400 mb-6">
                         O número na tela engana. US$ 100 parece pouco, mas nos EUA o poder de compra é superior ao do Brasil para bens de consumo. Compare o custo de vida real usando nossa ferramenta de <Link to="/calculadoras/poder-de-compra" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Poder de Compra</Link> para saber se o produto vale a pena.
                     </p>
@@ -426,11 +434,15 @@ export function CurrencyConverterPage() {
                 </div>
 
                 {/* Dicionário de Taxas */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <Info className="w-6 h-6 text-emerald-500" />
-                        Dicionário de Taxas: VET, Spread e PTAX
-                    </h2>
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                            <Info className="w-6 h-6 text-emerald-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Dicionário de Taxas: VET, Spread e PTAX
+                        </h2>
+                    </div>
                     <p className="text-gray-400 mb-6">
                         Entenda as siglas que definem quanto dinheiro sai do seu bolso:
                     </p>
