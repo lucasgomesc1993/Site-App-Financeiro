@@ -9,15 +9,31 @@ import './index.css';
 // Get initial data injected by prerender
 const initialData = (window as any).__INITIAL_DATA__;
 
-ReactDOM.hydrateRoot(
-    document.getElementById('root') as HTMLElement,
-    <React.StrictMode>
-        <BrowserRouter>
-            <HelmetProvider>
-                <ServerDataProvider value={initialData}>
-                    <App />
-                </ServerDataProvider>
-            </HelmetProvider>
-        </BrowserRouter>
-    </React.StrictMode>
-);
+const container = document.getElementById('root') as HTMLElement;
+
+if (container.hasChildNodes()) {
+    ReactDOM.hydrateRoot(
+        container,
+        <React.StrictMode>
+            <BrowserRouter>
+                <HelmetProvider>
+                    <ServerDataProvider value={initialData}>
+                        <App />
+                    </ServerDataProvider>
+                </HelmetProvider>
+            </BrowserRouter>
+        </React.StrictMode>
+    );
+} else {
+    ReactDOM.createRoot(container).render(
+        <React.StrictMode>
+            <BrowserRouter>
+                <HelmetProvider>
+                    <ServerDataProvider value={initialData}>
+                        <App />
+                    </ServerDataProvider>
+                </HelmetProvider>
+            </BrowserRouter>
+        </React.StrictMode>
+    );
+}
