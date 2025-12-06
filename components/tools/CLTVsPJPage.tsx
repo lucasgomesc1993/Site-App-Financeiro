@@ -107,9 +107,17 @@ export function CLTVsPJPage() {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Calculadora CLT vs PJ: Comparativo Completo 2025",
+        "url": "https://www.junny.com.br/calculadoras/clt-vs-pj",
         "description": "Descubra o que vale mais a pena: ser funcionário CLT ou abrir empresa PJ. Compare salários, impostos, benefícios e veja o lucro real.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Firefox, Edge.",
+        "featureList": [
+            "Comparativo Líquido CLT x PJ",
+            "Cálculo de Impostos (Simples Nacional vs IRRF)",
+            "Estimativa de Benefícios (Férias, 13º, FGTS)",
+            "Análise de Fator R"
+        ],
         "offers": {
             "@type": "Offer",
             "price": "0",
