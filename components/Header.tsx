@@ -88,33 +88,7 @@ export const Header: React.FC = () => {
     }
   };
 
-  const menuVariants: Variants = {
-    closed: {
-      opacity: 0,
-      y: "-100%",
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-        staggerChildren: 0.05,
-        staggerDirection: -1
-      }
-    },
-    open: {
-      opacity: 1,
-      y: "0%",
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-        staggerChildren: 0.07,
-        delayChildren: 0.2
-      }
-    }
-  };
 
-  const itemVariants = {
-    closed: { opacity: 0, y: 20 },
-    open: { opacity: 1, y: 0 }
-  };
 
   return (
     <header
@@ -213,7 +187,7 @@ export const Header: React.FC = () => {
             className={`mt-8 transition-all duration-500 delay-300 ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
           >
             <a
-              href="https://junny.com.br/criar-conta"
+              href="https://app.junny.com.br/criar-conta"
               className="flex items-center justify-center w-full py-4 rounded-full bg-gradient-to-r from-[#008c69] to-[#05a880] hover:brightness-110 transition-all duration-300 text-white font-bold text-sm uppercase tracking-wider shadow-[0_0_20px_rgba(0,140,105,0.3)] active:scale-[0.98]"
             >
               Começar Grátis

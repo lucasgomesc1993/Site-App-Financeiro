@@ -94,7 +94,7 @@ export const PromoPopup: React.FC = () => {
                             </div>
 
                             <a
-                                href="https://junny.com.br/criar-conta"
+                                href="https://app.junny.com.br/criar-conta"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center justify-center gap-2 w-full py-2 px-4 bg-primary hover:bg-primary/90 text-[#0d0d0d] font-bold text-xs uppercase tracking-wide rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
