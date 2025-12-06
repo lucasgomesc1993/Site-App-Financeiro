@@ -451,197 +451,101 @@ export function CurrencyConverterPage() {
                             <h3 className="text-lg font-bold text-white mb-3">O que é a Taxa PTAX?</h3>
                             <p className="text-sm text-gray-400">
                                 É a média oficial do Banco Central, calculada diariamente. É a referência usada para fechar a fatura do seu cartão de crédito. Geralmente, os bancos cobram <strong>PTAX + Spread</strong>. Descubra quanto o banco está lucrando em cima de você usando a <Link to="/calculadoras/porcentagem" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Porcentagem</Link>.
+                                <TrendingUp className="w-6 h-6 text-emerald-500" />
+                                O que faz o Dólar subir ou descer?
+                            </h2>
+                            <p className="text-gray-400 mb-6">
+                                A cotação flutua baseada em três pilares principais. Entendê-los ajuda a melhorar seu <Link to="/calculadoras/roi" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">ROI</Link> em operações internacionais e saber a hora certa de aportar em <Link to="/calculadoras/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Investimentos</Link> no exterior:
                             </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Comercial vs Turismo & Simulação */}
-                <div className="grid md:grid-cols-2 gap-8 mb-12">
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                            <DollarSign className="w-6 h-6 text-emerald-500" />
-                            Comercial vs. Turismo: Qual a diferença?
-                        </h2>
-                        <div className="space-y-4 text-gray-400 leading-relaxed">
-                            <p>
-                                A escolha errada pode encarecer sua viagem em <strong>até 8%</strong>. Entenda a diferença para não ser taxado à toa:
-                            </p>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left border-collapse text-sm">
-                                    <thead>
-                                        <tr className="border-b border-white/10">
-                                            <th className="p-2 text-white">Tipo</th>
-                                            <th className="p-2 text-white">Onde é usado?</th>
-                                            <th className="p-2 text-white">Custo Estimado</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-gray-400">
-                                        <tr className="border-b border-white/5">
-                                            <td className="p-2 font-bold text-white">Comercial</td>
-                                            <td className="p-2">Transações digitais, Contas Globais e Importação.</td>
-                                            <td className="p-2 font-bold text-emerald-400">✅ Mais Barato</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="p-2 font-bold text-white">Turismo</td>
-                                            <td className="p-2">Dinheiro em espécie (papel-moeda).</td>
-                                            <td className="p-2 font-bold text-red-400">🔴 +6% a 8%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div className="grid md:grid-cols-3 gap-6">
+                                <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                    <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                        <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                                        Taxa Selic
+                                    </h3>
+                                    <p className="text-sm text-gray-400">
+                                        Juros altos no Brasil atraem investidores estrangeiros, trazendo dólares e baixando a cotação.
+                                    </p>
+                                </div>
+                                <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                    <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                        <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                                        Risco Fiscal
+                                    </h3>
+                                    <p className="text-sm text-gray-400">
+                                        Quando o governo gasta mais do que arrecada, a confiança cai e o dólar sobe.
+                                    </p>
+                                </div>
+                                <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                    <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                                        <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                                        Juros nos EUA (Fed)
+                                    </h3>
+                                    <p className="text-sm text-gray-400">
+                                        Se os juros sobem lá, o dinheiro sai de emergentes (como o Brasil) e volta para os EUA, valorizando a moeda americana.
+                                    </p>
+                                </div>
                             </div>
-                            <p className="text-xs italic mt-2">
-                                *Nota para Empreendedores: Se você importa produtos pagando em Dólar Comercial para revenda no Brasil, utilize a calculadora de <Link to="/calculadoras/markup" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Markup</Link> para precificar seus itens corretamente.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                            <Calculator className="w-6 h-6 text-emerald-500" />
-                            Simulação: Qual a melhor forma de levar dinheiro?
-                        </h2>
-                        <div className="space-y-4 text-gray-400 leading-relaxed">
-                            <p>
-                                Comparativo de custos para uma despesa de <strong>US$ 1.000,00</strong> em Dezembro de 2025.
-                            </p>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left border-collapse text-sm">
-                                    <thead>
-                                        <tr className="border-b border-white/10">
-                                            <th className="p-2 text-white">Modalidade</th>
-                                            <th className="p-2 text-white">Câmbio Base</th>
-                                            <th className="p-2 text-white text-center">IOF (2025)</th>
-                                            <th className="p-2 text-white text-center">Veredito</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-gray-400">
-                                        <tr className="border-b border-white/5 bg-emerald-500/5">
-                                            <td className="p-2 font-bold text-white">Conta Global</td>
-                                            <td className="p-2">Comercial (+1% a 2%)</td>
-                                            <td className="p-2 text-center">1,10%</td>
-                                            <td className="p-2 text-center font-bold text-emerald-400">✅ Melhor Opção</td>
-                                        </tr>
-                                        <tr className="border-b border-white/5">
-                                            <td className="p-2">Papel Moeda</td>
-                                            <td className="p-2">Turismo (Alto Custo)</td>
-                                            <td className="p-2 text-center">1,10%</td>
-                                            <td className="p-2 text-center text-yellow-400">🟡 Emergências</td>
-                                        </tr>
-                                        <tr>
-                                            <td className="p-2">Cartão de Crédito</td>
-                                            <td className="p-2">PTAX (+4% a 6%)</td>
-                                            <td className="p-2 text-center">3,38%</td>
-                                            <td className="p-2 text-center text-red-400">🔴 Mais Caro</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div className="mt-6 bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-xl flex items-start gap-3">
+                                <AlertCircle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                                <p className="text-sm text-yellow-200/80">
+                                    <strong>Dica de Ouro:</strong> O dólar disparou antes do fechamento da fatura? Use nossa <Link to="/calculadoras/quitacao-antecipada" className="text-yellow-400 hover:text-yellow-300 underline decoration-yellow-400/30">Calculadora de Quitação Antecipada</Link> para ver se vale a pena adiantar o pagamento e travar o câmbio do dia.
+                                </p>
                             </div>
-                            <p className="text-sm">
-                                Está planejando as férias? Use nossa <Link to="/calculadoras/custo-viagem" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Custo de Viagem</Link> para somar passagens, hospedagem e alimentação.
-                            </p>
                         </div>
-                    </div>
-                </div>
 
-                {/* O que faz o Dólar subir */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <TrendingUp className="w-6 h-6 text-emerald-500" />
-                        O que faz o Dólar subir ou descer?
-                    </h2>
-                    <p className="text-gray-400 mb-6">
-                        A cotação flutua baseada em três pilares principais. Entendê-los ajuda a melhorar seu <Link to="/calculadoras/roi" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">ROI</Link> em operações internacionais e saber a hora certa de aportar em <Link to="/calculadoras/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Investimentos</Link> no exterior:
-                    </p>
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
-                                Taxa Selic
-                            </h3>
-                            <p className="text-sm text-gray-400">
-                                Juros altos no Brasil atraem investidores estrangeiros, trazendo dólares e baixando a cotação.
-                            </p>
-                        </div>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
-                                Risco Fiscal
-                            </h3>
-                            <p className="text-sm text-gray-400">
-                                Quando o governo gasta mais do que arrecada, a confiança cai e o dólar sobe.
-                            </p>
-                        </div>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
-                                Juros nos EUA (Fed)
-                            </h3>
-                            <p className="text-sm text-gray-400">
-                                Se os juros sobem lá, o dinheiro sai de emergentes (como o Brasil) e volta para os EUA, valorizando a moeda americana.
-                            </p>
-                        </div>
-                    </div>
-                    <div className="mt-6 bg-yellow-500/10 border border-yellow-500/20 p-4 rounded-xl flex items-start gap-3">
-                        <AlertCircle className="w-5 h-5 text-yellow-500 flex-shrink-0 mt-0.5" />
-                        <p className="text-sm text-yellow-200/80">
-                            <strong>Dica de Ouro:</strong> O dólar disparou antes do fechamento da fatura? Use nossa <Link to="/calculadoras/quitacao-antecipada" className="text-yellow-400 hover:text-yellow-300 underline decoration-yellow-400/30">Calculadora de Quitação Antecipada</Link> para ver se vale a pena adiantar o pagamento e travar o câmbio do dia.
-                        </p>
-                    </div>
-                </div>
+                        <FAQ
+                            items={CURRENCY_FAQS}
+                            title="Dúvidas Frequentes (FAQ)"
+                            className="py-12"
+                            showSocialProof={false}
+                        />
 
-                <FAQ
-                    items={CURRENCY_FAQS}
-                    title="Dúvidas Frequentes (FAQ)"
-                    className="py-12"
-                    showSocialProof={false}
-                />
-
-                <AppPromoBanner />
-            </div>
-        </section>
-    );
+                        <AppPromoBanner />
+                    </div>
+                </section>
+                );
 }
 
 
-function ChartLazyWrapper() {
+                function ChartLazyWrapper() {
     const [shouldLoad, setShouldLoad] = useState(false);
 
-    // Fallback: se o usuário tiver WiFi rápido, a gente pode tentar carregar no scroll
-    // mas o clique é garantia de performance inicial
-    const ref = useRef<HTMLDivElement>(null);
+                // Fallback: se o usuário tiver WiFi rápido, a gente pode tentar carregar no scroll
+                // mas o clique é garantia de performance inicial
+                const ref = useRef<HTMLDivElement>(null);
 
-    return (
-        <div ref={ref} className="h-full min-h-[600px] w-full flex flex-col relative">
-            {!shouldLoad ? (
-                <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center p-6 text-center z-10 transition-all">
-                    <TrendingUp className="w-12 h-12 text-emerald-400 mb-4" />
-                    <h3 className="text-xl font-bold text-white mb-2">Gráfico de Cotação</h3>
-                    <p className="text-gray-100 text-sm mb-6 max-w-xs font-medium leading-relaxed">
-                        Visualize o histórico do Dólar, Euro e Libra nos últimos 30 dias.
-                    </p>
-                    <button
-                        onClick={() => setShouldLoad(true)}
-                        className="group flex items-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold rounded-xl transition-all transform hover:scale-105 ring-2 ring-emerald-500/20 focus:outline-none focus:ring-emerald-500 shadow-lg"
-                        aria-label="Carregar histórico do gráfico de cotação"
-                    >
-                        <RefreshCw className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
-                        Carregar Gráfico
-                    </button>
-                    <p className="text-xs text-gray-200 mt-5 font-medium tracking-wide">
-                        (Carregamento sob demanda para economizar dados)
-                    </p>
-                </div>
-            ) : (
-                <Suspense fallback={
-                    <div className="h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center">
-                        <RefreshCw className="w-8 h-8 text-emerald-500 animate-spin" />
-                        <span className="ml-3 text-gray-400 text-sm">Carregando dados...</span>
+                    return (
+                    <div ref={ref} className="h-full min-h-[600px] w-full flex flex-col relative">
+                        {!shouldLoad ? (
+                            <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center p-6 text-center z-10 transition-all">
+                                <TrendingUp className="w-12 h-12 text-emerald-400 mb-4" />
+                                <h3 className="text-xl font-bold text-white mb-2">Gráfico de Cotação</h3>
+                                <p className="text-gray-100 text-sm mb-6 max-w-xs font-medium leading-relaxed">
+                                    Visualize o histórico do Dólar, Euro e Libra nos últimos 30 dias.
+                                </p>
+                                <button
+                                    onClick={() => setShouldLoad(true)}
+                                    className="group flex items-center gap-2 px-8 py-4 bg-emerald-700 hover:bg-emerald-800 active:bg-emerald-900 text-white font-bold rounded-xl transition-all transform hover:scale-105 ring-2 ring-emerald-500/20 focus:outline-none focus:ring-emerald-500 shadow-lg"
+                                    aria-label="Carregar histórico do gráfico de cotação"
+                                >
+                                    <RefreshCw className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
+                                    Carregar Gráfico
+                                </button>
+                                <p className="text-xs text-gray-200 mt-5 font-medium tracking-wide">
+                                    (Carregamento sob demanda para economizar dados)
+                                </p>
+                            </div>
+                        ) : (
+                            <Suspense fallback={
+                                <div className="h-full w-full min-h-[600px] bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 flex items-center justify-center">
+                                    <RefreshCw className="w-8 h-8 text-emerald-500 animate-spin" />
+                                    <span className="ml-3 text-gray-400 text-sm">Carregando dados...</span>
+                                </div>
+                            }>
+                                <CurrencyChart />
+                            </Suspense>
+                        )}
                     </div>
-                }>
-                    <CurrencyChart />
-                </Suspense>
-            )}
-        </div>
-    );
+                    );
 }
