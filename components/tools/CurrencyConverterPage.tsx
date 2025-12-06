@@ -614,20 +614,21 @@ function ChartLazyWrapper() {
     return (
         <div ref={ref} className="h-full min-h-[600px] w-full flex flex-col relative">
             {!shouldLoad ? (
-                <div className="absolute inset-0 bg-[#1a1a1a]/20 backdrop-blur-sm rounded-3xl border border-white/5 flex flex-col items-center justify-center p-6 text-center z-10 transition-all">
-                    <TrendingUp className="w-12 h-12 text-emerald-500/50 mb-4" />
+                <div className="absolute inset-0 bg-[#0d0d0d]/40 backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center p-6 text-center z-10 transition-all">
+                    <TrendingUp className="w-12 h-12 text-emerald-400 mb-4" />
                     <h3 className="text-xl font-bold text-white mb-2">Gráfico de Cotação</h3>
-                    <p className="text-gray-400 text-sm mb-6 max-w-xs">
+                    <p className="text-gray-200 text-sm mb-6 max-w-xs font-medium">
                         Visualize o histórico do Dólar, Euro e Libra nos últimos 30 dias.
                     </p>
                     <button
                         onClick={() => setShouldLoad(true)}
-                        className="group flex items-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-600 active:bg-emerald-700 text-white font-bold rounded-lg transition-all transform hover:scale-105"
+                        className="group flex items-center gap-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold rounded-lg transition-all transform hover:scale-105 ring-2 ring-emerald-500/20 focus:outline-none focus:ring-emerald-500"
+                        aria-label="Carregar histórico do gráfico de cotação"
                     >
                         <RefreshCw className="w-4 h-4 group-hover:rotate-180 transition-transform duration-500" />
                         Carregar Gráfico
                     </button>
-                    <p className="text-xs text-gray-500 mt-4">
+                    <p className="text-xs text-gray-300 mt-4 font-medium">
                         (Carregamento sob demanda para economizar dados)
                     </p>
                 </div>
