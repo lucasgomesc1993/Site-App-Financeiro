@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Briefcase, Calculator, DollarSign, Scale, ArrowRight, Wallet, TrendingUp, AlertCircle, Building2 } from 'lucide-react';
+import { Briefcase, Calculator, DollarSign, Scale, ArrowRight, Wallet, TrendingUp, AlertCircle, Building2, HelpCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
@@ -10,20 +10,24 @@ import { FAQItem } from '../../types';
 
 const CLT_PJ_FAQS: FAQItem[] = [
     {
-        question: "Qual a diferença principal entre CLT e PJ?",
-        answer: "A CLT (Consolidação das Leis do Trabalho) garante direitos como férias, 13º, FGTS e seguro-desemprego, mas tem maiores descontos. O PJ (Pessoa Jurídica) recebe o valor integral da nota fiscal, paga menos impostos, mas não tem os benefícios trabalhistas garantidos por lei, dependendo de negociação."
+        question: "Quanto devo pedir a mais no PJ para valer a pena?",
+        answer: "Para manter o mesmo poder de compra, o valor bruto da proposta PJ deve ser, no mínimo, de **40% a 50% superior** ao salário bruto CLT. Essa margem é essencial para cobrir impostos (DAS), custos contábeis, ausência de benefícios (como Vale Refeição) e permitir a criação de uma reserva financeira equivalente ao FGTS e 13º salário."
     },
     {
-        question: "Quantos % a mais o PJ deve ganhar para compensar?",
-        answer: "Geralmente, recomenda-se que o salário PJ seja de 30% a 50% maior que o salário CLT para cobrir a ausência de benefícios (férias, 13º, FGTS) e os custos de abertura e manutenção da empresa (contador, impostos)."
+        question: "PJ tem direito a 13º salário e férias?",
+        answer: "Por lei, não. PJ é uma relação comercial entre empresas (B2B). No entanto, é comum negociar no contrato um recesso remunerado ou um \"bônus\" anual, mas isso não é obrigação legal. Vale lembrar que horas trabalhadas a mais raramente são pagas, mas você pode usar nossa calculadora de [horas extras](/calculadoras/horas-extras) para precificar serviços adicionais fora do escopo."
     },
     {
-        question: "PJ tem direito a férias e 13º?",
-        answer: "Por lei, não. Como PJ é uma relação entre empresas, não existem verbas trabalhistas. Porém, muitos contratos PJ incluem 'recesso remunerado' ou bonificações equivalentes, mas isso deve estar explícito no contrato de prestação de serviços."
+        question: "O que é a \"Pejotização\"?",
+        answer: "Pejotização é a prática ilegal onde uma empresa contrata um funcionário como PJ para evitar encargos trabalhistas, mas exige cumprimento de horário, subordinação direta e exclusividade. Isso configura vínculo empregatício disfarçado, gerando alto risco jurídico para o contratante e direitos trabalhistas retroativos para o profissional em caso de ação judicial."
     },
     {
-        question: "Quais impostos o PJ paga?",
-        answer: "Depende do regime tributário. No Simples Nacional, a alíquota inicial para serviços (Anexo III) é geralmente de 6% sobre o faturamento, desde que o 'Fator R' (folha de pagamento) seja superior a 28%. Caso contrário, pode subir para 15,5% (Anexo V)."
+        question: "Sou obrigado a ter contador sendo PJ?",
+        answer: "Sim, se você for ME (Microempresa) ou EPP, a contabilidade é obrigatória para manter a escrituração fiscal em dia e distribuir lucros com isenção de IR. Apenas o MEI dispensa contador, mas o limite de faturamento do MEI (R$ 81 mil/ano) raramente atende profissionais seniores que migram da CLT."
+    },
+    {
+        question: "Como funciona o FGTS para PJ?",
+        answer: "O profissional PJ **não tem direito ao FGTS**, pois este é um benefício exclusivo da CLT. Para não ficar desprotegido, você deve calcular o valor que seria depositado (8% do salário) e investir esse montante mensalmente em uma aplicação de renda fixa segura. Use nossa [calculadora de FGTS](/calculadoras/fgts) para projetar quanto você deve guardar por conta própria."
     }
 ];
 
@@ -69,10 +73,7 @@ export function CLTVsPJPage() {
         const netCltMonthly = salaryVal - inss - irrf;
         // Total CLT Value "Package" per month (Net + Benefits + Provisions for 13th/Vacation/FGTS)
         // Note: This is an estimation of "Total Annual Gains / 12" to compare with monthly PJ
-        const cltTotalAnnual = (netCltMonthly * 12) + (salaryVal) + (salaryVal / 3) + (fgts * 12) + (benefitsVal * 12);
-        // Logic: 12 net salaries + 13th (gross approx) + vacation (gross approx) + FGTS. 
-        // More precise: Net annual = (Net * 13) + (Vacation Net) + FGTS + Benefits. 
-        // Let's stick to a monthly comparable:
+        // const cltTotalAnnual = (netCltMonthly * 12) + (salaryVal) + (salaryVal / 3) + (fgts * 12) + (benefitsVal * 12); 
         const cltComparableMonthly = netCltMonthly + benefitsVal + fgts + thirteenth + vacation;
 
         // PJ Calculations (Simples Nacional Annex III approx 6% + Accountant cost)
@@ -119,8 +120,8 @@ export function CLTVsPJPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora CLT vs PJ - Qual vale mais a pena em 2025?"
-                description="Comparativo exato: CLT com benefícios vs PJ com impostos. Descubra qual regime de trabalho coloca mais dinheiro no seu bolso."
+                title="Calculadora CLT x PJ 2025: Comparativo Salário Líquido e Impostos"
+                description="Use nossa calculadora CLT x PJ para descobrir qual vale a pena. Aprenda a fórmula de equivalência, tabelas do Simples Nacional e direitos em 2025."
                 canonical="/calculadoras/clt-vs-pj"
             />
             <script type="application/ld+json">
@@ -158,10 +159,10 @@ export function CLTVsPJPage() {
                             <span className="text-sm text-gray-300">Carreira e Contratos</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Comparativo <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">CLT vs PJ</span>
+                            Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">CLT vs PJ 2025</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Colocamos na balança: salário, impostos, férias, 13º e benefícios. Descubra a verdade sobre qual contrato paga mais.
+                            Compare salários, impostos e benefícios. Descubra qual regime de trabalho é mais vantajoso para o seu momento financeiro.
                         </p>
                     </div>
                 </div>
@@ -173,7 +174,7 @@ export function CLTVsPJPage() {
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-blue-500" />
-                                    Preencha os Dados
+                                    Simule a Comparação
                                 </h2>
                             </div>
 
@@ -258,8 +259,8 @@ export function CLTVsPJPage() {
                                     <div className="space-y-4">
                                         <div className="flex justify-between items-center p-3 rounded-lg bg-white/5">
                                             <div>
-                                                <span className="text-sm text-gray-400 block">CLT (Total Mensal*)</span>
-                                                <span className="text-xs text-gray-500">Inclui férias, 13º, FGTS diluídos</span>
+                                                <span className="text-sm text-gray-400 block">CLT (Pacote Mensal*)</span>
+                                                <span className="text-xs text-gray-500">Salário Líquido + Férias/13º diluídos</span>
                                             </div>
                                             <span className="text-lg font-bold text-white">
                                                 R$ {result.cltTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
@@ -267,7 +268,7 @@ export function CLTVsPJPage() {
                                         </div>
                                         <div className="flex justify-between items-center p-3 rounded-lg bg-white/5">
                                             <div>
-                                                <span className="text-sm text-gray-400 block">PJ (Líquido)</span>
+                                                <span className="text-sm text-gray-400 block">PJ (Líquido Estimado)</span>
                                                 <span className="text-xs text-gray-500">Descontando impostos e contador</span>
                                             </div>
                                             <span className="text-lg font-bold text-white">
@@ -300,79 +301,158 @@ export function CLTVsPJPage() {
                     </div>
                 </div>
 
-                {/* Info Sections */}
-                <div className="grid md:grid-cols-2 gap-8 mb-16">
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="flex items-start gap-4 mb-6">
-                            <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
-                                <Building2 className="w-6 h-6 text-blue-500" />
-                            </div>
-                            <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                                Vantagens CLT
-                            </h2>
+                {/* Main Content Info */}
+                <div className="max-w-4xl mx-auto space-y-12 mb-24 text-gray-300">
+
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-10">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Calculadora CLT x PJ: Comparativo Completo para 2025</h2>
+                        <div className="space-y-4 leading-relaxed">
+                            <p>
+                                <strong>A principal diferença entre CLT e PJ reside na tributação e nos benefícios.</strong> Enquanto o profissional CLT tem impostos (INSS e IRRF) retidos na fonte e acesso a direitos automáticos como FGTS, férias remuneradas e 13º salário, o PJ recebe o valor bruto integral, devendo assumir a responsabilidade pelo pagamento de tributos (DAS), contador e sua própria previdência privada ou pública.
+                            </p>
+                            <p>
+                                Abaixo, detalhamos a lógica financeira que você deve dominar antes de tomar a decisão de trocar a carteira assinada pelo contrato de prestação de serviços.
+                            </p>
                         </div>
-                        <ul className="space-y-3 text-gray-400 text-sm">
-                            <li className="flex items-start gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
-                                <span><strong>Estabilidade:</strong> Seguro-desemprego em caso de demissão sem justa causa.</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
-                                <span><strong>Benefícios Legais:</strong> Férias remuneradas (+1/3), 13º salário, depósito de FGTS (8%).</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2 flex-shrink-0" />
-                                <span><strong>Facilidade:</strong> Impostos retidos na fonte, sem burocracia de contabilidade.</span>
-                            </li>
-                        </ul>
+
+                        <div className="mt-8 space-y-4">
+                            <h3 className="text-xl font-semibold text-white">Diferença de cálculo: Salário Bruto CLT vs Faturamento PJ</h3>
+                            <p>
+                                Ao migrar para o modelo PJ, você deixa de ser um <Link to="/calculadoras/custo-funcionario" className="text-blue-400 hover:text-blue-300 underline">custo total do funcionário</Link> para a empresa (que economiza encargos trabalhistas) e passa a ser um fornecedor. O erro comum é comparar o valor nominal. Para uma equivalência real, é necessário somar os "custos invisíveis" que compõem sua remuneração atual.
+                            </p>
+                            <p><strong>Na CLT, seu pacote inclui automaticamente:</strong></p>
+                            <ul className="list-disc pl-5 space-y-2 text-gray-400">
+                                <li><strong>8% de FGTS:</strong> Valor depositado mensalmente em conta vinculada.</li>
+                                <li><strong>33% de Adicional de Férias:</strong> O terço constitucional garantido por lei sobre o salário.</li>
+                                <li><strong>8,33% de <Link to="/calculadoras/decimo-terceiro" className="text-blue-400 hover:text-blue-300 underline">13º Salário</Link>:</strong> A provisão mensal equivalente a um salário extra por ano (1/12).</li>
+                                <li><strong>Benefícios indiretos:</strong> Vale-refeição, vale-transporte e plano de saúde, que são isentos de IR para o funcionário na CLT, mas devem sair do seu bolso no PJ.</li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-100">
-                        <div className="flex items-start gap-4 mb-6">
-                            <div className="bg-indigo-500/10 p-3 rounded-xl shrink-0">
-                                <Wallet className="w-6 h-6 text-indigo-500" />
-                            </div>
-                            <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                                Vantagens PJ
-                            </h2>
-                        </div>
-                        <ul className="space-y-3 text-gray-400 text-sm">
-                            <li className="flex items-start gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
-                                <span><strong>Maior Líquido:</strong> Menos impostos descontados direto do valor bruto.</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
-                                <span><strong>Flexibilidade:</strong> Possibilidade de atender múltiplos clientes e maior autonomia.</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
-                                <span><strong>Tributação Reduzida:</strong> No Simples Nacional, alíquotas começam em 6% (vs até 27,5% IRPF).</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <div className="flex items-start gap-4 mb-6">
-                        <div className="bg-yellow-500/10 p-3 rounded-xl shrink-0">
-                            <AlertCircle className="w-6 h-6 text-yellow-500" />
-                        </div>
-                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                            Atenção: Peiotização Ilegal
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-10">
+                        <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                            <Calculator className="w-6 h-6 text-indigo-500" />
+                            Como calcular a equivalência CLT x PJ (Fórmula)
                         </h2>
+                        <div className="space-y-4 leading-relaxed">
+                            <p>
+                                O cálculo de equivalência consiste em somar ao salário bruto todos os benefícios da CLT (férias, 13º, FGTS) e adicionar os custos operacionais do PJ para encontrar o faturamento de empate. Essa conta revela o valor mínimo que você precisa faturar para manter o mesmo padrão de vida e segurança.
+                            </p>
+                            <p>
+                                Se você quiser validar os números manualmente, utilize a seguinte metodologia para encontrar o "Faturamento PJ Equivalente":
+                            </p>
+
+                            <div className="bg-white/5 p-6 rounded-xl border border-white/10 my-6">
+                                <ol className="space-y-6">
+                                    <li className="space-y-2">
+                                        <strong className="text-white block text-lg">1. Calcule seu Ganho Anual CLT:</strong>
+                                        <div className="bg-black/30 p-3 rounded-lg font-mono text-sm md:text-base text-center text-indigo-300 border border-indigo-500/30">
+                                            Ganho Anual = (Salário Bruto × 13,33) + FGTS Anual + (Benefícios Mensais × 12)
+                                        </div>
+                                        <span className="text-xs text-gray-500 block mt-1">Nota: O multiplicador 13,33 cobre os 12 salários mensais, o 13º salário e o 1/3 de férias.</span>
+                                    </li>
+                                    <li>
+                                        <strong className="text-white block text-lg mb-1">2. Adicione os Custos de Manutenção PJ:</strong>
+                                        <p className="text-sm">Estime os custos operacionais que você terá para manter a empresa aberta (Contador + Taxas anuais + Impostos sobre a Nota Fiscal).</p>
+                                    </li>
+                                    <li>
+                                        <strong className="text-white block text-lg mb-1">3. Aplique a Margem de Segurança:</strong>
+                                        <p className="text-sm">Adicione entre 10% a 20% para cobrir a ausência de seguro-desemprego e a falta de <Link to="/calculadoras/rescisao" className="text-indigo-400 hover:text-indigo-300 underline">cálculo de rescisão</Link> garantida.</p>
+                                    </li>
+                                </ol>
+                            </div>
+
+                            <p className="bg-blue-500/10 p-4 rounded-lg border border-blue-500/20 text-neutral-200">
+                                <strong>Resultado:</strong> O valor final dividido por 12 é o faturamento mensal mínimo que você deve exigir como PJ para "empatar" com a CLT.
+                            </p>
+
+                            <p>
+                                Para facilitar, você pode checar seu <Link to="/calculadoras/salario-liquido" className="text-blue-400 hover:text-blue-300 underline">salário líquido atual</Link> para ter a base de comparação inicial.
+                            </p>
+                        </div>
                     </div>
-                    <p className="text-gray-400 mb-4">
-                        Ser contratado como PJ mas ter obrigações de CLT (horário fixo, subordinação direta e pessoalidade) configura fraude trabalhista. Se você tem todos os deveres de um empregado mas nenhum direito, está em situação vulnerável.
-                    </p>
-                    <p className="text-gray-400">
-                        O cálculo acima considera <strong>valores financeiros</strong>. A segurança jurídica e a estabilidade também devem entrar na sua equação pessoal.
-                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <h3 className="text-xl font-bold text-white mb-4">Impostos no Simples Nacional</h3>
+                            <p className="mb-4">
+                                A maioria dos profissionais de tecnologia, marketing e consultoria se enquadra no <strong>Simples Nacional</strong>. O imposto que você pagará depende do fator R.
+                            </p>
+                            <h4 className="font-bold text-white mt-4 mb-2">O que é o Fator R?</h4>
+                            <p>
+                                Para pagar menos imposto (Anexo III), seu Pró-labore deve representar, no mínimo, <strong>28% do seu faturamento mensal</strong>. Caso contrário, a tributação sobe automaticamente para 15,5% (Anexo V).
+                            </p>
+
+                            <div className="mt-6 overflow-x-auto">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="bg-white/5 text-gray-300 uppercase">
+                                        <tr>
+                                            <th className="px-3 py-3 rounded-l-lg">Faixa (12 meses)</th>
+                                            <th className="px-3 py-3">Anexo III</th>
+                                            <th className="px-3 py-3 rounded-r-lg">Anexo V</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400 divide-y divide-white/5">
+                                        <tr>
+                                            <td className="px-3 py-3 font-medium text-white">Até R$ 180k</td>
+                                            <td className="px-3 py-3 text-green-400 font-bold">6,00%</td>
+                                            <td className="px-3 py-3 text-red-400">15,50%</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="px-3 py-3 font-medium text-white">R$ 180k a 360k</td>
+                                            <td className="px-3 py-3">11,20%</td>
+                                            <td className="px-3 py-3">18,00%</td>
+                                        </tr>
+                                        <tr>
+                                            <td className="px-3 py-3 font-medium text-white">R$ 360k a 720k</td>
+                                            <td className="px-3 py-3">13,50%</td>
+                                            <td className="px-3 py-3">19,50%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="mt-4 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-xs md:text-sm text-yellow-200">
+                                <strong>⚠️ Atenção:</strong> Profissionais de TI e Consultoria não podem ser MEI. Para entender o custo exato, consulte nossa ferramenta de <Link to="/calculadoras/das-mei" className="underline hover:text-white">cálculo do DAS</Link>.
+                            </div>
+                        </div>
+
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <h3 className="text-xl font-bold text-white mb-4">Vantagens e Riscos</h3>
+                            <div className="space-y-4">
+                                <div>
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="w-2 h-2 rounded-full bg-blue-500"></span>
+                                        <h4 className="font-bold text-blue-400">CLT (Carteira Assinada)</h4>
+                                    </div>
+                                    <ul className="text-sm space-y-2">
+                                        <li><strong>Estabilidade:</strong> Protegido na demissão (multa 40% FGTS).</li>
+                                        <li><strong>Liquidez:</strong> Recebe líquido menor, benefícios retidos.</li>
+                                        <li><strong>Férias:</strong> 30 dias remunerados + 1/3 garantido.</li>
+                                        <li><strong>Aposentadoria:</strong> <Link to="/calculadoras/inss" className="underline hover:text-white">INSS descontado</Link> automaticamente (teto).</li>
+                                    </ul>
+                                </div>
+                                <div className="border-t border-white/10 pt-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="w-2 h-2 rounded-full bg-indigo-500"></span>
+                                        <h4 className="font-bold text-indigo-400">PJ (Prestador de Serviço)</h4>
+                                    </div>
+                                    <ul className="text-sm space-y-2">
+                                        <li><strong>Estabilidade:</strong> Contrato comercial, rescisão facilitada.</li>
+                                        <li><strong>Liquidez:</strong> Recebe bruto maior. Sucesso depende de <Link to="/calculadoras/investimentos" className="underline hover:text-white">investir o excedente</Link>.</li>
+                                        <li><strong>Férias:</strong> Dias não trabalhados não geram receita (salvo contrato).</li>
+                                        <li><strong>Aposentadoria:</strong> Paga INSS sobre Pró-labore (minímo ou 28%).</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <FAQ
                     items={CLT_PJ_FAQS}
-                    title="Dúvidas Frequentes"
+                    title="Perguntas Frequentes sobre CLT e PJ"
                     className="py-12"
                     showSocialProof={false}
                 />
