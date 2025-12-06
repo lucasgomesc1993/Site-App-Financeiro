@@ -1,5 +1,6 @@
 import { Suspense, lazy, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { LazyMotion, domAnimation } from "framer-motion"
 
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -85,65 +86,67 @@ function App() {
         <Header />
         <main>
           <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/calculadoras" element={<Calculators />} />
-              <Route path="/calculadoras/investimentos" element={<InvestmentPage />} />
-              <Route path="/calculadoras/ferias" element={<VacationPage />} />
-              <Route path="/calculadoras/energia" element={<EnergyPage />} />
-              <Route path="/calculadoras/combustivel" element={<FuelPage />} />
-              <Route path="/calculadoras/rescisao" element={<TerminationPage />} />
-              <Route path="/calculadoras/inss" element={<INSSPage />} />
-              <Route path="/calculadoras/salario-liquido" element={<NetSalaryPage />} />
-              <Route path="/calculadoras/decimo-terceiro" element={<ThirteenthSalaryPage />} />
-              <Route path="/calculadoras/horas-extras" element={<OvertimePage />} />
-              <Route path="/calculadoras/seguro-desemprego" element={<UnemploymentInsurancePage />} />
-              <Route path="/calculadoras/adicional-noturno" element={<NightShiftPage />} />
-              <Route path="/calculadoras/fgts" element={<FGTSPage />} />
-              <Route path="/calculadoras/custo-funcionario" element={<EmployeeCostPage />} />
-              <Route path="/calculadoras/plr" element={<PLRPage />} />
-              <Route path="/calculadoras/fire" element={<FIREPage />} />
-              <Route path="/calculadoras/juros-compostos" element={<CompoundInterestPage />} />
-              <Route path="/calculadoras/alugar-ou-financiar" element={<RentVsBuyPage />} />
-              <Route path="/calculadoras/uber-ou-carro" element={<UberVsCarPage />} />
-              <Route path="/calculadoras/primeiro-milhao" element={<FirstMillionPage />} />
-              <Route path="/calculadoras/conversor-moedas" element={<CurrencyConverterPage />} />
-              <Route path="/calculadoras/poder-de-compra" element={<PurchasingPowerPage />} />
-              <Route path="/calculadoras/regra-50-30-20" element={<Budget503020Page />} />
-              <Route path="/calculadoras/financiamento-veiculos" element={<VehicleFinancingPage />} />
-              <Route path="/calculadoras/financiamento-imobiliario" element={<RealEstateFinancingPage />} />
-              <Route path="/calculadoras/quitacao-antecipada" element={<EarlyRepaymentPage />} />
-              <Route path="/calculadoras/custo-efetivo-total" element={<CETCalculatorPage />} />
-              <Route path="/calculadoras/divida-cartao-credito" element={<CreditCardDebtPage />} />
-              <Route path="/calculadoras/das-mei" element={<MEIDasPage />} />
-              <Route path="/calculadoras/markup" element={<MarkupPage />} />
-              <Route path="/calculadoras/ponto-de-equilibrio" element={<BreakEvenPage />} />
-              <Route path="/calculadoras/simples-vs-presumido" element={<SimplesVsPresumidoPage />} />
-              <Route path="/calculadoras/capital-de-giro" element={<WorkingCapitalPage />} />
-              <Route path="/calculadoras/roi" element={<ROICalculatorPage />} />
-              <Route path="/calculadoras/churrasco" element={<BarbecueCalculatorPage />} />
-              <Route path="/calculadoras/dias-uteis" element={<BusinessDaysPage />} />
-              <Route path="/calculadoras/regra-de-tres" element={<RuleOfThreePage />} />
-              <Route path="/calculadoras/porcentagem" element={<PercentageCalculatorPage />} />
-              <Route path="/calculadoras/horas" element={<HoursCalculatorPage />} />
-              <Route path="/calculadoras/tijolos-pisos" element={<TileBricksCalculatorPage />} />
-              <Route path="/calculadoras/custo-viagem" element={<TravelCostCalculatorPage />} />
-              <Route path="/calculadoras/imc" element={<IMCCalculatorPage />} />
-              <Route path="/calculadoras/agua" element={<WaterIntakeCalculatorPage />} />
-              <Route path="/calculadoras/conversor-culinario" element={<CulinaryConverterPage />} />
-              <Route path="/calculadoras/idade-gestacional" element={<GestationalAgeCalculatorPage />} />
-              <Route path="/calculadoras/amigo-secreto" element={<SecretSantaPage />} />
-              <Route path="/calculadoras/gerador-pix" element={<PixGeneratorPage />} />
-              <Route path="/blog" element={<BlogIndex />} />
-              <Route path="/blog/:category/:slug" element={<BlogPost />} />
-              <Route path="/blog/:categorySlug" element={<CategoryPage />} />
-              <Route path="/stories/:storyId" element={<WebStoryPage />} />
-              <Route path="/stories" element={<StoriesGallery />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/support" element={<Support />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
+            <LazyMotion features={domAnimation}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/calculadoras" element={<Calculators />} />
+                <Route path="/calculadoras/investimentos" element={<InvestmentPage />} />
+                <Route path="/calculadoras/ferias" element={<VacationPage />} />
+                <Route path="/calculadoras/energia" element={<EnergyPage />} />
+                <Route path="/calculadoras/combustivel" element={<FuelPage />} />
+                <Route path="/calculadoras/rescisao" element={<TerminationPage />} />
+                <Route path="/calculadoras/inss" element={<INSSPage />} />
+                <Route path="/calculadoras/salario-liquido" element={<NetSalaryPage />} />
+                <Route path="/calculadoras/decimo-terceiro" element={<ThirteenthSalaryPage />} />
+                <Route path="/calculadoras/horas-extras" element={<OvertimePage />} />
+                <Route path="/calculadoras/seguro-desemprego" element={<UnemploymentInsurancePage />} />
+                <Route path="/calculadoras/adicional-noturno" element={<NightShiftPage />} />
+                <Route path="/calculadoras/fgts" element={<FGTSPage />} />
+                <Route path="/calculadoras/custo-funcionario" element={<EmployeeCostPage />} />
+                <Route path="/calculadoras/plr" element={<PLRPage />} />
+                <Route path="/calculadoras/fire" element={<FIREPage />} />
+                <Route path="/calculadoras/juros-compostos" element={<CompoundInterestPage />} />
+                <Route path="/calculadoras/alugar-ou-financiar" element={<RentVsBuyPage />} />
+                <Route path="/calculadoras/uber-ou-carro" element={<UberVsCarPage />} />
+                <Route path="/calculadoras/primeiro-milhao" element={<FirstMillionPage />} />
+                <Route path="/calculadoras/conversor-moedas" element={<CurrencyConverterPage />} />
+                <Route path="/calculadoras/poder-de-compra" element={<PurchasingPowerPage />} />
+                <Route path="/calculadoras/regra-50-30-20" element={<Budget503020Page />} />
+                <Route path="/calculadoras/financiamento-veiculos" element={<VehicleFinancingPage />} />
+                <Route path="/calculadoras/financiamento-imobiliario" element={<RealEstateFinancingPage />} />
+                <Route path="/calculadoras/quitacao-antecipada" element={<EarlyRepaymentPage />} />
+                <Route path="/calculadoras/custo-efetivo-total" element={<CETCalculatorPage />} />
+                <Route path="/calculadoras/divida-cartao-credito" element={<CreditCardDebtPage />} />
+                <Route path="/calculadoras/das-mei" element={<MEIDasPage />} />
+                <Route path="/calculadoras/markup" element={<MarkupPage />} />
+                <Route path="/calculadoras/ponto-de-equilibrio" element={<BreakEvenPage />} />
+                <Route path="/calculadoras/simples-vs-presumido" element={<SimplesVsPresumidoPage />} />
+                <Route path="/calculadoras/capital-de-giro" element={<WorkingCapitalPage />} />
+                <Route path="/calculadoras/roi" element={<ROICalculatorPage />} />
+                <Route path="/calculadoras/churrasco" element={<BarbecueCalculatorPage />} />
+                <Route path="/calculadoras/dias-uteis" element={<BusinessDaysPage />} />
+                <Route path="/calculadoras/regra-de-tres" element={<RuleOfThreePage />} />
+                <Route path="/calculadoras/porcentagem" element={<PercentageCalculatorPage />} />
+                <Route path="/calculadoras/horas" element={<HoursCalculatorPage />} />
+                <Route path="/calculadoras/tijolos-pisos" element={<TileBricksCalculatorPage />} />
+                <Route path="/calculadoras/custo-viagem" element={<TravelCostCalculatorPage />} />
+                <Route path="/calculadoras/imc" element={<IMCCalculatorPage />} />
+                <Route path="/calculadoras/agua" element={<WaterIntakeCalculatorPage />} />
+                <Route path="/calculadoras/conversor-culinario" element={<CulinaryConverterPage />} />
+                <Route path="/calculadoras/idade-gestacional" element={<GestationalAgeCalculatorPage />} />
+                <Route path="/calculadoras/amigo-secreto" element={<SecretSantaPage />} />
+                <Route path="/calculadoras/gerador-pix" element={<PixGeneratorPage />} />
+                <Route path="/blog" element={<BlogIndex />} />
+                <Route path="/blog/:category/:slug" element={<BlogPost />} />
+                <Route path="/blog/:categorySlug" element={<CategoryPage />} />
+                <Route path="/stories/:storyId" element={<WebStoryPage />} />
+                <Route path="/stories" element={<StoriesGallery />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/support" element={<Support />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </LazyMotion>
           </Suspense>
         </main>
         <Footer />

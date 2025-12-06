@@ -57,10 +57,10 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks: isSSR ? undefined : {
-            // Separa o Recharts (pesado)
-            'recharts': ['recharts'],
-            // Separa Framer Motion (animações)
-            'framer-motion': ['framer-motion'],
+            // Remove explicit chunks for lazy libs so they bundle with their consumer
+            // 'recharts': ['recharts'], // merged into CurrencyChart
+            // 'framer-motion': ['framer-motion'], // optimization via LazyMotion
+
             // Separa o React Core e Lucide (prevenindo erro de forwardRef)
             'ui-vendor': ['react', 'react-dom', 'react-router-dom', 'lucide-react'],
             // CRÍTICO: Isola o Supabase para não carregar em páginas públicas simples
