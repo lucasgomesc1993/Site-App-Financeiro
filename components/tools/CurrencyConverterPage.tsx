@@ -457,78 +457,86 @@ export function CurrencyConverterPage() {
                 </div>
 
                 {/* Comercial vs Turismo & Simulação */}
-                <div className="grid md:grid-cols-2 gap-8 mb-12">
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                            <DollarSign className="w-6 h-6 text-emerald-500" />
-                            Comercial vs. Turismo: Qual a diferença?
-                        </h2>
+                <div className="grid md:grid-cols-2 gap-6 md:gap-8 mb-12">
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="flex items-start gap-4 mb-5">
+                            <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                                <DollarSign className="w-8 h-8 text-emerald-500" />
+                            </div>
+                            <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                                Comercial vs. Turismo: Qual a diferença?
+                            </h2>
+                        </div>
                         <div className="space-y-4 text-gray-400 leading-relaxed">
-                            <p>
+                            <p className="text-sm md:text-base">
                                 A escolha errada pode encarecer sua viagem em <strong>até 8%</strong>. Entenda a diferença para não ser taxado à toa:
                             </p>
-                            <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
-                                <table className="w-full text-left border-collapse text-sm min-w-[300px]">
+                            <div className="overflow-x-auto w-full pb-2">
+                                <table className="w-full text-left border-collapse text-sm min-w-[320px]">
                                     <thead>
                                         <tr className="border-b border-white/10">
-                                            <th className="p-2 text-white">Tipo</th>
-                                            <th className="p-2 text-white">Onde é usado?</th>
-                                            <th className="p-2 text-white">Custo Estimado</th>
+                                            <th className="p-3 text-white whitespace-nowrap">Tipo</th>
+                                            <th className="p-3 text-white">Onde é usado?</th>
+                                            <th className="p-3 text-white whitespace-nowrap">Custo</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-400">
                                         <tr className="border-b border-white/5">
-                                            <td className="p-2 font-bold text-white">Comercial</td>
-                                            <td className="p-2">Transações digitais e Global Accounts.</td>
-                                            <td className="p-2 font-bold text-emerald-400">✅ Mais Barato</td>
+                                            <td className="p-3 font-bold text-white">Comercial</td>
+                                            <td className="p-3 text-xs md:text-sm">Transações digitais e Global Accounts.</td>
+                                            <td className="p-3 font-bold text-emerald-400 text-xs md:text-sm whitespace-nowrap">✅ Mais Barato</td>
                                         </tr>
                                         <tr>
-                                            <td className="p-2 font-bold text-white">Turismo</td>
-                                            <td className="p-2">Dinheiro em espécie (papel).</td>
-                                            <td className="p-2 font-bold text-red-400">🔴 +6% a 8%</td>
+                                            <td className="p-3 font-bold text-white">Turismo</td>
+                                            <td className="p-3 text-xs md:text-sm">Dinheiro em espécie (papel).</td>
+                                            <td className="p-3 font-bold text-red-400 text-xs md:text-sm whitespace-nowrap">🔴 +6% a 8%</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-xs italic mt-2">
-                                *Nota: Se importa produtos, use a calculadora de <Link to="/calculadoras/markup" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Markup</Link>.
+                            <p className="text-xs italic mt-2 text-gray-500">
+                                *Nota: Se importa produtos, use a calculadora de <Link to="/calculadoras/markup" className="text-emerald-500 hover:text-emerald-300 underline decoration-emerald-400/30">Markup</Link>.
                             </p>
                         </div>
                     </div>
 
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
-                        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                            <Calculator className="w-6 h-6 text-emerald-500" />
-                            Simulação: Qual a melhor forma?
-                        </h2>
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+                        <div className="flex items-start gap-4 mb-5">
+                            <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                                <Calculator className="w-8 h-8 text-emerald-500" />
+                            </div>
+                            <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                                Simulação: Qual a melhor forma?
+                            </h2>
+                        </div>
                         <div className="space-y-4 text-gray-400 leading-relaxed">
-                            <p>
+                            <p className="text-sm md:text-base">
                                 Comparativo para <strong>US$ 1.000,00</strong> em Dezembro de 2025.
                             </p>
-                            <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
-                                <table className="w-full text-left border-collapse text-sm min-w-[350px]">
+                            <div className="overflow-x-auto w-full pb-2">
+                                <table className="w-full text-left border-collapse text-sm min-w-[340px]">
                                     <thead>
                                         <tr className="border-b border-white/10">
-                                            <th className="p-2 text-white">Modalidade</th>
-                                            <th className="p-2 text-white text-center">IOF</th>
-                                            <th className="p-2 text-white text-center">Veredito</th>
+                                            <th className="p-2 text-white whitespace-nowrap">Modalidade</th>
+                                            <th className="p-2 text-white text-center whitespace-nowrap">IOF</th>
+                                            <th className="p-2 text-white text-center whitespace-nowrap">Veredito</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-400">
                                         <tr className="border-b border-white/5 bg-emerald-500/5">
-                                            <td className="p-2 font-bold text-white">Conta Global</td>
-                                            <td className="p-2 text-center">1,10%</td>
-                                            <td className="p-2 text-center font-bold text-emerald-400">✅ Melhor</td>
+                                            <td className="p-2 font-bold text-white text-xs md:text-sm">Conta Global</td>
+                                            <td className="p-2 text-center text-xs md:text-sm">1,10%</td>
+                                            <td className="p-2 text-center font-bold text-emerald-400 text-xs md:text-sm whitespace-nowrap">✅ Melhor</td>
                                         </tr>
                                         <tr className="border-b border-white/5">
-                                            <td className="p-2">Papel Moeda</td>
-                                            <td className="p-2 text-center">1,10%</td>
-                                            <td className="p-2 text-center text-yellow-400">🟡 Emergência</td>
+                                            <td className="p-2 text-xs md:text-sm">Papel Moeda</td>
+                                            <td className="p-2 text-center text-xs md:text-sm">1,10%</td>
+                                            <td className="p-2 text-center text-yellow-400 text-xs md:text-sm whitespace-nowrap">🟡 Emergência</td>
                                         </tr>
                                         <tr>
-                                            <td className="p-2">Cartão de Crédito</td>
-                                            <td className="p-2 text-center">3,38%</td>
-                                            <td className="p-2 text-center text-red-400">🔴 Caro</td>
+                                            <td className="p-2 text-xs md:text-sm">Cartão de Crédito</td>
+                                            <td className="p-2 text-center text-xs md:text-sm">3,38%</td>
+                                            <td className="p-2 text-center text-red-400 text-xs md:text-sm whitespace-nowrap">🔴 Caro</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -541,11 +549,15 @@ export function CurrencyConverterPage() {
                 </div>
 
                 {/* O que faz o Dólar subir */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-                        <TrendingUp className="w-6 h-6 text-emerald-500" />
-                        O que faz o Dólar subir ou descer?
-                    </h2>
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                            <TrendingUp className="w-8 h-8 text-emerald-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            O que faz o Dólar subir ou descer?
+                        </h2>
+                    </div>
                     <p className="text-gray-400 mb-6">
                         A cotação flutua baseada em três pilares principais. Entendê-los ajuda a melhorar seu <Link to="/calculadoras/roi" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">ROI</Link> em operações internacionais e saber a hora certa de aportar em <Link to="/calculadoras/investimentos" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Investimentos</Link> no exterior:
                     </p>
