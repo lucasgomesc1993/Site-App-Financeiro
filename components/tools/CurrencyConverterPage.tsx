@@ -461,7 +461,7 @@ export function CurrencyConverterPage() {
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="flex items-start gap-4 mb-5">
                             <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
-                                <DollarSign className="w-8 h-8 text-emerald-500" />
+                                <DollarSign className="w-6 h-6 text-emerald-500" />
                             </div>
                             <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
                                 Comercial vs. Turismo: Qual a diferença?
@@ -503,7 +503,7 @@ export function CurrencyConverterPage() {
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
                         <div className="flex items-start gap-4 mb-5">
                             <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
-                                <Calculator className="w-8 h-8 text-emerald-500" />
+                                <Calculator className="w-6 h-6 text-emerald-500" />
                             </div>
                             <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
                                 Simulação: Qual a melhor forma?
@@ -552,7 +552,7 @@ export function CurrencyConverterPage() {
                 <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
-                            <TrendingUp className="w-8 h-8 text-emerald-500" />
+                            <TrendingUp className="w-6 h-6 text-emerald-500" />
                         </div>
                         <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
                             O que faz o Dólar subir ou descer?
@@ -564,7 +564,7 @@ export function CurrencyConverterPage() {
                     <div className="grid md:grid-cols-3 gap-6">
                         <div className="bg-white/5 p-6 rounded-xl border border-white/5">
                             <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
+                                <span className="bg-emerald-500/20 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center text-sm">1</span>
                                 Taxa Selic
                             </h3>
                             <p className="text-sm text-gray-400">
@@ -573,7 +573,7 @@ export function CurrencyConverterPage() {
                         </div>
                         <div className="bg-white/5 p-6 rounded-xl border border-white/5">
                             <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">2</span>
+                                <span className="bg-emerald-500/20 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center text-sm">2</span>
                                 Risco Fiscal
                             </h3>
                             <p className="text-sm text-gray-400">
@@ -582,7 +582,7 @@ export function CurrencyConverterPage() {
                         </div>
                         <div className="bg-white/5 p-6 rounded-xl border border-white/5">
                             <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
-                                <span className="bg-emerald-500/20 text-emerald-400 w-8 h-8 rounded-full flex items-center justify-center text-sm">3</span>
+                                <span className="bg-emerald-500/20 text-emerald-400 w-6 h-6 rounded-full flex items-center justify-center text-sm">3</span>
                                 Juros nos EUA (Fed)
                             </h3>
                             <p className="text-sm text-gray-400">
