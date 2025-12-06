@@ -62,7 +62,7 @@ export default defineConfig(({ mode }) => {
             // 'framer-motion': ['framer-motion'], // optimization via LazyMotion
 
             // Separa o React Core e Lucide (prevenindo erro de forwardRef)
-            'ui-vendor': ['react', 'react-dom', 'react-router-dom', 'lucide-react'],
+            'ui-vendor': ['react', 'react-dom', 'react-dom/client', 'react-router-dom', 'lucide-react'],
             // CRÍTICO: Isola o Supabase para não carregar em páginas públicas simples
             'supabase-vendor': ['@supabase/supabase-js', '@supabase/auth-js', '@supabase/realtime-js'],
             // Utilitários de UI

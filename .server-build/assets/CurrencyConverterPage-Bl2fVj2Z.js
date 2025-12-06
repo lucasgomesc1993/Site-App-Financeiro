@@ -537,10 +537,10 @@ function CurrencyConverterPage() {
 function ChartLazyWrapper() {
   const [shouldLoad, setShouldLoad] = useState(false);
   const ref = useRef(null);
-  return /* @__PURE__ */ jsx("div", { ref, className: "h-full w-full flex flex-col relative", children: !shouldLoad ? /* @__PURE__ */ jsxs("div", { className: "absolute inset-0 bg-[#050505]/60 backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center p-6 text-center z-10 transition-all", children: [
+  return /* @__PURE__ */ jsx("div", { ref, className: "h-full w-full flex flex-col relative min-h-[450px]", children: !shouldLoad ? /* @__PURE__ */ jsxs("div", { className: "w-full h-full bg-[#1a1a1a]/50 backdrop-blur-xl rounded-3xl border border-white/5 flex flex-col items-center justify-center p-6 text-center z-10 transition-all", children: [
     /* @__PURE__ */ jsx(TrendingUp, { className: "w-12 h-12 text-emerald-400 mb-4" }),
     /* @__PURE__ */ jsx("h3", { className: "text-xl font-bold text-white mb-2", children: "Gráfico de Cotação" }),
-    /* @__PURE__ */ jsx("p", { className: "text-gray-100 text-sm mb-6 max-w-xs font-medium leading-relaxed", children: "Visualize o histórico do Dólar, Euro e Libra nos últimos 30 dias." }),
+    /* @__PURE__ */ jsx("p", { className: "text-gray-400 text-sm mb-6 max-w-xs font-medium leading-relaxed", children: "Visualize o histórico do Dólar, Euro e Libra nos últimos 30 dias." }),
     /* @__PURE__ */ jsxs(
       "button",
       {
@@ -561,4 +561,4 @@ function ChartLazyWrapper() {
 export {
   CurrencyConverterPage
 };
-//# sourceMappingURL=CurrencyConverterPage-B9sPGvcC.js.map
+//# sourceMappingURL=CurrencyConverterPage-Bl2fVj2Z.js.map
