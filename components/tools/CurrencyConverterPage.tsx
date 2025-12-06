@@ -639,12 +639,12 @@ function ChartLazyWrapper() {
     const ref = useRef<HTMLDivElement>(null);
 
     return (
-        <div ref={ref} className="h-full w-full flex flex-col relative">
+        <div ref={ref} className="h-full w-full flex flex-col relative min-h-[450px]">
             {!shouldLoad ? (
-                <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center p-6 text-center z-10 transition-all">
+                <div className="w-full h-full bg-[#1a1a1a]/50 backdrop-blur-xl rounded-3xl border border-white/5 flex flex-col items-center justify-center p-6 text-center z-10 transition-all">
                     <TrendingUp className="w-12 h-12 text-emerald-400 mb-4" />
                     <h3 className="text-xl font-bold text-white mb-2">Gráfico de Cotação</h3>
-                    <p className="text-gray-100 text-sm mb-6 max-w-xs font-medium leading-relaxed">
+                    <p className="text-gray-400 text-sm mb-6 max-w-xs font-medium leading-relaxed">
                         Visualize o histórico do Dólar, Euro e Libra nos últimos 30 dias.
                     </p>
                     <button
