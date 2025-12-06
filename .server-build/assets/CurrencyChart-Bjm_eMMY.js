@@ -326,12 +326,12 @@ const CurrencyChart = () => {
     }
     return null;
   };
-  return /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col min-h-[600px]", children: [
-    /* @__PURE__ */ jsx("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6", children: /* @__PURE__ */ jsxs("h3", { className: "text-xl font-semibold text-white flex items-center gap-2", children: [
+  return /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col", children: [
+    /* @__PURE__ */ jsx("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0", children: /* @__PURE__ */ jsxs("h3", { className: "text-xl font-semibold text-white flex items-center gap-2", children: [
       /* @__PURE__ */ jsx(TrendingUp, { className: "w-5 h-5 text-emerald-500" }),
       "Evolução das Moedas"
     ] }) }),
-    /* @__PURE__ */ jsxs("div", { className: "w-full h-[400px] min-w-0 relative [&_.recharts-wrapper]:outline-none [&_.recharts-wrapper_*]:outline-none [&_*:focus]:outline-none [&_*:focus-visible]:outline-none", children: [
+    /* @__PURE__ */ jsxs("div", { className: "w-full flex-1 min-h-[300px] min-w-0 relative [&_.recharts-wrapper]:outline-none [&_.recharts-wrapper_*]:outline-none [&_*:focus]:outline-none [&_*:focus-visible]:outline-none", children: [
       isLoading && /* @__PURE__ */ jsx("div", { className: "absolute inset-0 flex items-center justify-center bg-[#1a1a1a]/50 z-10 backdrop-blur-sm rounded-xl", children: /* @__PURE__ */ jsx(RefreshCw, { className: "w-6 h-6 text-emerald-500 animate-spin" }) }),
       /* @__PURE__ */ jsx(ChartContainer, { config: chartConfig, className: "h-full w-full aspect-auto min-w-0 outline-none", children: /* @__PURE__ */ jsxs(
         AreaChart,
@@ -433,4 +433,4 @@ const CurrencyChart = () => {
 export {
   CurrencyChart as default
 };
-//# sourceMappingURL=CurrencyChart-Dg37Tp2Q.js.map
+//# sourceMappingURL=CurrencyChart-Bjm_eMMY.js.map

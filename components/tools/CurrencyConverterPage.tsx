@@ -181,7 +181,7 @@ export function CurrencyConverterPage() {
                 <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
                     <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full lg:min-h-[600px]">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
                                     <Calculator className="w-5 h-5 text-emerald-500" />
@@ -639,7 +639,7 @@ function ChartLazyWrapper() {
     const ref = useRef<HTMLDivElement>(null);
 
     return (
-        <div ref={ref} className="h-full min-h-[600px] w-full flex flex-col relative">
+        <div ref={ref} className="h-full w-full flex flex-col relative">
             {!shouldLoad ? (
                 <div className="absolute inset-0 bg-[#050505]/60 backdrop-blur-xl rounded-3xl border border-white/10 flex flex-col items-center justify-center p-6 text-center z-10 transition-all">
                     <TrendingUp className="w-12 h-12 text-emerald-400 mb-4" />

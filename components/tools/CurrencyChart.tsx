@@ -132,15 +132,15 @@ const CurrencyChart = () => {
     };
 
     return (
-        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col min-h-[600px]">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 shrink-0">
                 <h3 className="text-xl font-semibold text-white flex items-center gap-2">
                     <TrendingUp className="w-5 h-5 text-emerald-500" />
                     Evolução das Moedas
                 </h3>
             </div>
 
-            <div className="w-full h-[400px] min-w-0 relative [&_.recharts-wrapper]:outline-none [&_.recharts-wrapper_*]:outline-none [&_*:focus]:outline-none [&_*:focus-visible]:outline-none">
+            <div className="w-full flex-1 min-h-[300px] min-w-0 relative [&_.recharts-wrapper]:outline-none [&_.recharts-wrapper_*]:outline-none [&_*:focus]:outline-none [&_*:focus-visible]:outline-none">
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a]/50 z-10 backdrop-blur-sm rounded-xl">
                         <RefreshCw className="w-6 h-6 text-emerald-500 animate-spin" />
