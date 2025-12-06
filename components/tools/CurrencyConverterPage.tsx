@@ -507,7 +507,7 @@ export function CurrencyConverterPage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-xs italic mt-2 text-gray-500">
+                            <p className="text-xs italic mt-2 text-gray-400">
                                 *Nota: Se importa produtos, use a calculadora de <Link to="/calculadoras/markup" className="text-emerald-500 hover:text-emerald-300 underline decoration-emerald-400/30">Markup</Link>.
                             </p>
                         </div>
