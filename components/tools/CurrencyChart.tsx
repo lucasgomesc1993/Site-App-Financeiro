@@ -140,14 +140,14 @@ const CurrencyChart = () => {
                 </h3>
             </div>
 
-            <div className="w-full h-[400px] min-w-0 relative">
+            <div className="w-full h-[400px] min-w-0 relative [&_.recharts-wrapper]:!outline-none [&_.recharts-surface]:!outline-none">
                 {isLoading && (
                     <div className="absolute inset-0 flex items-center justify-center bg-[#1a1a1a]/50 z-10 backdrop-blur-sm rounded-xl">
                         <RefreshCw className="w-6 h-6 text-emerald-500 animate-spin" />
                     </div>
                 )}
 
-                <ChartContainer config={chartConfig} className="h-full w-full aspect-auto min-w-0">
+                <ChartContainer config={chartConfig} className="h-full w-full aspect-auto min-w-0 outline-none">
                     <AreaChart
                         accessibilityLayer
                         data={data}
