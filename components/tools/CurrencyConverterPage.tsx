@@ -195,6 +195,7 @@ export function CurrencyConverterPage() {
                                     <div className="relative">
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={amount}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setAmount)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
