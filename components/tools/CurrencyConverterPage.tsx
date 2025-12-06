@@ -648,9 +648,7 @@ function ChartLazyWrapper() {
                         <RefreshCw className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
                         Carregar Gráfico
                     </button>
-                    <p className="text-xs text-gray-200 mt-5 font-medium tracking-wide">
-                        (Carregamento sob demanda para economizar dados)
-                    </p>
+
                 </div>
             ) : (
                 <Suspense fallback={
