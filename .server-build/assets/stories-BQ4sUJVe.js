@@ -1,0 +1,45 @@
+const storiesData = [
+  {
+    slug: "5-erros-fgts",
+    title: "5 Erros que Comem seu FGTS",
+    publisher: "Junny",
+    publisherLogo: "https://junny.com.br/favicon.ico",
+    posterPortrait: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080",
+    slides: [
+      {
+        id: "capa",
+        media: {
+          type: "image",
+          url: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?q=80&w=1080"
+        },
+        text: "Você está perdendo dinheiro no FGTS sem saber?",
+        animation: "fly-in-bottom"
+      },
+      {
+        id: "erro-1",
+        media: {
+          type: "image",
+          url: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1080"
+        },
+        text: "Erro #1: Deixar o dinheiro parado na conta inativa rendendo menos que a inflação.",
+        animation: "fade-in"
+      },
+      {
+        id: "cta",
+        media: {
+          type: "image",
+          url: "https://images.unsplash.com/photo-1604594849809-dfedbc827105?q=80&w=1080"
+        },
+        text: "Não perca mais tempo. Simule seu saldo agora.",
+        cta: {
+          label: "Simular FGTS",
+          url: "https://junny.com.br/calculadoras/fgts"
+        }
+      }
+    ]
+  }
+];
+export {
+  storiesData as s
+};
+//# sourceMappingURL=stories-BQ4sUJVe.js.map

@@ -3,10 +3,11 @@ import { Routes, Route } from 'react-router-dom';
 
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
-import { Home } from './components/Home';
+// import { Home } from './components/Home'; // Lazy loaded below
 import { ScrollToTop } from './components/ScrollToTop';
 
 // Lazy load non-critical routes
+const Home = lazy(() => import('./components/Home').then(module => ({ default: module.Home })));
 const PromoPopup = lazy(() => import('./components/PromoPopup').then(module => ({ default: module.PromoPopup })));
 const Terms = lazy(() => import('./components/Terms').then(module => ({ default: module.Terms })));
 const Privacy = lazy(() => import('./components/Privacy').then(module => ({ default: module.Privacy })));
