@@ -272,9 +272,10 @@ export function CLTVsPJPage() {
                                         <div className="space-y-2">
                                             <label className="text-sm text-gray-400">Salário Bruto Mensal</label>
                                             <div className="relative">
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                                 <input
                                                     type="text"
+                                                    inputMode="decimal"
                                                     value={salary}
                                                     onChange={(e) => handleCurrencyInput(e.target.value, setSalary)}
                                                     className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
@@ -285,9 +286,10 @@ export function CLTVsPJPage() {
                                         <div className="space-y-2">
                                             <label className="text-sm text-gray-400">Benefícios (VR, VA, Plano)</label>
                                             <div className="relative">
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                                 <input
                                                     type="text"
+                                                    inputMode="decimal"
                                                     value={benefits}
                                                     onChange={(e) => handleCurrencyInput(e.target.value, setBenefits)}
                                                     className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
@@ -304,9 +306,10 @@ export function CLTVsPJPage() {
                                         <div className="space-y-2">
                                             <label className="text-sm text-gray-400">Faturamento Mensal</label>
                                             <div className="relative">
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                                 <input
                                                     type="text"
+                                                    inputMode="decimal"
                                                     value={pjSalary}
                                                     onChange={(e) => handleCurrencyInput(e.target.value, setPjSalary)}
                                                     className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-indigo-500/50 transition-all"
@@ -331,9 +334,10 @@ export function CLTVsPJPage() {
                                                 </div>
                                             </div>
                                             <div className="relative">
-                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                                 <input
                                                     type="text"
+                                                    inputMode="decimal"
                                                     value={proLabore}
                                                     onChange={(e) => {
                                                         setUseRFactorOptimization(false); // Disable auto-calc if user types
