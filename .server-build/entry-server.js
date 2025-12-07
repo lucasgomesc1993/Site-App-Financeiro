@@ -1190,13 +1190,13 @@ const PromoPopup = lazy(() => import("./assets/PromoPopup-FGg925Th.js").then((mo
 const Terms = lazy(() => import("./assets/Terms-Bq083FD0.js").then((module) => ({ default: module.Terms })));
 const Privacy = lazy(() => import("./assets/Privacy-DBxGVyta.js").then((module) => ({ default: module.Privacy })));
 const Support = lazy(() => import("./assets/Support-DJpCYc7i.js").then((module) => ({ default: module.Support })));
-const Calculators = lazy(() => import("./assets/Calculators-CW0gBuzD.js").then((module) => ({ default: module.Calculators })));
+const Calculators = lazy(() => import("./assets/Calculators-Dko69M7R.js").then((module) => ({ default: module.Calculators })));
 const InvestmentPage = lazy(() => import("./assets/InvestmentPage-BT-JO0xG.js").then((module) => ({ default: module.InvestmentPage })));
 const VacationPage = lazy(() => import("./assets/VacationPage-CeHO1yS3.js").then((module) => ({ default: module.VacationPage })));
 const EnergyPage = lazy(() => import("./assets/EnergyPage-3y5x0WLf.js").then((module) => ({ default: module.EnergyPage })));
 const FuelPage = lazy(() => import("./assets/FuelPage-C9FgdcRc.js").then((module) => ({ default: module.FuelPage })));
 const TerminationPage = lazy(() => import("./assets/TerminationPage-CRP__Yi1.js").then((module) => ({ default: module.TerminationPage })));
-const INSSPage = lazy(() => import("./assets/INSSPage-uk4ncunG.js").then((module) => ({ default: module.INSSPage })));
+const INSSPage = lazy(() => import("./assets/INSSPage-D9JHqYVG.js").then((module) => ({ default: module.INSSPage })));
 const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-CgjquNRe.js").then((module) => ({ default: module.NetSalaryPage })));
 const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-CBecb3P3.js").then((module) => ({ default: module.ThirteenthSalaryPage })));
 const OvertimePage = lazy(() => import("./assets/OvertimePage-37mfGuno.js").then((module) => ({ default: module.OvertimePage })));
@@ -1242,6 +1242,7 @@ const BlogIndex = lazy(() => import("./assets/BlogIndex-CaKCNcQS.js").then((modu
 const CategoryPage = lazy(() => import("./assets/CategoryPage-C75By9ga.js").then((module) => ({ default: module.CategoryPage })));
 const BlogPost = lazy(() => import("./assets/BlogPost-C-vNPgBn.js").then((module) => ({ default: module.BlogPost })));
 const NotFound = lazy(() => import("./assets/NotFound-zd4KAkOm.js").then((module) => ({ default: module.NotFound })));
+const CalculatorLayout = lazy(() => import("./assets/CalculatorLayout-DXkOue2c.js").then((module) => ({ default: module.CalculatorLayout })));
 function App() {
   const [isPopupMounted, setIsPopupMounted] = useState(false);
   useEffect(() => {
@@ -1257,51 +1258,53 @@ function App() {
       /* @__PURE__ */ jsx("main", { children: /* @__PURE__ */ jsx(Suspense, { fallback: /* @__PURE__ */ jsx("div", { className: "min-h-screen flex items-center justify-center", children: /* @__PURE__ */ jsx("div", { className: "w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" }) }), children: /* @__PURE__ */ jsx(LazyMotion, { features: domAnimation, children: /* @__PURE__ */ jsxs(Routes, { children: [
         /* @__PURE__ */ jsx(Route, { path: "/", element: /* @__PURE__ */ jsx(Home, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/calculadoras", element: /* @__PURE__ */ jsx(Calculators, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/investimentos", element: /* @__PURE__ */ jsx(InvestmentPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/ferias", element: /* @__PURE__ */ jsx(VacationPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/energia", element: /* @__PURE__ */ jsx(EnergyPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/combustivel", element: /* @__PURE__ */ jsx(FuelPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/rescisao", element: /* @__PURE__ */ jsx(TerminationPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/inss", element: /* @__PURE__ */ jsx(INSSPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/salario-liquido", element: /* @__PURE__ */ jsx(NetSalaryPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/decimo-terceiro", element: /* @__PURE__ */ jsx(ThirteenthSalaryPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/horas-extras", element: /* @__PURE__ */ jsx(OvertimePage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/seguro-desemprego", element: /* @__PURE__ */ jsx(UnemploymentInsurancePage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/adicional-noturno", element: /* @__PURE__ */ jsx(NightShiftPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fgts", element: /* @__PURE__ */ jsx(FGTSPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-funcionario", element: /* @__PURE__ */ jsx(EmployeeCostPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/plr", element: /* @__PURE__ */ jsx(PLRPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fire", element: /* @__PURE__ */ jsx(FIREPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/juros-compostos", element: /* @__PURE__ */ jsx(CompoundInterestPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/alugar-ou-financiar", element: /* @__PURE__ */ jsx(RentVsBuyPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/uber-ou-carro", element: /* @__PURE__ */ jsx(UberVsCarPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/primeiro-milhao", element: /* @__PURE__ */ jsx(FirstMillionPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-moedas", element: /* @__PURE__ */ jsx(CurrencyConverterPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/poder-de-compra", element: /* @__PURE__ */ jsx(PurchasingPowerPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/regra-50-30-20", element: /* @__PURE__ */ jsx(Budget503020Page, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/financiamento-veiculos", element: /* @__PURE__ */ jsx(VehicleFinancingPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/financiamento-imobiliario", element: /* @__PURE__ */ jsx(RealEstateFinancingPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/quitacao-antecipada", element: /* @__PURE__ */ jsx(EarlyRepaymentPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-efetivo-total", element: /* @__PURE__ */ jsx(CETCalculatorPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/divida-cartao-credito", element: /* @__PURE__ */ jsx(CreditCardDebtPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/das-mei", element: /* @__PURE__ */ jsx(MEIDasPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/markup", element: /* @__PURE__ */ jsx(MarkupPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/ponto-de-equilibrio", element: /* @__PURE__ */ jsx(BreakEvenPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/simples-vs-presumido", element: /* @__PURE__ */ jsx(SimplesVsPresumidoPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/capital-de-giro", element: /* @__PURE__ */ jsx(WorkingCapitalPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/roi", element: /* @__PURE__ */ jsx(ROICalculatorPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/churrasco", element: /* @__PURE__ */ jsx(BarbecueCalculatorPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/dias-uteis", element: /* @__PURE__ */ jsx(BusinessDaysPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/regra-de-tres", element: /* @__PURE__ */ jsx(RuleOfThreePage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/porcentagem", element: /* @__PURE__ */ jsx(PercentageCalculatorPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/horas", element: /* @__PURE__ */ jsx(HoursCalculatorPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-viagem", element: /* @__PURE__ */ jsx(TravelCostCalculatorPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/amigo-secreto", element: /* @__PURE__ */ jsx(SecretSantaPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/clt-vs-pj", element: /* @__PURE__ */ jsx(CLTVsPJPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/correcao-monetaria", element: /* @__PURE__ */ jsx(MonetaryCorrectionPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/impostos-importacao", element: /* @__PURE__ */ jsx(ImportTaxPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/juros-abusivos", element: /* @__PURE__ */ jsx(AbusiveInterestPage, {}) }),
-        /* @__PURE__ */ jsx(Route, { path: "/calculadoras/gerador-pix", element: /* @__PURE__ */ jsx(PixGeneratorPage, {}) }),
+        /* @__PURE__ */ jsxs(Route, { element: /* @__PURE__ */ jsx(CalculatorLayout, {}), children: [
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/investimentos", element: /* @__PURE__ */ jsx(InvestmentPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/ferias", element: /* @__PURE__ */ jsx(VacationPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/energia", element: /* @__PURE__ */ jsx(EnergyPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/combustivel", element: /* @__PURE__ */ jsx(FuelPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/rescisao", element: /* @__PURE__ */ jsx(TerminationPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/inss", element: /* @__PURE__ */ jsx(INSSPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/salario-liquido", element: /* @__PURE__ */ jsx(NetSalaryPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/decimo-terceiro", element: /* @__PURE__ */ jsx(ThirteenthSalaryPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/horas-extras", element: /* @__PURE__ */ jsx(OvertimePage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/seguro-desemprego", element: /* @__PURE__ */ jsx(UnemploymentInsurancePage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/adicional-noturno", element: /* @__PURE__ */ jsx(NightShiftPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fgts", element: /* @__PURE__ */ jsx(FGTSPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-funcionario", element: /* @__PURE__ */ jsx(EmployeeCostPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/plr", element: /* @__PURE__ */ jsx(PLRPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/fire", element: /* @__PURE__ */ jsx(FIREPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/juros-compostos", element: /* @__PURE__ */ jsx(CompoundInterestPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/alugar-ou-financiar", element: /* @__PURE__ */ jsx(RentVsBuyPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/uber-ou-carro", element: /* @__PURE__ */ jsx(UberVsCarPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/primeiro-milhao", element: /* @__PURE__ */ jsx(FirstMillionPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/conversor-moedas", element: /* @__PURE__ */ jsx(CurrencyConverterPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/poder-de-compra", element: /* @__PURE__ */ jsx(PurchasingPowerPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/regra-50-30-20", element: /* @__PURE__ */ jsx(Budget503020Page, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/financiamento-veiculos", element: /* @__PURE__ */ jsx(VehicleFinancingPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/financiamento-imobiliario", element: /* @__PURE__ */ jsx(RealEstateFinancingPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/quitacao-antecipada", element: /* @__PURE__ */ jsx(EarlyRepaymentPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-efetivo-total", element: /* @__PURE__ */ jsx(CETCalculatorPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/divida-cartao-credito", element: /* @__PURE__ */ jsx(CreditCardDebtPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/das-mei", element: /* @__PURE__ */ jsx(MEIDasPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/markup", element: /* @__PURE__ */ jsx(MarkupPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/ponto-de-equilibrio", element: /* @__PURE__ */ jsx(BreakEvenPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/simples-vs-presumido", element: /* @__PURE__ */ jsx(SimplesVsPresumidoPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/capital-de-giro", element: /* @__PURE__ */ jsx(WorkingCapitalPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/roi", element: /* @__PURE__ */ jsx(ROICalculatorPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/churrasco", element: /* @__PURE__ */ jsx(BarbecueCalculatorPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/dias-uteis", element: /* @__PURE__ */ jsx(BusinessDaysPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/regra-de-tres", element: /* @__PURE__ */ jsx(RuleOfThreePage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/porcentagem", element: /* @__PURE__ */ jsx(PercentageCalculatorPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/horas", element: /* @__PURE__ */ jsx(HoursCalculatorPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/custo-viagem", element: /* @__PURE__ */ jsx(TravelCostCalculatorPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/amigo-secreto", element: /* @__PURE__ */ jsx(SecretSantaPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/clt-vs-pj", element: /* @__PURE__ */ jsx(CLTVsPJPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/correcao-monetaria", element: /* @__PURE__ */ jsx(MonetaryCorrectionPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/impostos-importacao", element: /* @__PURE__ */ jsx(ImportTaxPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/juros-abusivos", element: /* @__PURE__ */ jsx(AbusiveInterestPage, {}) }),
+          /* @__PURE__ */ jsx(Route, { path: "/calculadoras/gerador-pix", element: /* @__PURE__ */ jsx(PixGeneratorPage, {}) })
+        ] }),
         /* @__PURE__ */ jsx(Route, { path: "/blog", element: /* @__PURE__ */ jsx(BlogIndex, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/blog/:category/:slug", element: /* @__PURE__ */ jsx(BlogPost, {}) }),
         /* @__PURE__ */ jsx(Route, { path: "/blog/:categorySlug", element: /* @__PURE__ */ jsx(CategoryPage, {}) }),

@@ -9,38 +9,30 @@ import { FAQItem } from '../../types';
 
 const INSS_FAQS: FAQItem[] = [
     {
-        question: "Qual o valor do teto do INSS em 2025?",
-        answer: "O teto do INSS em 2025 é de R$ 8.157,41. Isso significa que, mesmo se você ganhar R$ 15.000,00, sua contribuição será calculada apenas até esse limite, resultando em um desconto máximo de R$ 951,63."
+        question: "Qual o valor máximo do teto do INSS em 2025?",
+        answer: "O teto previdenciário oficial para 2025 é de R$ 8.157,41. Isso significa que qualquer valor salarial que ultrapasse essa quantia não sofrerá tributação adicional para a previdência. O desconto máximo que um trabalhador no regime geral pode ter em seu contracheque é travado em R$ 951,63."
     },
     {
-        question: "Como funciona o desconto progressivo?",
-        answer: "No desconto progressivo, seu salário é \"fatiado\". Você paga 7,5% sobre a primeira parte (até o salário mínimo), 9% sobre a segunda parte, e assim por diante. Quem ganha mais paga uma alíquota efetiva maior, mas justa em relação às faixas anteriores."
+        question: "Como calcular o INSS de quem ganha um salário mínimo?",
+        answer: "Para quem recebe o piso nacional de R$ 1.518,00, o cálculo é direto e cai na primeira faixa da tabela. Aplica-se a alíquota de 7,5% sobre o valor total, resultando em um desconto de R$ 113,85. Não há parcela a deduzir nesta faixa específica."
     },
     {
-        question: "O desconto do INSS é sobre o salário bruto ou líquido?",
-        answer: "O INSS é sempre calculado sobre o salário bruto (sem descontos). Ele é o primeiro desconto a ser aplicado, antes do Imposto de Renda e do Vale-Transporte."
+        question: "A isenção de Imposto de Renda até R$ 5.000 já vale para 2025?",
+        answer: "Não, esta regra não está vigente. A Lei nº 15.270/2025 sancionou a nova tabela de isenção ampliada, porém sua eficácia jurídica começa apenas em 1º de janeiro de 2026. Para todo o ano calendário de 2025, deve-se utilizar as tabelas e regras de dedução antigas para evitar pendências com a Receita Federal."
     },
     {
-        question: "Quem é autônomo paga quanto de INSS?",
-        answer: "Autônomos no plano normal pagam 20% sobre a remuneração do mês (limitado ao teto). Já no plano simplificado (código 1163), pagam 11% sobre o salário mínimo, mas perdem o direito à aposentadoria por tempo de contribuição."
-    },
-    {
-        question: "O que acontece se a empresa descontar mas não pagar o INSS?",
-        answer: "Isso é considerado apropriação indébita previdenciária. O trabalhador não perde o direito à contagem de tempo para aposentadoria, mas pode ter dor de cabeça para provar o vínculo. Acompanhe sempre seu extrato CNIS no portal Meu INSS."
-    },
-    {
-        question: "Desconto de INSS incide sobre vale-alimentação?",
-        answer: "Não. O vale-alimentação e vale-refeição, quando pagos dentro das regras do PAT (Programa de Alimentação do Trabalhador), não integram o salário para fins de contribuição ao INSS."
-    },
-    {
-        question: "Como calcular INSS de empregada doméstica?",
-        answer: "O cálculo para empregados domésticos segue a mesma tabela progressiva dos trabalhadores CLT. A alíquota varia de 7,5% a 14% dependendo do salário registrado na carteira."
+        question: "O desconto do INSS é calculado sobre o salário bruto ou líquido?",
+        answer: "A base de cálculo do INSS é sempre o salário bruto (também chamado de salário de contribuição), que inclui horas extras e adicionais. Ele é a primeira dedução a ocorrer na folha. O Imposto de Renda e outros descontos são calculados somente sobre o valor que resta após a subtração do INSS."
     }
 ];
 
 export function INSSPage() {
     const [salary, setSalary] = useState('');
-    const [result, setResult] = useState<{ discount: number; netSalary: number; effectiveRate: number; range: number } | null>(null);
+    const [result, setResult] = useState<{ discount: number; netSalary: number; effectiveRate: number; rangeDescription: string } | null>(null);
+
+    const formatCurrency = (value: number) => {
+        return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
 
     const calculate = () => {
         const sal = parseFloat(salary.replace(/\./g, '').replace(',', '.'));
@@ -50,43 +42,38 @@ export function INSSPage() {
             return;
         }
 
-        // Tabela INSS 2025 Oficial
-        // Faixa 1: até 1.518,00 -> 7,5%
-        // Faixa 2: de 1.518,01 a 2.793,88 -> 9%
-        // Faixa 3: de 2.793,89 a 4.190,83 -> 12%
-        // Faixa 4: de 4.190,84 a 8.157,41 -> 14%
+        // Tabela INSS 2025 (Dedução legal)
+        const TETO = 8157.41;
+        const TETO_DESCONTO = 951.63; // Max discount allowed
 
         let discount = 0;
-        const TETO = 8157.41;
-        const FAIXA_1 = 1518.00;
-        const FAIXA_2 = 2793.88;
-        const FAIXA_3 = 4190.83;
+        let rangeDescription = "";
 
-        let range = 0;
-
-        if (sal <= FAIXA_1) {
+        if (sal <= 1518.00) {
             discount = sal * 0.075;
-            range = 1;
-        } else if (sal <= FAIXA_2) {
-            discount = (FAIXA_1 * 0.075) + ((sal - FAIXA_1) * 0.09);
-            range = 2;
-        } else if (sal <= FAIXA_3) {
-            discount = (FAIXA_1 * 0.075) + ((FAIXA_2 - FAIXA_1) * 0.09) + ((sal - FAIXA_2) * 0.12);
-            range = 3;
+            rangeDescription = "Faixa 1 (7,5%)";
+        } else if (sal <= 2793.88) {
+            discount = (sal * 0.09) - 22.77;
+            rangeDescription = "Faixa 2 (9%)";
+        } else if (sal <= 4190.83) {
+            discount = (sal * 0.12) - 106.59;
+            rangeDescription = "Faixa 3 (12%)";
         } else if (sal <= TETO) {
-            discount = (FAIXA_1 * 0.075) + ((FAIXA_2 - FAIXA_1) * 0.09) + ((FAIXA_3 - FAIXA_2) * 0.12) + ((sal - FAIXA_3) * 0.14);
-            range = 4;
+            discount = (sal * 0.14) - 190.40;
+            rangeDescription = "Faixa 4 (14%)";
         } else {
-            // Acima do Teto
-            discount = 951.63; // Valor fixo calculado do teto
-            range = 5; // Teto
+            discount = TETO_DESCONTO;
+            rangeDescription = "Teto Máximo";
         }
+
+        // Ensure we don't return negative discount if something is weird (though math holds up)
+        discount = Math.max(0, discount);
 
         setResult({
             discount,
             netSalary: sal - discount,
             effectiveRate: (discount / sal) * 100,
-            range
+            rangeDescription
         });
     };
 
@@ -94,13 +81,9 @@ export function INSSPage() {
         calculate();
     }, [salary]);
 
-    const formatCurrency = (value: string) => {
-        const number = value.replace(/\D/g, '');
-        return (Number(number) / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-    };
-
     const handleCurrencyInput = (value: string, setter: (value: string) => void) => {
-        setter(formatCurrency(value));
+        const number = value.replace(/\D/g, '');
+        setter((Number(number) / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2 }));
     };
 
     const schema = {
@@ -108,7 +91,7 @@ export function INSSPage() {
         "@type": "WebApplication",
         "name": "Calculadora INSS 2025",
         "url": "https://www.junny.com.br/calculadoras/inss",
-        "description": "Consulte a Tabela INSS 2025 oficial atualizada. Aprenda a calcular o desconto no seu salário, emita a guia GPS e simule autônomos e MEI.",
+        "description": "Calcule o desconto exato do INSS 2025 com a nova tabela progressiva. Veja alíquotas, deduções e o impacto do salário mínimo de R$ 1.518,00 no seu bolso.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "offers": {
@@ -118,17 +101,17 @@ export function INSSPage() {
         },
         "featureList": [
             "Tabela INSS 2025 Atualizada",
-            "Cálculo Progressivo Automático",
-            "Desconto de Autônomos e MEI",
-            "Cálculo Reverso de Salário Líquido"
+            "Cálculo Progressivo com Dedução",
+            "Simulação para Teto de R$ 8.157,41",
+            "Exemplo Prático de Cálculo"
         ]
     };
 
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora INSS 2025: Tabela Oficial e Cálculo Exato [Atualizado]"
-                description="Consulte a Tabela INSS 2025 oficial atualizada. Aprenda a calcular o desconto no seu salário, emita a guia GPS e simule autônomos e MEI."
+                title="Calculadora INSS 2025: Desconto Oficial e Tabela Atualizada"
+                description="Calcule o desconto exato do INSS 2025 com a nova tabela progressiva. Veja alíquotas, deduções e o impacto do salário mínimo de R$ 1.518,00 no seu bolso."
                 canonical="/calculadoras/inss"
             />
             <script type="application/ld+json">
@@ -166,10 +149,30 @@ export function INSSPage() {
                             <span className="text-sm text-gray-300">Trabalhistas e Previdenciárias</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-500">INSS 2025</span>
+                            Calculadora de Desconto <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-500">INSS 2025</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Entenda o desconto do INSS no seu salário com a nova tabela de 2025.
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto text-left md:text-center">
+                            <div className="bg-white/5 p-3 rounded-lg border border-white/5">
+                                <span className="text-xs text-gray-400 block">Salário Mínimo (Base)</span>
+                                <span className="text-sm font-bold text-white">R$ 1.518,00</span>
+                            </div>
+                            <div className="bg-white/5 p-3 rounded-lg border border-white/5">
+                                <span className="text-xs text-gray-400 block">Teto do INSS (Máximo)</span>
+                                <span className="text-sm font-bold text-white">R$ 8.157,41</span>
+                            </div>
+                            <div className="bg-white/5 p-3 rounded-lg border border-white/5">
+                                <span className="text-xs text-gray-400 block">Desconto Máximo</span>
+                                <span className="text-sm font-bold text-white">R$ 951,63</span>
+                            </div>
+                            <div className="bg-white/5 p-3 rounded-lg border border-white/5">
+                                <span className="text-xs text-gray-400 block">Legislação</span>
+                                <span className="text-sm font-bold text-white">Portaria MPS/MF nº 6</span>
+                            </div>
+                        </div>
+
+                        <p className="text-lg text-gray-400 max-w-3xl mx-auto mt-6">
+                            A atualização fiscal de 2025 elevou o teto de contribuição para mais de oito mil reais. O sistema permanece <strong>progressivo</strong>. Nossa calculadora aplica automaticamente a dedução correta.
                         </p>
                     </div>
                 </div>
@@ -204,7 +207,7 @@ export function INSSPage() {
                                     <div className="bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4">
                                         <span className="text-sm text-blue-400 block mb-2">Valor do Desconto INSS</span>
                                         <span className="text-4xl font-bold text-white">
-                                            {result ? `R$ ${result.discount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
+                                            {result ? `R$ ${formatCurrency(result.discount)}` : '---'}
                                         </span>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
@@ -217,16 +220,35 @@ export function INSSPage() {
                                         <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
                                             <span className="text-xs text-gray-400 block mb-1">Salário Pós-INSS</span>
                                             <span className="text-xl font-bold text-white">
-                                                {result ? `R$ ${result.netSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
+                                                {result ? `R$ ${formatCurrency(result.netSalary)}` : '---'}
                                             </span>
                                         </div>
                                     </div>
-                                    {result && result.range === 5 && (
-                                        <div className="mt-4 bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-xl flex items-start gap-2 text-left">
-                                            <AlertCircle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
-                                            <p className="text-xs text-yellow-200/80">
-                                                Seu salário está acima do teto de R$ 8.157,41. O desconto é fixo no valor máximo de R$ 951,63.
-                                            </p>
+
+                                    {result && (
+                                        <div className="mt-4 flex flex-col gap-2">
+                                            <div className="bg-white/5 border border-white/5 p-3 rounded-xl flex items-center justify-between text-sm">
+                                                <span className="text-gray-400">Faixa Aplicada:</span>
+                                                <span className="text-white font-medium">{result.rangeDescription}</span>
+                                            </div>
+
+                                            {result.effectiveRate < 14 && result.effectiveRate > 0 && result.discount < 951.63 && (
+                                                <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-xl flex items-start gap-2 text-left">
+                                                    <Info className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
+                                                    <p className="text-xs text-green-200/80">
+                                                        Note que sua alíquota efetiva ({result.effectiveRate.toFixed(2)}%) é menor que a alíquota nominal da faixa, graças ao cálculo progressivo.
+                                                    </p>
+                                                </div>
+                                            )}
+
+                                            {result.discount >= 951.63 && (
+                                                <div className="bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-xl flex items-start gap-2 text-left">
+                                                    <AlertCircle className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" />
+                                                    <p className="text-xs text-yellow-200/80">
+                                                        Seu salário está acima do teto de R$ 8.157,41. O desconto foi travado no máximo permitido de R$ 951,63.
+                                                    </p>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>
@@ -239,242 +261,178 @@ export function INSSPage() {
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full">
                             <h3 className="text-lg font-semibold mb-6 flex items-center gap-2 text-white">
                                 <TrendingDown className="w-5 h-5 text-blue-500" />
-                                Tabela INSS 2025 (CLT)
+                                Tabela INSS 2025 (Oficial)
                             </h3>
                             <div className="space-y-4">
-                                <div className={`flex justify-between items-center p-3 rounded-xl border ${result && result.range === 1 ? 'bg-blue-500/20 border-blue-500/50' : 'bg-white/5 border-white/5'}`}>
-                                    <div className="flex flex-col">
-                                        <span className="text-xs text-gray-400">Até R$ 1.518,00</span>
-                                        <span className="text-sm font-medium text-white">Faixa 1</span>
+                                <div className="p-3 rounded-xl border bg-white/5 border-white/5">
+                                    <div className="grid grid-cols-3 gap-2 text-xs text-gray-400 mb-2 pb-2 border-b border-white/5">
+                                        <span>Faixa Salarial</span>
+                                        <span className="text-center">Alíquota</span>
+                                        <span className="text-right">Dedução</span>
                                     </div>
-                                    <span className="text-lg font-bold text-blue-400">7,5%</span>
-                                </div>
 
-                                <div className={`flex justify-between items-center p-3 rounded-xl border ${result && result.range === 2 ? 'bg-blue-500/20 border-blue-500/50' : 'bg-white/5 border-white/5'}`}>
-                                    <div className="flex flex-col">
-                                        <span className="text-xs text-gray-400">R$ 1.518,01 a R$ 2.793,88</span>
-                                        <span className="text-sm font-medium text-white">Faixa 2</span>
+                                    <div className="space-y-3">
+                                        <div className="grid grid-cols-3 gap-2 items-center">
+                                            <span className="text-xs text-gray-300">Até R$ 1.518,00</span>
+                                            <span className="text-sm font-bold text-blue-400 text-center">7,5%</span>
+                                            <span className="text-xs text-gray-400 text-right">-</span>
+                                        </div>
+                                        <div className="grid grid-cols-3 gap-2 items-center">
+                                            <span className="text-xs text-gray-300">Até R$ 2.793,88</span>
+                                            <span className="text-sm font-bold text-blue-400 text-center">9%</span>
+                                            <span className="text-xs text-gray-400 text-right">R$ 22,77</span>
+                                        </div>
+                                        <div className="grid grid-cols-3 gap-2 items-center">
+                                            <span className="text-xs text-gray-300">Até R$ 4.190,83</span>
+                                            <span className="text-sm font-bold text-blue-400 text-center">12%</span>
+                                            <span className="text-xs text-gray-400 text-right">R$ 106,59</span>
+                                        </div>
+                                        <div className="grid grid-cols-3 gap-2 items-center">
+                                            <span className="text-xs text-gray-300">Até R$ 8.157,41</span>
+                                            <span className="text-sm font-bold text-blue-400 text-center">14%</span>
+                                            <span className="text-xs text-gray-400 text-right">R$ 190,40</span>
+                                        </div>
                                     </div>
-                                    <span className="text-lg font-bold text-blue-400">9%</span>
-                                </div>
-
-                                <div className={`flex justify-between items-center p-3 rounded-xl border ${result && result.range === 3 ? 'bg-blue-500/20 border-blue-500/50' : 'bg-white/5 border-white/5'}`}>
-                                    <div className="flex flex-col">
-                                        <span className="text-xs text-gray-400">R$ 2.793,89 a R$ 4.190,83</span>
-                                        <span className="text-sm font-medium text-white">Faixa 3</span>
-                                    </div>
-                                    <span className="text-lg font-bold text-blue-400">12%</span>
-                                </div>
-
-                                <div className={`flex justify-between items-center p-3 rounded-xl border ${result && result.range >= 4 ? 'bg-blue-500/20 border-blue-500/50' : 'bg-white/5 border-white/5'}`}>
-                                    <div className="flex flex-col">
-                                        <span className="text-xs text-gray-400">R$ 4.190,84 a R$ 8.157,41</span>
-                                        <span className="text-sm font-medium text-white">Faixa 4</span>
-                                    </div>
-                                    <span className="text-lg font-bold text-blue-400">14%</span>
                                 </div>
                             </div>
-                            <p className="text-xs text-gray-400 mt-4 text-center">
-                                *O cálculo é feito por fatias. Quem ganha R$ 3.000 não paga 12% sobre tudo, mas sim a soma das alíquotas de cada faixa.
-                            </p>
+
+                            <div className="mt-6 bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl flex items-start gap-3">
+                                <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
+                                <p className="text-sm text-blue-200/80">
+                                    Quem possui rendimentos acima de <strong>R$ 8.157,41</strong> contribui com o valor fixo de R$ 951,63, independentemente do salário total.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/* Content Sections */}
                 <div className="space-y-12 mb-24">
-                    {/* Intro & Tabela */}
+                    {/* Exemplo Prático */}
                     <div className="grid md:grid-cols-1 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <h2 className="text-3xl font-bold text-white mb-4">Como funciona o cálculo em 2025?</h2>
-                        <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                            Entender o desconto do <strong>INSS (Instituto Nacional do Seguro Social)</strong> é essencial para saber exatamente quanto do seu salário cai na conta no final do mês. Em 2025, com o novo salário mínimo de <strong>R$ 1.518,00</strong>, as faixas de contribuição e o teto da previdência sofreram reajustes importantes que impactam diretamente o seu bolso.
-                        </p>
-
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 overflow-hidden">
-                            <h3 className="text-xl font-bold text-white mb-6">Tabela Oficial Detalhada</h3>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-left border-collapse text-sm">
-                                    <thead>
-                                        <tr className="border-b border-white/10">
-                                            <th className="p-4 text-white">Salário de Contribuição</th>
-                                            <th className="p-4 text-white text-center">Alíquota</th>
-                                            <th className="p-4 text-white text-center">Parcela a Deduzir</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody className="text-gray-400">
-                                        <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                                            <td className="p-4">Até R$ 1.518,00</td>
-                                            <td className="p-4 text-center font-bold text-blue-400">7,5%</td>
-                                            <td className="p-4 text-center">-</td>
-                                        </tr>
-                                        <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                                            <td className="p-4">De R$ 1.518,01 a R$ 2.793,88</td>
-                                            <td className="p-4 text-center font-bold text-blue-400">9%</td>
-                                            <td className="p-4 text-center">R$ 22,77</td>
-                                        </tr>
-                                        <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                                            <td className="p-4">De R$ 2.793,89 a R$ 4.190,83</td>
-                                            <td className="p-4 text-center font-bold text-blue-400">12%</td>
-                                            <td className="p-4 text-center">R$ 106,59</td>
-                                        </tr>
-                                        <tr className="hover:bg-white/5 transition-colors">
-                                            <td className="p-4">De R$ 4.190,84 a R$ 8.157,41</td>
-                                            <td className="p-4 text-center font-bold text-blue-400">14%</td>
-                                            <td className="p-4 text-center">R$ 190,41</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <div className="flex items-start gap-4 mb-6">
+                                <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
+                                    <FileText className="w-6 h-6 text-blue-500" />
+                                </div>
+                                <div>
+                                    <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">Como o cálculo é feito na prática? (Exemplo Real)</h2>
+                                </div>
                             </div>
-                            <div className="mt-4 bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl flex items-start gap-3">
-                                <Info className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                                <p className="text-sm text-blue-200/80">
-                                    <strong>Atenção:</strong> Quem ganha acima do teto de R$ 8.157,41 paga um valor fixo de contribuição, que atualmente é de <strong>R$ 951,63</strong> (o teto máximo de desconto).
+                            <p className="text-gray-400 mb-6">
+                                A alíquota nominal (aquela que aparece na tabela, como 12% ou 14%) quase nunca é a porcentagem real que sai do seu bolso. Para facilitar a conta manual, utilizamos a <strong>Parcela a Deduzir</strong>.
+                            </p>
+
+                            <div className="bg-white/5 p-6 rounded-xl border border-white/5 mb-8">
+                                <h3 className="text-lg font-bold text-white mb-4">Vamos a um exemplo prático de um salário de R$ 3.000,00:</h3>
+                                <div className="space-y-4">
+                                    <div className="flex flex-col md:flex-row gap-4 items-start md:items-center p-3 rounded-lg bg-black/20">
+                                        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold shrink-0">1</div>
+                                        <div className="text-gray-300 text-sm">
+                                            <strong>Identificação da Faixa:</strong> R$ 3.000,00 está na 3ª faixa (entre 2.793,89 e 4.190,83).
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col md:flex-row gap-4 items-start md:items-center p-3 rounded-lg bg-black/20">
+                                        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold shrink-0">2</div>
+                                        <div className="text-gray-300 text-sm">
+                                            <strong>Aplicação da Alíquota:</strong> Multiplica-se o salário por 12%. <br />
+                                            <span className="text-blue-400 font-mono mt-1 block">3.000,00 x 12% = 360,00</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col md:flex-row gap-4 items-start md:items-center p-3 rounded-lg bg-black/20">
+                                        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold shrink-0">3</div>
+                                        <div className="text-gray-300 text-sm">
+                                            <strong>Subtração da Dedução:</strong> Subtrai-se a parcela fixa da tabela (R$ 106,59). <br />
+                                            <span className="text-blue-400 font-mono mt-1 block">360,00 - 106,59 = R$ 253,41</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+                                    <p className="text-sm text-blue-200">
+                                        Neste exemplo, o desconto real foi de R$ 253,41. Se dividirmos esse valor pelo salário (253,41 ÷ 3000), descobrimos que a <strong>alíquota efetiva</strong> é de apenas <strong>8,45%</strong>, e não os 12% nominais.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p className="text-gray-400 mb-6">
+                                Para ver como isso impacta o restante das suas finanças, incluindo o Imposto de Renda, utilize nossa <Link to="/calculadoras/salario-liquido" className="text-blue-400 hover:text-blue-300 underline">Calculadora de Salário Líquido</Link>.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Erros Comuns */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="flex items-start gap-4 mb-6">
+                            <div className="bg-red-500/10 p-3 rounded-xl shrink-0">
+                                <AlertCircle className="w-6 h-6 text-red-500" />
+                            </div>
+                            <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">Erros comuns ao calcular o INSS</h2>
+                        </div>
+                        <p className="text-gray-400 mb-6">A complexidade das regras de 2025 gera muitas dúvidas. Evite os erros abaixo:</p>
+
+                        <div className="grid md:grid-cols-3 gap-6">
+                            <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                <h3 className="text-lg font-bold text-white mb-3">13º Salário</h3>
+                                <p className="text-sm text-gray-400">
+                                    O Décimo Terceiro possui tributação exclusiva. Ele nunca deve ser somado ao salário de dezembro para enquadramento na tabela. O cálculo dele é isolado.
+                                </p>
+                                <Link to="/calculadoras/decimo-terceiro" className="text-xs text-blue-400 hover:text-blue-300 mt-2 inline-block">Calcular Décimo Terceiro &rarr;</Link>
+                            </div>
+                            <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                <h3 className="text-lg font-bold text-white mb-3">Férias</h3>
+                                <p className="text-sm text-gray-400">
+                                    Se você tirou 20 dias de Férias e trabalhou o resto do mês, o INSS do saldo de salário deve considerar o que já foi descontado nas férias. Reiniciar a tabela do zero gera recolhimento incorreto.
+                                </p>
+                                <Link to="/calculadoras/ferias" className="text-xs text-blue-400 hover:text-blue-300 mt-2 inline-block">Calcular Férias &rarr;</Link>
+                            </div>
+                            <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                <h3 className="text-lg font-bold text-white mb-3">Isenção IR (2026)</h3>
+                                <p className="text-sm text-gray-400">
+                                    A lei que amplia a isenção do Imposto de Renda de R$ 5.000 foi aprovada, mas só entra em vigor em <strong>2026</strong>. Para 2025, os descontos seguem a tabela antiga.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Exemplo Prático */}
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <div className="flex items-start gap-4 mb-6">
-                            <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
-                                <FileText className="w-6 h-6 text-blue-500" />
-                            </div>
-                            <div>
-                                <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">Como calcular o INSS na prática?</h2>
-                            </div>
-                        </div>
-                        <p className="text-gray-400 mb-6">
-                            O cálculo progressivo pode parecer complexo, mas existe um macete simples usando a "Parcela a Deduzir" da tabela acima.
-                        </p>
-
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5 mb-6">
-                            <h3 className="text-lg font-bold text-white mb-2">Fórmula Simples:</h3>
-                            <code className="block bg-black/30 p-4 rounded-lg text-blue-300 font-mono text-sm md:text-base break-words">
-                                [Salário Bruto] x [Alíquota] - [Parcela a Deduzir] = Valor do INSS
-                            </code>
-                        </div>
-
-                        <div className="space-y-4">
-                            <h3 className="text-lg font-bold text-white">Exemplo Prático: Salário de R$ 3.500,00</h3>
-                            <ol className="list-decimal list-inside space-y-2 text-gray-400 ml-4">
-                                <li>Enquadra-se na 3ª faixa (12%).</li>
-                                <li>Multiplique: <span className="text-white">R$ 3.500,00 x 12% = R$ 420,00</span>.</li>
-                                <li>Subtraia a dedução: <span className="text-white">R$ 420,00 - R$ 106,59</span>.</li>
-                                <li><strong>Desconto Final INSS: R$ 313,41</strong>.</li>
-                            </ol>
-                        </div>
-
-                        <div className="mt-8 flex flex-col md:flex-row gap-4">
-                            <Link to="/calculadoras/salario-liquido" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors">
-                                Ver Salário Líquido Completo <ArrowRight className="w-4 h-4" />
-                            </Link>
-                            <Link to="/calculadoras/custo-funcionario" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-colors">
-                                Calcular Custo para Empresa (Patrão)
-                            </Link>
-                        </div>
-                    </div>
-
-                    {/* Autônomos e Pró-Labore */}
+                    {/* Pró-Labore */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
                                 <DollarSign className="w-6 h-6 text-blue-500" />
                             </div>
-                            <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                                Tabela INSS para Autônomos e Pró-Labore (2025)
-                            </h2>
+                            <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">Pró-Labore e Autônomos</h2>
                         </div>
                         <p className="text-gray-400 mb-6">
-                            Para Contribuintes Individuais (Autônomos) e sócios que retiram Pró-Labore, a lógica é diferente. Não há progressividade, a alíquota é fixa dependendo do tipo de contribuição.
+                            Para empresários e prestadores de serviço, a lógica progressiva acima nem sempre se aplica.
                         </p>
 
-                        <div className="overflow-x-auto mb-8">
-                            <table className="w-full text-left border-collapse text-sm">
-                                <thead>
-                                    <tr className="border-b border-white/10">
-                                        <th className="p-3 text-white">Categoria</th>
-                                        <th className="p-3 text-white text-center">Alíquota</th>
-                                        <th className="p-3 text-white">Base de Cálculo</th>
-                                        <th className="p-3 text-white">Valor Mensal</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="text-gray-400">
-                                    <tr className="border-b border-white/5">
-                                        <td className="p-3 font-bold text-white">Plano Normal (Aposenta por tempo)</td>
-                                        <td className="p-3 text-center font-bold text-blue-400">20%</td>
-                                        <td className="p-3">Sobre ganhos (Min. R$ 1.518 até Teto)</td>
-                                        <td className="p-3">De R$ 303,60 até R$ 1.631,48</td>
-                                    </tr>
-                                    <tr className="border-b border-white/5">
-                                        <td className="p-3 font-bold text-white">Plano Simplificado (Aposenta por idade)</td>
-                                        <td className="p-3 text-center font-bold text-blue-400">11%</td>
-                                        <td className="p-3">Apenas sobre Salário Mínimo</td>
-                                        <td className="p-3">R$ 166,98</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="p-3 font-bold text-white"><Link to="/calculadoras/das-mei" className="text-blue-300 hover:text-blue-200 underline">MEI</Link></td>
-                                        <td className="p-3 text-center font-bold text-blue-400">5%</td>
-                                        <td className="p-3">Apenas sobre Salário Mínimo</td>
-                                        <td className="p-3">R$ 75,90 (+ ISS/ICMS)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div className="space-y-4">
+                            <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/5">
+                                <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                                <div>
+                                    <h3 className="text-white font-bold">Pró-Labore</h3>
+                                    <p className="text-sm text-gray-400">Sócios de empresas no Simples Nacional (Anexos I, II, III e V) pagam geralmente <strong>11%</strong> fixos sobre a retirada.</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl border border-white/5">
+                                <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 shrink-0" />
+                                <div>
+                                    <h3 className="text-white font-bold">Autônomos</h3>
+                                    <p className="text-sm text-gray-400">A regra padrão é <strong>20%</strong> sobre o salário de contribuição, limitado ao teto.</p>
+                                </div>
+                            </div>
                         </div>
-
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                            <h3 className="text-lg font-bold text-white mb-4">Como pagar (Códigos GPS)</h3>
-                            <ul className="space-y-3 text-gray-400">
-                                <li className="flex items-center gap-3">
-                                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                    <span><strong>Código 1007:</strong> Contribuinte Individual - Plano Normal (20%)</span>
-                                </li>
-                                <li className="flex items-center gap-3">
-                                    <CheckCircle className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                    <span><strong>Código 1163:</strong> Contribuinte Individual - Plano Simplificado (11%)</span>
-                                </li>
-                            </ul>
-                            <p className="mt-4 text-sm text-gray-400">
-                                Dúvida entre ser CLT ou PJ? Use nossa calculadora <Link to="/calculadoras/clt-vs-pj" className="text-blue-300 hover:text-blue-200 underline">CLT vs PJ</Link> para comparar.
+                        <div className="mt-6">
+                            <p className="text-sm text-gray-400">
+                                Se você está avaliando se vale a pena ser autônomo ou funcionário, nossa ferramenta de comparação <Link to="/calculadoras/clt-vs-pj" className="text-blue-400 hover:text-blue-300 underline">CLT vs PJ</Link> detalha todos esses custos.
                             </p>
-                        </div>
-                    </div>
-
-                    {/* Impacto em outros benefícios */}
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                        <h2 className="text-xl md:text-2xl font-bold text-white mb-6">O impacto do INSS em outros benefícios</h2>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <Link to="/calculadoras/horas-extras" className="group bg-white/5 p-5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
-                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Horas Extras</h3>
-                                <p className="text-sm text-gray-400">
-                                    O valor recebido por horas adicionais integra o salário de contribuição, aumentando o desconto do INSS.
-                                </p>
-                            </Link>
-                            <Link to="/calculadoras/fgts" className="group bg-white/5 p-5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
-                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">FGTS</h3>
-                                <p className="text-sm text-gray-400">
-                                    O FGTS é calculado sobre o salário bruto, sem descontar o INSS. O INSS reduz a base apenas do Imposto de Renda.
-                                </p>
-                            </Link>
-                            <Link to="/calculadoras/decimo-terceiro" className="group bg-white/5 p-5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
-                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">13º Salário</h3>
-                                <p className="text-sm text-gray-400">
-                                    O INSS também é descontado da primeira ou segunda parcela do seu abono natalino.
-                                </p>
-                            </Link>
-                            <Link to="/calculadoras/ferias" className="group bg-white/5 p-5 rounded-xl border border-white/5 hover:bg-white/10 transition-colors">
-                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Férias</h3>
-                                <p className="text-sm text-gray-400">
-                                    Quando você vende férias ou recebe o terço constitucional, o INSS também incide sobre esses valores.
-                                </p>
-                            </Link>
                         </div>
                     </div>
                 </div>
 
                 <FAQ
                     items={INSS_FAQS}
-                    title="Dúvidas Frequentes sobre INSS"
+                    title="Perguntas Frequentes (FAQ)"
                     className="py-12"
                     showSocialProof={false}
                 />
