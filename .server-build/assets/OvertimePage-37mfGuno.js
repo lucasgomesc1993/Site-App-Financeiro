@@ -86,6 +86,12 @@ function OvertimePage() {
     "description": "Faça o cálculo de hora extra 50% e 100% com reflexo no DSR. Simule agora o valor real a receber na folha de pagamento com as regras da CLT.",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Any",
+    "featureList": [
+      "Cálculo de Hora Extra 50% e 100%",
+      "Reflexo no Descanso Semanal Remunerado (DSR)",
+      "Configuração de Jornada Mensal (220h, 200h, 180h)",
+      "Simulação de Salário Bruto com Adicionais"
+    ],
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -404,7 +410,7 @@ function OvertimePage() {
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "mt-6 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-center", children: [
-              /* @__PURE__ */ jsx("span", { className: "text-sm text-green-400 uppercase tracking-wider font-semibold", children: "Total Final Bruto" }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-green-400 uppercase tracking-wider font-semibold", children: "Total Extra a Receber" }),
               /* @__PURE__ */ jsxs("div", { className: "text-2xl font-bold text-white mt-1", children: [
                 "R$ 216,00 ",
                 /* @__PURE__ */ jsx("span", { className: "text-sm font-normal text-gray-400", children: "(R$ 180 + R$ 36)" })
@@ -482,4 +488,4 @@ function OvertimePage() {
 export {
   OvertimePage
 };
-//# sourceMappingURL=OvertimePage-D5i6dVO3.js.map
+//# sourceMappingURL=OvertimePage-37mfGuno.js.map
