@@ -366,7 +366,7 @@ export function INSSPage() {
                         </div>
 
                         <div className="mt-8 flex flex-col md:flex-row gap-4">
-                            <Link to="/calculadoras/salario-liquido" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-medium transition-colors">
+                            <Link to="/calculadoras/salario-liquido" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors">
                                 Ver Salário Líquido Completo <ArrowRight className="w-4 h-4" />
                             </Link>
                             <Link to="/calculadoras/custo-funcionario" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium transition-colors">
