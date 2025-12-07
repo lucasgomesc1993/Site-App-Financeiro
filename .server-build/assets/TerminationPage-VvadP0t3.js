@@ -182,44 +182,47 @@ function TerminationPage() {
           /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
             /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6 w-full", children: [
               /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Data de Admissão" }),
+                /* @__PURE__ */ jsx("label", { htmlFor: "startDate", className: "text-sm text-gray-400", children: "Data de Admissão" }),
                 /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                   /* @__PURE__ */ jsx(
                     "input",
                     {
+                      id: "startDate",
                       type: "date",
                       value: startDate,
                       onChange: (e) => setStartDate(e.target.value),
                       className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all [color-scheme:dark]"
                     }
                   ),
-                  /* @__PURE__ */ jsx(Calendar, { className: "absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" })
+                  /* @__PURE__ */ jsx(Calendar, { className: "absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" })
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Data de Afastamento" }),
+                /* @__PURE__ */ jsx("label", { htmlFor: "endDate", className: "text-sm text-gray-400", children: "Data de Afastamento" }),
                 /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                   /* @__PURE__ */ jsx(
                     "input",
                     {
+                      id: "endDate",
                       type: "date",
                       value: endDate,
                       onChange: (e) => setEndDate(e.target.value),
                       className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all [color-scheme:dark]"
                     }
                   ),
-                  /* @__PURE__ */ jsx(Calendar, { className: "absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" })
+                  /* @__PURE__ */ jsx(Calendar, { className: "absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" })
                 ] })
               ] })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
               /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Salário Bruto" }),
+                /* @__PURE__ */ jsx("label", { htmlFor: "salary", className: "text-sm text-gray-400", children: "Salário Bruto" }),
                 /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                  /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                  /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
                   /* @__PURE__ */ jsx(
                     "input",
                     {
+                      id: "salary",
                       type: "text",
                       inputMode: "decimal",
                       value: salary,
@@ -231,11 +234,12 @@ function TerminationPage() {
                 ] })
               ] }),
               /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Motivo" }),
+                /* @__PURE__ */ jsx("label", { htmlFor: "reason", className: "text-sm text-gray-400", children: "Motivo" }),
                 /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                   /* @__PURE__ */ jsxs(
                     "select",
                     {
+                      id: "reason",
                       value: reason,
                       onChange: (e) => setReason(e.target.value),
                       className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer",
@@ -247,17 +251,18 @@ function TerminationPage() {
                       ]
                     }
                   ),
-                  /* @__PURE__ */ jsx(AlertCircle, { className: "absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" })
+                  /* @__PURE__ */ jsx(AlertCircle, { className: "absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" })
                 ] })
               ] })
             ] }),
             (reason === "sem_justa_causa" || reason === "acordo") && /* @__PURE__ */ jsxs("div", { className: "space-y-2 animate-in fade-in slide-in-from-top-2 duration-300", children: [
-              /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Saldo do FGTS (para multa)" }),
+              /* @__PURE__ */ jsx("label", { htmlFor: "balanceFGTS", className: "text-sm text-gray-400", children: "Saldo do FGTS (para multa)" }),
               /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
                 /* @__PURE__ */ jsx(
                   "input",
                   {
+                    id: "balanceFGTS",
                     type: "text",
                     inputMode: "decimal",
                     value: balanceFGTS,
@@ -267,13 +272,13 @@ function TerminationPage() {
                   }
                 )
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500", children: "Informe o saldo total acumulado para cálculo correto da multa." })
+              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: "Informe o saldo total acumulado para cálculo correto da multa." })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "pt-2", children: [
               /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4", children: [
                 /* @__PURE__ */ jsx("span", { className: "text-sm text-blue-400 block mb-2", children: "Valor Bruto Estimado" }),
                 /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-white", children: result ? `R$ ${result.total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "R$ 0,00" }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs text-blue-300/60 mt-2", children: "*Sujeito a descontos de INSS/IRRF" })
+                /* @__PURE__ */ jsx("p", { className: "text-xs text-blue-300 mt-2", children: "*Sujeito a descontos de INSS/IRRF" })
               ] }),
               result && result.breakdown && /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 text-sm", children: [
                 result.breakdown.salaryBalance > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-3 rounded-lg bg-white/5 border border-white/5", children: [
@@ -549,4 +554,4 @@ function TerminationPage() {
 export {
   TerminationPage
 };
-//# sourceMappingURL=TerminationPage-CSdvyBYt.js.map
+//# sourceMappingURL=TerminationPage-VvadP0t3.js.map

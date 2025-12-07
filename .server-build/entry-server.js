@@ -1195,7 +1195,7 @@ const InvestmentPage = lazy(() => import("./assets/InvestmentPage-BT-JO0xG.js").
 const VacationPage = lazy(() => import("./assets/VacationPage-CeHO1yS3.js").then((module) => ({ default: module.VacationPage })));
 const EnergyPage = lazy(() => import("./assets/EnergyPage-3y5x0WLf.js").then((module) => ({ default: module.EnergyPage })));
 const FuelPage = lazy(() => import("./assets/FuelPage-C9FgdcRc.js").then((module) => ({ default: module.FuelPage })));
-const TerminationPage = lazy(() => import("./assets/TerminationPage-CSdvyBYt.js").then((module) => ({ default: module.TerminationPage })));
+const TerminationPage = lazy(() => import("./assets/TerminationPage-VvadP0t3.js").then((module) => ({ default: module.TerminationPage })));
 const INSSPage = lazy(() => import("./assets/INSSPage-Ns0l4MeJ.js").then((module) => ({ default: module.INSSPage })));
 const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-B291BSre.js").then((module) => ({ default: module.NetSalaryPage })));
 const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-lZeMrWLr.js").then((module) => ({ default: module.ThirteenthSalaryPage })));

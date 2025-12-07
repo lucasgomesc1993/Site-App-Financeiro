@@ -234,27 +234,29 @@ export function TerminationPage() {
                                 {/* Dates Row */}
                                 <div className="grid md:grid-cols-2 gap-6 w-full">
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Data de Admissão</label>
+                                        <label htmlFor="startDate" className="text-sm text-gray-400">Data de Admissão</label>
                                         <div className="relative">
                                             <input
+                                                id="startDate"
                                                 type="date"
                                                 value={startDate}
                                                 onChange={(e) => setStartDate(e.target.value)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all [color-scheme:dark]"
                                             />
-                                            <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                                            <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Data de Afastamento</label>
+                                        <label htmlFor="endDate" className="text-sm text-gray-400">Data de Afastamento</label>
                                         <div className="relative">
                                             <input
+                                                id="endDate"
                                                 type="date"
                                                 value={endDate}
                                                 onChange={(e) => setEndDate(e.target.value)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all [color-scheme:dark]"
                                             />
-                                            <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                                            <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
                                     </div>
                                 </div>
@@ -262,10 +264,11 @@ export function TerminationPage() {
                                 {/* Salary & Reason */}
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Salário Bruto</label>
+                                        <label htmlFor="salary" className="text-sm text-gray-400">Salário Bruto</label>
                                         <div className="relative">
-                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                             <input
+                                                id="salary"
                                                 type="text"
                                                 inputMode="decimal"
                                                 value={salary}
@@ -277,9 +280,10 @@ export function TerminationPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Motivo</label>
+                                        <label htmlFor="reason" className="text-sm text-gray-400">Motivo</label>
                                         <div className="relative">
                                             <select
+                                                id="reason"
                                                 value={reason}
                                                 onChange={(e) => setReason(e.target.value)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
@@ -289,7 +293,7 @@ export function TerminationPage() {
                                                 <option value="com_justa_causa">Justa Causa</option>
                                                 <option value="acordo">Acordo (Comum Acordo)</option>
                                             </select>
-                                            <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+                                            <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
                                     </div>
                                 </div>
@@ -297,10 +301,11 @@ export function TerminationPage() {
                                 {/* Conditional Fields */}
                                 {(reason === 'sem_justa_causa' || reason === 'acordo') && (
                                     <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                                        <label className="text-sm text-gray-400">Saldo do FGTS (para multa)</label>
+                                        <label htmlFor="balanceFGTS" className="text-sm text-gray-400">Saldo do FGTS (para multa)</label>
                                         <div className="relative">
-                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                             <input
+                                                id="balanceFGTS"
                                                 type="text"
                                                 inputMode="decimal"
                                                 value={balanceFGTS}
@@ -309,7 +314,7 @@ export function TerminationPage() {
                                                 placeholder="0,00"
                                             />
                                         </div>
-                                        <p className="text-xs text-gray-500">Informe o saldo total acumulado para cálculo correto da multa.</p>
+                                        <p className="text-xs text-gray-400">Informe o saldo total acumulado para cálculo correto da multa.</p>
                                     </div>
                                 )}
 
@@ -322,7 +327,7 @@ export function TerminationPage() {
                                         <span className="text-4xl font-bold text-white">
                                             {result ? `R$ ${result.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : 'R$ 0,00'}
                                         </span>
-                                        <p className="text-xs text-blue-300/60 mt-2">*Sujeito a descontos de INSS/IRRF</p>
+                                        <p className="text-xs text-blue-300 mt-2">*Sujeito a descontos de INSS/IRRF</p>
                                     </div>
 
                                     {result && result.breakdown && (
