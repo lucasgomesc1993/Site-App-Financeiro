@@ -66,24 +66,10 @@ export function NetSalaryPage() {
         const irrfBaseLegal = salary - inss - (deps * deductionPerDependent);
 
         // Simplified Discount (Standard R$ 564.80 replacing legal deductions if better)
-        // Rule: Taxpayer can choose Simplified Discount (R$ 564.80) OR (INSS + Dependents)
-        // Actually the rule allows replacing the specific deductions with a fixed discount of 25% of exemption range? 
-        // Current rule: Simplified Monthly Discount = R$ 564.80.
-        // It replaces the deductions (INSS, Dependents, Alimony).
-        // Wait, the simplified discount LIMITS the deduction. 
-        // Standard logic: Compare (Salary - INSS - Deps) vs (Salary - 564.80).
-        // The prompt says: "O sistema sempre aplicará o que for mais vantajoso para você."
-
-        // Let's implement the comparison correctly.
-        // Option A: Legal Deductions
         let irrfBaseA = salary - inss - (deps * deductionPerDependent);
-
-        // Option B: Simplified Discount
-        // The simplified discount of 564.80 REPLACES the deductions.
         let irrfBaseB = salary - 564.80;
 
-        // Use the smaller base (which leads to less tax), but base cannot be negative conceptually for tax lookup, 
-        // though standard calc handles it. Actually, we want the LARGEST deduction, i.e., SMALLEST Base.
+        // Use the smaller base (which leads to less tax)
         const irrfBase = Math.min(irrfBaseA, irrfBaseB);
 
         // 3. Calculate IRRF (2024 Table)
@@ -212,7 +198,7 @@ export function NetSalaryPage() {
                                 <div className="space-y-2">
                                     <label className="text-sm text-gray-400">Salário Bruto</label>
                                     <div className="relative">
-                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                         <input
                                             type="text"
                                             inputMode="decimal"
@@ -240,7 +226,7 @@ export function NetSalaryPage() {
                                     <div className="space-y-2">
                                         <label className="text-sm text-gray-400">Outros Descontos</label>
                                         <div className="relative">
-                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                             <input
                                                 type="text"
                                                 inputMode="decimal"
@@ -273,7 +259,7 @@ export function NetSalaryPage() {
                                         <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10">
                                             <span className="text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1">
                                                 INSS
-                                                <span className="text-xs text-gray-600">(Previdência)</span>
+                                                <span className="text-xs text-gray-400">(Previdência)</span>
                                             </span>
                                             <span className="text-lg font-bold text-red-400">
                                                 {result ? `- R$ ${result.inss.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
@@ -282,7 +268,7 @@ export function NetSalaryPage() {
                                         <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10">
                                             <span className="text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1">
                                                 IRRF
-                                                <span className="text-xs text-gray-600">(Imposto)</span>
+                                                <span className="text-xs text-gray-400">(Imposto)</span>
                                             </span>
                                             <span className="text-lg font-bold text-red-400">
                                                 {result ? `- R$ ${result.irrf.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
@@ -474,13 +460,13 @@ export function NetSalaryPage() {
 
                         <div className="grid md:grid-cols-2 gap-6">
                             <div className="bg-white/5 p-5 rounded-xl border border-white/5">
-                                <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                                <h3 className="font-bold text-white mb-2 flex items-center gap-2">
                                     <PiggyBank className="w-4 h-4 text-emerald-500" />
                                     Adicionais e Descontos
-                                </h4>
+                                </h3>
                                 <ul className="text-sm text-gray-400 space-y-2">
                                     <li>• <strong>Pensões e Planos de Saúde:</strong> Subtraídos do montante.</li>
-                                    <li>• <strong>Adicionais:</strong> <Link to="/calculadoras/horas-extras" className="text-emerald-400">Horas extras</Link> e <Link to="/calculadoras/adicional-noturno" className="text-emerald-400">Adicional noturno</Link> entram antes dos impostos.</li>
+                                    <li>• <strong>Adicionais:</strong> <Link to="/calculadoras/horas-extras" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Horas extras</Link> e <Link to="/calculadoras/adicional-noturno" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Adicional noturno</Link> entram antes dos impostos.</li>
                                 </ul>
                             </div>
                         </div>

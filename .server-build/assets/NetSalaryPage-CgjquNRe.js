@@ -168,7 +168,7 @@ function NetSalaryPage() {
             /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
               /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Salário Bruto" }),
               /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
                 /* @__PURE__ */ jsx(
                   "input",
                   {
@@ -201,7 +201,7 @@ function NetSalaryPage() {
               /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
                 /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Outros Descontos" }),
                 /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                  /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
+                  /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
                   /* @__PURE__ */ jsx(
                     "input",
                     {
@@ -229,14 +229,14 @@ function NetSalaryPage() {
                 /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10", children: [
                   /* @__PURE__ */ jsxs("span", { className: "text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1", children: [
                     "INSS",
-                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-600", children: "(Previdência)" })
+                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "(Previdência)" })
                   ] }),
                   /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-red-400", children: result ? `- R$ ${result.inss.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10", children: [
                   /* @__PURE__ */ jsxs("span", { className: "text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1", children: [
                     "IRRF",
-                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-600", children: "(Imposto)" })
+                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "(Imposto)" })
                   ] }),
                   /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-red-400", children: result ? `- R$ ${result.irrf.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" })
                 ] })
@@ -405,7 +405,7 @@ function NetSalaryPage() {
             ", pois a tributação sobre esses pagamentos ocorre de forma exclusiva na fonte."
           ] }),
           /* @__PURE__ */ jsx("div", { className: "grid md:grid-cols-2 gap-6", children: /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-5 rounded-xl border border-white/5", children: [
-            /* @__PURE__ */ jsxs("h4", { className: "font-bold text-white mb-2 flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxs("h3", { className: "font-bold text-white mb-2 flex items-center gap-2", children: [
               /* @__PURE__ */ jsx(PiggyBank, { className: "w-4 h-4 text-emerald-500" }),
               "Adicionais e Descontos"
             ] }),
@@ -419,9 +419,9 @@ function NetSalaryPage() {
                 "• ",
                 /* @__PURE__ */ jsx("strong", { children: "Adicionais:" }),
                 " ",
-                /* @__PURE__ */ jsx(Link, { to: "/calculadoras/horas-extras", className: "text-emerald-400", children: "Horas extras" }),
+                /* @__PURE__ */ jsx(Link, { to: "/calculadoras/horas-extras", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "Horas extras" }),
                 " e ",
-                /* @__PURE__ */ jsx(Link, { to: "/calculadoras/adicional-noturno", className: "text-emerald-400", children: "Adicional noturno" }),
+                /* @__PURE__ */ jsx(Link, { to: "/calculadoras/adicional-noturno", className: "text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30", children: "Adicional noturno" }),
                 " entram antes dos impostos."
               ] })
             ] })
@@ -449,4 +449,4 @@ function NetSalaryPage() {
 export {
   NetSalaryPage
 };
-//# sourceMappingURL=NetSalaryPage-BHpOaczY.js.map
+//# sourceMappingURL=NetSalaryPage-CgjquNRe.js.map
