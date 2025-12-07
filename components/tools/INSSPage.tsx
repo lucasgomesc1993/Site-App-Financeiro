@@ -189,12 +189,12 @@ export function INSSPage() {
                                 <div className="space-y-2">
                                     <label className="text-sm text-gray-400">Salário Bruto</label>
                                     <div className="relative">
-                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                         <input
                                             type="text"
                                             value={salary}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setSalary)}
-                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all"
                                             placeholder="0,00"
                                         />
                                     </div>
@@ -274,7 +274,7 @@ export function INSSPage() {
                                     <span className="text-lg font-bold text-blue-400">14%</span>
                                 </div>
                             </div>
-                            <p className="text-xs text-gray-500 mt-4 text-center">
+                            <p className="text-xs text-gray-400 mt-4 text-center">
                                 *O cálculo é feito por fatias. Quem ganha R$ 3.000 não paga 12% sobre tudo, mas sim a soma das alíquotas de cada faixa.
                             </p>
                         </div>
@@ -349,14 +349,14 @@ export function INSSPage() {
                         </p>
 
                         <div className="bg-white/5 p-6 rounded-xl border border-white/5 mb-6">
-                            <h4 className="text-lg font-bold text-white mb-2">Fórmula Simples:</h4>
+                            <h3 className="text-lg font-bold text-white mb-2">Fórmula Simples:</h3>
                             <code className="block bg-black/30 p-4 rounded-lg text-blue-300 font-mono text-sm md:text-base break-words">
                                 [Salário Bruto] x [Alíquota] - [Parcela a Deduzir] = Valor do INSS
                             </code>
                         </div>
 
                         <div className="space-y-4">
-                            <h4 className="text-lg font-bold text-white">Exemplo Prático: Salário de R$ 3.500,00</h4>
+                            <h3 className="text-lg font-bold text-white">Exemplo Prático: Salário de R$ 3.500,00</h3>
                             <ol className="list-decimal list-inside space-y-2 text-gray-400 ml-4">
                                 <li>Enquadra-se na 3ª faixa (12%).</li>
                                 <li>Multiplique: <span className="text-white">R$ 3.500,00 x 12% = R$ 420,00</span>.</li>
@@ -413,7 +413,7 @@ export function INSSPage() {
                                         <td className="p-3">R$ 166,98</td>
                                     </tr>
                                     <tr>
-                                        <td className="p-3 font-bold text-white"><Link to="/calculadoras/das-mei" className="text-blue-400 hover:underline">MEI</Link></td>
+                                        <td className="p-3 font-bold text-white"><Link to="/calculadoras/das-mei" className="text-blue-300 hover:text-blue-200 underline">MEI</Link></td>
                                         <td className="p-3 text-center font-bold text-blue-400">5%</td>
                                         <td className="p-3">Apenas sobre Salário Mínimo</td>
                                         <td className="p-3">R$ 75,90 (+ ISS/ICMS)</td>
@@ -434,8 +434,8 @@ export function INSSPage() {
                                     <span><strong>Código 1163:</strong> Contribuinte Individual - Plano Simplificado (11%)</span>
                                 </li>
                             </ul>
-                            <p className="mt-4 text-sm text-gray-500">
-                                Dúvida entre ser CLT ou PJ? Use nossa calculadora <Link to="/calculadoras/clt-vs-pj" className="text-blue-400 hover:underline">CLT vs PJ</Link> para comparar.
+                            <p className="mt-4 text-sm text-gray-400">
+                                Dúvida entre ser CLT ou PJ? Use nossa calculadora <Link to="/calculadoras/clt-vs-pj" className="text-blue-300 hover:text-blue-200 underline">CLT vs PJ</Link> para comparar.
                             </p>
                         </div>
                     </div>
@@ -483,14 +483,4 @@ export function INSSPage() {
             </div>
         </section >
     );
-}
-// Helper icon component since Info was not imported originally but used in new code
-function Info({ className }: { className?: string }) {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" x2="12" y1="16" y2="12" />
-            <line x1="12" x2="12.01" y1="8" y2="8" />
-        </svg>
-    )
 }

@@ -1,7 +1,6 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
 import { ShieldCheck, Calculator, AlertCircle, TrendingDown, Info, FileText, ArrowRight, DollarSign, CheckCircle } from "lucide-react";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { S as SEO } from "./SEO-Cm8ngfJd.js";
 import { B as Breadcrumb } from "./Breadcrumb-B-PV_K4y.js";
@@ -13,6 +12,7 @@ import "react-fast-compare";
 import "invariant";
 import "shallowequal";
 import "stream";
+import "framer-motion";
 const INSS_FAQS = [
   {
     question: "Qual o valor do teto do INSS em 2025?",
@@ -154,105 +154,87 @@ function INSSPage() {
         ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "grid lg:grid-cols-12 gap-8 mb-16", children: [
-        /* @__PURE__ */ jsx(
-          motion.div,
-          {
-            initial: { opacity: 0, x: -20 },
-            animate: { opacity: 1, x: 0 },
-            transition: { duration: 0.6, delay: 0.2 },
-            className: "lg:col-span-7",
-            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full", children: [
-              /* @__PURE__ */ jsx("div", { className: "flex items-center justify-between mb-8", children: /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold flex items-center gap-2 text-white", children: [
-                /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-blue-500" }),
-                "Calcular Desconto"
-              ] }) }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
-                /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Salário Bruto" }),
-                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
-                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-500", children: "R$" }),
-                    /* @__PURE__ */ jsx(
-                      "input",
-                      {
-                        type: "text",
-                        value: salary,
-                        onChange: (e) => handleCurrencyInput(e.target.value, setSalary),
-                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all",
-                        placeholder: "0,00"
-                      }
-                    )
-                  ] })
+        /* @__PURE__ */ jsx("div", { className: "lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full", children: [
+          /* @__PURE__ */ jsx("div", { className: "flex items-center justify-between mb-8", children: /* @__PURE__ */ jsxs("h2", { className: "text-xl font-semibold flex items-center gap-2 text-white", children: [
+            /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5 text-blue-500" }),
+            "Calcular Desconto"
+          ] }) }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-6", children: [
+            /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+              /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Salário Bruto" }),
+              /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
+                /* @__PURE__ */ jsx(
+                  "input",
+                  {
+                    type: "text",
+                    value: salary,
+                    onChange: (e) => handleCurrencyInput(e.target.value, setSalary),
+                    className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder:text-gray-600 focus:outline-none focus:border-blue-500/50 transition-all",
+                    placeholder: "0,00"
+                  }
+                )
+              ] })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "pt-6 border-t border-white/5", children: [
+              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-blue-400 block mb-2", children: "Valor do Desconto INSS" }),
+                /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-white", children: result ? `R$ ${result.discount.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5 text-center", children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400 block mb-1", children: "Alíquota Efetiva" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-xl font-bold text-white", children: result ? `${result.effectiveRate.toFixed(2)}%` : "---" })
                 ] }),
-                /* @__PURE__ */ jsxs("div", { className: "pt-6 border-t border-white/5", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-sm text-blue-400 block mb-2", children: "Valor do Desconto INSS" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-white", children: result ? `R$ ${result.discount.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" })
-                  ] }),
-                  /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-2 gap-4", children: [
-                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5 text-center", children: [
-                      /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400 block mb-1", children: "Alíquota Efetiva" }),
-                      /* @__PURE__ */ jsx("span", { className: "text-xl font-bold text-white", children: result ? `${result.effectiveRate.toFixed(2)}%` : "---" })
-                    ] }),
-                    /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5 text-center", children: [
-                      /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400 block mb-1", children: "Salário Pós-INSS" }),
-                      /* @__PURE__ */ jsx("span", { className: "text-xl font-bold text-white", children: result ? `R$ ${result.netSalary.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" })
-                    ] })
-                  ] }),
-                  result && result.range === 5 && /* @__PURE__ */ jsxs("div", { className: "mt-4 bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-xl flex items-start gap-2 text-left", children: [
-                    /* @__PURE__ */ jsx(AlertCircle, { className: "w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" }),
-                    /* @__PURE__ */ jsx("p", { className: "text-xs text-yellow-200/80", children: "Seu salário está acima do teto de R$ 8.157,41. O desconto é fixo no valor máximo de R$ 951,63." })
-                  ] })
+                /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-4 rounded-xl border border-white/5 text-center", children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400 block mb-1", children: "Salário Pós-INSS" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-xl font-bold text-white", children: result ? `R$ ${result.netSalary.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "---" })
                 ] })
+              ] }),
+              result && result.range === 5 && /* @__PURE__ */ jsxs("div", { className: "mt-4 bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-xl flex items-start gap-2 text-left", children: [
+                /* @__PURE__ */ jsx(AlertCircle, { className: "w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" }),
+                /* @__PURE__ */ jsx("p", { className: "text-xs text-yellow-200/80", children: "Seu salário está acima do teto de R$ 8.157,41. O desconto é fixo no valor máximo de R$ 951,63." })
               ] })
             ] })
-          }
-        ),
-        /* @__PURE__ */ jsx(
-          motion.div,
-          {
-            initial: { opacity: 0, x: 20 },
-            animate: { opacity: 1, x: 0 },
-            transition: { duration: 0.6, delay: 0.4 },
-            className: "lg:col-span-5 space-y-6",
-            children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full", children: [
-              /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-6 flex items-center gap-2 text-white", children: [
-                /* @__PURE__ */ jsx(TrendingDown, { className: "w-5 h-5 text-blue-500" }),
-                "Tabela INSS 2025 (CLT)"
+          ] })
+        ] }) }),
+        /* @__PURE__ */ jsx("div", { className: "lg:col-span-5 space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-400", children: /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 h-full", children: [
+          /* @__PURE__ */ jsxs("h3", { className: "text-lg font-semibold mb-6 flex items-center gap-2 text-white", children: [
+            /* @__PURE__ */ jsx(TrendingDown, { className: "w-5 h-5 text-blue-500" }),
+            "Tabela INSS 2025 (CLT)"
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
+            /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range === 1 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "Até R$ 1.518,00" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 1" })
               ] }),
-              /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-                /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range === 1 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "Até R$ 1.518,00" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 1" })
-                  ] }),
-                  /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "7,5%" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range === 2 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "R$ 1.518,01 a R$ 2.793,88" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 2" })
-                  ] }),
-                  /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "9%" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range === 3 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "R$ 2.793,89 a R$ 4.190,83" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 3" })
-                  ] }),
-                  /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "12%" })
-                ] }),
-                /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range >= 4 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
-                    /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "R$ 4.190,84 a R$ 8.157,41" }),
-                    /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 4" })
-                  ] }),
-                  /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "14%" })
-                ] })
+              /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "7,5%" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range === 2 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "R$ 1.518,01 a R$ 2.793,88" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 2" })
               ] }),
-              /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-500 mt-4 text-center", children: "*O cálculo é feito por fatias. Quem ganha R$ 3.000 não paga 12% sobre tudo, mas sim a soma das alíquotas de cada faixa." })
+              /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "9%" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range === 3 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "R$ 2.793,89 a R$ 4.190,83" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 3" })
+              ] }),
+              /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "12%" })
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: `flex justify-between items-center p-3 rounded-xl border ${result && result.range >= 4 ? "bg-blue-500/20 border-blue-500/50" : "bg-white/5 border-white/5"}`, children: [
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "R$ 4.190,84 a R$ 8.157,41" }),
+                /* @__PURE__ */ jsx("span", { className: "text-sm font-medium text-white", children: "Faixa 4" })
+              ] }),
+              /* @__PURE__ */ jsx("span", { className: "text-lg font-bold text-blue-400", children: "14%" })
             ] })
-          }
-        )
+          ] }),
+          /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400 mt-4 text-center", children: "*O cálculo é feito por fatias. Quem ganha R$ 3.000 não paga 12% sobre tudo, mas sim a soma das alíquotas de cada faixa." })
+        ] }) })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "space-y-12 mb-24", children: [
         /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-1 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-700", children: [
@@ -313,11 +295,11 @@ function INSSPage() {
           ] }),
           /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: 'O cálculo progressivo pode parecer complexo, mas existe um macete simples usando a "Parcela a Deduzir" da tabela acima.' }),
           /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-6 rounded-xl border border-white/5 mb-6", children: [
-            /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white mb-2", children: "Fórmula Simples:" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white mb-2", children: "Fórmula Simples:" }),
             /* @__PURE__ */ jsx("code", { className: "block bg-black/30 p-4 rounded-lg text-blue-300 font-mono text-sm md:text-base break-words", children: "[Salário Bruto] x [Alíquota] - [Parcela a Deduzir] = Valor do INSS" })
           ] }),
           /* @__PURE__ */ jsxs("div", { className: "space-y-4", children: [
-            /* @__PURE__ */ jsx("h4", { className: "text-lg font-bold text-white", children: "Exemplo Prático: Salário de R$ 3.500,00" }),
+            /* @__PURE__ */ jsx("h3", { className: "text-lg font-bold text-white", children: "Exemplo Prático: Salário de R$ 3.500,00" }),
             /* @__PURE__ */ jsxs("ol", { className: "list-decimal list-inside space-y-2 text-gray-400 ml-4", children: [
               /* @__PURE__ */ jsx("li", { children: "Enquadra-se na 3ª faixa (12%)." }),
               /* @__PURE__ */ jsxs("li", { children: [
@@ -371,7 +353,7 @@ function INSSPage() {
                 /* @__PURE__ */ jsx("td", { className: "p-3", children: "R$ 166,98" })
               ] }),
               /* @__PURE__ */ jsxs("tr", { children: [
-                /* @__PURE__ */ jsx("td", { className: "p-3 font-bold text-white", children: /* @__PURE__ */ jsx(Link, { to: "/calculadoras/das-mei", className: "text-blue-400 hover:underline", children: "MEI" }) }),
+                /* @__PURE__ */ jsx("td", { className: "p-3 font-bold text-white", children: /* @__PURE__ */ jsx(Link, { to: "/calculadoras/das-mei", className: "text-blue-300 hover:text-blue-200 underline", children: "MEI" }) }),
                 /* @__PURE__ */ jsx("td", { className: "p-3 text-center font-bold text-blue-400", children: "5%" }),
                 /* @__PURE__ */ jsx("td", { className: "p-3", children: "Apenas sobre Salário Mínimo" }),
                 /* @__PURE__ */ jsx("td", { className: "p-3", children: "R$ 75,90 (+ ISS/ICMS)" })
@@ -396,9 +378,9 @@ function INSSPage() {
                 ] })
               ] })
             ] }),
-            /* @__PURE__ */ jsxs("p", { className: "mt-4 text-sm text-gray-500", children: [
+            /* @__PURE__ */ jsxs("p", { className: "mt-4 text-sm text-gray-400", children: [
               "Dúvida entre ser CLT ou PJ? Use nossa calculadora ",
-              /* @__PURE__ */ jsx(Link, { to: "/calculadoras/clt-vs-pj", className: "text-blue-400 hover:underline", children: "CLT vs PJ" }),
+              /* @__PURE__ */ jsx(Link, { to: "/calculadoras/clt-vs-pj", className: "text-blue-300 hover:text-blue-200 underline", children: "CLT vs PJ" }),
               " para comparar."
             ] })
           ] })
@@ -441,4 +423,4 @@ function INSSPage() {
 export {
   INSSPage
 };
-//# sourceMappingURL=INSSPage-Di9GW-us.js.map
+//# sourceMappingURL=INSSPage-uk4ncunG.js.map
