@@ -1,6 +1,6 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
-import { Briefcase, Calculator, Calendar, AlertCircle, FileText, DollarSign, CheckCircle, XCircle, Clock } from "lucide-react";
+import { Briefcase, Calculator, Calendar, AlertCircle, CheckCircle, FileText, DollarSign, XCircle, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { S as SEO } from "./SEO-Cm8ngfJd.js";
 import { B as Breadcrumb } from "./Breadcrumb-B-PV_K4y.js";
@@ -41,7 +41,45 @@ function TerminationPage() {
   const [endDate, setEndDate] = useState("");
   const [reason, setReason] = useState("sem_justa_causa");
   const [balanceFGTS, setBalanceFGTS] = useState("");
+  const [hasExpiredVacation, setHasExpiredVacation] = useState(false);
   const [result, setResult] = useState(null);
+  const INSS_TABLE = [
+    { max: 1412, rate: 0.075, deduction: 0 },
+    { max: 2666.68, rate: 0.09, deduction: 21.18 },
+    { max: 4000.03, rate: 0.12, deduction: 101.18 },
+    { max: 7786.02, rate: 0.14, deduction: 181.18 }
+  ];
+  const IRRF_TABLE = [
+    { max: 2259.2, rate: 0, deduction: 0 },
+    { max: 2826.65, rate: 0.075, deduction: 169.44 },
+    { max: 3751.05, rate: 0.15, deduction: 381.44 },
+    { max: 4664.68, rate: 0.225, deduction: 662.77 },
+    { max: Infinity, rate: 0.275, deduction: 896 }
+  ];
+  const calculateINSS = (value) => {
+    let discount = 0;
+    let taxableValue = value;
+    if (taxableValue > 7786.02) taxableValue = 7786.02;
+    for (let i = 0; i < INSS_TABLE.length; i++) {
+      const range = INSS_TABLE[i];
+      const prevMax = i === 0 ? 0 : INSS_TABLE[i - 1].max;
+      if (taxableValue > prevMax) {
+        const base = Math.min(taxableValue, range.max) - prevMax;
+        discount += base * range.rate;
+      }
+    }
+    return discount;
+  };
+  const calculateIRRF = (value, dependents = 0) => {
+    const deductionPerDependent = 189.59;
+    const taxableBase = value - dependents * deductionPerDependent;
+    for (const range of IRRF_TABLE) {
+      if (taxableBase <= range.max) {
+        return taxableBase * range.rate - range.deduction;
+      }
+    }
+    return 0;
+  };
   const calculate = () => {
     const sal = parseFloat(salary.replace(/\./g, "").replace(",", "."));
     const fgts = parseFloat(balanceFGTS.replace(/\./g, "").replace(",", ".") || "0");
@@ -59,50 +97,73 @@ function TerminationPage() {
     const diffDays = Math.ceil(diffTime / (1e3 * 60 * 60 * 24));
     const yearsWorked = Math.floor(diffDays / 365);
     const monthsWorkedTotal = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
-    let total = 0;
+    let totalGross = 0;
+    let totalDiscounts = 0;
     const breakdown = {};
     new Date(end.getFullYear(), end.getMonth() + 1, 0).getDate();
     const lastDay = end.getDate();
-    if (lastDay === 31) breakdown.salaryBalance = sal;
+    if (lastDay === 31 || end.getMonth() === 1 && lastDay >= 28) breakdown.salaryBalance = sal;
     else breakdown.salaryBalance = sal / 30 * lastDay;
-    total += breakdown.salaryBalance;
+    totalGross += breakdown.salaryBalance;
+    const inssSalary = calculateINSS(breakdown.salaryBalance);
+    breakdown.inssSalary = inssSalary;
+    totalDiscounts += inssSalary;
+    const irrfSalaryBase = breakdown.salaryBalance - inssSalary;
+    const irrfSalary = Math.max(0, calculateIRRF(irrfSalaryBase));
+    breakdown.irrfSalary = irrfSalary;
+    totalDiscounts += irrfSalary;
     let noticeDays = 30;
     if (yearsWorked >= 1) noticeDays += yearsWorked * 3;
     if (noticeDays > 90) noticeDays = 90;
     if (reason === "sem_justa_causa") {
       breakdown.noticeIndemnified = sal / 30 * noticeDays;
-      total += breakdown.noticeIndemnified;
+      totalGross += breakdown.noticeIndemnified;
     } else if (reason === "acordo") {
       breakdown.noticeIndemnified = sal / 30 * noticeDays / 2;
-      total += breakdown.noticeIndemnified;
+      totalGross += breakdown.noticeIndemnified;
     }
     const currentPeriodMonths = monthsWorkedTotal % 12;
     const accruedVacation = sal / 12 * currentPeriodMonths;
     const vacationThird = accruedVacation / 3;
     breakdown.vacationProportional = accruedVacation;
     breakdown.vacationThird = vacationThird;
+    if (hasExpiredVacation) {
+      breakdown.vacationExpired = sal;
+      breakdown.vacationExpiredThird = sal / 3;
+    } else {
+      breakdown.vacationExpired = 0;
+      breakdown.vacationExpiredThird = 0;
+    }
     if (reason !== "justa_causa") {
-      total += breakdown.vacationProportional + breakdown.vacationThird;
+      totalGross += breakdown.vacationProportional + breakdown.vacationThird + breakdown.vacationExpired + breakdown.vacationExpiredThird;
     }
     let monthsInYear = end.getMonth() + 1;
     if (end.getDate() < 15) monthsInYear -= 1;
     const thirteenth = sal / 12 * monthsInYear;
     breakdown.thirteenthProportional = thirteenth;
     if (reason !== "justa_causa") {
-      total += breakdown.thirteenthProportional;
+      totalGross += breakdown.thirteenthProportional;
+      const inss13 = calculateINSS(thirteenth);
+      breakdown.inss13 = inss13;
+      totalDiscounts += inss13;
+      const irrf13Base = thirteenth - inss13;
+      const irrf13 = Math.max(0, calculateIRRF(irrf13Base));
+      breakdown.irrf13 = irrf13;
+      totalDiscounts += irrf13;
     }
     if (reason === "sem_justa_causa") {
       breakdown.fgtsFine = fgts * 0.4;
-      total += breakdown.fgtsFine;
+      totalGross += breakdown.fgtsFine;
     } else if (reason === "acordo") {
       breakdown.fgtsFine = fgts * 0.2;
-      total += breakdown.fgtsFine;
+      totalGross += breakdown.fgtsFine;
     }
-    setResult({ total, breakdown });
+    const totalNet = totalGross - totalDiscounts;
+    setResult({ totalGross, totalNet, totalDiscounts, breakdown });
   };
   useEffect(() => {
     calculate();
-  }, [salary, startDate, endDate, reason, balanceFGTS]);
+  }, [salary, startDate, endDate, reason, balanceFGTS, hasExpiredVacation]);
   const formatCurrency = (value) => {
     const number = value.replace(/\D/g, "");
     return (Number(number) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
@@ -123,7 +184,8 @@ function TerminationPage() {
       "Cálculo de Rescisão CLT 2025",
       "Simulação de Multa do FGTS (40%)",
       "Cálculo de Férias e 13º Proporcionais",
-      "Aviso Prévio Indenizado"
+      "Aviso Prévio Indenizado",
+      "Cálculo de Descontos INSS e IRRF"
     ],
     "offers": {
       "@type": "Offer",
@@ -255,6 +317,10 @@ function TerminationPage() {
                 ] })
               ] })
             ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 cursor-pointer hover:bg-white/10 transition-colors", onClick: () => setHasExpiredVacation(!hasExpiredVacation), children: [
+              /* @__PURE__ */ jsx("div", { className: `w-5 h-5 rounded border flex items-center justify-center transition-all ${hasExpiredVacation ? "bg-blue-500 border-blue-500" : "border-gray-500"}`, children: hasExpiredVacation && /* @__PURE__ */ jsx(CheckCircle, { className: "w-3.5 h-3.5 text-white" }) }),
+              /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Possui férias vencidas (1 ano)?" })
+            ] }),
             (reason === "sem_justa_causa" || reason === "acordo") && /* @__PURE__ */ jsxs("div", { className: "space-y-2 animate-in fade-in slide-in-from-top-2 duration-300", children: [
               /* @__PURE__ */ jsx("label", { htmlFor: "balanceFGTS", className: "text-sm text-gray-400", children: "Saldo do FGTS (para multa)" }),
               /* @__PURE__ */ jsxs("div", { className: "relative", children: [
@@ -275,10 +341,19 @@ function TerminationPage() {
               /* @__PURE__ */ jsx("p", { className: "text-xs text-gray-400", children: "Informe o saldo total acumulado para cálculo correto da multa." })
             ] }),
             /* @__PURE__ */ jsxs("div", { className: "pt-2", children: [
-              /* @__PURE__ */ jsxs("div", { className: "bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4", children: [
-                /* @__PURE__ */ jsx("span", { className: "text-sm text-blue-400 block mb-2", children: "Valor Bruto Estimado" }),
-                /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-white", children: result ? `R$ ${result.total.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "R$ 0,00" }),
-                /* @__PURE__ */ jsx("p", { className: "text-xs text-blue-300 mt-2", children: "*Sujeito a descontos de INSS/IRRF" })
+              /* @__PURE__ */ jsxs("div", { className: "bg-gradient-to-br from-blue-500/10 to-indigo-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4", children: [
+                /* @__PURE__ */ jsx("span", { className: "text-sm text-blue-400 block mb-2", children: "Valor Líquido Estimado" }),
+                /* @__PURE__ */ jsx("span", { className: "text-4xl font-bold text-white", children: result ? `R$ ${result.totalNet.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "R$ 0,00" }),
+                result && /* @__PURE__ */ jsxs("div", { className: "flex justify-center gap-4 mt-3 text-xs", children: [
+                  /* @__PURE__ */ jsxs("span", { className: "text-gray-400", children: [
+                    "Bruto: R$ ",
+                    result.totalGross.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                  ] }),
+                  /* @__PURE__ */ jsxs("span", { className: "text-red-400", children: [
+                    "Descontos: R$ ",
+                    result.totalDiscounts.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                  ] })
+                ] })
               ] }),
               result && result.breakdown && /* @__PURE__ */ jsxs("div", { className: "grid grid-cols-1 gap-3 text-sm", children: [
                 result.breakdown.salaryBalance > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-3 rounded-lg bg-white/5 border border-white/5", children: [
@@ -288,18 +363,53 @@ function TerminationPage() {
                     result.breakdown.salaryBalance.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
                   ] })
                 ] }),
+                result.breakdown.inssSalary > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400", children: [
+                  /* @__PURE__ */ jsx("span", { children: "- INSS (Sobre Salário)" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    "R$ ",
+                    result.breakdown.inssSalary.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                  ] })
+                ] }),
+                result.breakdown.irrfSalary > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400", children: [
+                  /* @__PURE__ */ jsx("span", { children: "- IRRF (Sobre Salário)" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    "R$ ",
+                    result.breakdown.irrfSalary.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                  ] })
+                ] }),
                 result.breakdown.vacationProportional > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-3 rounded-lg bg-white/5 border border-white/5", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-gray-300", children: "Férias + 1/3" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-gray-300", children: "Férias + 1/3 (Prop)" }),
                   /* @__PURE__ */ jsxs("span", { className: "text-white font-medium", children: [
                     "R$ ",
                     (result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString("pt-BR", { minimumFractionDigits: 2 })
                   ] })
                 ] }),
+                result.breakdown.vacationExpired > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-3 rounded-lg bg-white/5 border border-white/5", children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-gray-300", children: "Férias Vencidas + 1/3" }),
+                  /* @__PURE__ */ jsxs("span", { className: "text-white font-medium", children: [
+                    "R$ ",
+                    (result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                  ] })
+                ] }),
                 result.breakdown.thirteenthProportional > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-3 rounded-lg bg-white/5 border border-white/5", children: [
-                  /* @__PURE__ */ jsx("span", { className: "text-gray-300", children: "13º Salário Proporcional" }),
+                  /* @__PURE__ */ jsx("span", { className: "text-gray-300", children: "13º Salário Prop." }),
                   /* @__PURE__ */ jsxs("span", { className: "text-white font-medium", children: [
                     "R$ ",
                     result.breakdown.thirteenthProportional.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                  ] })
+                ] }),
+                result.breakdown.inss13 > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400", children: [
+                  /* @__PURE__ */ jsx("span", { children: "- INSS (Sobre 13º)" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    "R$ ",
+                    result.breakdown.inss13.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
+                  ] })
+                ] }),
+                result.breakdown.irrf13 > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400", children: [
+                  /* @__PURE__ */ jsx("span", { children: "- IRRF (Sobre 13º)" }),
+                  /* @__PURE__ */ jsxs("span", { children: [
+                    "R$ ",
+                    result.breakdown.irrf13.toLocaleString("pt-BR", { minimumFractionDigits: 2 })
                   ] })
                 ] }),
                 result.breakdown.noticeIndemnified > 0 && /* @__PURE__ */ jsxs("div", { className: "flex justify-between p-3 rounded-lg bg-white/5 border border-white/5", children: [
@@ -554,4 +664,4 @@ function TerminationPage() {
 export {
   TerminationPage
 };
-//# sourceMappingURL=TerminationPage-VvadP0t3.js.map
+//# sourceMappingURL=TerminationPage-CX6eZgej.js.map

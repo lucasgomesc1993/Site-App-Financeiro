@@ -36,9 +36,62 @@ export function TerminationPage() {
     const [endDate, setEndDate] = useState('');
     const [reason, setReason] = useState('sem_justa_causa');
     const [balanceFGTS, setBalanceFGTS] = useState('');
+    const [hasExpiredVacation, setHasExpiredVacation] = useState(false);
 
     // States for results
-    const [result, setResult] = useState<{ total: number; breakdown: any } | null>(null);
+    const [result, setResult] = useState<{
+        totalGross: number;
+        totalNet: number;
+        totalDiscounts: number;
+        breakdown: any
+    } | null>(null);
+
+    // 2024/2025 Tables (Approximation for 2025 based on current trends/2024 active)
+    const INSS_TABLE = [
+        { max: 1412.00, rate: 0.075, deduction: 0 },
+        { max: 2666.68, rate: 0.09, deduction: 21.18 },
+        { max: 4000.03, rate: 0.12, deduction: 101.18 },
+        { max: 7786.02, rate: 0.14, deduction: 181.18 },
+    ];
+
+    const IRRF_TABLE = [
+        { max: 2259.20, rate: 0, deduction: 0 },
+        { max: 2826.65, rate: 0.075, deduction: 169.44 },
+        { max: 3751.05, rate: 0.15, deduction: 381.44 },
+        { max: 4664.68, rate: 0.225, deduction: 662.77 },
+        { max: Infinity, rate: 0.275, deduction: 896.00 },
+    ];
+
+    const calculateINSS = (value: number) => {
+        let discount = 0;
+        let taxableValue = value;
+
+        // Capped at ceiling
+        if (taxableValue > 7786.02) taxableValue = 7786.02;
+
+        for (let i = 0; i < INSS_TABLE.length; i++) {
+            const range = INSS_TABLE[i];
+            const prevMax = i === 0 ? 0 : INSS_TABLE[i - 1].max;
+
+            if (taxableValue > prevMax) {
+                const base = Math.min(taxableValue, range.max) - prevMax;
+                discount += base * range.rate;
+            }
+        }
+        return discount;
+    };
+
+    const calculateIRRF = (value: number, dependents = 0) => {
+        const deductionPerDependent = 189.59;
+        const taxableBase = value - (dependents * deductionPerDependent);
+
+        for (const range of IRRF_TABLE) {
+            if (taxableBase <= range.max) {
+                return (taxableBase * range.rate) - range.deduction;
+            }
+        }
+        return 0; // Should be covered by Infinity
+    };
 
     const calculate = () => {
         const sal = parseFloat(salary.replace(/\./g, '').replace(',', '.'));
@@ -58,28 +111,36 @@ export function TerminationPage() {
         }
 
         // Logic estimation
-        // Time worked in years, months
         const diffTime = Math.abs(end.getTime() - start.getTime());
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         const yearsWorked = Math.floor(diffDays / 365);
         const monthsWorkedTotal = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
 
-        // This is a simplified calculation for the "Simulator"
-        // Real implementation would need precise rules for fractions of 15 days
-
-        let total = 0;
+        let totalGross = 0;
+        let totalDiscounts = 0;
         const breakdown: any = {};
 
         // 1. Saldo de Salário
-        // Days worked in last month
         const daysInLastMonth = new Date(end.getFullYear(), end.getMonth() + 1, 0).getDate();
         const lastDay = end.getDate();
-        // CLT usually uses 30 days base or actual days depending on convention
-        // Adjust for 30 days base commercial
-        if (lastDay === 31) breakdown.salaryBalance = sal;
+
+        // Logic: Pay 30 days if full month, otherwise days worked
+        if (lastDay === 31 || (end.getMonth() === 1 && lastDay >= 28)) breakdown.salaryBalance = sal;
         else breakdown.salaryBalance = (sal / 30) * lastDay;
 
-        total += breakdown.salaryBalance;
+        totalGross += breakdown.salaryBalance;
+
+        // INSS on Salary Balance
+        const inssSalary = calculateINSS(breakdown.salaryBalance);
+        breakdown.inssSalary = inssSalary;
+        totalDiscounts += inssSalary;
+
+        // IRRF on Salary Balance (Simplified: Base = Saldo - INSS)
+        const irrfSalaryBase = breakdown.salaryBalance - inssSalary;
+        const irrfSalary = Math.max(0, calculateIRRF(irrfSalaryBase));
+        breakdown.irrfSalary = irrfSalary;
+        totalDiscounts += irrfSalary;
+
 
         // 2. Aviso Prévio
         let noticeDays = 30; // Min
@@ -88,16 +149,14 @@ export function TerminationPage() {
 
         if (reason === 'sem_justa_causa') {
             breakdown.noticeIndemnified = (sal / 30) * noticeDays;
-            total += breakdown.noticeIndemnified;
+            totalGross += breakdown.noticeIndemnified;
         } else if (reason === 'acordo') {
             breakdown.noticeIndemnified = ((sal / 30) * noticeDays) / 2; // Half notice
-            total += breakdown.noticeIndemnified;
+            totalGross += breakdown.noticeIndemnified;
         }
+        // Notice Indemnified is Exempt from INSS and usually IRRF.
 
         // 3. Férias
-        // Assuming current period has N months
-        // Logic simplified: Proportional vacation = months worked in current cycle * 1/12
-        // We will just estimate based on months mod 12
         const currentPeriodMonths = monthsWorkedTotal % 12;
         const accruedVacation = (sal / 12) * currentPeriodMonths;
         const vacationThird = accruedVacation / 3;
@@ -105,38 +164,59 @@ export function TerminationPage() {
         breakdown.vacationProportional = accruedVacation;
         breakdown.vacationThird = vacationThird;
 
-        if (reason !== 'justa_causa') {
-            total += breakdown.vacationProportional + breakdown.vacationThird;
+        // Expired Vacation
+        if (hasExpiredVacation) {
+            breakdown.vacationExpired = sal;
+            breakdown.vacationExpiredThird = sal / 3;
+        } else {
+            breakdown.vacationExpired = 0;
+            breakdown.vacationExpiredThird = 0;
         }
 
+        if (reason !== 'justa_causa') {
+            totalGross += breakdown.vacationProportional + breakdown.vacationThird + breakdown.vacationExpired + breakdown.vacationExpiredThird;
+        }
+        // Vacations are Indemnified -> Exempt from INSS/IRRF in Rescission (usually)
+
         // 4. 13º Salário
-        // Months worked in current YEAR
         let monthsInYear = end.getMonth() + 1;
-        // If fired before 15th, month doesn't count. Simplified.
         if (end.getDate() < 15) monthsInYear -= 1;
 
         const thirteenth = (sal / 12) * monthsInYear;
         breakdown.thirteenthProportional = thirteenth;
 
         if (reason !== 'justa_causa') {
-            total += breakdown.thirteenthProportional;
+            totalGross += breakdown.thirteenthProportional;
+
+            // INSS on 13th
+            const inss13 = calculateINSS(thirteenth);
+            breakdown.inss13 = inss13;
+            totalDiscounts += inss13;
+
+            // IRRF on 13th (Exclusive)
+            const irrf13Base = thirteenth - inss13;
+            const irrf13 = Math.max(0, calculateIRRF(irrf13Base));
+            breakdown.irrf13 = irrf13;
+            totalDiscounts += irrf13;
         }
 
         // 5. FGTS Fine
         if (reason === 'sem_justa_causa') {
             breakdown.fgtsFine = fgts * 0.40;
-            total += breakdown.fgtsFine;
+            totalGross += breakdown.fgtsFine;
         } else if (reason === 'acordo') {
             breakdown.fgtsFine = fgts * 0.20;
-            total += breakdown.fgtsFine;
+            totalGross += breakdown.fgtsFine;
         }
 
-        setResult({ total, breakdown });
+        const totalNet = totalGross - totalDiscounts;
+
+        setResult({ totalGross, totalNet, totalDiscounts, breakdown });
     };
 
     useEffect(() => {
         calculate();
-    }, [salary, startDate, endDate, reason, balanceFGTS]);
+    }, [salary, startDate, endDate, reason, balanceFGTS, hasExpiredVacation]);
 
     const formatCurrency = (value: string) => {
         const number = value.replace(/\D/g, '');
@@ -160,7 +240,8 @@ export function TerminationPage() {
             "Cálculo de Rescisão CLT 2025",
             "Simulação de Multa do FGTS (40%)",
             "Cálculo de Férias e 13º Proporcionais",
-            "Aviso Prévio Indenizado"
+            "Aviso Prévio Indenizado",
+            "Cálculo de Descontos INSS e IRRF"
         ],
         "offers": {
             "@type": "Offer",
@@ -298,6 +379,15 @@ export function TerminationPage() {
                                     </div>
                                 </div>
 
+                                {/* Expired Vacation Checkbox */}
+                                <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 cursor-pointer hover:bg-white/10 transition-colors" onClick={() => setHasExpiredVacation(!hasExpiredVacation)}>
+                                    <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${hasExpiredVacation ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
+                                        {hasExpiredVacation && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                                    </div>
+                                    <span className="text-sm text-gray-300">Possui férias vencidas (1 ano)?</span>
+                                </div>
+
+
                                 {/* Conditional Fields */}
                                 {(reason === 'sem_justa_causa' || reason === 'acordo') && (
                                     <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
@@ -320,14 +410,20 @@ export function TerminationPage() {
 
                                 {/* Result Block */}
                                 <div className="pt-2">
-                                    <div className="bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4">
+                                    <div className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4">
                                         <span className="text-sm text-blue-400 block mb-2">
-                                            Valor Bruto Estimado
+                                            Valor Líquido Estimado
                                         </span>
                                         <span className="text-4xl font-bold text-white">
-                                            {result ? `R$ ${result.total.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : 'R$ 0,00'}
+                                            {result ? `R$ ${result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : 'R$ 0,00'}
                                         </span>
-                                        <p className="text-xs text-blue-300 mt-2">*Sujeito a descontos de INSS/IRRF</p>
+
+                                        {result && (
+                                            <div className="flex justify-center gap-4 mt-3 text-xs">
+                                                <span className="text-gray-400">Bruto: R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                <span className="text-red-400">Descontos: R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {result && result.breakdown && (
@@ -338,18 +434,52 @@ export function TerminationPage() {
                                                     <span className="text-white font-medium">R$ {result.breakdown.salaryBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                 </div>
                                             )}
+                                            {result.breakdown.inssSalary > 0 && (
+                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                    <span>- INSS (Sobre Salário)</span>
+                                                    <span>R$ {result.breakdown.inssSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            )}
+                                            {result.breakdown.irrfSalary > 0 && (
+                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                    <span>- IRRF (Sobre Salário)</span>
+                                                    <span>R$ {result.breakdown.irrfSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            )}
+
                                             {(result.breakdown.vacationProportional > 0) && (
                                                 <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">Férias + 1/3</span>
+                                                    <span className="text-gray-300">Férias + 1/3 (Prop)</span>
                                                     <span className="text-white font-medium">R$ {(result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                 </div>
                                             )}
+
+                                            {(result.breakdown.vacationExpired > 0) && (
+                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                    <span className="text-gray-300">Férias Vencidas + 1/3</span>
+                                                    <span className="text-white font-medium">R$ {(result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            )}
+
                                             {(result.breakdown.thirteenthProportional > 0) && (
                                                 <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">13º Salário Proporcional</span>
+                                                    <span className="text-gray-300">13º Salário Prop.</span>
                                                     <span className="text-white font-medium">R$ {result.breakdown.thirteenthProportional.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                 </div>
                                             )}
+                                            {result.breakdown.inss13 > 0 && (
+                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                    <span>- INSS (Sobre 13º)</span>
+                                                    <span>R$ {result.breakdown.inss13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            )}
+                                            {result.breakdown.irrf13 > 0 && (
+                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                    <span>- IRRF (Sobre 13º)</span>
+                                                    <span>R$ {result.breakdown.irrf13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            )}
+
                                             {result.breakdown.noticeIndemnified > 0 && (
                                                 <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
                                                     <span className="text-gray-300">Aviso Prévio Indenizado</span>
