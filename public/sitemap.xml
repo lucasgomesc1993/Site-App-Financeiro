@@ -252,11 +252,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://junny.com.br/calculadoras/tijolos-pisos</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://junny.com.br/calculadoras/uber-ou-carro</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
