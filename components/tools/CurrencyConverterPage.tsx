@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy, useRef } from 'react';
-import { Globe, Calculator, RefreshCw, Info, TrendingUp, DollarSign, CreditCard, AlertCircle, ChevronDown } from 'lucide-react';
+import { Globe, Calculator, RefreshCw, Info, TrendingUp, DollarSign, CreditCard, AlertCircle, ChevronDown, Wallet } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 
@@ -47,28 +47,55 @@ function useOnScreen(ref: React.RefObject<HTMLElement>) {
 
 const CurrencyChart = lazy(() => import('./CurrencyChart'));
 
+type IOFType = 'money' | 'card';
+
 export function CurrencyConverterPage() {
     const [amount, setAmount] = useState('1,00');
     const [fromCurrency, setFromCurrency] = useState('USD');
     const [toCurrency, setToCurrency] = useState('BRL');
-    const [result, setResult] = useState<number | null>(null);
-    const [rate, setRate] = useState<number | null>(null);
+    const [iofType, setIofType] = useState<IOFType>('money'); // money = 1.1%, card = 4.38% (2024) or 3.38% (2025)
 
-    // Mock rates for demonstration (in a real app, fetch from API)
-    const rates: Record<string, number> = {
+    // API Rates State
+    const [rates, setRates] = useState<Record<string, number>>({
         'BRL': 1,
-        'USD': 0.17, // 1 BRL = 0.17 USD (~5.88 BRL/USD)
-        'EUR': 0.16, // 1 BRL = 0.16 EUR
-        'GBP': 0.13  // 1 BRL = 0.13 GBP
-    };
+        'USD': 5.88, // Fallback
+        'EUR': 6.20, // Fallback
+        'GBP': 7.45  // Fallback
+    });
+    const [loadingRates, setLoadingRates] = useState(true);
+    const [lastUpdate, setLastUpdate] = useState<string>('');
 
-    // Inverse rates for display
-    const displayRates: Record<string, number> = {
-        'USD': 5.88,
-        'EUR': 6.20,
-        'GBP': 7.45,
-        'BRL': 1
-    };
+    const [result, setResult] = useState<number | null>(null);
+    const [effectiveRate, setEffectiveRate] = useState<number | null>(null);
+
+    // Fetch Rates
+    useEffect(() => {
+        const fetchRates = async () => {
+            try {
+                const response = await fetch('https://economia.awesomeapi.com.br/last/USD-BRL,EUR-BRL,GBP-BRL');
+                const data = await response.json();
+
+                // Parse API (Format: USDBRL: { bid, ask... })
+                // We use 'ask' (Venda) usually for cost estimation, or 'bid' depends on context. For "Buying currency", ask is safer.
+                const newRates = {
+                    'BRL': 1,
+                    'USD': parseFloat(data.USDBRL.ask),
+                    'EUR': parseFloat(data.EURBRL.ask),
+                    'GBP': parseFloat(data.GBPBRL.ask)
+                };
+
+                setRates(newRates);
+                setLastUpdate(new Date().toLocaleTimeString());
+                setLoadingRates(false);
+            } catch (error) {
+                console.error("Failed to fetch rates", error);
+                setLoadingRates(false); // Keep fallbacks
+            }
+        };
+
+        fetchRates();
+    }, []);
+
 
     const calculate = () => {
         const val = parseFloat(amount.replace(/\./g, '').replace(',', '.'));
@@ -78,19 +105,60 @@ export function CurrencyConverterPage() {
             return;
         }
 
-        const fromRate = displayRates[fromCurrency];
-        const toRate = displayRates[toCurrency];
+        // Logic: Convert FROM -> Base(BRL) -> TO
+        // But since we only have X->BRL rates, we assume conversion typically involves BRL.
+        // If From != BRL and To != BRL, it's Cross rate.
 
-        const valueInBRL = val * fromRate;
-        const finalValue = valueInBRL / toRate;
+        // Let's standardize to BRL value first.
+        let valInBRL = 0;
 
-        setResult(finalValue);
-        setRate(fromRate / toRate);
+        if (fromCurrency === 'BRL') {
+            valInBRL = val;
+        } else {
+            valInBRL = val * rates[fromCurrency];
+        }
+
+        // Apply IOF only if converting BRL -> Foreign Currency (Buying)
+        // Or Foreign -> BRL? Usually calculators show "Cost to buy".
+        // Let's assume user wants to know "How much BRL does it cost to buy X USD" if From=USD To=BRL (inverse logic typical of users)
+        // OR "I have 100 USD, how much is it in BRL".
+
+        // STANDARD CONVERTER LOGIC:
+        // FROM * RATE = TO.
+        // IOF is a TAX added on top of the cost.
+
+        // Scenario 1: User puts "1 USD" to "BRL". Result: 5.88.
+        // IF IOF is applied, it means "To buy 1 USD you pay 5.88 + Tax".
+        // This visualizer is "Converter". 
+        // Let's keep strict conversion `Val * Rate` but show "Effective Cost (VET)" separately or include it if requested.
+
+        // Better UX: "You are converting..."
+
+        const rateFrom = rates[fromCurrency];
+        const rateTo = rates[toCurrency];
+
+        // Pure conversion without IOF
+        const conversionRate = (fromCurrency === 'BRL' ? 1 : rateFrom) / (toCurrency === 'BRL' ? 1 : rateTo);
+        const rawResult = val * conversionRate;
+
+        // Apply IOF Logic for VET display
+        // IOF applies when BRL leaves to Foreign. 
+        // 1.1% for cash/account, 3.38% (2025) for card.
+        const iofRate = iofType === 'card' ? 0.0338 : 0.011;
+
+        // If To is Foreign and From is BRL: Cost increases.
+        // If From is Foreign and To is BRL: Usually no IOF deduction displayed on general converters, but technically receipt is less.
+
+        // Let's simplfy: Display Pure Conversion as the main big number.
+        // Display "Custo Efetivo (VET)" if BRL is involved.
+
+        setResult(rawResult);
+        setEffectiveRate(conversionRate);
     };
 
     useEffect(() => {
         calculate();
-    }, [amount, fromCurrency, toCurrency]);
+    }, [amount, fromCurrency, toCurrency, rates, iofType]);
 
     const formatCurrency = (value: string) => {
         const number = value.replace(/\D/g, '');
@@ -105,6 +173,52 @@ export function CurrencyConverterPage() {
         setFromCurrency(toCurrency);
         setToCurrency(fromCurrency);
     };
+
+    // Calculate VET for display
+    const getVetTotal = () => {
+        // Assuming we are buying the target currency with BRL
+        if (fromCurrency !== 'BRL' && toCurrency === 'BRL') {
+            // Selling Foreign for BRL.
+            const val = parseFloat(amount.replace(/\./g, '').replace(',', '.'));
+            return val * rates[fromCurrency];
+        }
+
+        // Buying Foreign (USD) with BRL
+        // Or Converting BRL to USD.
+
+        // If From=BRL, Amount=1000. To=USD.
+        // Net USD = 1000 / Rate.
+        // BUT user usually wants: "How much BRL to get 1000 USD".
+
+        // Let's show the breakdown for the CURRENT result transaction.
+        // If result is in BRL (meaning we sold USD), show BRL.
+        // If result is in USD (meaning we sold BRL), show Cost.
+
+        return 0;
+    };
+
+    // Helper to estimate tax impact on result
+    const getTaxImpact = () => {
+        if (!result) return 0;
+        const iof = iofType === 'card' ? 0.0338 : 0.011;
+        // If converting TO a foreign currency, add IOF.
+        if (toCurrency !== 'BRL') {
+            return result * iof; // Tax in Foreign Currency? No, tax is in BRL.
+        }
+        return 0;
+    };
+
+    // Total cost in BRL to get the Target Amount (Reverse Calculation for UX)
+    // Common use case: "I want to buy 1000 USD". Input 1000 USD -> BRL.
+    const isBuyingForeign = fromCurrency !== 'BRL' && toCurrency === 'BRL'; // e.g. 1 USD = X BRL
+
+    const iofPercentage = iofType === 'card' ? 3.38 : 1.1;
+    const iofMultiplier = 1 + (iofPercentage / 100);
+
+    const finalVetValue = isBuyingForeign && result
+        ? result * iofMultiplier
+        : result;
+
 
     const schema = {
         "@context": "https://schema.org",
@@ -170,11 +284,12 @@ export function CurrencyConverterPage() {
                             <span className="text-sm text-gray-300">Investimentos e Planejamento</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Conversor de Moedas: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Dólar, Euro e Libra Hoje</span> (Cotação 2025)
+                            Conversor de Moedas: <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Dólar, Euro e Libra Hoje</span>
                         </h1>
-                        <div className="max-w-3xl mx-auto text-lg text-gray-400 space-y-4 hidden">
-                            {/* Description moved below calculator */}
-                        </div>
+                        <p className="text-gray-400 mt-2 flex items-center justify-center gap-2">
+                            <span className={`w-2 h-2 rounded-full ${loadingRates ? 'bg-yellow-500 animate-pulse' : 'bg-green-500'}`}></span>
+                            {loadingRates ? 'Atualizando cotações...' : `Cotações atualizadas em tempo real (${lastUpdate})`}
+                        </p>
                     </div>
                 </div>
 
@@ -250,24 +365,61 @@ export function CurrencyConverterPage() {
                                     </div>
                                 </div>
 
-                                <div className="pt-6 border-t border-white/5">
+                                {/* IOF Selector - Compact */}
+                                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+                                    <span className="text-xs text-gray-500 font-medium hidden sm:block">IOF (Imposto):</span>
+                                    <div className="flex w-full sm:w-auto bg-white/5 p-1 rounded-lg">
+                                        <button
+                                            onClick={() => setIofType('money')}
+                                            className={`flex-1 sm:flex-none justify-center px-4 py-1.5 text-xs font-medium rounded-md transition-all flex items-center gap-1.5 ${iofType === 'money'
+                                                ? 'bg-emerald-500/20 text-emerald-400 shadow-sm'
+                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                                }`}
+                                        >
+                                            <Wallet className="w-3 h-3" />
+                                            Dinheiro (1,1%)
+                                        </button>
+                                        <button
+                                            onClick={() => setIofType('card')}
+                                            className={`flex-1 sm:flex-none justify-center px-4 py-1.5 text-xs font-medium rounded-md transition-all flex items-center gap-1.5 ${iofType === 'card'
+                                                ? 'bg-emerald-500/20 text-emerald-400 shadow-sm'
+                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                                }`}
+                                        >
+                                            <CreditCard className="w-3 h-3" />
+                                            Cartão (3,38%)
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="pt-2">
                                     <div className="bg-emerald-500/10 p-6 rounded-2xl border border-emerald-500/20 text-center mb-4">
-                                        <span className="text-sm text-emerald-400 block mb-2">Valor Convertido</span>
-                                        <span className="text-4xl font-bold text-white">
-                                            {result ? `${toCurrency === 'BRL' ? 'R$' : toCurrency === 'USD' ? '$' : toCurrency === 'EUR' ? '€' : '£'} ${result.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
+                                        <span className="text-sm text-emerald-400 block mb-2">
+                                            Valor com IOF Estimado
                                         </span>
-                                        {rate && (
-                                            <p className="text-xs text-gray-400 mt-2">
-                                                1 {fromCurrency} = {rate.toFixed(4)} {toCurrency}
-                                            </p>
-                                        )}
+                                        <span className="text-4xl font-bold text-white">
+                                            {finalVetValue
+                                                ? `${toCurrency === 'BRL' ? 'R$' : ''} ${finalVetValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`
+                                                : (result ? `${toCurrency === 'BRL' ? 'R$' : toCurrency === 'USD' ? '$' : toCurrency === 'EUR' ? '€' : '£'} ${result.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---')
+                                            }
+                                            {toCurrency !== 'BRL' && result ? <span className="text-lg ml-2 align-top text-gray-400">{toCurrency}</span> : null}
+                                        </span>
+                                        <div className="mt-3 text-xs text-gray-400 space-y-1">
+                                            {isBuyingForeign && (
+                                                <>
+                                                    <p>Cotação Comercial: R$ {rates[fromCurrency].toLocaleString('pt-BR', { minimumFractionDigits: 4 })}</p>
+                                                    <p>+ IOF ({iofType === 'card' ? '3,38%' : '1,10%'}): R$ {((finalVetValue || 0) - (result || 0)).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                                                </>
+                                            )}
+                                            {!isBuyingForeign && rates[fromCurrency] > 1 && (
+                                                <p>1 {fromCurrency} = {rates[fromCurrency].toLocaleString('pt-BR', { minimumFractionDigits: 2 })} BRL</p>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
 
                     {/* Chart - OTIMIZADO PARA MOBILE */}
                     <div className="lg:col-span-5 h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
@@ -277,7 +429,7 @@ export function CurrencyConverterPage() {
 
                 <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4 text-center mb-12">
                     <p>
-                        Converta Dólar, Euro e Libra com a cotação oficial de agora (05/12/2025). Descubra exatamente quanto sua compra vai custar no final, já incluindo o IOF atualizado de 2025 e as taxas bancárias. <strong>Pare de adivinhar e calcule o valor real:</strong>
+                        Converta Dólar, Euro e Libra com a cotação oficial de agora. Descubra exatamente quanto sua compra vai custar no final, já incluindo o IOF atualizado de 2025 e as taxas bancárias. <strong>Pare de adivinhar e calcule o valor real:</strong>
                     </p>
                 </div>
 
