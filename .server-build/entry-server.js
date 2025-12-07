@@ -1197,7 +1197,7 @@ const EnergyPage = lazy(() => import("./assets/EnergyPage-3y5x0WLf.js").then((mo
 const FuelPage = lazy(() => import("./assets/FuelPage-C9FgdcRc.js").then((module) => ({ default: module.FuelPage })));
 const TerminationPage = lazy(() => import("./assets/TerminationPage-CRP__Yi1.js").then((module) => ({ default: module.TerminationPage })));
 const INSSPage = lazy(() => import("./assets/INSSPage-Ns0l4MeJ.js").then((module) => ({ default: module.INSSPage })));
-const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-B291BSre.js").then((module) => ({ default: module.NetSalaryPage })));
+const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-BHpOaczY.js").then((module) => ({ default: module.NetSalaryPage })));
 const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-lZeMrWLr.js").then((module) => ({ default: module.ThirteenthSalaryPage })));
 const OvertimePage = lazy(() => import("./assets/OvertimePage-B9ZsDXzn.js").then((module) => ({ default: module.OvertimePage })));
 const UnemploymentInsurancePage = lazy(() => import("./assets/UnemploymentInsurancePage-Bu4nmuf7.js").then((module) => ({ default: module.UnemploymentInsurancePage })));

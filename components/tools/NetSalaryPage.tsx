@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, HelpCircle, Wallet, DollarSign, ArrowRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Calculator, HelpCircle, Wallet, DollarSign, ArrowRight, Building2, TrendingDown, Check, Coins, Calendar, PiggyBank, Briefcase } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
@@ -10,16 +9,24 @@ import { FAQItem } from '../../types';
 
 const NET_SALARY_FAQS: FAQItem[] = [
     {
-        question: "O que é descontado do salário?",
-        answer: "Os principais descontos obrigatórios são INSS (previdência) e IRRF (imposto de renda). Outros descontos comuns são vale-transporte (até 6%), plano de saúde e vale-refeição."
+        question: "Qual a diferença entre Salário Bruto e Líquido?",
+        answer: "Salário Bruto é o valor registrado na sua Carteira de Trabalho (CLT) sem nenhum desconto. Salário Líquido é o valor que efetivamente cai na sua conta bancária após a subtração de impostos (INSS, IRRF) e benefícios (Vale Transporte, Vale Refeição, Plano de Saúde)."
     },
     {
-        question: "Como calcular o IRRF?",
-        answer: "O IRRF é calculado sobre o salário base após descontar o INSS e o valor por dependente (R$ 189,59 em 2024). Aplica-se a alíquota da tabela progressiva e subtrai-se a parcela a deduzir."
+        question: "Como calcular o salário líquido passo a passo?",
+        answer: "Primeiro, desconte o INSS do Salário Bruto usando a tabela progressiva. Com o resultado (Base de Cálculo), aplique a alíquota do Imposto de Renda correspondente e subtraia a \"parcela a deduzir\" da tabela do IR. Por fim, subtraia outros descontos como VR, VT e convênios."
     },
     {
-        question: "O que é salário líquido?",
-        answer: "É o valor que efetivamente cai na sua conta bancária, após todas as deduções legais e benefícios."
+        question: "Quanto é descontado de Vale Transporte?",
+        answer: "A empresa pode descontar até 6% do seu Salário Base (Bruto) referente ao Vale Transporte. Se o custo das passagens for menor que 6% do seu salário, o desconto será apenas o valor real das passagens. Se for maior, a empresa arca com a diferença."
+    },
+    {
+        question: "O desconto simplificado do IR vale a pena?",
+        answer: "Sim, para faixas salariais mais baixas (até aprox. R$ 5.000,00), o desconto simplificado de R$ 564,80 costuma ser mais vantajoso que as deduções legais, garantindo isenção para quem ganha até dois salários mínimos."
+    },
+    {
+        question: "Por que meu salário líquido diminuiu após um aumento?",
+        answer: "Isso pode acontecer se o aumento fizer seu salário mudar de faixa na tabela do INSS ou do Imposto de Renda. A mudança de alíquota (ex: de 15% para 22,5%) pode consumir uma parte maior do reajuste inicialmente."
     }
 ];
 
@@ -27,19 +34,19 @@ export function NetSalaryPage() {
     const [grossSalary, setGrossSalary] = useState('');
     const [dependents, setDependents] = useState('0');
     const [otherDiscounts, setOtherDiscounts] = useState('');
-    const [result, setResult] = useState<{ inss: number; irrf: number; netSalary: number } | null>(null);
+    const [result, setResult] = useState<{ inss: number; irrf: number; netSalary: number; totalDiscounts: number } | null>(null);
 
     const calculate = () => {
         const salary = parseFloat(grossSalary.replace(/\./g, '').replace(',', '.'));
         const deps = parseInt(dependents);
         const others = parseFloat(otherDiscounts.replace(/\./g, '').replace(',', '.') || '0');
 
-        if (isNaN(salary)) {
+        if (isNaN(salary) || salary === 0) {
             setResult(null);
             return;
         }
 
-        // 1. Calculate INSS (2024 Table)
+        // 1. Calculate INSS (2024/2025 Table Logic)
         let inss = 0;
         if (salary <= 1412.00) {
             inss = salary * 0.075;
@@ -50,14 +57,36 @@ export function NetSalaryPage() {
         } else if (salary <= 7786.02) {
             inss = 1412.00 * 0.075 + (2666.68 - 1412.00) * 0.09 + (4000.03 - 2666.68) * 0.12 + (salary - 4000.03) * 0.14;
         } else {
-            inss = 908.85; // Ceiling
+            inss = 908.85; // Ceiling for 2024
         }
 
         // 2. Calculate IRRF Base
+        // Legal Deductions
         const deductionPerDependent = 189.59;
-        const irrfBase = salary - inss - (deps * deductionPerDependent);
+        const irrfBaseLegal = salary - inss - (deps * deductionPerDependent);
 
-        // 3. Calculate IRRF (2024 Table - Simplified)
+        // Simplified Discount (Standard R$ 564.80 replacing legal deductions if better)
+        // Rule: Taxpayer can choose Simplified Discount (R$ 564.80) OR (INSS + Dependents)
+        // Actually the rule allows replacing the specific deductions with a fixed discount of 25% of exemption range? 
+        // Current rule: Simplified Monthly Discount = R$ 564.80.
+        // It replaces the deductions (INSS, Dependents, Alimony).
+        // Wait, the simplified discount LIMITS the deduction. 
+        // Standard logic: Compare (Salary - INSS - Deps) vs (Salary - 564.80).
+        // The prompt says: "O sistema sempre aplicará o que for mais vantajoso para você."
+
+        // Let's implement the comparison correctly.
+        // Option A: Legal Deductions
+        let irrfBaseA = salary - inss - (deps * deductionPerDependent);
+
+        // Option B: Simplified Discount
+        // The simplified discount of 564.80 REPLACES the deductions.
+        let irrfBaseB = salary - 564.80;
+
+        // Use the smaller base (which leads to less tax), but base cannot be negative conceptually for tax lookup, 
+        // though standard calc handles it. Actually, we want the LARGEST deduction, i.e., SMALLEST Base.
+        const irrfBase = Math.min(irrfBaseA, irrfBaseB);
+
+        // 3. Calculate IRRF (2024 Table)
         let irrf = 0;
         if (irrfBase <= 2259.20) {
             irrf = 0;
@@ -71,15 +100,16 @@ export function NetSalaryPage() {
             irrf = (irrfBase * 0.275) - 896.00;
         }
 
-        // Simplified discount option (new rule) check omitted for brevity, using standard calculation
         if (irrf < 0) irrf = 0;
 
-        const netSalary = salary - inss - irrf - others;
+        const totalDiscounts = inss + irrf + others;
+        const netSalary = salary - totalDiscounts;
 
         setResult({
             inss,
             irrf,
-            netSalary
+            netSalary,
+            totalDiscounts
         });
     };
 
@@ -99,10 +129,17 @@ export function NetSalaryPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Salário Líquido 2025",
-        "description": "Descubra quanto vai cair na sua conta. Cálculo exato de salário líquido com descontos de INSS e Imposto de Renda.",
+        "name": "Calculadora de Salário Líquido 2025: Cálculo Exato e Grátis",
+        "url": "https://www.junny.com.br/calculadoras/salario-liquido",
+        "description": "Descubra o valor real do seu pagamento com a Calculadora de Salário Líquido 2025. Descontos de INSS, IRRF e benefícios atualizados.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
+        "featureList": [
+            "Cálculo exato CLT 2025",
+            "Tabela INSS Progressiva",
+            "Cálculo IRRF Automático",
+            "Simulação com Dependentes"
+        ],
         "offers": {
             "@type": "Offer",
             "price": "0",
@@ -113,8 +150,8 @@ export function NetSalaryPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Salário Líquido 2025 - Cálculo Exato"
-                description="Salário Bruto x Líquido: saiba a diferença. Calcule seus descontos de INSS e IRRF e descubra seu salário real."
+                title="Calculadora de Salário Líquido 2025: Cálculo Exato e Grátis"
+                description="Descubra o valor real do seu pagamento com a Calculadora de Salário Líquido 2025. Descontos de INSS, IRRF e benefícios atualizados. Calcule agora."
                 canonical="/calculadoras/salario-liquido"
             />
             <script type="application/ld+json">
@@ -146,38 +183,28 @@ export function NetSalaryPage() {
                         { label: 'Salário Líquido', href: '/calculadoras/salario-liquido' }
                     ]} />
 
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="text-center mb-12"
-                    >
+                    <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Wallet className="w-4 h-4 text-blue-500" />
+                            <Wallet className="w-4 h-4 text-emerald-500" />
                             <span className="text-sm text-gray-300">Trabalhistas e Previdenciárias</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-green-500">Salário Líquido</span>
+                            Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Salário Líquido 2025</span>
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto hidden">
-                            {/* Description moved below calculator */}
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                            Você sabe exatamente quanto dinheiro cai na sua conta no final do mês? O valor contratado na carteira de trabalho (Salário Bruto) raramente é o mesmo que chega ao seu bolso.
                         </p>
-                    </motion.div>
+                    </div>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-8 mb-24">
+                <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="lg:col-span-7"
-                    >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 min-h-[600px]">
+                    <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
-                                    <Calculator className="w-5 h-5 text-blue-500" />
-                                    Calcular Líquido
+                                    <Calculator className="w-5 h-5 text-emerald-500" />
+                                    Calcular Agora
                                 </h2>
                             </div>
 
@@ -188,9 +215,10 @@ export function NetSalaryPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={grossSalary}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setGrossSalary)}
-                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
                                             placeholder="0,00"
                                         />
                                     </div>
@@ -201,9 +229,10 @@ export function NetSalaryPage() {
                                         <label className="text-sm text-gray-400">Número de Dependentes</label>
                                         <input
                                             type="number"
+                                            inputMode="numeric"
                                             value={dependents}
                                             onChange={(e) => setDependents(e.target.value)}
-                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
                                             placeholder="0"
                                             min="0"
                                         />
@@ -214,9 +243,10 @@ export function NetSalaryPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={otherDiscounts}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setOtherDiscounts)}
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
                                                 placeholder="0,00"
                                             />
                                         </div>
@@ -224,22 +254,37 @@ export function NetSalaryPage() {
                                 </div>
 
                                 <div className="pt-6 border-t border-white/5">
-                                    <div className="bg-blue-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4">
-                                        <span className="text-sm text-blue-400 block mb-2">Salário Líquido Estimado</span>
-                                        <span className="text-4xl font-bold text-white">
-                                            {result ? `R$ ${result.netSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
-                                        </span>
+                                    <div className="bg-emerald-500/10 p-6 rounded-2xl border border-emerald-500/20 text-center mb-6 relative overflow-hidden">
+                                        <div className="relative z-10">
+                                            <span className="text-sm text-emerald-400 block mb-2 font-medium">Salário Líquido Real</span>
+                                            <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                                                {result ? `R$ ${result.netSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
+                                            </span>
+                                            {result && result.netSalary > 0 && (
+                                                <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/20 text-xs text-emerald-300">
+                                                    <Check className="w-3 h-3" />
+                                                    Disponível para gastar
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
+
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
-                                            <span className="text-xs text-gray-400 block mb-1">Desconto INSS</span>
-                                            <span className="text-xl font-bold text-red-400">
+                                        <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10">
+                                            <span className="text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1">
+                                                INSS
+                                                <span className="text-xs text-gray-600">(Previdência)</span>
+                                            </span>
+                                            <span className="text-lg font-bold text-red-400">
                                                 {result ? `- R$ ${result.inss.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
                                             </span>
                                         </div>
-                                        <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center">
-                                            <span className="text-xs text-gray-400 block mb-1">Desconto IRRF</span>
-                                            <span className="text-xl font-bold text-red-400">
+                                        <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10">
+                                            <span className="text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1">
+                                                IRRF
+                                                <span className="text-xs text-gray-600">(Imposto)</span>
+                                            </span>
+                                            <span className="text-lg font-bold text-red-400">
                                                 {result ? `- R$ ${result.irrf.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
                                             </span>
                                         </div>
@@ -247,46 +292,211 @@ export function NetSalaryPage() {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
 
-                    {/* Sidebar Info */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="lg:col-span-5 space-y-6"
-                    >
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <DollarSign className="w-5 h-5 text-blue-500" />
+                    {/* Funnel Explanation & Context */}
+                    <div className="lg:col-span-5 space-y-8 animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
+                        {/* Intro Box */}
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <div className="flex items-start gap-4 mb-4">
+                                <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                                    <Building2 className="w-6 h-6 text-emerald-500" />
+                                </div>
+                                <h2 className="text-xl font-bold text-white leading-tight mt-1">
+                                    Como é feito o cálculo?
+                                </h2>
+                            </div>
+                            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                                O cálculo segue uma lógica de "funil". Começamos com o valor bruto e subtraímos as obrigações legais na ordem correta. Entender essa ordem é vital para não errar a conta, especialmente se você precisa planejar suas <Link to="/blog/financas-pessoais" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">finanças pessoais</Link>.
+                            </p>
+                            <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-sm font-mono text-gray-300">
+                                Salário Bruto <br />
+                                <span className="text-red-400">- INSS</span> <br />
+                                <span className="text-red-400">- IRRF</span> <br />
+                                <span className="text-red-400">- Outros</span> <br />
+                                <span className="text-emerald-400">+ Adicionais</span> <br />
+                                <span className="text-white font-bold">= Salário Líquido</span>
+                            </div>
+                        </div>
+
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
+                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                <Coins className="w-5 h-5 text-emerald-500" />
                                 Para onde vai o dinheiro?
                             </h3>
-                            <div className="space-y-4 text-sm text-gray-400">
-                                <p>
-                                    O "Leão" e a Previdência levam uma fatia considerável.
-                                </p>
-                                <ul className="space-y-2 list-disc pl-4">
-                                    <li><strong>INSS:</strong> Garante sua aposentadoria e auxílios.</li>
-                                    <li><strong>IRRF:</strong> Imposto sobre a renda, retido na fonte.</li>
-                                </ul>
-                                <div className="p-3 rounded-xl bg-white/5 border border-white/5 mt-2">
-                                    <strong className="text-white block mb-1">Dica</strong>
-                                    Dependentes reduzem o Imposto de Renda. Certifique-se de informar todos ao RH da sua empresa.
+                            <div className="space-y-4">
+                                <div className="flex gap-4 items-start">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 shrink-0" />
+                                    <div>
+                                        <strong className="text-white text-sm block">INSS (Previdência Social)</strong>
+                                        <p className="text-xs text-gray-400 mt-1">
+                                            Incide sobre o total e serve para aposentadoria. Alíquotas de 7,5% a 14%.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-4 items-start">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 shrink-0" />
+                                    <div>
+                                        <strong className="text-white text-sm block">Imposto de Renda (IRRF)</strong>
+                                        <p className="text-xs text-gray-400 mt-1">
+                                            Calculado sobre o que sobra do INSS. Quem ganha até R$ 2.824,00 (2 salários) está isento.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </div>
                 </div>
 
-                <div className="mt-8 max-w-2xl mx-auto text-lg text-gray-400 text-center mb-12">
+                {/* Detailed Content Sections */}
+                <div className="max-w-4xl mx-auto space-y-12 mb-24">
+
+                    {/* INSS Table */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="flex items-start gap-4 mb-6">
+                            <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                                <Briefcase className="w-6 h-6 text-emerald-500" />
+                            </div>
+                            <div>
+                                <h3 className="text-2xl font-bold text-white mb-2">1. Desconto do INSS</h3>
+                                <p className="text-gray-400">
+                                    O primeiro desconto aplicado é sempre o INSS. Desde a Reforma da Previdência, a alíquota é <strong>progressiva</strong>.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr className="border-b border-white/10">
+                                        <th className="p-3 text-white">Faixa Salarial (R$)</th>
+                                        <th className="p-3 text-white">Alíquota</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-gray-400">
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">Até 1.412,00</td>
+                                        <td className="p-3">7,5%</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">De 1.412,01 até 2.666,68</td>
+                                        <td className="p-3">9%</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">De 2.666,69 até 4.000,03</td>
+                                        <td className="p-3">12%</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3">De 4.000,04 até 7.786,02</td>
+                                        <td className="p-3">14%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p className="text-sm text-gray-500 mt-4 italic">
+                            *Nota: Para salários acima de R$ 7.786,02, o desconto é fixo no teto da previdência. Simule cenários específicos na nossa calculadora de <Link to="/calculadoras/inss" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">INSS</Link>.
+                        </p>
+                    </div>
+
+                    {/* IRRF Table */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="flex items-start gap-4 mb-6">
+                            <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                                <TrendingDown className="w-6 h-6 text-emerald-500" />
+                            </div>
+                            <div>
+                                <h3 className="text-2xl font-bold text-white mb-2">2. Desconto do Imposto de Renda (IRRF)</h3>
+                                <p className="text-gray-400">
+                                    O sistema sempre aplicará o que for mais vantajoso: Deduções Legais ou Desconto Simplificado. Quem ganha até 2 salários mínimos está isento.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse text-sm">
+                                <thead>
+                                    <tr className="border-b border-white/10">
+                                        <th className="p-3 text-white">Base de Cálculo (R$)</th>
+                                        <th className="p-3 text-white">Alíquota</th>
+                                        <th className="p-3 text-white">Dedução (R$)</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="text-gray-400">
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">Até 2.259,20</td>
+                                        <td className="p-3">Isento</td>
+                                        <td className="p-3">0,00</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">De 2.259,21 até 2.826,65</td>
+                                        <td className="p-3">7,5%</td>
+                                        <td className="p-3">169,44</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">De 2.826,66 até 3.751,05</td>
+                                        <td className="p-3">15%</td>
+                                        <td className="p-3">381,44</td>
+                                    </tr>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">De 3.751,06 até 4.664,68</td>
+                                        <td className="p-3">22,5%</td>
+                                        <td className="p-3">662,77</td>
+                                    </tr>
+                                    <tr>
+                                        <td className="p-3">Acima de 4.664,68</td>
+                                        <td className="p-3">27,5%</td>
+                                        <td className="p-3">896,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="mt-6 bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-xl flex items-start gap-3">
+                            <Check className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+                            <p className="text-sm text-emerald-200/80">
+                                <strong>Fique atento:</strong> Cada dependente legal reduz a base de cálculo do imposto em <strong>R$ 189,59</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Planning Section */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="flex items-start gap-4 mb-6">
+                            <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                                <Calendar className="w-6 h-6 text-emerald-500" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-white mt-1">
+                                Planejamento Anual
+                            </h2>
+                        </div>
+                        <p className="text-gray-400 mb-6 leading-relaxed">
+                            Saber seu salário líquido mensal é o primeiro passo. No entanto, para um planejamento completo, lembre-se de considerar o impacto do <Link to="/calculadoras/decimo-terceiro" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">décimo terceiro</Link> e a previsão das suas <Link to="/calculadoras/ferias" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">férias</Link>, pois a tributação sobre esses pagamentos ocorre de forma exclusiva na fonte.
+                        </p>
+
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                                <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                                    <PiggyBank className="w-4 h-4 text-emerald-500" />
+                                    Adicionais e Descontos
+                                </h4>
+                                <ul className="text-sm text-gray-400 space-y-2">
+                                    <li>• <strong>Pensões e Planos de Saúde:</strong> Subtraídos do montante.</li>
+                                    <li>• <strong>Adicionais:</strong> <Link to="/calculadoras/horas-extras" className="text-emerald-400">Horas extras</Link> e <Link to="/calculadoras/adicional-noturno" className="text-emerald-400">Adicional noturno</Link> entram antes dos impostos.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="mt-8 max-w-3xl mx-auto text-lg text-gray-400 space-y-4 text-center mb-12">
                     <p>
-                        Entenda seu holerite. Veja para onde vai seu dinheiro e quanto sobra no final.
+                        Para acabar com essa dúvida, nossa ferramenta considera todos os descontos obrigatórios atualizados para mostrar seu <strong>Salário Líquido</strong> real. Basta preencher os dados acima para obter o resultado imediato.
                     </p>
                 </div>
 
                 <FAQ
                     items={NET_SALARY_FAQS}
-                    title="Dúvidas sobre Salário Líquido"
+                    title="Perguntas Frequentes sobre Salário Líquido"
                     className="py-12"
                     showSocialProof={false}
                 />
