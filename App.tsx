@@ -67,6 +67,7 @@ const StoriesGallery = lazy(() => import('./components/StoriesGallery').then(mod
 const BlogIndex = lazy(() => import('./pages/blog/BlogIndex').then(module => ({ default: module.BlogIndex })));
 const CategoryPage = lazy(() => import('./pages/blog/CategoryPage').then(module => ({ default: module.CategoryPage })));
 const BlogPost = lazy(() => import('./pages/blog/BlogPost').then(module => ({ default: module.BlogPost })));
+const AuthorPage = lazy(() => import('./pages/AuthorPage').then(module => ({ default: module.AuthorPage })));
 const NotFound = lazy(() => import('./components/NotFound').then(module => ({ default: module.NotFound })));
 const CalculatorLayout = lazy(() => import('./components/CalculatorLayout').then(module => ({ default: module.CalculatorLayout })));
 
@@ -145,6 +146,7 @@ function App() {
                 <Route path="/blog" element={<BlogIndex />} />
                 <Route path="/blog/:category/:slug" element={<BlogPost />} />
                 <Route path="/blog/:categorySlug" element={<CategoryPage />} />
+                <Route path="/autor" element={<AuthorPage />} />
                 <Route path="/stories/:storyId" element={<WebStoryPage />} />
                 <Route path="/stories" element={<StoriesGallery />} />
                 <Route path="/terms" element={<Terms />} />

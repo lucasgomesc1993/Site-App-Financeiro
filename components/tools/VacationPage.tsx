@@ -4,8 +4,29 @@ import { Plane } from 'lucide-react';
 import { VacationCalculator } from './VacationCalculator';
 import { Breadcrumb } from '../Breadcrumb';
 import { SEO } from '../SEO';
+import { FAQ } from '../FAQ';
+import { FAQItem } from '../../types';
 
 const AppPromoBanner = lazy(() => import('../AppPromoBanner').then(module => ({ default: module.AppPromoBanner })));
+
+const VACATION_FAQS: FAQItem[] = [
+    {
+        question: "O que compõe o cálculo de férias?",
+        answer: "O cálculo envolve: Salário Bruto (incluindo médias de horas extras e comissões), o acréscimo de 1/3 Constitucional (33,33% sobre o valor), a opção de Abono Pecuniário (venda de 10 dias) e os descontos de INSS e IRRF."
+    },
+    {
+        question: "É vantajoso vender 10 dias de férias (Abono)?",
+        answer: "Financeiramente sim, pois você recebe pelos dias trabalhados + o valor da venda dos dias de férias (com 1/3). É uma renda extra significativa, mas deve-se pesar a necessidade de descanso."
+    },
+    {
+        question: "Quando o pagamento deve ser feito?",
+        answer: "A empresa deve pagar as férias até 2 dias úteis antes do início do descanso. Se houver atraso, a lei determina o pagamento em dobro."
+    },
+    {
+        question: "Como funcionam os descontos de INSS e IRRF nas férias?",
+        answer: "As férias são tributadas separadamente do salário do mês. O INSS segue a tabela progressiva e o Imposto de Renda é retido na fonte se o valor ultrapassar o limite de isenção."
+    }
+];
 
 export const VacationPage: React.FC = () => {
     const schema = {
@@ -32,6 +53,21 @@ export const VacationPage: React.FC = () => {
             <script type="application/ld+json">
                 {JSON.stringify(schema)}
             </script>
+            <script type="application/ld+json">
+                {JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "FAQPage",
+                    "mainEntity": VACATION_FAQS.map(faq => ({
+                        "@type": "Question",
+                        "name": faq.question,
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": faq.answer
+                        }
+                    }))
+                })}
+            </script>
+
             {/* Background Orbs */}
             <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
             <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
@@ -76,35 +112,12 @@ export const VacationPage: React.FC = () => {
                     </p>
                 </motion.div>
 
-                {/* SEO Content */}
-                <div className="mt-24 max-w-4xl mx-auto prose prose-invert prose-lg">
-                    <h2 className="text-3xl font-bold text-white mb-6">Calculadora de Férias: Saiba quanto você vai receber</h2>
-                    <p className="text-gray-400 mb-8">
-                        Planejando seu descanso? Utilize a Calculadora de Férias do FinZap para saber exatamente o valor líquido que cairá na sua conta, já considerando todos os descontos legais e adicionais.
-                    </p>
-
-                    <h3 className="text-2xl font-bold text-white mb-4">O que compõe o cálculo de férias?</h3>
-                    <p className="text-gray-400 mb-6">
-                        O cálculo de férias envolve diversas variáveis que podem confundir o trabalhador. Nossa ferramenta simplifica tudo isso, considerando:
-                    </p>
-
-                    <ul className="list-disc pl-6 space-y-2 text-gray-400 mb-8">
-                        <li><strong className="text-white">Salário Bruto:</strong> A base de cálculo, incluindo médias de horas extras e comissões.</li>
-                        <li><strong className="text-white">1/3 Constitucional:</strong> Adicional de 33,33% sobre o valor das férias garantido por lei.</li>
-                        <li><strong className="text-white">Abono Pecuniário:</strong> A famosa "venda de férias". É possível vender até 10 dias.</li>
-                        <li><strong className="text-white">Descontos (INSS e IRRF):</strong> Impostos que incidem sobre o valor total e reduzem o valor líquido.</li>
-                    </ul>
-
-                    <h3 className="text-2xl font-bold text-white mb-4">Como usar a calculadora?</h3>
-                    <p className="text-gray-400 mb-8">
-                        Basta inserir seu salário bruto, a quantidade de dias que pretende tirar de férias, se possui dependentes (para cálculo do IRRF) e se deseja vender dias (abono). O FinZap faz todo o cálculo complexo das alíquotas progressivas de INSS e Imposto de Renda automaticamente.
-                    </p>
-
-                    <h3 className="text-2xl font-bold text-white mb-4">Planeje suas finanças com o FinZap</h3>
-                    <p className="text-gray-400 mb-8">
-                        Saber o valor exato das suas férias ajuda a planejar melhor sua viagem ou seus gastos no período de descanso. Use nossa ferramenta gratuita quantas vezes precisar e tenha total controle sobre seu dinheiro.
-                    </p>
-                </div>
+                <FAQ
+                    items={VACATION_FAQS}
+                    title="Perguntas Frequentes sobre Férias"
+                    className="py-12"
+                    showSocialProof={false}
+                />
 
                 <Suspense fallback={<div className="h-96 w-full flex items-center justify-center text-gray-500">Carregando oferta...</div>}>
                     <AppPromoBanner />
