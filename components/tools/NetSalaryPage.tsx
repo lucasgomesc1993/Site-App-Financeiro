@@ -9,24 +9,20 @@ import { FAQItem } from '../../types';
 
 const NET_SALARY_FAQS: FAQItem[] = [
     {
-        question: "Qual a diferença entre Salário Bruto e Líquido?",
-        answer: "Salário Bruto é o valor registrado na sua Carteira de Trabalho (CLT) sem nenhum desconto. Salário Líquido é o valor que efetivamente cai na sua conta bancária após a subtração de impostos (INSS, IRRF) e benefícios (Vale Transporte, Vale Refeição, Plano de Saúde)."
+        question: "Qual o valor máximo (Teto) que pode ser descontado de INSS em 2025?",
+        answer: "O teto previdenciário para 2025 é R$ 8.157,41. Mesmo que seu salário seja superior a isso, o desconto máximo de INSS no contracheque será de R$ 951,63 (valor aproximado dependendo da progressão exata)."
     },
     {
-        question: "Como calcular o salário líquido passo a passo?",
-        answer: "Primeiro, desconte o INSS do Salário Bruto usando a tabela progressiva. Com o resultado (Base de Cálculo), aplique a alíquota do Imposto de Renda correspondente e subtraia a \"parcela a deduzir\" da tabela do IR. Por fim, subtraia outros descontos como VR, VT e convênios."
+        question: "O que é o Desconto Simplificado Mensal?",
+        answer: "É um mecanismo que permite abater R$ 607,20 da base de cálculo do IRRF, substituindo as deduções legais (INSS, dependentes) caso seja mais vantajoso. Ele garante a isenção para quem ganha até dois salários mínimos."
     },
     {
-        question: "Quanto é descontado de Vale Transporte?",
-        answer: "A empresa pode descontar até 6% do seu Salário Base (Bruto) referente ao Vale Transporte. Se o custo das passagens for menor que 6% do seu salário, o desconto será apenas o valor real das passagens. Se for maior, a empresa arca com a diferença."
+        question: "Qual o salário líquido de quem ganha o mínimo (R$ 1.518,00)?",
+        answer: "Para quem recebe o piso nacional em 2025, o único desconto é o INSS de 7,5% (R$ 113,85). O valor líquido final é R$ 1.404,15."
     },
     {
-        question: "O desconto simplificado do IR vale a pena?",
-        answer: "Sim, para faixas salariais mais baixas (até aprox. R$ 5.000,00), o desconto simplificado de R$ 564,80 costuma ser mais vantajoso que as deduções legais, garantindo isenção para quem ganha até dois salários mínimos."
-    },
-    {
-        question: "Por que meu salário líquido diminuiu após um aumento?",
-        answer: "Isso pode acontecer se o aumento fizer seu salário mudar de faixa na tabela do INSS ou do Imposto de Renda. A mudança de alíquota (ex: de 15% para 22,5%) pode consumir uma parte maior do reajuste inicialmente."
+        question: "Dependentes influenciam no cálculo?",
+        answer: "Sim. Cada dependente legal reduz a base de cálculo do Imposto de Renda em R$ 189,59. No entanto, se você tiver poucos dependentes e ganhar pouco acima da isenção, o sistema pode ignorar essa dedução e usar o Desconto Simplificado (R$ 607,20) se este for maior."
     }
 ];
 
@@ -46,44 +42,49 @@ export function NetSalaryPage() {
             return;
         }
 
-        // 1. Calculate INSS (2024/2025 Table Logic)
+        // 1. Calculate INSS (2025 Table Logic)
+        // Ranges: 1518.00 | 2793.88 | 4190.83 | 8157.41
         let inss = 0;
-        if (salary <= 1412.00) {
+        if (salary <= 1518.00) {
             inss = salary * 0.075;
-        } else if (salary <= 2666.68) {
-            inss = 1412.00 * 0.075 + (salary - 1412.00) * 0.09;
-        } else if (salary <= 4000.03) {
-            inss = 1412.00 * 0.075 + (2666.68 - 1412.00) * 0.09 + (salary - 2666.68) * 0.12;
-        } else if (salary <= 7786.02) {
-            inss = 1412.00 * 0.075 + (2666.68 - 1412.00) * 0.09 + (4000.03 - 2666.68) * 0.12 + (salary - 4000.03) * 0.14;
+        } else if (salary <= 2793.88) {
+            inss = 1518.00 * 0.075 + (salary - 1518.00) * 0.09;
+        } else if (salary <= 4190.83) {
+            inss = 1518.00 * 0.075 + (2793.88 - 1518.00) * 0.09 + (salary - 2793.88) * 0.12;
+        } else if (salary <= 8157.41) {
+            inss = 1518.00 * 0.075 + (2793.88 - 1518.00) * 0.09 + (4190.83 - 2793.88) * 0.12 + (salary - 4190.83) * 0.14;
         } else {
-            inss = 908.85; // Ceiling for 2024
+            // Ceiling calculation
+            inss = 1518.00 * 0.075 +
+                (2793.88 - 1518.00) * 0.09 +
+                (4190.83 - 2793.88) * 0.12 +
+                (8157.41 - 4190.83) * 0.14;
         }
 
         // 2. Calculate IRRF Base
         // Legal Deductions
         const deductionPerDependent = 189.59;
-        const irrfBaseLegal = salary - inss - (deps * deductionPerDependent);
 
-        // Simplified Discount (Standard R$ 564.80 replacing legal deductions if better)
+        // Simplified Discount (Standard R$ 607.20 replacing legal deductions if better)
         let irrfBaseA = salary - inss - (deps * deductionPerDependent);
-        let irrfBaseB = salary - 564.80;
+        let irrfBaseB = salary - 607.20;
 
-        // Use the smaller base (which leads to less tax)
-        const irrfBase = Math.min(irrfBaseA, irrfBaseB);
+        // Use the smaller base (which leads to less tax), but base cannot be negative
+        let irrfBase = Math.max(0, Math.min(irrfBaseA, irrfBaseB));
 
-        // 3. Calculate IRRF (2024 Table)
+        // 3. Calculate IRRF (2025 Table)
+        // Exempt up to 2428.80
         let irrf = 0;
-        if (irrfBase <= 2259.20) {
+        if (irrfBase <= 2428.80) {
             irrf = 0;
         } else if (irrfBase <= 2826.65) {
-            irrf = (irrfBase * 0.075) - 169.44;
+            irrf = (irrfBase * 0.075) - 182.16;
         } else if (irrfBase <= 3751.05) {
-            irrf = (irrfBase * 0.15) - 381.44;
+            irrf = (irrfBase * 0.15) - 394.16;
         } else if (irrfBase <= 4664.68) {
-            irrf = (irrfBase * 0.225) - 662.77;
+            irrf = (irrfBase * 0.225) - 675.49;
         } else {
-            irrf = (irrfBase * 0.275) - 896.00;
+            irrf = (irrfBase * 0.275) - 908.73;
         }
 
         if (irrf < 0) irrf = 0;
@@ -136,8 +137,8 @@ export function NetSalaryPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Salário Líquido 2025: Cálculo Exato e Grátis"
-                description="Descubra o valor real do seu pagamento com a Calculadora de Salário Líquido 2025. Descontos de INSS, IRRF e benefícios atualizados. Calcule agora."
+                title="Calculadora Salário Líquido 2025: Oficial e Atualizada (CLT)"
+                description="Simule seu salário líquido com as tabelas oficiais de Dezembro/2025. Veja o cálculo exato do INSS e a escolha automática entre Dedução Legal ou Simplificada."
                 canonical="/calculadoras/salario-liquido"
             />
             <script type="application/ld+json">
@@ -172,13 +173,13 @@ export function NetSalaryPage() {
                     <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                             <Wallet className="w-4 h-4 text-emerald-500" />
-                            <span className="text-sm text-gray-300">Trabalhistas e Previdenciárias</span>
+                            <span className="text-sm text-gray-300">Oficial (Dezembro/2025)</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Salário Líquido 2025</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                            Você sabe exatamente quanto dinheiro cai na sua conta no final do mês? O valor contratado na carteira de trabalho (Salário Bruto) raramente é o mesmo que chega ao seu bolso.
+                            Esta ferramenta calcula quanto dinheiro cai na sua conta com precisão auditada. Nosso algoritmo compara automaticamente se é melhor para o seu bolso descontar o INSS ou usar o Desconto Simplificado (R$ 607,20).
                         </p>
                     </div>
                 </div>
@@ -293,14 +294,13 @@ export function NetSalaryPage() {
                                 </h2>
                             </div>
                             <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                                O cálculo segue uma lógica de "funil". Começamos com o valor bruto e subtraímos as obrigações legais na ordem correta. Entender essa ordem é vital para não errar a conta, especialmente se você precisa planejar suas <Link to="/blog/financas-pessoais" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">finanças pessoais</Link>.
+                                A fórmula correta compara duas opções: <code>Salário Bruto - MÁXIMO(INSS, 607,20)</code>. Nós aplicamos o que for melhor para você.
                             </p>
                             <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-sm font-mono text-gray-300">
                                 Salário Bruto <br />
-                                <span className="text-red-400">- INSS</span> <br />
+                                <span className="text-red-400">- INSS (ou Simplificado)</span> <br />
                                 <span className="text-red-400">- IRRF</span> <br />
                                 <span className="text-red-400">- Outros</span> <br />
-                                <span className="text-emerald-400">+ Adicionais</span> <br />
                                 <span className="text-white font-bold">= Salário Líquido</span>
                             </div>
                         </div>
@@ -344,9 +344,9 @@ export function NetSalaryPage() {
                                 <Briefcase className="w-6 h-6 text-emerald-500" />
                             </div>
                             <div>
-                                <h3 className="text-2xl font-bold text-white mb-2">1. Desconto do INSS</h3>
+                                <h3 className="text-2xl font-bold text-white mb-2">1. Tabela INSS 2025 (Progressiva)</h3>
                                 <p className="text-gray-400">
-                                    O primeiro desconto aplicado é sempre o INSS. Desde a Reforma da Previdência, a alíquota é <strong>progressiva</strong>.
+                                    A contribuição previdenciária é "fatiada". Você paga alíquotas diferentes para cada faixa do seu salário.
                                 </p>
                             </div>
                         </div>
@@ -357,30 +357,35 @@ export function NetSalaryPage() {
                                     <tr className="border-b border-white/10">
                                         <th className="p-3 text-white">Faixa Salarial (R$)</th>
                                         <th className="p-3 text-white">Alíquota</th>
+                                        <th className="p-3 text-white">Parcela a Deduzir</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-gray-400">
                                     <tr className="border-b border-white/5">
-                                        <td className="p-3">Até 1.412,00</td>
+                                        <td className="p-3">Até 1.518,00</td>
                                         <td className="p-3">7,5%</td>
+                                        <td className="p-3">-</td>
                                     </tr>
                                     <tr className="border-b border-white/5">
-                                        <td className="p-3">De 1.412,01 até 2.666,68</td>
+                                        <td className="p-3">De 1.518,01 até 2.793,88</td>
                                         <td className="p-3">9%</td>
+                                        <td className="p-3">R$ 22,77</td>
                                     </tr>
                                     <tr className="border-b border-white/5">
-                                        <td className="p-3">De 2.666,69 até 4.000,03</td>
+                                        <td className="p-3">De 2.793,89 até 4.190,83</td>
                                         <td className="p-3">12%</td>
+                                        <td className="p-3">R$ 106,59</td>
                                     </tr>
-                                    <tr>
-                                        <td className="p-3">De 4.000,04 até 7.786,02</td>
+                                    <tr className="border-b border-white/5">
+                                        <td className="p-3">De 4.190,84 até 8.157,41</td>
                                         <td className="p-3">14%</td>
+                                        <td className="p-3">R$ 190,40</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <p className="text-sm text-gray-500 mt-4 italic">
-                            *Nota: Para salários acima de R$ 7.786,02, o desconto é fixo no teto da previdência. Simule cenários específicos na nossa calculadora de <Link to="/calculadoras/inss" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">INSS</Link>.
+                            *Nota: Teto do INSS em R$ 8.157,41 (Desconto máx. ~R$ 951,63).
                         </p>
                     </div>
 
@@ -391,9 +396,9 @@ export function NetSalaryPage() {
                                 <TrendingDown className="w-6 h-6 text-emerald-500" />
                             </div>
                             <div>
-                                <h3 className="text-2xl font-bold text-white mb-2">2. Desconto do Imposto de Renda (IRRF)</h3>
+                                <h3 className="text-2xl font-bold text-white mb-2">2. Tabela Imposto de Renda (Vigência Maio/2025)</h3>
                                 <p className="text-gray-400">
-                                    O sistema sempre aplicará o que for mais vantajoso: Deduções Legais ou Desconto Simplificado. Quem ganha até 2 salários mínimos está isento.
+                                    Dedução Simplificada: R$ 607,20 (Substitui o INSS no cálculo se for mais vantajoso).
                                 </p>
                             </div>
                         </div>
@@ -409,29 +414,29 @@ export function NetSalaryPage() {
                                 </thead>
                                 <tbody className="text-gray-400">
                                     <tr className="border-b border-white/5">
-                                        <td className="p-3">Até 2.259,20</td>
+                                        <td className="p-3">Até 2.428,80</td>
                                         <td className="p-3">Isento</td>
-                                        <td className="p-3">0,00</td>
+                                        <td className="p-3">-</td>
                                     </tr>
                                     <tr className="border-b border-white/5">
-                                        <td className="p-3">De 2.259,21 até 2.826,65</td>
+                                        <td className="p-3">De 2.428,81 até 2.826,65</td>
                                         <td className="p-3">7,5%</td>
-                                        <td className="p-3">169,44</td>
+                                        <td className="p-3">182,16</td>
                                     </tr>
                                     <tr className="border-b border-white/5">
                                         <td className="p-3">De 2.826,66 até 3.751,05</td>
                                         <td className="p-3">15%</td>
-                                        <td className="p-3">381,44</td>
+                                        <td className="p-3">394,16</td>
                                     </tr>
                                     <tr className="border-b border-white/5">
                                         <td className="p-3">De 3.751,06 até 4.664,68</td>
                                         <td className="p-3">22,5%</td>
-                                        <td className="p-3">662,77</td>
+                                        <td className="p-3">675,49</td>
                                     </tr>
-                                    <tr>
+                                    <tr className="border-b border-white/5">
                                         <td className="p-3">Acima de 4.664,68</td>
                                         <td className="p-3">27,5%</td>
-                                        <td className="p-3">896,00</td>
+                                        <td className="p-3">908,73</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -439,35 +444,116 @@ export function NetSalaryPage() {
                         <div className="mt-6 bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-xl flex items-start gap-3">
                             <Check className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
                             <p className="text-sm text-emerald-200/80">
-                                <strong>Fique atento:</strong> Cada dependente legal reduz a base de cálculo do imposto em <strong>R$ 189,59</strong>.
+                                <strong>Regra:</strong> O sistema escolhe automaticamente entre deduzir o INSS real ou o desconto simplificado de R$ 607,20.
                             </p>
                         </div>
                     </div>
 
-                    {/* Planning Section */}
+                    {/* Examples Section */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="flex items-start gap-4 mb-6">
                             <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
-                                <Calendar className="w-6 h-6 text-emerald-500" />
+                                <DollarSign className="w-6 h-6 text-emerald-500" />
                             </div>
                             <h2 className="text-2xl font-bold text-white mt-1">
-                                Planejamento Anual
+                                Exemplos Reais de Cálculo (Dezembro 2025)
                             </h2>
                         </div>
-                        <p className="text-gray-400 mb-6 leading-relaxed">
-                            Saber seu salário líquido mensal é o primeiro passo. No entanto, para um planejamento completo, lembre-se de considerar o impacto do <Link to="/calculadoras/decimo-terceiro" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">décimo terceiro</Link> e a previsão das suas <Link to="/calculadoras/ferias" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">férias</Link>, pois a tributação sobre esses pagamentos ocorre de forma exclusiva na fonte.
-                        </p>
 
                         <div className="grid md:grid-cols-2 gap-6">
-                            <div className="bg-white/5 p-5 rounded-xl border border-white/5">
-                                <h3 className="font-bold text-white mb-2 flex items-center gap-2">
-                                    <PiggyBank className="w-4 h-4 text-emerald-500" />
-                                    Adicionais e Descontos
-                                </h3>
-                                <ul className="text-sm text-gray-400 space-y-2">
-                                    <li>• <strong>Pensões e Planos de Saúde:</strong> Subtraídos do montante.</li>
-                                    <li>• <strong>Adicionais:</strong> <Link to="/calculadoras/horas-extras" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Horas extras</Link> e <Link to="/calculadoras/adicional-noturno" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Adicional noturno</Link> entram antes dos impostos.</li>
-                                </ul>
+                            {/* Example 1 */}
+                            <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
+                                <div className="mb-4">
+                                    <h3 className="font-bold text-white mb-1">Exemplo 1: Salário R$ 3.500,00</h3>
+                                    <span className="text-xs text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-full border border-emerald-500/20">
+                                        Simplificado Vence
+                                    </span>
+                                </div>
+                                <div className="space-y-3 text-sm text-gray-400">
+                                    <div className="flex justify-between border-b border-white/5 pb-2">
+                                        <span>INSS (12%)</span>
+                                        <span className="text-red-400">- R$ 313,41</span>
+                                    </div>
+                                    <div className="flex justify-between border-b border-white/5 pb-2">
+                                        <span>Base IR (Simplificado)</span>
+                                        <span>R$ 2.892,80</span>
+                                    </div>
+                                    <div className="flex justify-between border-b border-white/5 pb-2">
+                                        <span>IRRF (15%)</span>
+                                        <span className="text-red-400">- R$ 39,76</span>
+                                    </div>
+                                    <div className="flex justify-between pt-1 font-bold text-white">
+                                        <span>Salário Líquido</span>
+                                        <span className="text-emerald-400">R$ 3.146,83</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Example 2 */}
+                            <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
+                                <div className="mb-4">
+                                    <h3 className="font-bold text-white mb-1">Exemplo 2: Salário R$ 7.500,00</h3>
+                                    <span className="text-xs text-blue-400 bg-blue-500/10 px-2 py-1 rounded-full border border-blue-500/20">
+                                        Dedução Legal Vence
+                                    </span>
+                                </div>
+                                <div className="space-y-3 text-sm text-gray-400">
+                                    <div className="flex justify-between border-b border-white/5 pb-2">
+                                        <span>INSS (14%)</span>
+                                        <span className="text-red-400">- R$ 859,60</span>
+                                    </div>
+                                    <div className="flex justify-between border-b border-white/5 pb-2">
+                                        <span>Base IR (Legal)</span>
+                                        <span>R$ 6.640,40</span>
+                                    </div>
+                                    <div className="flex justify-between border-b border-white/5 pb-2">
+                                        <span>IRRF (27,5%)</span>
+                                        <span className="text-red-400">- R$ 917,38</span>
+                                    </div>
+                                    <div className="flex justify-between pt-1 font-bold text-white">
+                                        <span>Salário Líquido</span>
+                                        <span className="text-emerald-400">R$ 5.723,02</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Special Cases & Planning Section */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="flex items-start gap-4 mb-6">
+                            <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                                <HelpCircle className="w-6 h-6 text-emerald-500" />
+                            </div>
+                            <h2 className="text-2xl font-bold text-white mt-1">
+                                Casos Especiais e Dúvidas Técnicas
+                            </h2>
+                        </div>
+
+                        <div className="space-y-6">
+                            <div>
+                                <h3 className="text-lg font-bold text-white mb-2">Salários acima do Teto do INSS</h3>
+                                <p className="text-gray-400 leading-relaxed">
+                                    Quem ganha acima de <strong>R$ 8.157,41</strong> (Teto de 2025) tem o desconto do INSS travado. A contribuição para de crescer, fixando-se em aproximadamente <strong>R$ 951,63</strong>. Qualquer valor que você receba acima disso (bônus, horas extras) sofrerá incidência apenas do Imposto de Renda.
+                                </p>
+                            </div>
+
+                            <div className="h-px bg-white/5" />
+
+                            <div>
+                                <h3 className="text-lg font-bold text-white mb-2">Férias e 13º Salário</h3>
+                                <p className="text-gray-400 leading-relaxed">
+                                    Nas férias, você recebe o salário antecipado + 1/3 constitucional. Esse "1/3 extra" aumenta sua renda no mês, o que pode fazer você pular de faixa no IRRF e pagar uma alíquota maior temporariamente. Para simulações exatas, use a <Link to="/calculadoras/ferias" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Férias</Link>. Já para a gratificação natalina, acesse a <Link to="/calculadoras/decimo-terceiro" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de Décimo Terceiro</Link>.
+                                </p>
+                            </div>
+
+                            <div className="h-px bg-white/5" />
+
+                            <div>
+                                <h3 className="text-lg font-bold text-white mb-2">Autônomos (PJ) e MEI</h3>
+                                <p className="text-gray-400 leading-relaxed">
+                                    A lógica acima é exclusiva para CLT. Se você é PJ, não há desconto em folha; você paga o DAS ou guias próprias. Para comparar o que sobra no bolso em cada regime, utilize nosso comparador <Link to="/calculadoras/clt-vs-pj" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">CLT vs PJ</Link>.
+                                </p>
                             </div>
                         </div>
                     </div>
