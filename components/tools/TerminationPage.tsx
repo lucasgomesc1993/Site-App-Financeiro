@@ -9,24 +9,24 @@ import { FAQItem } from '../../types';
 
 const TERMINATION_FAQS: FAQItem[] = [
     {
-        question: "Quanto tempo a empresa tem para pagar a rescisão?",
-        answer: "A empresa tem 10 dias corridos contados a partir do último dia de contrato para pagar as verbas e liberar as guias. Se o 10º dia cair em fim de semana ou feriado, o ideal é antecipar para o dia útil anterior."
+        question: "Qual o prazo para a empresa pagar a rescisão em 2025?",
+        answer: "A empresa tem até 10 dias corridos após o término do contrato para realizar o pagamento, independentemente se o aviso prévio foi trabalhado ou indenizado. O atraso gera multa no valor de um salário do funcionário."
     },
     {
-        question: "Quem pede demissão tem direito ao FGTS?",
-        answer: "Não. Ao pedir demissão, o saldo do Fundo de Garantia fica retido (inativo) e não há pagamento da multa de 40%. O saque só será permitido após 3 anos sem registro em carteira ou para compra da casa própria/aposentadoria."
+        question: "O aviso prévio conta para férias e décimo terceiro?",
+        answer: "Sim. A Lei determina a \"projeção do aviso prévio\". Isso significa que o tempo do aviso (inclusive os dias extras por ano de casa) conta como tempo de serviço efetivo, gerando mais avos de férias e 13º salário na conta final."
     },
     {
-        question: "O aviso prévio conta como tempo de serviço?",
-        answer: "Sim. O período do aviso, mesmo indenizado, projeta o contrato para o futuro. Isso garante mais dias de férias proporcionais e mais avos de 13º salário na conta final."
+        question: "Como fica o imposto sobre o 13º na rescisão?",
+        answer: "O 13º salário possui tributação exclusiva e separada. O cálculo do IRRF sobre o 13º não se mistura com o do saldo de salário ou aviso prévio, o que muitas vezes resulta em um desconto de imposto menor para o trabalhador."
     },
     {
-        question: "Como é calculado o desconto do INSS na rescisão?",
-        answer: "O desconto segue a tabela progressiva do INSS vigente em 2025 (alíquotas de 7,5% a 14%). O imposto é calculado separadamente sobre o saldo de salário e sobre o 13º salário. Verbas de natureza indenizatória, como férias indenizadas e aviso prévio indenizado, são isentas dessa contribuição."
+        question: "Posso sacar todo o meu FGTS se pedir demissão?",
+        answer: "Não. No pedido de demissão, o trabalhador não tem direito ao saque do FGTS nem à multa de 40%. O valor permanece retido na conta (rendendo juros) e só pode ser sacado em situações específicas, como compra da casa própria, aposentadoria ou após 3 anos sem registro em carteira."
     },
     {
-        question: "O que fazer se o valor da rescisão estiver errado?",
-        answer: "Não assine o termo de quitação plena. Se for obrigado a assinar para receber, faça uma ressalva por escrito no próprio documento indicando os valores discordantes. Procure o sindicato ou o Ministério do Trabalho para exigir as diferenças."
+        question: "Qual é o teto máximo de desconto do INSS na rescisão em 2025?",
+        answer: "O teto máximo de contribuição para o INSS em 2025 é de R$ 951,63 (soma das parcelas máximas de todas as faixas) para quem recebe acima de R$ 8.157,41. Mesmo que seu salário na rescisão seja de R$ 20.000,00, o desconto não pode ultrapassar esse valor limite."
     }
 ];
 
@@ -46,20 +46,21 @@ export function TerminationPage() {
         breakdown: any
     } | null>(null);
 
-    // 2024/2025 Tables (Approximation for 2025 based on current trends/2024 active)
+    // 2025 Tables (Tabelas Oficiais conforme Portaria Interministerial MPS/MF nº 2/2025)
     const INSS_TABLE = [
-        { max: 1412.00, rate: 0.075, deduction: 0 },
-        { max: 2666.68, rate: 0.09, deduction: 21.18 },
-        { max: 4000.03, rate: 0.12, deduction: 101.18 },
-        { max: 7786.02, rate: 0.14, deduction: 181.18 },
+        { max: 1518.00, rate: 0.075, deduction: 0 },
+        { max: 2793.88, rate: 0.09, deduction: 22.77 },
+        { max: 4190.83, rate: 0.12, deduction: 106.59 },
+        { max: 8157.41, rate: 0.14, deduction: 190.40 },
     ];
 
+    // Tabela IRRF 2025 (Vigência a partir de Maio/2025 - MP 1.294/25)
     const IRRF_TABLE = [
-        { max: 2259.20, rate: 0, deduction: 0 },
-        { max: 2826.65, rate: 0.075, deduction: 169.44 },
-        { max: 3751.05, rate: 0.15, deduction: 381.44 },
-        { max: 4664.68, rate: 0.225, deduction: 662.77 },
-        { max: Infinity, rate: 0.275, deduction: 896.00 },
+        { max: 2428.80, rate: 0, deduction: 0 },
+        { max: 2826.65, rate: 0.075, deduction: 182.16 },
+        { max: 3751.05, rate: 0.15, deduction: 394.16 },
+        { max: 4664.68, rate: 0.225, deduction: 675.49 },
+        { max: Infinity, rate: 0.275, deduction: 908.73 },
     ];
 
     const calculateINSS = (value: number) => {
@@ -67,7 +68,8 @@ export function TerminationPage() {
         let taxableValue = value;
 
         // Capped at ceiling
-        if (taxableValue > 7786.02) taxableValue = 7786.02;
+        // Capped at ceiling
+        if (taxableValue > 8157.41) taxableValue = 8157.41;
 
         for (let i = 0; i < INSS_TABLE.length; i++) {
             const range = INSS_TABLE[i];
@@ -230,9 +232,9 @@ export function TerminationPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Rescisão de Contrato CLT 2025: Cálculo Exato e Direitos",
+        "name": "Calculadora de Rescisão 2025: Cálculo Exato CLT com Novas Regras",
         "url": "https://www.junny.com.br/calculadoras/rescisao",
-        "description": "Calcule sua rescisão trabalhista em segundos. Descubra o valor exato de saldo de salário, férias, 13º, multa do FGTS e descontos oficiais de 2025.",
+        "description": "Calcule sua rescisão trabalhista com as regras atualizadas de 2025. Inclui novo salário mínimo (R$ 1.518), tabelas progressivas de INSS e projeção de férias.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Firefox, Edge.",
@@ -253,8 +255,8 @@ export function TerminationPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora de Rescisão de Contrato CLT 2025: Cálculo Exato e Direitos"
-                description="Calcule sua rescisão trabalhista em segundos. Descubra o valor exato de saldo de salário, férias, 13º, multa do FGTS e descontos oficiais de 2025."
+                title="Calculadora de Rescisão 2025: Cálculo Exato CLT com Novas Regras"
+                description="Calcule sua rescisão trabalhista com as regras atualizadas de 2025. Inclui novo salário mínimo (R$ 1.518), tabelas progressivas de INSS e projeção de férias."
                 canonical="/calculadoras/rescisao"
             />
             <script type="application/ld+json">
@@ -295,7 +297,7 @@ export function TerminationPage() {
                             Calculadora de Rescisão <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Contrato CLT (2025)</span>
                         </h1>
                         <p className="text-gray-400 mt-2 max-w-2xl mx-auto">
-                            Descubra o valor exato de saldo de salário, férias, 13º e multa do FGTS. Ferramenta ajustada com as novas regras trabalhistas.
+                            Esta ferramenta simula os valores exatos que você deve receber ao sair de um emprego. Diferente de calculadoras comuns, nosso sistema considera o <strong>INSS progressivo de 2025</strong>, a média de horas extras e as novas faixas de Imposto de Renda.
                         </p>
                     </div>
                 </div>
@@ -499,65 +501,41 @@ export function TerminationPage() {
                         </div>
                     </div>
 
-                    {/* Right Side Content (Instructions & Practical Example) */}
+                    {/* Right Side Content (Quick Summary) */}
                     <div className="lg:col-span-5 space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
-                        {/* What is TRCT */}
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                                 <FileText className="w-5 h-5 text-blue-500" />
-                                O que é TRCT?
+                                Resumo Rápido (2025)
                             </h3>
-                            <p className="text-sm text-gray-400 leading-relaxed mb-4">
-                                O <strong>TRCT (Termo de Rescisão do Contrato de Trabalho)</strong> é o documento oficial obrigatório que formaliza o fim do contrato. Nele, a empresa deve discriminar cada centavo pago e cada desconto realizado, servindo como comprovante legal para o saque do FGTS e solicitação do Seguro-Desemprego.
-                            </p>
-                        </div>
 
-                        {/* How to Use */}
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-bold text-white mb-4">
-                                Como usar a Calculadora
-                            </h3>
-                            <ul className="space-y-3">
-                                <li className="flex gap-3 text-sm text-gray-400">
-                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">1</span>
-                                    <span>
-                                        <strong>Informe o período:</strong> Preencha a data de admissão e o último dia trabalhado.
-                                    </span>
-                                </li>
-                                <li className="flex gap-3 text-sm text-gray-400">
-                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">2</span>
-                                    <span>
-                                        <strong>Insira o Salário:</strong> Use o valor bruto registrado em carteira.
-                                    </span>
-                                </li>
-                                <li className="flex gap-3 text-sm text-gray-400">
-                                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-xs font-bold">3</span>
-                                    <span>
-                                        <strong>Escolha o Motivo:</strong> O tipo de demissão muda totalmente seus direitos.
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-
-                        {/* Practical Example */}
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <div className="flex items-start gap-4 mb-4">
-                                <div className="bg-blue-500/10 p-2 rounded-lg shrink-0">
-                                    <DollarSign className="w-5 h-5 text-blue-500" />
+                            <div className="space-y-4">
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                                    <div className="text-sm text-gray-400 mb-1">Salário Mínimo Base</div>
+                                    <div className="text-lg font-bold text-white">R$ 1.518,00</div>
+                                    <div className="text-xs text-gray-500">Piso nacional vigente</div>
                                 </div>
-                                <h3 className="text-lg font-bold text-white leading-tight mt-1">
-                                    Exemplo Prático
-                                </h3>
-                            </div>
-                            <div className="space-y-2 text-sm text-gray-400">
-                                <p>Trabalhador com R$ 2.000,00, demitido após 1 ano e 6 meses:</p>
-                                <ul className="list-disc pl-4 space-y-1 marker:text-blue-500">
-                                    <li><strong>Aviso Prévio (33 dias):</strong> R$ 2.200,00</li>
-                                    <li><strong>13º Prop. (6/12):</strong> R$ 1.000,00</li>
-                                    <li><strong>Férias Prop. + 1/3:</strong> R$ 1.333,33</li>
-                                    <li><strong>Multa FGTS:</strong> R$ 1.152,00</li>
-                                </ul>
-                                <p className="pt-2 text-white font-bold">Total Bruto: R$ 6.351,99</p>
+
+                                <div className="p-4 rounded-xl bg-white/5 border border-white/5">
+                                    <div className="text-sm text-gray-400 mb-1">Teto do INSS</div>
+                                    <div className="text-lg font-bold text-white">R$ 8.157,41</div>
+                                    <div className="text-xs text-gray-500">Limite máximo de desconto</div>
+                                </div>
+
+                                <div className="space-y-3 pt-2">
+                                    <div className="flex gap-3 text-sm text-gray-400">
+                                        <Clock className="w-5 h-5 text-blue-500 shrink-0" />
+                                        <span><strong>Prazo de Pagamento:</strong> Até 10 dias corridos após o término do contrato.</span>
+                                    </div>
+                                    <div className="flex gap-3 text-sm text-gray-400">
+                                        <Calendar className="w-5 h-5 text-blue-500 shrink-0" />
+                                        <span><strong>Aviso Prévio:</strong> 30 dias + 3 dias por ano completo de empresa (Lei 12.506).</span>
+                                    </div>
+                                    <div className="flex gap-3 text-sm text-gray-400">
+                                        <Percent className="w-5 h-5 text-blue-500 shrink-0" />
+                                        <span><strong>FGTS:</strong> Multa de 40% sobre o saldo total (ou 20% em acordo mútuo).</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -565,166 +543,166 @@ export function TerminationPage() {
 
                 {/* Content Sections */}
 
-                {/* O que entra no cálculo */}
+                {/* Tabelas Oficiais */}
                 <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
+                            <Briefcase className="w-6 h-6 text-blue-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Tabelas Oficiais e Parâmetros (2025)
+                        </h2>
+                    </div>
+                    <p className="text-gray-400 mb-8 max-w-3xl">
+                        Para garantir que o valor final bata com o seu holerite, utilizamos as tabelas de tributação oficiais vigentes a partir de janeiro de 2025. O desconto do INSS agora é fatiado por faixas salariais.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 className="text-lg font-bold text-white mb-4">Tabela INSS (2025)</h3>
+                            <div className="overflow-x-auto rounded-xl border border-white/10">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="bg-white/5 text-gray-300">
+                                        <tr>
+                                            <th className="p-3">Faixa Salarial (R$)</th>
+                                            <th className="p-3">Alíquota</th>
+                                            <th className="p-3">Dedução</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400 divide-y divide-white/5">
+                                        <tr><td className="p-3">Até 1.518,00</td><td className="p-3">7,5%</td><td className="p-3">-</td></tr>
+                                        <tr><td className="p-3">1.518,01 a 2.793,88</td><td className="p-3">9%</td><td className="p-3">22,77</td></tr>
+                                        <tr><td className="p-3">2.793,89 a 4.190,83</td><td className="p-3">12%</td><td className="p-3">106,59</td></tr>
+                                        <tr><td className="p-3">4.190,84 a 8.157,41</td><td className="p-3">14%</td><td className="p-3">190,40</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-bold text-white mb-4">Tabela IRRF (2025)</h3>
+                            <div className="overflow-x-auto rounded-xl border border-white/10">
+                                <table className="w-full text-sm text-left">
+                                    <thead className="bg-white/5 text-gray-300">
+                                        <tr>
+                                            <th className="p-3">Base de Cálculo (R$)</th>
+                                            <th className="p-3">Alíquota</th>
+                                            <th className="p-3">Dedução</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-gray-400 divide-y divide-white/5">
+                                        <tr><td className="p-3">Até 2.428,80</td><td className="p-3">Isento</td><td className="p-3">-</td></tr>
+                                        <tr><td className="p-3">2.428,81 a 2.826,65</td><td className="p-3">7,5%</td><td className="p-3">182,16</td></tr>
+                                        <tr><td className="p-3">2.826,66 a 3.751,05</td><td className="p-3">15,0%</td><td className="p-3">394,16</td></tr>
+                                        <tr><td className="p-3">3.751,06 a 4.664,68</td><td className="p-3">22,5%</td><td className="p-3">675,49</td></tr>
+                                        <tr><td className="p-3">Acima de 4.664,68</td><td className="p-3">27,5%</td><td className="p-3">908,73</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-2">*Dedução por dependente: R$ 189,59.</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Erros Comuns */}
+                <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-3xl p-6 md:p-8 mb-12">
+                    <div className="flex items-start gap-4 mb-6">
+                        <AlertCircle className="w-8 h-8 text-yellow-500 shrink-0" />
+                        <div>
+                            <h3 className="text-xl font-bold text-yellow-200 mb-2">Erros Comuns ao Calcular a Rescisão</h3>
+                            <p className="text-yellow-100/80">Evite perder dinheiro ignorando estes detalhes:</p>
+                        </div>
+                    </div>
+                    <ul className="space-y-4 text-yellow-100/70">
+                        <li className="flex gap-3">
+                            <XCircle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
+                            <span><strong>Ignorar a Média de Variáveis:</strong> Horas extras, comissões e adicional noturno devem entrar na conta (média dos últimos 12 meses). Calculadoras simples usam apenas o salário base, reduzindo o valor final.</span>
+                        </li>
+                        <li className="flex gap-3">
+                            <XCircle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
+                            <span><strong>Cálculo Linear de INSS:</strong> Aplicar 9% direto sobre o total está errado. O cálculo correto é progressivo, fatiado entre as faixas da tabela oficial.</span>
+                        </li>
+                        <li className="flex gap-3">
+                            <XCircle className="w-5 h-5 text-yellow-500 shrink-0 mt-0.5" />
+                            <span><strong>Esquecer a Projeção do Aviso Prévio:</strong> Cada ano trabalhado adiciona 3 dias ao aviso. Esses dias extras contam para gerar mais avos de férias e décimo terceiro.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Como Funciona o Cálculo / Examples */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
                             <Calculator className="w-6 h-6 text-blue-500" />
                         </div>
                         <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                            O que entra no cálculo da rescisão?
+                            Como Funciona o Cálculo (Passo a Passo)
                         </h2>
                     </div>
-                    <p className="text-gray-400 mb-8 max-w-3xl">
-                        O valor final não se baseia apenas no seu salário nominal. Para chegar ao montante correto, é necessário calcular a média de variáveis recebidas nos últimos 12 meses, como <Link to="/calculadoras/horas-extras" className="text-blue-400 hover:text-blue-300 hover:underline">horas extras</Link> habituais e comissões.
-                    </p>
 
-                    <div className="grid md:grid-cols-3 gap-6">
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-3">Saldo de Salário</h3>
-                            <p className="text-sm text-gray-400">
-                                Pagamento proporcional aos dias trabalhados no mês da saída. Confira nossa calculadora de <Link to="/calculadoras/salario-liquido" className="text-blue-400 hover:underline">salário líquido</Link>.
-                            </p>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        {/* Exemplo 1 */}
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="text-lg font-bold text-white mb-3">Exemplo 1: Salário R$ 3.000,00</h3>
+                            <p className="text-sm text-gray-400 mb-4">Funcionário com 2 anos de casa, demissão sem justa causa.</p>
+                            <ul className="space-y-2 text-sm text-gray-300">
+                                <li>• <strong>Saldo de Salário:</strong> R$ 3.000,00</li>
+                                <li>• <strong>Aviso Prévio (36 dias):</strong> R$ 3.600,00</li>
+                                <li>
+                                    • <strong>Cálculo INSS:</strong>
+                                    <ul className="pl-4 mt-1 text-xs text-gray-400 space-y-1">
+                                        <li>1ª Faixa (7,5%): R$ 113,85</li>
+                                        <li>2ª Faixa (9%): R$ 114,83</li>
+                                        <li>3ª Faixa (12%): R$ 24,73 (sobre restante)</li>
+                                        <li className="text-red-300 font-bold">Total INSS: R$ 253,41</li>
+                                    </ul>
+                                </li>
+                            </ul>
                         </div>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-3">Aviso Prévio</h3>
-                            <p className="text-sm text-gray-400">
-                                Indenizado ou trabalhado. A cada ano de serviço completo, somam-se 3 dias ao aviso (Lei 12.506/11).
-                            </p>
-                        </div>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-3">13º Proporcional</h3>
-                            <p className="text-sm text-gray-400">
-                                1/12 da remuneração para cada mês trabalhado (fração igual ou superior a 15 dias). Simule no <Link to="/calculadoras/decimo-terceiro" className="text-blue-400 hover:underline">décimo terceiro</Link>.
-                            </p>
-                        </div>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-3">Férias + 1/3</h3>
-                            <p className="text-sm text-gray-400">
-                                Valor integral das férias vencidas (se houver) + proporcional do ano corrente, ambos com terço constitucional.
-                            </p>
-                        </div>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-3">Multa do FGTS</h3>
-                            <p className="text-sm text-gray-400">
-                                40% sobre o saldo total depositado para demissões sem justa causa. Veja <Link to="/calculadoras/fgts" className="text-blue-400 hover:underline">calculadora FGTS</Link>.
-                            </p>
-                        </div>
-                        <div className="bg-white/5 p-6 rounded-xl border border-white/5 hover:border-blue-500/30 transition-colors">
-                            <h3 className="text-lg font-bold text-white mb-3">Médias Salariais</h3>
-                            <p className="text-sm text-gray-400">
-                                Valores referentes a <Link to="/calculadoras/adicional-noturno" className="text-blue-400 hover:underline">adicional noturno</Link>, periculosidade ou insalubridade integram a base.
-                            </p>
+
+                        {/* Exemplo 2 */}
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="text-lg font-bold text-white mb-3">Exemplo 2: Salário R$ 7.800,00</h3>
+                            <p className="text-sm text-gray-400 mb-4">Gestor com 5 anos de empresa.</p>
+                            <ul className="space-y-2 text-sm text-gray-300">
+                                <li>• <strong>Base de Cálculo:</strong> R$ 7.800,00</li>
+                                <li>
+                                    • <strong>Cálculo INSS (4 Faixas):</strong>
+                                    <ul className="pl-4 mt-1 text-xs text-gray-400 space-y-1">
+                                        <li>1ª Faixa (7,5%): R$ 113,85</li>
+                                        <li>2ª Faixa (9%): R$ 114,83</li>
+                                        <li>3ª Faixa (12%): R$ 167,63</li>
+                                        <li>4ª Faixa (14%): R$ 505,28</li>
+                                        <li className="text-red-300 font-bold">Total INSS: R$ 901,59</li>
+                                    </ul>
+                                </li>
+                                <li className="text-xs text-blue-300 mt-2">*Se fosse acima de R$ 8.157,41, travaria no teto.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
-                {/* Descontos e Atenção (Alert Style) */}
-                <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-3xl p-6 md:p-8 mb-12 flex flex-col md:flex-row gap-6 items-start">
-                    <AlertCircle className="w-8 h-8 text-yellow-500 shrink-0" />
-                    <div>
-                        <h3 className="text-xl font-bold text-yellow-200 mb-3">Atenção aos Descontos Oficiais</h3>
-                        <p className="text-yellow-100/80 mb-4 leading-relaxed">
-                            Não conte com o valor bruto! A empresa é obrigada a deduzir <strong>INSS e IRRF</strong> conforme tabelas progressivas de 2025. Além disso, serão descontados adiantamentos, vale-transporte não utilizado e, se houver, saldo de empréstimo consignado (até o limite legal de 30-35%).
-                        </p>
-                    </div>
-                </div>
-
-                {/* Tabela Comparativa de Direitos */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <div className="flex items-start gap-4 mb-6">
-                        <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
-                            <FileText className="w-6 h-6 text-blue-500" />
+                {/* Casos Especiais */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                    <h2 className="text-xl md:text-2xl font-bold text-white mb-6">Casos Especiais e Situações Específicas</h2>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="font-bold text-white mb-2">Demissão por Acordo</h3>
+                            <p className="text-sm text-gray-400">
+                                O aviso prévio indenizado é pago pela metade (50%) e a multa do FGTS cai para 20%. O trabalhador saca 80% do saldo, mas não tem direito ao seguro-desemprego.
+                            </p>
                         </div>
-                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                            Tipos de Demissão e Seus Direitos
-                        </h2>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse text-sm">
-                            <thead>
-                                <tr className="border-b border-white/10">
-                                    <th className="p-3 text-white min-w-[150px]">Direito</th>
-                                    <th className="p-3 text-white text-center min-w-[120px]">Sem Justa Causa</th>
-                                    <th className="p-3 text-white text-center min-w-[120px]">Pedido de Demissão</th>
-                                    <th className="p-3 text-white text-center min-w-[120px]">Justa Causa</th>
-                                    <th className="p-3 text-white text-center min-w-[120px]">Comum Acordo</th>
-                                </tr>
-                            </thead>
-                            <tbody className="text-gray-400">
-                                <tr className="border-b border-white/5 bg-blue-500/5">
-                                    <td className="p-3 font-medium text-white">Saldo de Salário</td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="p-3 font-medium text-white">Férias Vencidas + 1/3</td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="p-3 font-medium text-white">Férias Proporc. + 1/3</td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="p-3 font-medium text-white">13º Proporcional</td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="p-3 font-medium text-white">Aviso Prévio</td>
-                                    <td className="p-3 text-center text-xs">Indenizado/Trab.</td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center text-xs">50% (se indenizado)</td>
-                                </tr>
-                                <tr className="border-b border-white/5">
-                                    <td className="p-3 font-medium text-white">Multa FGTS</td>
-                                    <td className="p-3 text-center font-bold text-blue-400">40%</td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center font-bold text-blue-400">20%</td>
-                                </tr>
-                                <tr>
-                                    <td className="p-3 font-medium text-white">Saque FGTS</td>
-                                    <td className="p-3 text-center"><CheckCircle className="w-4 h-4 text-emerald-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center"><XCircle className="w-4 h-4 text-red-500 mx-auto" /></td>
-                                    <td className="p-3 text-center font-bold text-blue-400">80%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                {/* Prazo de Pagamento */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                    <div className="flex items-start gap-4 mb-6">
-                        <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
-                            <Clock className="w-6 h-6 text-blue-500" />
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="font-bold text-white mb-2">FGTS: Saque-Aniversário</h3>
+                            <p className="text-sm text-gray-400">
+                                Se você optou pelo Saque-Aniversário, o saldo do FGTS fica bloqueado na demissão. Você recebe apenas a multa de 40%. O valor principal só pode ser sacado nas janelas anuais.
+                            </p>
                         </div>
-                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                            Prazo de Pagamento da Rescisão em 2025
-                        </h2>
-                    </div>
-                    <p className="text-gray-400 mb-6">
-                        Conforme o artigo 477 da CLT, a empresa tem até <strong>10 dias corridos</strong> após o término do contrato para realizar o pagamento. Esse prazo é único para qualquer tipo de aviso prévio. Além do depósito, a empresa deve realizar a <strong>Baixa na CTPS Digital</strong> e liberar as guias.
-                    </p>
-                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex gap-4 items-center">
-                        <span className="text-2xl">⚠️</span>
-                        <p className="text-sm text-red-200">
-                            <strong>Atrasou?</strong> O não pagamento no prazo gera multa a favor do funcionário no valor de um salário nominal completo.
-                        </p>
+                        <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                            <h3 className="font-bold text-white mb-2">Descontos (VT e Banco)</h3>
+                            <p className="text-sm text-gray-400">
+                                A empresa pode descontar até 6% do salário (Vale-Transporte) e saldo negativo de banco de horas (se previsto em contrato).
+                            </p>
+                        </div>
                     </div>
                 </div>
 
