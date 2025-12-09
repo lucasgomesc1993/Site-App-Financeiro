@@ -1192,7 +1192,7 @@ const Privacy = lazy(() => import("./assets/Privacy-DBxGVyta.js").then((module) 
 const Support = lazy(() => import("./assets/Support-CcE5dtBz.js").then((module) => ({ default: module.Support })));
 const Calculators = lazy(() => import("./assets/Calculators-CYo30QNj.js").then((module) => ({ default: module.Calculators })));
 const InvestmentPage = lazy(() => import("./assets/InvestmentPage-BjSKk0dA.js").then((module) => ({ default: module.InvestmentPage })));
-const VacationPage = lazy(() => import("./assets/VacationPage-CdFAhKty.js").then((module) => ({ default: module.VacationPage })));
+const VacationPage = lazy(() => import("./assets/VacationPage-BfY-nPMh.js").then((module) => ({ default: module.VacationPage })));
 const EnergyPage = lazy(() => import("./assets/EnergyPage-iYekxcvs.js").then((module) => ({ default: module.EnergyPage })));
 const FuelPage = lazy(() => import("./assets/FuelPage-BCEFWcMJ.js").then((module) => ({ default: module.FuelPage })));
 const TerminationPage = lazy(() => import("./assets/TerminationPage-BxUrrIRm.js").then((module) => ({ default: module.TerminationPage })));
@@ -1231,7 +1231,7 @@ const PercentageCalculatorPage = lazy(() => import("./assets/PercentageCalculato
 const HoursCalculatorPage = lazy(() => import("./assets/HoursCalculatorPage-Cjwpjk51.js").then((module) => ({ default: module.HoursCalculatorPage })));
 const TravelCostCalculatorPage = lazy(() => import("./assets/TravelCostCalculatorPage-Qj6AWMcF.js").then((module) => ({ default: module.TravelCostCalculatorPage })));
 const SecretSantaPage = lazy(() => import("./assets/SecretSantaPage-BFcnRUV2.js").then((module) => ({ default: module.SecretSantaPage })));
-const CLTVsPJPage = lazy(() => import("./assets/CLTVsPJPage-DL-Ub81c.js").then((module) => ({ default: module.CLTVsPJPage })));
+const CLTVsPJPage = lazy(() => import("./assets/CLTVsPJPage-beBmHJm3.js").then((module) => ({ default: module.CLTVsPJPage })));
 const MonetaryCorrectionPage = lazy(() => import("./assets/MonetaryCorrectionPage-CBbwUq6O.js").then((module) => ({ default: module.MonetaryCorrectionPage })));
 const ImportTaxPage = lazy(() => import("./assets/ImportTaxPage-BMdN815-.js").then((module) => ({ default: module.ImportTaxPage })));
 const AbusiveInterestPage = lazy(() => import("./assets/AbusiveInterestPage-CYgSt0fn.js").then((module) => ({ default: module.AbusiveInterestPage })));

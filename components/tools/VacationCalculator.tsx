@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Calculator, TrendingUp, DollarSign, Calendar, Percent, User } from 'lucide-react';
 
 export const VacationCalculator: React.FC = () => {
@@ -44,15 +43,27 @@ export const VacationCalculator: React.FC = () => {
 
         const totalGross = vacationValue + oneThird + allowance + allowanceOneThird;
 
-        // INSS Calculation (Progressive Table 2024)
-        // Base for INSS is Vacation + 1/3 (Allowance is not subject to INSS/IRRF usually, but depends on interpretation. Standard is no incidence on Abono)
+        // INSS Calculation (Progressive Table 2025)
+        // Base for INSS is Vacation + 1/3
         const baseINSS = vacationValue + oneThird;
         let inss = calculateINSS(baseINSS);
 
-        // IRRF Calculation
-        // Base = BaseINSS - INSS - (Dependents * 189.59)
-        const baseIRRF = baseINSS - inss - (dependents * 189.59);
-        let irrf = calculateIRRF(baseIRRF);
+        // IRRF Calculation (2025 - Simplified Discount Logic)
+        // Option A: Legal Deductions (INSS + Dependents)
+        const deductionPerDependent = 189.59;
+        const totalDeductionsLegal = inss + (dependents * deductionPerDependent);
+        const baseIRRFLegal = baseINSS - totalDeductionsLegal;
+
+        // Option B: Simplified Discount (R$ 607.20)
+        // Note: The simplified discount replaces BOTH INSS and Dependent deductions appropriately in the comparison logic
+        // As per Receita Federal: "Could deduct 20%... or Simplified Discount".
+        // Actually, Simplified Discount replaces the "Deduções Legais".
+        const baseIRRFSimplified = baseINSS - 607.20;
+
+        // Use the most beneficial base (smallest positive base)
+        const finalBaseIRRF = Math.min(baseIRRFLegal, baseIRRFSimplified);
+
+        let irrf = calculateIRRF(finalBaseIRRF);
 
         const totalNet = totalGross - inss - irrf;
 
@@ -70,32 +81,51 @@ export const VacationCalculator: React.FC = () => {
 
     const calculateINSS = (base: number) => {
         let discount = 0;
-        if (base <= 1412.00) {
+        // Teto 2025: R$ 8.157,41 -> Max Discount R$ 951,63
+        if (base > 8157.41) {
+            return 951.63;
+        }
+
+        if (base <= 1518.00) {
             discount = base * 0.075;
-        } else if (base <= 2666.68) {
-            discount = (1412.00 * 0.075) + ((base - 1412.00) * 0.09);
-        } else if (base <= 4000.03) {
-            discount = (1412.00 * 0.075) + ((2666.68 - 1412.00) * 0.09) + ((base - 2666.68) * 0.12);
-        } else if (base <= 7786.02) {
-            discount = (1412.00 * 0.075) + ((2666.68 - 1412.00) * 0.09) + ((4000.03 - 2666.68) * 0.12) + ((base - 4000.03) * 0.14);
+        } else if (base <= 2793.88) {
+            discount = (1518.00 * 0.075) + ((base - 1518.00) * 0.09);
+        } else if (base <= 4190.83) {
+            discount = (1518.00 * 0.075) + ((2793.88 - 1518.00) * 0.09) + ((base - 2793.88) * 0.12);
         } else {
-            discount = (1412.00 * 0.075) + ((2666.68 - 1412.00) * 0.09) + ((4000.03 - 2666.68) * 0.12) + ((7786.02 - 4000.03) * 0.14);
+            discount = (1518.00 * 0.075) + ((2793.88 - 1518.00) * 0.09) + ((4190.83 - 2793.88) * 0.12) + ((base - 4190.83) * 0.14);
         }
         return discount;
     };
 
     const calculateIRRF = (base: number) => {
+        // 2025 Rules: Check Simplified Discount vs Legal Deductions
+        // In this calculator, we are receiving the 'base' which already has INSS and Dependents deducted in the parent function?
+        // Wait, the parent function calls this with `baseINSS - inss - (dependents * 189.59)`.
+        // To implement Simplified Discount correctly, we need to compare:
+        // Option A: Base = Gross - INSS - Dependents
+        // Option B: Base = Gross - SimplifiedDiscount (607.20)
+
+        // HOWEVER, the logic in calculateVacation calculates `baseIRRF` *before* calling this function.
+        // We need to refactor `calculateVacation` to handle the simplified discount comparison logic properly, 
+        // OR handle it here if we pass the Gross Base.
+
+        // Let's stick to the existing structure but update the Table values first.
+        // ACTUALLY, checking the parent function: `const baseIRRF = baseINSS - inss - (dependents * 189.59);`
+        // This forces Option A. I need to update `calculateVacation` to fully support Simplified Discount.
+        // For now, I will update the Table intervals here conforming to 2025.
+
         let discount = 0;
-        if (base <= 2259.20) {
+        if (base <= 2428.80) {
             discount = 0;
         } else if (base <= 2826.65) {
-            discount = (base * 0.075) - 169.44;
+            discount = (base * 0.075) - 182.16;
         } else if (base <= 3751.05) {
-            discount = (base * 0.15) - 381.44;
+            discount = (base * 0.15) - 394.16;
         } else if (base <= 4664.68) {
-            discount = (base * 0.225) - 662.77;
+            discount = (base * 0.225) - 675.49;
         } else {
-            discount = (base * 0.275) - 896.00;
+            discount = (base * 0.275) - 908.73;
         }
         return discount > 0 ? discount : 0;
     };

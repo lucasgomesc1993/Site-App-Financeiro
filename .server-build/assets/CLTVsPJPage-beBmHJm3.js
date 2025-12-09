@@ -44,7 +44,7 @@ function CLTVsPJPage() {
     if (useRFactorOptimization && pjSalary) {
       const pjVal = parseFloat(pjSalary.replace(/\./g, "").replace(",", ".") || "0");
       const optimizedProLabore = Math.max(pjVal * 0.28, 1518);
-      setProLabore((optimizedProLabore * 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 }).replace(".", ","));
+      setProLabore(optimizedProLabore.toLocaleString("pt-BR", { minimumFractionDigits: 2 }));
     }
   }, [pjSalary, useRFactorOptimization]);
   const calculate = () => {
@@ -708,4 +708,4 @@ function CLTVsPJPage() {
 export {
   CLTVsPJPage
 };
-//# sourceMappingURL=CLTVsPJPage-DL-Ub81c.js.map
+//# sourceMappingURL=CLTVsPJPage-beBmHJm3.js.map

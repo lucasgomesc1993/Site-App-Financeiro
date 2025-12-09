@@ -63,7 +63,7 @@ export function CLTVsPJPage() {
         if (useRFactorOptimization && pjSalary) {
             const pjVal = parseFloat(pjSalary.replace(/\./g, '').replace(',', '.') || '0');
             const optimizedProLabore = Math.max(pjVal * 0.28, 1518.00); // Minimum 28% or min wage (2025: 1518)
-            setProLabore((optimizedProLabore * 100).toLocaleString('pt-BR', { minimumFractionDigits: 2 }).replace('.', ','));
+            setProLabore(optimizedProLabore.toLocaleString('pt-BR', { minimumFractionDigits: 2 }));
         }
     }, [pjSalary, useRFactorOptimization]);
 
