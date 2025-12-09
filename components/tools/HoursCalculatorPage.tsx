@@ -36,20 +36,19 @@ export function HoursCalculatorPage() {
     const [time1, setTime1] = useState('');
     const [time2, setTime2] = useState('');
     const [operation, setOperation] = useState<Operation>('add');
+
+    // Result States
     const [result, setResult] = useState<string>('00:00');
-    const [decimalResult, setDecimalResult] = useState<string>('0.00');
+    const [decimalResult, setDecimalResult] = useState<string>('0,00');
     const [nightResult, setNightResult] = useState<string>('00:00');
+
+    // Toggle State
     const [isNightShift, setIsNightShift] = useState(false);
 
-    const calculateTime = () => {
-        if (!time1 && !time2) {
-            setResult('00:00');
-            setDecimalResult('0.00');
-            setNightResult('00:00');
-            return;
-        }
-
+    // Calculation Effect
+    useEffect(() => {
         const parseTime = (t: string) => {
+            if (!t) return { h: 0, m: 0 };
             const parts = t.split(':');
             let h = 0, m = 0;
             if (parts.length === 1) {
@@ -77,19 +76,19 @@ export function HoursCalculatorPage() {
         const isNegative = finalMinutes < 0;
         const absMinutes = Math.abs(finalMinutes);
 
+        // Standard H:MM
         const hours = Math.floor(absMinutes / 60);
         const minutes = absMinutes % 60;
-
         const formattedResult = `${isNegative ? '-' : ''}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
         setResult(formattedResult);
 
-        // Centesimal (Decimal) calculation
+        // Centesimal (Decimal)
         const decimalHours = absMinutes / 60;
         setDecimalResult(`${isNegative ? '-' : ''}${decimalHours.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`);
 
         // Night Shift Calculation (Fator 1.142857)
-        // 52.5 minutes = 1 night hour.
-        // Ratio = 60 / 52.5 = 1.142857
+        // Logic: 52.5 mins clock = 60 mins paid.
+        // Factor = 60 / 52.5 = 1.142857
         const nightFactor = 60 / 52.5;
         const nightMinutesTotal = absMinutes * nightFactor;
         const nHours = Math.floor(nightMinutesTotal / 60);
@@ -97,14 +96,12 @@ export function HoursCalculatorPage() {
 
         const formattedNight = `${isNegative ? '-' : ''}${String(nHours).padStart(2, '0')}:${String(nMinutes).padStart(2, '0')}`;
         setNightResult(formattedNight);
-    };
 
-    useEffect(() => {
-        calculateTime();
     }, [time1, time2, operation]);
 
     const handleTimeInput = (value: string, setter: (value: string) => void) => {
         const cleanVal = value.replace(/[^\d:]/g, '');
+        // Auto-add colon logic kept for UX
         if (cleanVal.length === 2 && !cleanVal.includes(':') && value.length > (setter === setTime1 ? time1.length : time2.length)) {
             setter(cleanVal + ':');
         } else {
@@ -112,10 +109,19 @@ export function HoursCalculatorPage() {
         }
     };
 
+    const resetCalculator = () => {
+        setTime1('');
+        setTime2('');
+        setResult('00:00');
+        setDecimalResult('0,00');
+        setNightResult('00:00');
+        setIsNightShift(false);
+    };
+
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora de Horas Trabalhadas e Centesimais (Online 2025)",
+        "name": "Calculadora de Horas Trabalhadas e Horas Centesimais (2025)",
         "description": "Converta horas em centesimais para folha 2025. Calcule extras e noturna (52min30s) com precisão. Regras CLT, tolerância de 5min e tabela oficial.",
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Any",
@@ -174,7 +180,7 @@ export function HoursCalculatorPage() {
                             <span className="text-sm text-gray-300">Departamento Pessoal 2025</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de Horas Trabalhadas <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">e Horas Centesimais (2025)</span>
+                            Calculadora de Horas Trabalhadas e <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Horas Centesimais (2025)</span>
                         </h1>
                         <p className="text-gray-400 mt-2 max-w-2xl mx-auto">
                             Converta horas em decimais, calcule banco de horas e aplique a redução de hora noturna (52m30s) automaticamente. Tudo atualizado para 2025.
@@ -183,7 +189,7 @@ export function HoursCalculatorPage() {
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-8 mb-16">
-                    {/* Calculator */}
+                    {/* Calculator Component */}
                     <div className="lg:col-span-7">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
@@ -192,7 +198,7 @@ export function HoursCalculatorPage() {
                                     Calcular Horas
                                 </h2>
                                 <button
-                                    onClick={() => { setTime1(''); setTime2(''); setResult('00:00'); setDecimalResult('0.00'); setNightResult('00:00'); setIsNightShift(false); }}
+                                    onClick={resetCalculator}
                                     className="text-xs flex items-center gap-1 text-gray-400 hover:text-white transition-colors"
                                 >
                                     <RotateCcw className="w-3 h-3" /> Limpar
@@ -201,7 +207,7 @@ export function HoursCalculatorPage() {
 
                             <div className="grid grid-cols-[1fr,auto,1fr] gap-4 items-center mb-8">
                                 <div className="space-y-2">
-                                    <label className="text-xs text-gray-500 ml-1">Horário 1</label>
+                                    <label className="text-xs text-gray-400 ml-1">Horário 1</label>
                                     <input
                                         type="text"
                                         value={time1}
@@ -230,7 +236,7 @@ export function HoursCalculatorPage() {
                                 </div>
 
                                 <div className="space-y-2">
-                                    <label className="text-xs text-gray-500 ml-1">Horário 2</label>
+                                    <label className="text-xs text-gray-400 ml-1">Horário 2</label>
                                     <input
                                         type="text"
                                         value={time2}
@@ -261,7 +267,7 @@ export function HoursCalculatorPage() {
                                     <div className={`text-4xl font-bold text-white font-mono tracking-wider ${isNightShift ? 'text-indigo-400' : ''}`}>
                                         {isNightShift ? nightResult : result}
                                     </div>
-                                    <p className="text-xs text-blue-400/60 mt-2 font-medium">
+                                    <p className="text-xs text-blue-400 mt-2 font-medium">
                                         {isNightShift ? "Equivalente a trabalhar no relógio" : "Horas : Minutos"}
                                     </p>
                                 </div>
@@ -272,7 +278,7 @@ export function HoursCalculatorPage() {
                                     <div className="text-4xl font-bold text-white font-mono tracking-wider">
                                         {decimalResult} <span className="text-lg text-gray-500 font-sans">h</span>
                                     </div>
-                                    <p className="text-xs text-emerald-400/60 mt-2 font-medium">
+                                    <p className="text-xs text-emerald-400 mt-2 font-medium">
                                         Multiplique este valor pelo salário-hora
                                     </p>
                                 </div>
@@ -315,32 +321,32 @@ export function HoursCalculatorPage() {
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td className="p-3">00:06</td>
                                             <td className="p-3 text-right font-mono text-emerald-400">0,10</td>
-                                            <td className="p-3 text-right text-xs sm:table-cell hidden">6 ÷ 60</td>
+                                            <td className="p-3 text-right text-xs sm:table-cell hidden">6 dividido por 60</td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td className="p-3">00:12</td>
                                             <td className="p-3 text-right font-mono text-emerald-400">0,20</td>
-                                            <td className="p-3 text-right text-xs sm:table-cell hidden">12 ÷ 60</td>
+                                            <td className="p-3 text-right text-xs sm:table-cell hidden">12 dividido por 60</td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td className="p-3">00:15</td>
                                             <td className="p-3 text-right font-mono text-emerald-400">0,25</td>
-                                            <td className="p-3 text-right text-xs sm:table-cell hidden">1/4 hora</td>
+                                            <td className="p-3 text-right text-xs sm:table-cell hidden">Um quarto de hora</td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td className="p-3">00:30</td>
                                             <td className="p-3 text-right font-mono text-emerald-400">0,50</td>
-                                            <td className="p-3 text-right text-xs sm:table-cell hidden">1/2 hora</td>
+                                            <td className="p-3 text-right text-xs sm:table-cell hidden">Meia hora exata</td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td className="p-3">00:45</td>
                                             <td className="p-3 text-right font-mono text-emerald-400">0,75</td>
-                                            <td className="p-3 text-right text-xs sm:table-cell hidden">3/4 hora</td>
+                                            <td className="p-3 text-right text-xs sm:table-cell hidden">Três quartos de hora</td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td className="p-3">00:52:30</td>
                                             <td className="p-3 text-right font-mono text-indigo-400">0,875</td>
-                                            <td className="p-3 text-right text-xs sm:table-cell hidden">1h Noturna</td>
+                                            <td className="p-3 text-right text-xs sm:table-cell hidden">1 hora noturna ficta</td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td className="p-3">01:00</td>
@@ -351,14 +357,23 @@ export function HoursCalculatorPage() {
                                 </table>
                             </div>
 
-                            <div className="mt-6 pt-6 border-t border-white/5">
-                                <h3 className="text-white font-medium mb-2 flex items-center gap-2">
-                                    <Calculator className="w-4 h-4 text-gray-400" />
-                                    Fórmula de Conversão
-                                </h3>
-                                <p className="text-sm text-gray-400 font-mono bg-black/30 p-2 rounded-lg border border-white/5 text-center">
-                                    Hora Decimal = Horas + (Minutos ÷ 60)
-                                </p>
+                            <div className="mt-6 pt-6 border-t border-white/5 space-y-4">
+                                <div className="bg-white/5 p-4 rounded-xl">
+                                    <p className="text-gray-400 text-xs mb-1">Fonte Oficial:</p>
+                                    <p className="text-sm text-gray-300 leading-relaxed">
+                                        Base legal para jornada de trabalho e computação de horas conforme <a href="https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Consolidação das Leis do Trabalho - CLT (Decreto-Lei nº 5.452/1943)</a>.
+                                    </p>
+                                </div>
+
+                                <div>
+                                    <h3 className="text-white font-medium mb-2 flex items-center gap-2">
+                                        <Calculator className="w-4 h-4 text-gray-400" />
+                                        Fórmula de Conversão
+                                    </h3>
+                                    <p className="text-sm text-gray-400 font-mono bg-black/30 p-2 rounded-lg border border-white/5 text-center">
+                                        Hora Centesimal = Horas Inteiras + (Minutos ÷ 60)
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -389,6 +404,16 @@ export function HoursCalculatorPage() {
                             <span><strong>Atualização:</strong> Regras vigentes para fechamento de folha em <strong>Dezembro de 2025</strong>.</span>
                         </li>
                     </ul>
+
+                    <div className="mt-8 p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                        <h3 className="text-blue-200 font-semibold mb-2">O que você precisa saber em 30 segundos</h3>
+                        <p className="text-sm text-blue-100/80 leading-relaxed mb-4">
+                            Esta ferramenta resolve o problema mais comum no Departamento Pessoal e na vida do trabalhador: a incompatibilidade entre o relógio (base 60) e a calculadora financeira (base 100). Se você multiplicar "1 hora e 30 minutos" por R$ 50,00 usando "1,30", perderá dinheiro. O correto é <strong>1,50</strong>.
+                        </p>
+                        <p className="text-sm text-blue-100/80 leading-relaxed">
+                            Nossa calculadora converte automaticamente o formato de hora relógio (HH:MM) para hora centesimal, aplica as reduções de hora noturna exigidas por lei e considera as tolerâncias de ponto da CLT. Ideal para conferir o holerite, calcular banco de horas ou preparar a folha de pagamento com segurança jurídica.
+                        </p>
+                    </div>
                 </div>
 
                 {/* O Erro Invisível */}
@@ -396,50 +421,66 @@ export function HoursCalculatorPage() {
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
                         <h2 className="text-xl font-bold text-white mb-4">O Erro Invisível: Sexagesimal vs. Centesimal</h2>
                         <p className="text-gray-400 mb-4 text-sm leading-relaxed">
-                            A maioria dos erros em pagamentos e <Link to="/calculadoras/custo-funcionario" className="text-blue-400 hover:text-blue-300 underline">custo de funcionário</Link> nasce de uma falha matemática simples. O tempo é medido em <strong>base sexagesimal</strong> (1h = 60min), enquanto o dinheiro opera em <strong>base centesimal</strong> (1 Real = 100 centavos).
+                            A maioria dos erros em pagamentos e <Link to="/calculadoras/custo-funcionario" className="text-blue-400 hover:text-blue-300 underline">custo de funcionário</Link> nasce de uma falha matemática simples. O tempo é medido em <strong>base sexagesimal</strong> (1 hora = 60 minutos), enquanto o dinheiro opera em <strong>base centesimal</strong> (1 Real = 100 centavos).
                         </p>
                         <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl">
-                            <strong className="text-red-300 block mb-2">O Prejuízo do Erro (Exemplo):</strong>
+                            <strong className="text-red-300 block mb-2">O Exemplo do Prejuízo:</strong>
                             <p className="text-sm text-gray-300 mb-2">Funcionário ganha R$ 100/h e faz 1h30min extra.</p>
                             <ul className="text-sm space-y-1">
-                                <li className="text-red-400">❌ Errado: 1,30 x 100 = R$ 130,00</li>
-                                <li className="text-emerald-400">✅ Correto: 1,50 x 100 = R$ 150,00</li>
+                                <li className="text-red-400">❌ Cálculo Errado (Intuitivo): 1,30 x 100 = R$ 130,00</li>
+                                <li className="text-emerald-400">✅ Cálculo Correto (Centesimal): 1,50 x 100 = R$ 150,00</li>
                             </ul>
-                            <p className="text-xs text-gray-500 mt-2">Diferença de R$ 20,00 (13%) perdida.</p>
+                            <p className="text-xs text-gray-400 mt-2">Diferença de R$ 20,00 (mais de 13% do valor devido) perdida.</p>
                         </div>
+                        <p className="text-gray-400 mt-4 text-sm leading-relaxed">
+                            Ao calcular <Link to="/calculadoras/horas-extras" className="text-blue-400 hover:text-blue-300 underline">horas extras</Link>, sempre converta os minutos para decimais antes de multiplicar pelo valor monetário.
+                        </p>
                     </div>
 
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                        <h2 className="text-xl font-bold text-white mb-4">A "Mágica" da Hora Noturna</h2>
+                        <h2 className="text-xl font-bold text-white mb-4">A "Mágica" da Hora Noturna (Fator 1.1428)</h2>
                         <p className="text-gray-400 mb-4 text-sm leading-relaxed">
                             Se o trabalho ocorre entre 22h e 05h (trabalhador urbano), a hora não tem 60 minutos, mas sim <strong>52 minutos e 30 segundos</strong> (Art. 73 da CLT).
                         </p>
                         <p className="text-gray-400 mb-4 text-sm leading-relaxed">
-                            Não precisa somar minuto a minuto. Basta multiplicar o tempo de relógio por <strong>1,142857</strong>.
+                            Para calcular isso sem dor de cabeça, aplicamos um fator de redução. Você não precisa somar minuto a minuto, basta multiplicar o tempo de relógio por 1,142857.
                         </p>
                         <div className="bg-indigo-500/10 border border-indigo-500/20 p-4 rounded-xl">
-                            <strong className="text-indigo-300 block mb-2">Exemplo Real:</strong>
+                            <strong className="text-indigo-300 block mb-2">Cenário:</strong>
                             <p className="text-sm text-gray-300 mb-2">Trabalho das 22:00 às 05:00 (7 horas no relógio).</p>
                             <ul className="text-sm space-y-1">
                                 <li className="text-indigo-300">Cálculo: 7 x 1,142857 = 8 horas pagas</li>
                             </ul>
-                            <p className="text-xs text-gray-500 mt-2">O trabalhador recebe por 8 horas + 20% de <Link to="/calculadoras/adicional-noturno" className="text-indigo-400 hover:text-indigo-300 underline">adicional noturno</Link>.</p>
+                            <p className="text-xs text-gray-400 mt-2">O trabalhador recebe por 8 horas, além do percentual mínimo de 20% do <Link to="/calculadoras/adicional-noturno" className="text-indigo-400 hover:text-indigo-300 underline">adicional noturno</Link>.</p>
                         </div>
                     </div>
                 </div>
 
-                {/* Exemplos Práticos */}
+                {/* Como Calcular / Exemplos Práticos */}
                 <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 mb-12">
-                    <h2 className="text-xl font-bold text-white mb-6">Exemplos Práticos de Cálculo (2025)</h2>
+                    <h2 className="text-xl font-bold text-white mb-6">Como Calcular (Metodologia e Exemplos Práticos)</h2>
+
+                    <div className="mb-8">
+                        <h3 className="text-lg font-semibold text-white mb-4">1. Fórmula de Conversão Manual</h3>
+                        <p className="text-gray-400 text-sm mb-4">
+                            Se você precisa fazer a conta na mão ou auditar um sistema, use a seguinte lógica para transformar minutos em horas decimais:
+                        </p>
+                        <div className="bg-black/30 p-4 rounded-xl border border-white/10 text-center font-mono text-emerald-400">
+                            Hora Centesimal = Horas Inteiras + (Minutos ÷ 60)
+                        </div>
+                    </div>
+
+                    <h3 className="text-lg font-semibold text-white mb-4">2. Exemplos Práticos de Cálculo</h3>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                             <h3 className="text-white font-semibold mb-2">Exemplo A: Salário Alto (R$ 8.000,00)</h3>
-                            <p className="text-xs text-gray-400 mb-2">Gerente trabalhou 8 horas e 48 minutos no feriado.</p>
+                            <p className="text-xs text-gray-400 mb-2">Gerente (R$ 36,36/h) trabalhou 8 horas e 48 minutos.</p>
                             <ul className="text-sm space-y-1 text-gray-300">
                                 <li><strong>1. Conversão:</strong> 48 min ÷ 60 = 0,8. Tempo: 8,8h.</li>
                                 <li><strong>2. Valor Hora (100%):</strong> R$ 36,36 x 2 = R$ 72,72.</li>
                                 <li><strong>3. Cálculo:</strong> 8,8 x 72,72 = <span className="text-emerald-400 font-bold">R$ 639,93</span>.</li>
                             </ul>
+                            <p className="text-xs text-red-400 mt-2">Prejuízo se errar (usar 8,48): R$ 23,27 a menos.</p>
                         </div>
                         <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                             <h3 className="text-white font-semibold mb-2">Exemplo B: Salário Mínimo 2025 (R$ 1.518,00)</h3>
@@ -449,24 +490,28 @@ export function HoursCalculatorPage() {
                                 <li><strong>2. Valor Hora (50%):</strong> R$ 6,90 + 50% = R$ 10,35.</li>
                                 <li><strong>3. Cálculo:</strong> 0,75 x 10,35 = <span className="text-emerald-400 font-bold">R$ 7,76</span>.</li>
                             </ul>
+                            <p className="text-xs text-red-400 mt-2">Prejuízo se errar (usar 0,45): R$ 3,11 a menos.</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Excel Section */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-24">
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
                             <FileSpreadsheet className="w-6 h-6 text-emerald-500" />
                         </div>
                         <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                            Como calcular horas no Excel (Solução Técnica)
+                            Solução Técnica: Excel e o Sistema de Datas 1904
                         </h2>
                     </div>
                     <div className="grid md:grid-cols-2 gap-8 items-center">
                         <div>
                             <p className="text-gray-400 mb-4 text-sm">
-                                O Excel padrão usa o sistema de datas de 1900, que não reconhece tempo negativo (ex: saldo devedor de banco de horas).
+                                Muitos profissionais de RH tentam criar suas próprias planilhas e esbarram em um erro clássico: o Excel mostra <code className="text-red-400">################</code> quando o saldo de horas é negativo.
+                            </p>
+                            <p className="text-gray-400 mb-4 text-sm">
+                                Isso acontece porque o Excel padrão usa o sistema de datas de 1900, que não reconhece tempo negativo.
                             </p>
                             <div className="space-y-4">
                                 <p className="text-white font-medium text-sm">Como resolver (Hack para Usuários Avançados):</p>
@@ -475,8 +520,7 @@ export function HoursCalculatorPage() {
                                     <li>Role até a seção "Ao calcular esta pasta de trabalho".</li>
                                     <li>Marque a caixa <strong>"Usar sistema de data 1904"</strong>.</li>
                                 </ol>
-                                <p className="text-white font-medium text-sm mt-4">Para somar acima de 24h:</p>
-                                <p className="text-sm text-gray-400">Use a formatação personalizada: <code className="bg-white/10 px-1 rounded text-emerald-400">[h]:mm</code></p>
+                                <p className="text-sm text-gray-400 mt-4">Isso permite que você calcule débitos de <Link to="/calculadoras/horas" className="text-emerald-400 hover:text-emerald-300 underline">banco de horas</Link> sem que a planilha quebre.</p>
                             </div>
                         </div>
                         <div className="bg-black/40 p-6 rounded-2xl border border-white/10">
@@ -488,14 +532,51 @@ export function HoursCalculatorPage() {
                                 <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                                     <p className="text-xs text-red-300 mb-1">Sem formatação (h:mm)</p>
                                     <p className="text-xl font-mono text-red-400">02:00</p>
-                                    <p className="text-[10px] text-gray-500">(O Excel zerou 26 horas)</p>
+                                    <p className="text-xs text-gray-400">(O Excel zerou 26 horas)</p>
                                 </div>
                                 <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
                                     <p className="text-xs text-emerald-300 mb-1">Com formatação ([h]:mm)</p>
                                     <p className="text-xl font-mono text-emerald-400">26:00</p>
-                                    <p className="text-[10px] text-gray-500">(Contagem correta de horas acumuladas)</p>
+                                    <p className="text-xs text-gray-400">(Contagem correta de horas acumuladas)</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Casos Especiais */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 mb-24">
+                    <h2 className="text-xl font-bold text-white mb-6">Casos Especiais e Regras de Escala</h2>
+
+                    <div className="space-y-8">
+                        <div>
+                            <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                                <AlertCircle className="w-5 h-5 text-blue-500" />
+                                Escala 12x36 e Feriados
+                            </h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                                Na escala 12x36, generalizada pela Reforma Trabalhista, o pagamento mensal pactuado já engloba o descanso semanal remunerado (DSR) e os feriados trabalhados. Por isso, ao trabalhar em um feriado, você não recebe automaticamente em dobro, pois a lei considera que as 36 horas de folga seguintes já compensam esse dia. A única exceção ocorre se houver uma Convenção Coletiva da categoria estipulando explicitamente o pagamento adicional. Consulte sempre a <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2017/lei/l13467.htm" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Lei nº 13.467/2017</a> e o acordo do seu sindicato.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                                <HelpCircle className="w-5 h-5 text-indigo-500" />
+                                Reflexos na Rescisão
+                            </h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                                No momento da <Link to="/calculadoras/rescisao" className="text-blue-400 hover:text-blue-300 underline">rescisão</Link>, o cálculo das médias de horas extras deve seguir a <a href="https://www.tst.jus.br/sumulas" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 underline">Súmula 347 do TST</a>. Isso significa que não se deve fazer a média dos valores em reais pagos nos meses anteriores, mas sim a média da <strong>quantidade física de horas</strong> efetivamente prestadas. Essa média é então multiplicada pelo valor do salário <strong>atual</strong> na data da saída. Isso garante que o trabalhador não perca poder de compra e receba os reflexos corretos sobre Aviso Prévio, 13º Salário, Férias e FGTS.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                                <Clock className="w-5 h-5 text-emerald-500" />
+                                Intervalo Intrajornada (Almoço)
+                            </h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                                Se o empregador não concede a 1 hora completa de almoço (para jornadas acima de 6h), ele deve pagar o tempo suprimido como hora extra (com adicional de 50%), e não apenas como hora normal. Nossa calculadora considera apenas o tempo de trabalho efetivo, então subtraia o intervalo real antes de inserir os dados se o sistema de ponto não for automatizado.
+                            </p>
                         </div>
                     </div>
                 </div>
