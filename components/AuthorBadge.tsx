@@ -30,7 +30,7 @@ export const AuthorBadge: React.FC<AuthorBadgeProps> = ({ className = "" }) => {
                     <span className="text-sm font-semibold text-white group-hover:text-primary transition-colors">
                         {AUTHOR.name}
                     </span>
-                    <span className="text-xs text-gray-500 line-clamp-1 max-w-[200px] md:max-w-none">
+                    <span className="text-xs text-gray-400 line-clamp-1 max-w-[200px] md:max-w-none">
                         {AUTHOR.role}
                     </span>
                 </div>

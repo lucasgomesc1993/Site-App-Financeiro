@@ -181,10 +181,11 @@ export function OvertimePage() {
                             <div className="space-y-6">
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Salário Bruto</label>
+                                        <label htmlFor="salary-input" className="text-sm text-gray-400">Salário Bruto</label>
                                         <div className="relative">
-                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
+                                            <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                             <input
+                                                id="salary-input"
                                                 type="text"
                                                 inputMode="decimal"
                                                 value={salary}
@@ -195,9 +196,10 @@ export function OvertimePage() {
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Jornada Mensal</label>
+                                        <label htmlFor="hours-select" className="text-sm text-gray-400">Jornada Mensal</label>
                                         <div className="relative">
                                             <select
+                                                id="hours-select"
                                                 value={hoursWorked}
                                                 onChange={(e) => setHoursWorked(e.target.value)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
@@ -213,9 +215,10 @@ export function OvertimePage() {
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Horas Extras 50%</label>
+                                        <label htmlFor="ot50-input" className="text-sm text-gray-400">Horas Extras 50%</label>
                                         <div className="relative">
                                             <input
+                                                id="ot50-input"
                                                 type="text"
                                                 inputMode="decimal"
                                                 value={overtime50}
@@ -223,13 +226,14 @@ export function OvertimePage() {
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
                                                 placeholder="Qtd horas (ex: 10)"
                                             />
-                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500">Dias Úteis</span>
+                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400">Dias Úteis</span>
                                         </div>
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Horas Extras 100%</label>
+                                        <label htmlFor="ot100-input" className="text-sm text-gray-400">Horas Extras 100%</label>
                                         <div className="relative">
                                             <input
+                                                id="ot100-input"
                                                 type="text"
                                                 inputMode="decimal"
                                                 value={overtime100}
@@ -237,18 +241,19 @@ export function OvertimePage() {
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
                                                 placeholder="Qtd horas"
                                             />
-                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-500">Domingos/Feriados</span>
+                                            <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-gray-400">Domingos/Feriados</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400 flex items-center gap-1">
+                                        <label htmlFor="business-days-input" className="text-sm text-gray-400 flex items-center gap-1">
                                             Dias Úteis
-                                            <HelpCircle className="w-3 h-3 text-gray-500" />
+                                            <HelpCircle className="w-3 h-3 text-gray-400" />
                                         </label>
                                         <input
+                                            id="business-days-input"
                                             type="number"
                                             value={businessDays}
                                             onChange={(e) => setBusinessDays(e.target.value)}
@@ -257,11 +262,12 @@ export function OvertimePage() {
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400 flex items-center gap-1">
+                                        <label htmlFor="rest-days-input" className="text-sm text-gray-400 flex items-center gap-1">
                                             Domingos e Feriados
-                                            <HelpCircle className="w-3 h-3 text-gray-500" />
+                                            <HelpCircle className="w-3 h-3 text-gray-400" />
                                         </label>
                                         <input
+                                            id="rest-days-input"
                                             type="number"
                                             value={restDays}
                                             onChange={(e) => setRestDays(e.target.value)}
@@ -378,8 +384,8 @@ export function OvertimePage() {
                                     <span className="text-xs text-gray-400">A média das horas entra no cálculo desses benefícios.</span>
                                 </div>
                             </div>
-                            <p className="text-xs text-gray-500 mt-4 italic">
-                                * Se você faz muitas horas extras, compare se <Link to="/calculadoras/clt-vs-pj" className="text-blue-400 hover:underline">vale a pena virar PJ</Link>.
+                            <p className="text-xs text-gray-400 mt-4 italic">
+                                * Se você faz muitas horas extras, compare se <Link to="/calculadoras/clt-vs-pj" className="text-blue-400 underline">vale a pena virar PJ</Link>.
                             </p>
                         </div>
                     </div>
@@ -406,28 +412,28 @@ export function OvertimePage() {
 
                             <div className="grid md:grid-cols-2 gap-4 mt-6">
                                 <div className="bg-white/5 p-4 rounded-xl space-y-2">
-                                    <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Passo 1: Hora Normal</span>
+                                    <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Passo 1: Hora Normal</span>
                                     <div className="flex justify-between text-sm">
                                         <span>R$ 2.640 ÷ 220</span>
                                         <span className="text-white font-bold">R$ 12,00</span>
                                     </div>
                                 </div>
                                 <div className="bg-white/5 p-4 rounded-xl space-y-2">
-                                    <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Passo 2: Hora Extra (50%)</span>
+                                    <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Passo 2: Hora Extra (50%)</span>
                                     <div className="flex justify-between text-sm">
                                         <span>R$ 12,00 + 50%</span>
                                         <span className="text-white font-bold">R$ 18,00</span>
                                     </div>
                                 </div>
                                 <div className="bg-white/5 p-4 rounded-xl space-y-2">
-                                    <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Passo 3: Total (10h)</span>
+                                    <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Passo 3: Total (10h)</span>
                                     <div className="flex justify-between text-sm">
                                         <span>10 x R$ 18,00</span>
                                         <span className="text-white font-bold">R$ 180,00</span>
                                     </div>
                                 </div>
                                 <div className="bg-white/5 p-4 rounded-xl space-y-2">
-                                    <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold">Passo 4: DSR (25 úteis / 5 dom)</span>
+                                    <span className="text-xs text-gray-400 uppercase tracking-wider font-semibold">Passo 4: DSR (25 úteis / 5 dom)</span>
                                     <div className="flex justify-between text-sm">
                                         <span>(180 ÷ 25) x 5</span>
                                         <span className="text-white font-bold">R$ 36,00</span>
@@ -502,7 +508,7 @@ export function OvertimePage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-xs text-gray-500 mt-4 leading-relaxed">
+                            <p className="text-xs text-gray-400 mt-4 leading-relaxed">
                                 * Convenções Coletivas podem estipular porcentagens maiores (ex: 60%, 70% ou 100% aos sábados).
                             </p>
                         </div>
