@@ -1200,7 +1200,7 @@ const INSSPage = lazy(() => import("./assets/INSSPage-P1jLBxS5.js").then((module
 const NetSalaryPage = lazy(() => import("./assets/NetSalaryPage-BOdO77Ix.js").then((module) => ({ default: module.NetSalaryPage })));
 const ThirteenthSalaryPage = lazy(() => import("./assets/ThirteenthSalaryPage-DoybU4vX.js").then((module) => ({ default: module.ThirteenthSalaryPage })));
 const OvertimePage = lazy(() => import("./assets/OvertimePage-D_TfFKfE.js").then((module) => ({ default: module.OvertimePage })));
-const UnemploymentInsurancePage = lazy(() => import("./assets/UnemploymentInsurancePage-B7OLEfU9.js").then((module) => ({ default: module.UnemploymentInsurancePage })));
+const UnemploymentInsurancePage = lazy(() => import("./assets/UnemploymentInsurancePage-BxBwgZJi.js").then((module) => ({ default: module.UnemploymentInsurancePage })));
 const NightShiftPage = lazy(() => import("./assets/NightShiftPage-CyT7WO7Y.js").then((module) => ({ default: module.NightShiftPage })));
 const FGTSPage = lazy(() => import("./assets/FGTSPage-CtLxTYuq.js").then((module) => ({ default: module.FGTSPage })));
 const EmployeeCostPage = lazy(() => import("./assets/EmployeeCostPage-BX9MfT3B.js").then((module) => ({ default: module.EmployeeCostPage })));

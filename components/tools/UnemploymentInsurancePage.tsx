@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Calculator, AlertTriangle, CheckCircle2, AlertCircle, Info, DollarSign, Calendar } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ShieldCheck, Calculator, AlertTriangle, CheckCircle2, AlertCircle, Info, DollarSign, Calendar, Briefcase, HelpCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
@@ -8,30 +7,37 @@ import { FAQ } from '../FAQ';
 import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQItem } from '../../types';
 
+// Constants 2025
+const MIN_WAGE_2025 = 1518.00;
+const RANGE_1_LIMIT = 2138.76;
+const RANGE_2_LIMIT = 3564.96;
+const FIXED_AMOUNT_RANGE_2 = 1711.01;
+const MAX_BENEFIT_2025 = 2424.11;
+
 const UNEMPLOYMENT_FAQS: FAQItem[] = [
     {
-        question: "Qual o prazo para dar entrada no Seguro-Desemprego?",
-        answer: "Para o trabalhador formal, o prazo é do 7º ao 120º dia (corridos) após a data da demissão. Para empregados domésticos, o prazo é do 7º ao 90º dia. Perder esse prazo resulta na perda do direito ao benefício."
+        question: "Qual o valor máximo do Seguro-Desemprego em 2025?",
+        answer: "O valor máximo (teto) pago a qualquer trabalhador em 2025 é de R$ 2.424,11. Mesmo que seu salário anterior fosse superior a R$ 10.000,00, este é o limite fixado pelo governo."
     },
     {
-        question: "Quem pede demissão tem direito ao Seguro-Desemprego?",
-        answer: "Não. O benefício é exclusivo para demissões involuntárias (sem justa causa). Quem pede demissão perde o direito ao seguro, mas mantém outros direitos que podem ser calculados na nossa ferramenta de cálculo de férias."
+        question: "Quanto tempo demora para cair a primeira parcela?",
+        answer: "A primeira parcela é liberada 30 dias após a data em que você dá entrada no requerimento. As demais parcelas são pagas mensalmente, a cada 30 dias. Você pode acompanhar o calendário pelo aplicativo Carteira de Trabalho Digital."
     },
     {
-        question: "O Seguro-Desemprego conta para aposentadoria?",
-        answer: "Sim, mas não automaticamente. O período em que você recebe o seguro pode contar como tempo de contribuição, desde que você pague a contribuição previdenciária (confira as alíquotas na nossa calculadora de INSS) como segurado facultativo ou se houver compensação automática."
+        question: "Quem pede demissão tem direito ao seguro?",
+        answer: "Não. O benefício é exclusivo para demissões sem justa causa (involuntárias) ou rescisão indireta. Quem pede demissão perde o direito ao seguro, mas mantém o direito ao saldo de salário e férias, que podem ser simulados na nossa calculadora de rescisão."
     },
     {
-        question: "Recebo a primeira parcela quando?",
-        answer: "A liberação da primeira parcela ocorre 30 dias após a data do requerimento (protocolo do pedido), seguindo o calendário de pagamentos da CAIXA."
+        question: "MEI tem direito a receber Seguro-Desemprego?",
+        answer: "Sim, mas apenas se comprovar que a atividade como MEI não gera renda suficiente para o sustento. Frequentemente o benefício é negado inicialmente, exigindo que o trabalhador apresente recurso administrativo comprovando a inatividade ou baixo faturamento do CNPJ."
     },
     {
-        question: "MEI tem direito ao Seguro-Desemprego?",
-        answer: "Em regra, não, pois o sistema entende que o MEI possui fonte de renda. Contudo, se você comprovar que o MEI está inativo (sem faturamento) e que sua renda vinha exclusivamente do emprego CLT, é possível conseguir o benefício mediante recurso administrativo."
+        question: "Como dar entrada no Seguro-Desemprego online?",
+        answer: "Você pode solicitar o benefício totalmente online através do aplicativo Carteira de Trabalho Digital ou pelo portal Gov.br. Basta acessar a aba 'Benefícios', selecionar 'Seguro-Desemprego' e clicar em 'Solicitar', utilizando o número do requerimento fornecido pelo empregador na demissão."
     },
     {
-        question: "Qual o valor máximo (teto) do Seguro-Desemprego em 2025?",
-        answer: "O valor máximo que um trabalhador pode receber por parcela em 2025 é R$ 2.424,11, independentemente de quão alto era o seu salário anterior."
+        question: "O que acontece se eu arrumar um emprego enquanto recebo?",
+        answer: "O benefício é suspenso imediatamente. Se você for contratado (CLT) antes de receber todas as parcelas, o pagamento das restantes é cancelado. Receber seguro-desemprego trabalhando registrado é fraude e pode exigir devolução dos valores."
     }
 ];
 
@@ -50,32 +56,16 @@ export function UnemploymentInsurancePage() {
 
         const salaries = [s1, s2, s3].filter(s => s > 0);
 
-        // Se não tiver nenhum salário preenchido, reseta o resultado sem erro
         if (salaries.length === 0) {
             setResult(null);
             return;
         }
 
-        // Regra para média salarial:
-        // A média é calculada com base nos últimos 3 salários (ou quantos houver se for menos que 3)
-        // O texto diz "média dos seus três últimos salários".
-        // Implementação: Considerar 3, se faltar algum, usa-se a média dos que existem (lógica comum) ou força 3?
-        // O texto diz "Se você não trabalhou integralmente em algum dos últimos três meses, o cálculo considera o salário do mês completo de trabalho."
-        // Vamos usar a média aritmética simples dos valores preenchidos para ser mais flexível, mas o ideal é ter os 3.
-        // Assumindo que o usuário preencha o que tem.
+        // Average Calculation
+        const sum = salaries.reduce((a, b) => a + b, 0);
+        const averageSalary = sum / salaries.length;
 
-        let averageSalary = salaries.reduce((a, b) => a + b, 0) / salaries.length;
-
-        // Se o usuário preencheu 3 campos, divide por 3.
-        // Se preencheu só 2, divide por 2?
-        // A lei diz: média dos salários dos últimos 3 meses anteriores à dispensa.
-        // Vamos considerar divisão por 3 se todos preenchidos, ou pelos preenchidos.
-
-        if (s1 && s2 && s3) averageSalary = (s1 + s2 + s3) / 3;
-        else if (salaries.length > 0) averageSalary = salaries.reduce((a, b) => a + b, 0) / salaries.length;
-        else averageSalary = 0;
-
-        const months = parseInt(monthsWorked);
+        const months = parseInt(monthsWorked) || 0;
         const request = parseInt(requestCount);
 
         if (months === 0) {
@@ -83,48 +73,40 @@ export function UnemploymentInsurancePage() {
             return;
         }
 
-        // Tabela Oficial 2025
+        // Value Calculation 2025 Logic
         let installmentValue = 0;
 
-        if (averageSalary <= 2138.76) {
+        if (averageSalary <= RANGE_1_LIMIT) {
             installmentValue = averageSalary * 0.8;
-        } else if (averageSalary <= 3564.96) {
-            installmentValue = 1711.01 + (averageSalary - 2138.76) * 0.5;
+        } else if (averageSalary <= RANGE_2_LIMIT) {
+            installmentValue = FIXED_AMOUNT_RANGE_2 + (averageSalary - RANGE_1_LIMIT) * 0.5;
         } else {
-            installmentValue = 2424.11; // Teto Fixo
+            installmentValue = MAX_BENEFIT_2025;
         }
 
-        // O valor do benefício nunca será inferior ao salário mínimo (R$ 1.518,00 em 2025)
-        if (installmentValue < 1518.00) {
-            installmentValue = 1518.00;
+        // Floor Check (Min Wage)
+        if (installmentValue < MIN_WAGE_2025) {
+            installmentValue = MIN_WAGE_2025;
         }
 
-        // Calcular Quantidade de Parcelas
+        // Installment Count Logic
         let installmentCount = 0;
 
         if (request === 1) {
             if (months >= 12 && months <= 23) installmentCount = 4;
             else if (months >= 24) installmentCount = 5;
-            else installmentCount = 0; // Menos de 12 meses na 1ª solicitação não dá direito
+            else installmentCount = 0;
         } else if (request === 2) {
             if (months >= 9 && months <= 11) installmentCount = 3;
             else if (months >= 12 && months <= 23) installmentCount = 4;
             else if (months >= 24) installmentCount = 5;
             else installmentCount = 0;
         } else {
-            // 3ª ou mais
+            // 3rd or more
             if (months >= 6 && months <= 11) installmentCount = 3;
             else if (months >= 12 && months <= 23) installmentCount = 4;
             else if (months >= 24) installmentCount = 5;
             else installmentCount = 0;
-        }
-
-        // Se não tiver direito a parcelas, zera o valor?
-        // O usuário pode querer ver a simulação de valor mesmo sem tempo, mas o correto é dizer que não tem direito.
-        // Vamos manter o cálculo de valor mas indicar 0 parcelas se for o caso, ou null.
-
-        if (installmentCount === 0) {
-            // Caso especial: mostra mensagem ou zera
         }
 
         setResult({
@@ -150,16 +132,16 @@ export function UnemploymentInsurancePage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora Seguro-Desemprego 2025",
+        "name": "Calculadora Seguro-Desemprego 2025: Valor e Parcelas",
         "url": "https://junny.com.br/calculadoras/seguro-desemprego",
-        "description": "Calcule agora o valor exato e a quantidade de parcelas do seu Seguro-Desemprego em 2025. Regras atualizadas, tabela oficial e prazos de pagamento.",
+        "description": "Calcule agora o valor e a quantidade de parcelas do seu Seguro-Desemprego 2025. Tabela CODEFAT atualizada, teto de R$ 2.424,11 e regras para domésticos.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "featureList": [
-            "Cálculo Tabela 2025",
+            "Cálculo Tabela CODEFAT 2025",
             "Simulação de Parcelas",
-            "Regras Atualizadas",
-            "Teto do Benefício"
+            "Teto R$ 2.424,11",
+            "Regras Atualizadas"
         ],
         "offers": {
             "@type": "Offer",
@@ -171,8 +153,8 @@ export function UnemploymentInsurancePage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora Seguro-Desemprego 2025: Valor, Parcelas e Tabela Oficial"
-                description="Calcule agora o valor exato e a quantidade de parcelas do seu Seguro-Desemprego em 2025. Regras atualizadas, tabela oficial e prazos de pagamento."
+                title="Calculadora Seguro-Desemprego 2025: Valor e Parcelas (Atualizada)"
+                description="Calcule agora o valor e a quantidade de parcelas do seu Seguro-Desemprego 2025. Tabela CODEFAT atualizada, teto de R$ 2.424,11 e regras para domésticos."
                 canonical="/calculadoras/seguro-desemprego"
             />
             <script type="application/ld+json">
@@ -204,23 +186,23 @@ export function UnemploymentInsurancePage() {
                         { label: 'Seguro Desemprego', href: '/calculadoras/seguro-desemprego' }
                     ]} />
 
-                    <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="text-center mb-12">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                             <ShieldCheck className="w-4 h-4 text-blue-500" />
-                            <span className="text-sm text-gray-300">Trabalhistas e Previdenciárias</span>
+                            <span className="text-sm text-gray-300">Atualizado CODEFAT 2025</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora de Seguro-Desemprego 2025: <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-orange-500">Simule Valor e Parcelas</span>
+                            Calculadora de Seguro-Desemprego 2025 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-orange-500">(Atualizada)</span>
                         </h1>
                         <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Perder o emprego gera incerteza financeira imediata. O Seguro-Desemprego é um direito fundamental do trabalhador CLT demitido sem justa causa. Nossa ferramenta utiliza as regras oficiais vigentes para 2025 para mostrar exatamente quanto você receberá.
+                            O Seguro-Desemprego é um auxílio financeiro temporário garantido ao trabalhador demitido sem justa causa. Diferente do <Link to="/calculadoras/salario-liquido" className="text-blue-400 hover:text-blue-300 underline">salário líquido</Link> habitual, o valor do benefício segue uma tabela progressiva definida pelo CODEFAT, que limita o pagamento máximo a <strong>R$ 2.424,11</strong> em 2025.
                         </p>
                     </div>
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
-                    <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
+                    <div className="lg:col-span-7">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
@@ -264,7 +246,7 @@ export function UnemploymentInsurancePage() {
                                             />
                                         </div>
                                     </div>
-                                    <p className="text-xs text-gray-500">Se houver menos de 3 salários, preencha apenas os correspondentes.</p>
+                                    <p className="text-xs text-gray-400">Se houver menos de 3 salários, preencha apenas os correspondentes.</p>
                                 </div>
 
                                 <div className="grid md:grid-cols-2 gap-6">
@@ -303,7 +285,7 @@ export function UnemploymentInsurancePage() {
                                                 {result && result.installmentCount > 0 ? `R$ ${result.installmentValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : '---'}
                                             </span>
                                             {result && result.averageSalary > 0 && (
-                                                <span className="text-xs text-blue-400/60 mt-2 block">
+                                                <span className="text-xs text-blue-400 mt-2 block">
                                                     Média Salarial: R$ {result.averageSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                                 </span>
                                             )}
@@ -329,18 +311,48 @@ export function UnemploymentInsurancePage() {
                     </div>
 
                     {/* Sidebar Info */}
-                    <div className="lg:col-span-5 space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
+                    <div className="lg:col-span-5 space-y-6">
 
-                        {/* Tabela Resumo */}
+                        {/* Resumo em 30 Segundos */}
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
+                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
+                                <Briefcase className="w-5 h-5 text-emerald-500" />
+                                Resumo em 30 segundos
+                            </h3>
+                            <ul className="space-y-3">
+                                <li className="flex items-start gap-2 text-sm text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
+                                    <span><strong>Teto Máximo da Parcela:</strong> R$ 2.424,11 (para médias acima de R$ 3.564,96).</span>
+                                </li>
+                                <li className="flex items-start gap-2 text-sm text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
+                                    <span><strong>Valor Mínimo (Piso):</strong> R$ 1.518,00 (<a href="https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/noticias/2025/04/presidente-sanciona-orcamento-de-2025-com-aumento-do-salario-minimo-para-r-1.518" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 hover:underline">Lei Orçamentária 2025</a>).</span>
+                                </li>
+                                <li className="flex items-start gap-2 text-sm text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
+                                    <span><strong>Quantidade de Parcelas:</strong> De 3 a 5 pagamentos, dependendo do tempo de trabalho.</span>
+                                </li>
+                                <li className="flex items-start gap-2 text-sm text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
+                                    <span><strong>Prazo para Solicitar:</strong> 7 a 120 dias (trabalhadores formais) ou 7 a 90 dias (domésticos).</span>
+                                </li>
+                                <li className="flex items-start gap-2 text-sm text-gray-400">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
+                                    <span><strong>Base de Cálculo:</strong> Média dos últimos 3 salários anteriores à demissão.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Tabela Oficial */}
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
                                 <Info className="w-5 h-5 text-blue-500" />
-                                Tabela Oficial 2025
+                                Tabela Oficial CODEFAT 2025
                             </h3>
                             <div className="space-y-4">
                                 <div className="p-3 rounded-xl bg-white/5 border border-white/5">
-                                    <div className="text-xs text-gray-400 mb-1">Menor que R$ 2.138,76</div>
-                                    <div className="text-white font-medium">Multiplica-se por 80%</div>
+                                    <div className="text-xs text-gray-400 mb-1">Até R$ 2.138,76</div>
+                                    <div className="text-white font-medium">Multiplica-se o salário médio por 0,80 (80%)</div>
                                 </div>
                                 <div className="p-3 rounded-xl bg-white/5 border border-white/5">
                                     <div className="text-xs text-gray-400 mb-1">De R$ 2.138,77 até R$ 3.564,96</div>
@@ -351,96 +363,60 @@ export function UnemploymentInsurancePage() {
                                     <div className="text-white font-medium">Valor Fixo: R$ 2.424,11 (Teto)</div>
                                 </div>
                                 <div className="mt-2 text-xs text-gray-500">
-                                    * O benefício nunca será menor que R$ 1.518,00 (Salário Mínimo).
+                                    <a href="https://www.gov.br/trabalho-e-emprego/pt-br/servicos/trabalhador/seguro-desemprego/seguro-desemprego-formal" target="_blank" rel="noopener noreferrer" className="hover:text-blue-400 hover:underline">
+                                        Fonte Oficial: Tabela Seguro-Desemprego 2025 - Portal MTE
+                                    </a>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
-                            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-white">
-                                <AlertTriangle className="w-5 h-5 text-orange-500" />
-                                Requisitos Básicos
-                            </h3>
-                            <ul className="space-y-3">
-                                <li className="flex gap-3 text-sm text-gray-400">
-                                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                    <span>Demissão sem justa causa</span>
-                                </li>
-                                <li className="flex gap-3 text-sm text-gray-400">
-                                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                    <span>Estar desempregado na solicitação</span>
-                                </li>
-                                <li className="flex gap-3 text-sm text-gray-400">
-                                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                                    <span>Não possuir renda própria</span>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
 
                 {/* Content Sections */}
-                <div className="space-y-12 max-w-4xl mx-auto mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
+                <div className="space-y-12 max-w-4xl mx-auto mb-24">
 
                     {/* Como é calculado */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8">
-                        <h2 className="text-2xl font-bold text-white mb-6">Como é calculado o Seguro-Desemprego em 2025?</h2>
+                        <h2 className="text-2xl font-bold text-white mb-6">Como Calcular o Seguro-Desemprego (Passo a Passo)</h2>
                         <div className="prose prose-invert max-w-none text-gray-400">
                             <p className="mb-4">
-                                O cálculo baseia-se na média dos seus <strong>três últimos salários</strong> anteriores à demissão. O resultado final depende de qual "faixa" salarial essa média se encaixa, seguindo a tabela reajustada pelo Ministério do Trabalho e Emprego.
-                            </p>
-                            <p className="mb-6">
-                                Para trabalhadores que recebem salário variável ou comissões, o cálculo da média é essencial para garantir o valor correto. Se você já tem o valor da sua rescisão em mente, vale a pena conferir nossa calculadora de <Link to="/calculadoras/rescisao" className="text-blue-400 hover:text-blue-300 underline">rescisão de contrato</Link> para ter o panorama financeiro completo.
+                                Entender a lógica por trás dos números ajuda a evitar surpresas no planejamento financeiro enquanto você busca recolocação. O sistema não utiliza apenas o seu último contracheque, mas sim uma média.
                             </p>
 
-                            <h3 className="text-xl font-bold text-white mb-4 mt-8">Exemplo de Cálculo Real</h3>
-                            <div className="bg-white/5 p-6 rounded-xl border border-white/5">
-                                <p className="mb-4">Imagine que a média dos seus últimos 3 salários foi de <strong>R$ 2.500,00</strong>.</p>
-                                <ol className="list-decimal list-inside space-y-2 text-gray-400">
-                                    <li>Este valor está na segunda faixa da tabela.</li>
-                                    <li>O que excede R$ 2.138,76 é <strong>R$ 361,24</strong> (2.500 - 2.138,76).</li>
-                                    <li>Multiplicamos o excedente por 50% = <strong>R$ 180,62</strong>.</li>
-                                    <li>Somamos a parcela fixa de R$ 1.711,01.</li>
-                                    <li className="text-white font-medium">Valor Final da Parcela: R$ 1.891,63.</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
+                            <h3 className="text-xl font-bold text-white mb-4 mt-8">1. Encontre a Média Salarial</h3>
+                            <p className="mb-4">
+                                Some os seus últimos 3 salários anteriores à demissão e divida por 3.
+                            </p>
+                            <ul className="list-disc list-inside space-y-2 mb-6 text-gray-400">
+                                <li><strong>Atenção:</strong> Considere o salário bruto (sem descontos de <Link to="/calculadoras/inss" className="text-blue-400 hover:text-blue-300 underline">INSS</Link> ou IR). Horas extras e comissões entram na conta. Benefícios como Vale-Alimentação ou Vale-Transporte <strong>não</strong> entram.</li>
+                            </ul>
 
-                    {/* Como solicitar */}
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8">
-                        <h2 className="text-2xl font-bold text-white mb-6">Como solicitar o Seguro-Desemprego (Passo a Passo)</h2>
-                        <div className="grid md:grid-cols-2 gap-6">
-                            <div className="space-y-4">
-                                <div className="flex gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm flex-shrink-0">1</div>
-                                    <div>
-                                        <h3 className="font-bold text-white mb-1">Acesse o Canal Digital</h3>
-                                        <p className="text-sm text-gray-400">Entre no portal Gov.br ou baixe o aplicativo Carteira de Trabalho Digital.</p>
-                                    </div>
+                            <h3 className="text-xl font-bold text-white mb-4 mt-8">2. Aplique a Regra da Faixa (Exemplos Práticos)</h3>
+                            <p className="mb-4 text-sm text-gray-500">Para ilustrar, vamos simular três situações reais de trabalhadores demitidos em 2025:</p>
+
+                            <div className="space-y-6">
+                                <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                    <h4 className="text-white font-semibold mb-2">Exemplo A: Salário Médio de R$ 2.000,00</h4>
+                                    <p className="text-sm">Como o valor está na <strong>primeira faixa</strong> (até R$ 2.138,76):</p>
+                                    <div className="font-mono text-emerald-400 mt-2">2.000,00 x 0,80 = R$ 1.600,00</div>
                                 </div>
-                                <div className="flex gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm flex-shrink-0">2</div>
-                                    <div>
-                                        <h3 className="font-bold text-white mb-1">Navegue pelo Menu</h3>
-                                        <p className="text-sm text-gray-400">Vá na aba "Benefícios" e selecione a opção "Seguro-Desemprego".</p>
-                                    </div>
+
+                                <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                    <h4 className="text-white font-semibold mb-2">Exemplo B: Salário Médio de R$ 3.000,00</h4>
+                                    <p className="text-sm">O valor está na <strong>segunda faixa</strong>. O cálculo é feito em duas etapas:</p>
+                                    <ol className="list-decimal list-inside space-y-1 mt-2 text-sm text-gray-400">
+                                        <li>Calcula-se o excesso: 3.000,00 - 2.138,76 = 861,24</li>
+                                        <li>Aplica-se 50% sobre o excesso e soma o fixo: (861,24 x 0,50) + 1.711,01</li>
+                                    </ol>
+                                    <div className="font-mono text-emerald-400 mt-2">430,62 + 1.711,01 = R$ 2.141,63</div>
+                                    <p className="text-xs text-blue-400 mt-2">Dica Ninja: Use a fórmula direta: (Salário x 0,50) + 641,63 = Parcela</p>
                                 </div>
-                            </div>
-                            <div className="space-y-4">
-                                <div className="flex gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm flex-shrink-0">3</div>
-                                    <div>
-                                        <h3 className="font-bold text-white mb-1">Inicie o Pedido</h3>
-                                        <p className="text-sm text-gray-400">Clique em "Solicitar" e insira o número do Requerimento (10 dígitos).</p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-4">
-                                    <div className="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm flex-shrink-0">4</div>
-                                    <div>
-                                        <h3 className="font-bold text-white mb-1">Confirme</h3>
-                                        <p className="text-sm text-gray-400">Siga as instruções, confira seus dados bancários e finalize.</p>
-                                    </div>
+
+                                <div className="bg-white/5 p-6 rounded-xl border border-white/5">
+                                    <h4 className="text-white font-semibold mb-2">Exemplo C: Salário Médio de R$ 5.000,00</h4>
+                                    <p className="text-sm">O valor está acima de R$ 3.564,96.</p>
+                                    <div className="font-mono text-emerald-400 mt-2">Resultado: Teto fixo de R$ 2.424,11</div>
                                 </div>
                             </div>
                         </div>
@@ -450,7 +426,7 @@ export function UnemploymentInsurancePage() {
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8">
                         <h2 className="text-2xl font-bold text-white mb-6">Quantas parcelas vou receber?</h2>
                         <p className="text-gray-400 mb-6">
-                            A quantidade de parcelas (3, 4 ou 5) depende de quanto tempo você trabalhou com carteira assinada nos últimos 36 meses e quantas vezes já solicitou o benefício anteriormente.
+                            A quantidade de parcelas não é aleatória. Ela depende de quantas vezes você já solicitou o benefício e quantos meses comprovados você trabalhou nos últimos 36 meses.
                         </p>
 
                         <div className="space-y-4">
@@ -465,6 +441,7 @@ export function UnemploymentInsurancePage() {
                                     <div className="text-gray-400">24 meses ou mais</div>
                                     <div className="text-white text-right font-medium">5 parcelas</div>
                                 </div>
+                                <p className="px-6 pb-4 text-xs text-gray-500">Para a primeira solicitação, é obrigatório ter recebido salário por pelo menos 12 meses nos últimos 18 meses.</p>
                             </div>
 
                             <div className="bg-white/5 rounded-xl border border-white/5 overflow-hidden">
@@ -499,13 +476,31 @@ export function UnemploymentInsurancePage() {
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <div className="mt-8 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl">
-                            <p className="text-sm text-blue-200">
-                                Ao organizar suas finanças, recomendamos planejar seu orçamento comparando com seu <Link to="/calculadoras/salario-liquido" className="text-white underline">salário líquido</Link> habitual e verificando seu saldo do <Link to="/calculadoras/fgts" className="text-white underline">FGTS</Link>, pois o saque-rescisão pode ser decisivo neste período.
+                    {/* Casos Especiais */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8">
+                        <h2 className="text-2xl font-bold text-white mb-6">Casos Especiais e Regras Específicas</h2>
+                        <div className="grid md:grid-cols-2 gap-8">
+                            <div>
+                                <h3 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
+                                    <HelpCircle className="w-5 h-5 text-indigo-500" />
+                                    Microempreendedor Individual (MEI)
+                                </h3>
+                                <p className="text-gray-400 text-sm leading-relaxed">
+                                    Ter um CNPJ MEI ativo pode bloquear automaticamente o seu seguro, pois o sistema entende que você possui "renda própria". No entanto, se o MEI estiver inativo ou não gerar faturamento suficiente, é possível entrar com recurso administrativo para liberar o benefício.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="mt-8 p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl">
+                            <h3 className="text-white font-semibold mb-2">Diferença: Seguro vs FGTS e Rescisão</h3>
+                            <p className="text-sm text-gray-300 mb-4">
+                                É fundamental não confundir este cálculo com o do <Link to="/calculadoras/fgts" className="text-blue-400 hover:text-blue-300 underline">FGTS</Link>. São benefícios distintos. Além disso, optar pelo Saque-Aniversário do FGTS <strong>não</strong> retira o seu direito ao Seguro-Desemprego, apenas impede o saque do saldo da conta (Saque-Rescisão).
                             </p>
                         </div>
                     </div>
+
                 </div>
 
                 <FAQ

@@ -1,0 +1,176 @@
+Calculadora Rescisão 2025: Guia Completo e Atualizado (CLT)
+
+Calcule sua rescisão exata com regras 2025. Inclui nova tabela INSS (teto R$ 8.157,41), médias de salário e multa de 40% do FGTS. Guia atualizado.
+
+### Resumo em 30 segundos (Dados Dezembro 2025)
+* **Salário Mínimo Base:** R$ 1.518,00 (Decreto Federal vigente).
+* **Teto do INSS:** R$ 8.157,41 (para cálculo de descontos máximos).
+* **Prazo de Pagamento:** Até 10 dias corridos após o término do contrato.
+* **Aviso Prévio:** 30 dias + 3 dias por ano completo de serviço (Lei 12.506/11).
+* **Isenção IRRF:** Rendimentos até R$ 2.428,80 (ou desconto simplificado de R$ 607,20).
+* 👉 Use a calculadora no topo para simular seu caso real.
+
+# Calculadora de Rescisão 2025: Guia Completo e Atualizado (CLT e Novas Regras)
+
+A **rescisão de contrato de trabalho** é o momento financeiro mais crítico da relação trabalhista. O cálculo exato envolve não apenas o salário base, mas a integração de médias variáveis (horas extras, comissões), a aplicação correta da tabela progressiva do INSS e as regras de proporcionalidade de férias e 13º salário. Em 2025, o reajuste do salário mínimo para **R$ 1.518,00** e as novas faixas de tributação alteraram o valor líquido final a receber.
+
+Esta ferramenta aplica a legislação vigente para garantir que você não perca dinheiro na homologação.
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+---
+
+## Tabelas Oficiais para Cálculo (Vigência 2025)
+
+Para auditar o cálculo da sua rescisão, utilize as tabelas oficiais abaixo. O erro mais comum é aplicar a alíquota cheia sobre o salário total, quando o correto é o **cálculo progressivo** por faixas.
+
+### Como funciona a Progressividade do INSS
+Diferente do modelo antigo, em 2025 o INSS não é calculado aplicando uma única porcentagem sobre o salário inteiro. O cálculo é feito por "fatias": você paga 7,5% apenas sobre a parcela equivalente ao salário mínimo, 9% sobre a parcela seguinte, e assim por diante. Isso significa que a alíquota efetiva (o que realmente é descontado) é sempre menor que a alíquota da sua faixa salarial, resultando em um imposto mais justo e menor para o trabalhador.
+
+### Tabela de Contribuição INSS 2025 (Progressiva)
+
+| Salário de Contribuição (R$) | Alíquota | Parcela a Deduzir (R$) |
+| :--- | :--- | :--- |
+| Até 1.518,00 | 7,5% | - |
+| De 1.518,01 até 2.793,88 | 9% | 22,77 |
+| De 2.793,89 até 4.190,83 | 12% | 106,59 |
+| De 4.190,84 até 8.157,41 | 14% | 190,40 |
+
+> **Fonte Oficial:** Dados baseados na Portaria Interministerial que atualiza os benefícios previdenciários. Consulte a [Tabela de Contribuição Mensal - Gov.br](https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal).
+
+### Tabela de Aviso Prévio Proporcional (Lei 12.506/11)
+
+| Tempo de Serviço | Aviso Prévio Total |
+| :--- | :--- |
+| Menos de 1 ano | 30 dias |
+| 1 ano completo | 33 dias |
+| 2 anos completos | 36 dias |
+| 5 anos completos | 45 dias |
+| 10 anos completos | 60 dias |
+| 20 anos ou mais | 90 dias (Teto) |
+
+> **Fonte Oficial:** Lei nº 12.506, de 11 de outubro de 2011. Consulte no [Planalto Gov.br](https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12506.htm).
+
+---
+
+## O Que Compõe a Sua Rescisão? (Passo a Passo)
+
+Entender cada verba é a única defesa contra erros de processamento na folha de pagamento.
+
+### 1. Saldo de Salário e Médias
+Refere-se aos dias efetivamente trabalhados no mês do desligamento. O cálculo divide o salário mensal por 30 e multiplica pelos dias trabalhados.
+**Atenção:** Se você recebe habitualmente [horas extras](https://junny.com.br/calculadoras/horas-extras) ou comissões, deve-se apurar a média física ou financeira dos últimos 12 meses (ou período trabalhado) e integrá-la ao salário base para *todos* os cálculos rescisórios.
+
+### 2. Aviso Prévio (Trabalhado ou Indenizado)
+O aviso prévio indenizado integra o tempo de serviço. Isso significa que ele projeta a data de saída na carteira de trabalho, gerando direito a mais 1/12 avos de férias e de 13º salário.
+* **Trabalhado:** O empregado cumpre a jornada (com redução de 2 horas diárias ou 7 dias corridos).
+* **Indenizado:** A empresa paga o período e o empregado é desligado imediatamente.
+
+### 3. Férias Vencidas e Proporcionais
+Você tem direito a receber os períodos de [ferias](https://junny.com.br/calculadoras/ferias) que não gozou.
+* **Vencidas:** Período aquisitivo completo não concedido. Paga-se em dobro se o prazo de concessão já estourou.
+* **Proporcionais:** Fração do ano atual trabalhado. Considera-se "mês" qualquer fração igual ou superior a 15 dias de trabalho.
+* **Terço Constitucional:** Sobre ambas incide o adicional de 1/3.
+
+### 4. 13º Salário Proporcional
+Calculado na proporção de 1/12 avos por mês trabalhado no ano corrente. Assim como nas férias, a fração superior a 14 dias no mês conta como mês cheio para o pagamento. Se você quer simular apenas esta verba, use nossa calculadora de [décimo terceiro](https://junny.com.br/calculadoras/decimo-terceiro).
+
+---
+
+## Como Calcular a Rescisão (Exemplos Práticos 2025)
+
+### Exemplo 1: Salário na Faixa Média (R$ 3.000,00)
+**Cenário:** Demissão sem justa causa, 1 ano de casa (Aviso Prévio 33 dias indenizado), saída em 10/12/2025.
+
+**1. Saldo de Salário (10 dias):**
+$$\frac{3.000}{30} \times 10 = R\$ 1.000,00$$
+
+**2. Aviso Prévio Indenizado (33 dias):**
+$$\frac{3.000}{30} \times 33 = R\$ 3.300,00$$
+
+**3. 13º Salário (11/12 + 1/12 projeção = 12/12):**
+Valor integral: **R$ 3.000,00**
+
+**4. Desconto de INSS no 13º:**
+Aplica-se a tabela progressiva sobre R$ 3.000,00:
+* Faixa 1 (até 1.518,00): R$ 113,85
+* Faixa 2 (até 2.793,88): R$ 114,83
+* Faixa 3 (restante): R$ 24,73
+* [cite_start]**Total INSS:** **R$ 253,41** [cite: 158-161].
+
+---
+
+### Exemplo 2: Salário Acima do Teto (R$ 9.000,00)
+**Cenário:** Demissão sem justa causa, aviso indenizado, saída em 10/12/2025. Este exemplo demonstra o "teto" do desconto.
+
+**1. Saldo de Salário (10 dias):**
+$$\frac{9.000}{30} \times 10 = R\$ 3.000,00$$
+
+**2. 13º Salário Integral (R$ 9.000,00):**
+Como o valor ultrapassa o teto do INSS (R$ 8.157,41), o desconto não é calculado sobre os 9 mil, mas trava no limite máximo.
+
+**3. Cálculo do INSS Travado no Teto:**
+$$INSS = (Salário \times Alíquota) - Parcela~a~Deduzir$$
+
+Em vez de aplicar 14% sobre R$ 9.000,00 (o que seria incorreto), calcula-se sobre o teto:
+$$(8.157,41 \times 14\%) - 190,40~(\text{parcela a deduzir}) = \textbf{R\$ 951,63}$$
+O trabalhador contribui com o valor máximo de **R$ 951,63**, e o restante do salário fica isento de contribuição previdenciária.
+
+*Nota: O cálculo real envolve ainda o IRRF e o FGTS. Use a calculadora no topo para o valor líquido final.*
+
+---
+
+## Tipos de Demissão e Seus Direitos
+
+A modalidade de encerramento do contrato define quais verbas você recebe.
+
+* **Demissão Sem Justa Causa:** Recebe tudo (Saldo, Aviso, Férias, 13º, Saque FGTS e Multa de 40%). Habilita o [seguro-desemprego](https://junny.com.br/calculadoras/seguro-desemprego).
+* **Pedido de Demissão:** O trabalhador abre mão do Aviso Prévio (se não cumprir), do Saque do FGTS (e multa) e do Seguro-Desemprego. Recebe apenas saldo, férias e 13º.
+* **Demissão por Acordo Comum (Reforma Trabalhista):** Recebe metade do aviso prévio indenizado (15 dias), metade da multa do FGTS (20%) e pode sacar 80% do saldo do fundo. [cite_start]Não tem direito ao seguro-desemprego [cite: 184-189].
+* **Justa Causa:** Recebe apenas saldo de salário e férias vencidas (se houver). Perde o direito ao proporcional de férias e 13º.
+
+---
+
+## A Matemática da Multa de 40% do FGTS
+
+Um erro financeiro comum é acreditar que a multa de 40% incide apenas sobre o valor que está *atualmente* na conta do FGTS.
+
+**A Regra Correta:** A multa é calculada sobre o **saldo total histórico** de depósitos realizados pela empresa, devidamente corrigidos.
+Mesmo que você tenha feito o Saque-Aniversário ou usado o fundo para comprar um imóvel, a base de cálculo da multa permanece o valor global depositado. [cite_start]A empresa paga 40% sobre tudo o que ela depositou durante o contrato [cite: 203-205].
+
+> **Atualização Jurídica (STF):** O Supremo Tribunal Federal fixou em **5 anos** o prazo prescricional para cobrança de depósitos de FGTS não realizados (ARE 709.212). Se a empresa deixou de depositar há mais de 5 anos, a cobrança judicial pode estar prescrita. Consulte seu extrato no [Aplicativo FGTS Oficial](https://www.fgts.gov.br/).
+
+---
+
+## Casos Especiais
+
+**Rescisão por Falecimento do Empregado**
+Equivale legalmente a um pedido de demissão, mas sem aviso prévio e com direito ao saque do FGTS pelos herdeiros. [cite_start]O pagamento deve ser feito em quotas iguais aos dependentes habilitados no INSS [cite: 215-217].
+
+**Empregados sem Carteira Assinada**
+Mesmo sem registro, os direitos são os mesmos da CLT se comprovado o vínculo (subordinação, habitualidade, onerosidade). É necessário ingressar com ação trabalhista para reconhecimento e cálculo das verbas retroativas, respeitando a prescrição de 5 anos.
+
+**Prazo de Pagamento e Multa**
+A empresa tem até **10 dias corridos** após o término do contrato para pagar as verbas. O atraso gera multa a favor do empregado no valor de um salário nominal (Art. 477 da CLT).
+
+---
+
+## Perguntas Frequentes sobre Rescisão (FAQ)
+
+### Como calcular a multa de 40% do FGTS se já fiz saques?
+A multa incide sobre o total de depósitos que a empresa fez, não sobre o saldo atual. Você deve solicitar o extrato analítico do [FGTS](https://junny.com.br/calculadoras/fgts) para ver o montante acumulado histórico ("saldo para fins rescisórios") e aplicar 40% sobre ele.
+
+### O que é descontado na rescisão em 2025?
+São descontados o INSS (tabela progressiva com teto de R$ 8.157,41), o Imposto de Renda na Fonte (se ultrapassar a faixa de isenção de R$ 2.428,80), eventuais adiantamentos salariais e benefícios como vale-transporte não utilizado (no caso de pedido de demissão).
+
+### O aviso prévio conta para férias e 13º salário?
+Sim. O aviso prévio, mesmo quando indenizado (pago em dinheiro sem trabalhar), conta como tempo de serviço. Ele projeta a data de saída, garantindo mais 1/12 avos de férias e de 13º salário se a projeção alcançar 15 dias ou mais dentro de um mês.
+
+### Qual o prazo para a empresa pagar a rescisão?
+O prazo é unificado: 10 dias corridos contados a partir do último dia de contrato, independentemente se o aviso prévio foi trabalhado ou indenizado. Se cair em dia não útil, antecipa-se o pagamento.
+
+### Quem pede demissão perde quais direitos?
+Ao pedir demissão, o trabalhador perde o direito à multa de 40% do FGTS, não pode sacar o saldo do fundo e perde o acesso ao Seguro-Desemprego. Mantém direito ao saldo de salário, férias (vencidas/proporcionais) e 13º proporcional.
+
+### Como funciona a demissão por acordo comum?
+Nesta modalidade, criada pela Reforma Trabalhista, o trabalhador recebe 50% do aviso prévio indenizado e 20% da multa do FGTS. [cite_start]Permite sacar 80% do fundo, mas não libera o Seguro-Desemprego [cite: 186-189].

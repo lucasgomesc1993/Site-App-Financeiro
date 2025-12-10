@@ -1,0 +1,144 @@
+---
+meta_title: "Calculadora Salário Líquido 2025: Cálculo Exato (Lei 15.191)"
+meta_description: "Calcule salário líquido de Dez 2025. Tabelas INSS (Teto R$ 8.157,41) e IRRF Lei 15.191 atualizadas. Veja cálculo exato e descontos reais."
+---
+
+## Resumo em 30 segundos (Dados Dezembro 2025)
+
+* **[Salário Mínimo Nacional](https://www.gov.br/secom/pt-br/assuntos/noticias/2025/janeiro/inss-divulga-os-novos-valores-dos-beneficios-para-2025):** **R$ 1.518,00** (Base para faixas iniciais).
+* **Teto do INSS:** **R$ 8.157,41** (Contribuição máxima travada em ~R$ 951,63).
+* **Novo Desconto Simplificado IRRF:** Opção automática de deduzir **R$ 607,20** da base de cálculo.
+* **Legislação Vigente:** Regras atualizadas pela **Lei nº 15.191** (Agosto/2025) e Portaria MPS/MF nº 6.
+* **Isenção de IR:** Quem ganha até **R$ 2.428,80** está isento (considerando faixas ajustadas).
+
+# Calculadora de Salário Líquido 2025: Cálculo Exato e Atualizado (Lei 15.191)
+
+Entender o valor real que cairá na sua conta bancária em dezembro de 2025 exige mais do que uma conta simples de subtração. Com a promulgação da **Lei nº 15.191** e o reajuste do INPC de 4,77%, as regras do jogo mudaram no meio do ano. Esta ferramenta processa automaticamente a progressividade do INSS e a lógica do Desconto Simplificado do Imposto de Renda, garantindo que você visualize o cenário tributário mais vantajoso para o seu bolso.
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+## Tabelas Oficiais de Incidência (Vigência Dezembro 2025)
+
+Para garantir a transparência do cálculo, utilizamos as tabelas oficiais aplicadas pela Receita Federal e Previdência Social.
+
+### 1. Tabela Progressiva do INSS 2025
+O INSS não é mais calculado com uma porcentagem única sobre todo o salário. A alíquota incide apenas sobre cada "fatia" da remuneração.
+
+| Faixa de Salário de Contribuição (R$) | Alíquota Aplicada | Parcela a Deduzir |
+| :--- | :--- | :--- |
+| Até **1.518,00** | 7,5% | - |
+| De 1.518,01 até 2.793,88 | 9,0% | R$ 22,77 |
+| De 2.793,89 até 4.190,83 | 12,0% | R$ 106,59 |
+| De 4.190,84 até **8.157,41** (Teto) | 14,0% | R$ 190,40 |
+
+> **Fonte Oficial:** Dados baseados na [Portaria Interministerial MPS/MF nº 6](https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal).
+
+### 2. Tabela Mensal do IRRF (Pós-Lei 15.191)
+Desde maio de 2025, vigora a nova estrutura que permite o Desconto Simplificado.
+
+| Base de Cálculo (R$) | Alíquota (%) | Parcela a Deduzir do IR (R$) |
+| :--- | :--- | :--- |
+| Até **2.428,80** | Isento | - |
+| De 2.428,81 até 2.826,65 | 7,5% | R$ 182,16 |
+| De 2.826,66 até 3.751,05 | 15,0% | R$ 394,16 |
+| De 3.751,06 até 4.664,68 | 22,5% | R$ 675,49 |
+| Acima de 4.664,68 | 27,5% | R$ 908,73 |
+
+> **Fonte Oficial:** Dados baseados na [Lei nº 15.191 de 2025](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15191.htm) e Receita Federal.
+
+## Entendendo o Cálculo: O Que Mudou em 2025?
+
+### Erros Comuns ao Calcular Salário Líquido
+O erro mais frequente é aplicar a alíquota cheia (ex: 14% de INSS ou 27,5% de IR) sobre o valor total do salário bruto. Isso gera um valor de imposto muito maior do que o real. O sistema brasileiro utiliza a **progressividade**: você só paga a alíquota mais alta sobre a parcela do salário que excede a faixa anterior. Outra falha comum é ignorar que o **Desconto Simplificado** (R$ 607,20) pode substituir as deduções legais se for mais benéfico, algo que nossa calculadora faz automaticamente.
+
+### Como Funciona a Metodologia Progressiva
+O cálculo segue uma ordem hierárquica rígida. Primeiro, descobre-se quanto deve ser pago à Previdência (INSS). Esse valor é subtraído do salário bruto para formar a "Base de Cálculo do IR". Somente então calcula-se o Imposto de Renda. Isso significa que você não paga imposto sobre o dinheiro que foi usado para pagar o INSS.
+
+Além disso, em 2025, o teto do INSS foi fixado em **R$ 8.157,41**. Quem ganha acima disso não paga alíquota sobre o excedente, travando o desconto máximo em aproximadamente R$ 951,63. Para entender profundamente esse desconto específico, utilize nossa ferramenta dedicada de [cálculo de INSS](https://junny.com.br/calculadoras/inss).
+
+### Como Calcular (Passo a Passo)
+
+Para quem deseja conferir o holerite manualmente, o processo envolve três etapas matemáticas.
+
+#### 1. Fórmula do INSS (Cálculo Simplificado)
+Para encontrar o valor do INSS de forma rápida, usamos a alíquota da faixa correspondente e subtraímos a "parcela a deduzir" da tabela oficial.
+
+$$INSS = (Salário~Bruto \times Alíquota) - Parcela~a~Deduzir$$
+
+#### 2. Definição da Base do IRRF
+Aqui ocorre a mágica da Lei 15.191. Você deve comparar dois cenários para achar a menor base tributável:
+* **Cenário A (Legal):** Salário Bruto - INSS - (Dependentes × R$ 189,59) - Pensão Alimentícia.
+* **Cenário B (Simplificado):** Salário Bruto - Desconto Simplificado (R$ 607,20).
+
+O governo utilizará o **menor valor** de imposto resultante entre A e B. *Nota: Geralmente, se o valor do INSS pago for maior que R$ 607,20, a dedução legal (Cenário A) vale mais a pena.*
+
+#### 3. Fórmula do Imposto de Renda
+$$IRRF = (Base~de~Cálculo \times Alíquota~IR) - Parcela~a~Deduzir~IR$$
+
+#### Exemplo 1: Salário de R$ 5.000,00 (Salário Médio)
+Vamos simular um profissional sem dependentes com salário bruto de R$ 5.000,00.
+
+1.  **Cálculo do INSS:** O salário está na faixa de 14%.
+    * (5.000 × 14%) - 190,40 = **R$ 509,60** de INSS.
+2.  **Base de Cálculo IR:** 5.000 - 509,60 = R$ 4.490,40.
+3.  **Escolha do Modelo:**
+    * *Dedução Simplificada:* R$ 607,20.
+    * *Dedução Legal (INSS pago):* R$ 509,60.
+    * *Decisão:* O sistema escolhe o **Simplificado** (R$ 607,20) pois abate mais da base. Base ajustada: 5.000 - 607,20 = 4.392,80.
+4.  **Cálculo do IRRF:** Base de R$ 4.392,80 cai na alíquota de 22,5%.
+    * (4.392,80 × 22,5%) - 675,49 = **R$ 312,89** de IRRF.
+5.  **Salário Líquido Final:** 5.000 - 509,60 - 312,89 = **R$ 4.177,51**.
+
+#### Exemplo 2: Salário de R$ 10.000,00 (Acima do Teto INSS)
+Simulação para alta renda, demonstrando o travamento do INSS e a alíquota máxima do IR.
+
+1.  **Cálculo do INSS:** O salário supera o teto de R$ 8.157,41.
+    * O desconto é travado no máximo absoluto: **R$ 951,63**.
+2.  **Base de Cálculo IR:** 10.000 - 951,63 = R$ 9.048,37.
+3.  **Escolha do Modelo:**
+    * *Dedução Simplificada:* R$ 607,20.
+    * *Dedução Legal (INSS pago):* R$ 951,63.
+    * *Decisão:* Aqui, o **INSS pago é maior** que o desconto simplificado. Logo, usamos a Dedução Legal para pagar menos imposto.
+4.  **Cálculo do IRRF:** Base de R$ 9.048,37 cai na alíquota máxima de 27,5%.
+    * (9.048,37 × 27,5%) - 908,73 = **R$ 1.579,57** de IRRF.
+5.  **Salário Líquido Final:** 10.000 - 951,63 (INSS) - 1.579,57 (IRRF) = **R$ 7.468,80**.
+
+### Para Quem Serve Esta Ferramenta?
+Este cálculo aplica-se obrigatoriamente a:
+* Trabalhadores em regime **CLT** (contrato formal).
+* Trabalhadores **Avulsos** e **Temporários**.
+* **Funcionários Públicos** (regidos pelo teto do RGPS).
+* **Aposentados** que continuam na ativa (o desconto de INSS continua incidindo sobre o salário).
+
+Se você é prestador de serviços, a lógica é diferente. Recomendamos comparar os cenários usando nosso simulador de [CLT vs PJ](https://junny.com.br/calculadoras/clt-vs-pj) para ver qual regime compensa mais em 2025.
+
+## Casos Especiais no Cálculo
+
+### Descontos em Férias e 13º Salário
+O cálculo de férias e Décimo Terceiro possui tributação exclusiva. O Imposto de Renda sobre o 13º, por exemplo, é descontado integralmente na segunda parcela e não se soma ao salário do mês para o ajuste anual, sendo uma tributação definitiva. Para planejar esses recebimentos específicos, utilize as ferramentas de [cálculo de férias](https://junny.com.br/calculadoras/ferias) e [décimo terceiro](https://junny.com.br/calculadoras/decimo-terceiro), que consideram essas variáveis isoladamente.
+
+### Profissionais Acima do Teto (R$ 8.157,41)
+Para quem ganha acima de R$ 8.157,41, o desconto do INSS para de crescer, fixando-se no teto. Isso significa que um aumento salarial acima desse ponto sofre apenas a incidência do Imposto de Renda (27,5%), sem novas mordidas da previdência. É um ponto de virada importante para analisar o seu [poder de compra](https://junny.com.br/calculadoras/poder-de-compra) real frente à inflação de 4,77% acumulada.
+
+### Horas Extras e Adicionais
+Verbas como horas extras e adicional noturno integram a base de cálculo tanto do INSS quanto do IRRF. Se você fez muitas horas a mais em dezembro, seu desconto de imposto pode pular para uma faixa superior, retendo mais dinheiro na fonte. Antes de se assustar com o holerite, verifique o valor exato na calculadora de [horas extras](https://junny.com.br/calculadoras/horas-extras) para separar o que é salário do que é adicional.
+
+## Perguntas Frequentes sobre Salário Líquido
+
+### O vale-transporte é descontado do salário líquido?
+Sim, a empresa pode descontar até 6% do seu salário base (não sobre horas extras ou comissões) referente ao vale-transporte. Se o custo das passagens for menor que 6% do seu salário, desconta-se apenas o valor real das passagens. É um desconto opcional se você optar por não receber o benefício.
+
+### Quem ganha R$ 1.518,00 paga Imposto de Renda?
+Não. Quem recebe um salário mínimo de R$ 1.518,00 em 2025 está isento de Imposto de Renda, pois o valor está abaixo da faixa inicial de tributação (R$ 2.428,80) e também se enquadra na faixa mínima do INSS (7,5%).
+
+### O que é o Desconto Simplificado de R$ 607,20?
+É um mecanismo legal introduzido pela Lei 15.191 para beneficiar quem tem poucas deduções. O governo permite abater R$ 607,20 direto da base de cálculo do IRRF. Se você não tem dependentes ou despesas médicas dedutíveis no mês, essa opção geralmente diminui o imposto a pagar automaticamente.
+
+### Como o adiantamento salarial (vale) afeta o cálculo?
+O adiantamento (geralmente 40% do salário) não sofre descontos de impostos no momento do pagamento (dia 15 ou 20). Os impostos (INSS e IRRF) são calculados sobre o salário total cheio e descontados apenas no pagamento final do mês. Por isso, o "segundo pagamento" parece menor.
+
+### Qual o valor máximo de desconto do INSS em 2025?
+O desconto máximo de INSS para quem ganha acima de R$ 8.157,41 é de aproximadamente **R$ 951,63** (podendo variar centavos conforme arredondamento). Esse é o teto de contribuição; nenhum trabalhador CLT paga mais que isso para a previdência, independentemente do salário.
+
+### Pensão alimentícia é descontada antes do imposto?
+Sim. O valor pago de pensão alimentícia judicial é deduzido da base de cálculo do Imposto de Renda. Isso significa que você não paga imposto sobre o dinheiro que é enviado para a pensão, reduzindo o valor final do IRRF retido no seu holerite.

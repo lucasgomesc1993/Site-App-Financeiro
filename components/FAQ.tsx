@@ -6,6 +6,7 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { FAQItem } from '../types';
 import { useCalculatorContext } from '../context/CalculatorContext';
 import { AuthorBadge } from './AuthorBadge';
+import { ShareButtons } from './ShareButtons';
 
 interface FAQProps {
     items?: FAQItem[];
@@ -141,7 +142,12 @@ export const FAQ: React.FC<FAQProps> = ({ items, title = "Dúvidas frequentes", 
                         </div>
                     </div>
                 )}
-                {isCalculator && <AuthorBadge className="mt-8 md:mt-12" />}
+                {isCalculator && (
+                    <>
+                        <ShareButtons className="mt-12 md:mt-16" />
+                        <AuthorBadge className="mt-12" />
+                    </>
+                )}
             </div>
         </section>
     );
