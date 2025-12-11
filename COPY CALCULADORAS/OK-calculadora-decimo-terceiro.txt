@@ -1,0 +1,159 @@
+---
+Meta Title: Calculadora de Décimo Terceiro 2025: Valor Líquido e Prazos
+Meta Description: Calcule seu 13º Salário 2025 exato. Confira descontos de INSS/IRRF (teto R$ 8.157,41), prazos oficiais e regra de médias para pagamento líquido.
+---
+
+# Calculadora de Décimo Terceiro Salário 2025
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+**Resumo em 30 Segundos**
+
+[cite_start]O **Décimo Terceiro Salário** é um direito fundamental que funciona como uma gratificação natalina proporcional aos meses trabalhados[cite: 5]. [cite_start]Em 2025, o cálculo final exige atenção redobrada devido às novas faixas de tributação progressiva: o valor que cai na conta em dezembro (2ª parcela) sofre todos os descontos acumulados de INSS e Imposto de Renda[cite: 7]. Use esta ferramenta para prever quanto sobrará no seu bolso após o "leão" e garantir o pagamento de dívidas ou as compras de fim de ano com segurança.
+
+**Resumo Rápido (Dados Oficiais Dezembro/2025):**
+* [cite_start]**Salário Mínimo Base:** R$ 1.518,00[cite: 17].
+* [cite_start]**Teto do INSS:** R$ 8.157,41[cite: 119].
+* [cite_start]**Desconto Máximo INSS:** R$ 951,63[cite: 121].
+* [cite_start]**Prazo da 2ª Parcela:** Até 19 de dezembro de 2025 (Antecipado)[cite: 229].
+* [cite_start]**Modelo de Tributação:** Progressiva (descontos incidem sobre o valor total na 2ª parcela)[cite: 78].
+
+## Tabela Oficial de Descontos 2025
+
+[cite_start]Para chegar ao valor líquido final, o cálculo utiliza a Tabela Progressiva do INSS (atualizada para o teto de R$ 8.157,41) e a Tabela do Imposto de Renda vigente desde maio de 2025[cite: 127].
+
+### Como funciona a Progressividade
+[cite_start]Diferente do modelo antigo, a alíquota não incide sobre o salário total de uma só vez[cite: 116]. O cálculo é feito por "fatias": você paga 7,5% sobre a primeira parte do salário (até o mínimo), 9% sobre a segunda parte, e assim por diante. [cite_start]O valor final é a soma dessas fatias, o que torna o imposto mais justo do que a aplicação direta da alíquota maior sobre todo o montante[cite: 117, 118].
+
+### 1. Tabela de Contribuição Previdenciária (INSS)
+
+| Faixa de Salário de Contribuição (R$) | Alíquota Progressiva | Parcela a Deduzir (R$) |
+| :--- | :--- | :--- |
+| Até **1.518,00** | 7,5% | - |
+| De 1.518,01 até 2.793,88 | 9,0% | R$ 22,77 |
+| De 2.793,89 até 4.190,83 | 12,0% | R$ 106,59 |
+| De 4.190,84 até **8.157,41** | 14,0% | R$ 190,40 |
+
+> [cite_start]**Fonte Oficial:** Dados baseados na [Portaria Interministerial referente aos benefícios de 2025](https://www.gov.br/inss/pt-br/noticias/confira-como-ficaram-as-aliquotas-de-contribuicao-ao-inss) e projeções econômicas[cite: 120].
+
+### 2. Tabela de Imposto de Renda (IRRF)
+
+| Base de Cálculo (R$) | Alíquota (%) | Parcela a Deduzir (R$) |
+| :--- | :--- | :--- |
+| Até **2.428,80** | Isento | - |
+| De 2.428,81 até 2.826,65 | 7,5% | R$ 182,16 |
+| De 2.826,66 até 3.751,05 | 15,0% | R$ 394,16 |
+| De 3.751,06 até 4.664,68 | 22,5% | R$ 675,49 |
+| Acima de 4.664,68 | 27,5% | R$ 908,73 |
+
+> [cite_start]**Fonte Oficial:** Consulte a tabela progressiva mensal vigente diretamente no site da [Receita Federal](https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2025)[cite: 128].
+
+---
+
+## Como Calcular o Décimo Terceiro (Passo a Passo)
+
+O cálculo exato exige atenção porque a tributação ocorre quase inteiramente na segunda parcela. A primeira parcela (adiantamento), paga até novembro, corresponde a 50% do bruto sem descontos. [cite_start]O "acerto de contas" acontece agora em dezembro[cite: 43].
+
+### Diferença: 1ª Parcela vs 2ª Parcela
+* **1ª Parcela (Adiantamento):** Paga entre fevereiro e novembro. [cite_start]Corresponde a **50% do salário bruto** do mês anterior, sem nenhum desconto de impostos (INSS ou IRRF)[cite: 43, 67].
+* **2ª Parcela (Quitação):** Paga até 20 de dezembro (antecipado para dia 19 em 2025). É feito o cálculo do 13º integral, subtraem-se o **INSS total**, o **IRRF total** e o valor já adiantado na 1ª parcela. [cite_start]O saldo restante é o valor líquido[cite: 43, 78].
+
+### A Fórmula Matemática
+
+Para encontrar o valor da **2ª Parcela**, utilizamos a seguinte lógica:
+
+$$V_{2parc} = (V_{BrutoTotal} - INSS_{total} - IRRF_{total}) - V_{1parc}$$
+
+Onde:
+* **V_BrutoTotal:** Salário de Dezembro ÷ 12 × Meses Trabalhados.
+* **V_1parc:** Valor já recebido no adiantamento.
+
+### Exemplo 1: Salário Intermediário (R$ 5.000,00)
+
+Vamos simular um trabalhador que ganha R$ 5.000,00 e trabalhou os 12 meses do ano.
+
+1.  **1ª Parcela (Já paga em Nov):** R$ 5.000,00 ÷ 2 = **R$ 2.500,00**.
+2.  **Cálculo do INSS Total:** Aplica-se a alíquota progressiva sobre os R$ 5.000,00. [cite_start]O desconto total é de **R$ 509,59**[cite: 145].
+3.  **Cálculo do IRRF:**
+    * Base: R$ 5.000,00 - R$ 509,59 (INSS) = R$ 4.490,41.
+    * [cite_start]Imposto: (4.490,41 × 22,5%) - 675,49 = **R$ 334,85**[cite: 150].
+4.  **Valor Líquido da 2ª Parcela:**
+    * R$ 5.000,00 (Bruto) - R$ 509,59 (INSS) - R$ 334,85 (IR) - R$ 2.500,00 (Adiantamento).
+    * [cite_start]**A receber em Dezembro:** **R$ 1.655,56**[cite: 152].
+
+### Exemplo 2: Salário no Teto do INSS (R$ 8.157,41)
+
+Simulação para quem recebe o teto previdenciário ou acima dele.
+
+1.  **1ª Parcela (Adiantamento):** R$ 8.157,41 ÷ 2 = **R$ 4.078,70**.
+2.  **Cálculo do INSS Total:** Devido ao teto, o desconto é fixo no valor máximo.
+    * [cite_start]**Desconto Máximo:** **R$ 951,63**[cite: 121].
+3.  **Cálculo do IRRF:**
+    * Base de Cálculo: R$ 8.157,41 - R$ 951,63 = **R$ 7.205,78**.
+    * Enquadramento: Faixa de 27,5%.
+    * Imposto: (7.205,78 × 27,5%) - 908,73 = **R$ 1.072,86**.
+4.  **Valor Líquido da 2ª Parcela:**
+    * R$ 8.157,41 (Bruto) - R$ 951,63 (INSS) - R$ 1.072,86 (IR) - R$ 4.078,70 (Adiantamento).
+    * **A receber em Dezembro:** **R$ 2.054,22**.
+
+Se houver dúvidas sobre os descontos mensais regulares, compare com nossa calculadora de [salário líquido](https://junny.com.br/calculadoras/salario-liquido) para entender a diferença na tributação.
+
+## Erros Comuns e a Regra dos 15 Dias
+
+[cite_start]Um erro frequente é achar que basta dividir o salário por 12. É obrigatório aplicar a **Regra do Dia 15**: para ter direito a 1/12 (um avo) do benefício, você precisa ter trabalhado pelo menos 15 dias naquele mês[cite: 56].
+
+**O Erro da Multiplicação Simples:** Um equívoco clássico é pegar o salário total (ex: R$ 5.000) e multiplicar direto pela alíquota da faixa final (14%). Isso gera um valor de desconto muito maior do que o real. [cite_start]O correto é sempre aplicar a tabela progressiva faixa a faixa ou usar a "Parcela a Deduzir" para corrigir o cálculo[cite: 116, 117].
+
+* [cite_start]**Faltas Injustificadas:** Se você teve muitas faltas em um mês específico e trabalhou menos de 15 dias, aquele mês não conta para o cálculo[cite: 63].
+* [cite_start]**Admissão Recente:** Se foi contratado após o dia 17 do mês (em meses de 31 dias), aquele primeiro mês não entra na conta[cite: 60].
+
+Se você está saindo da empresa agora, o cálculo muda e entra como verba de [rescisão](https://junny.com.br/calculadoras/rescisao), onde o pagamento é proporcional.
+
+## Médias de Horas Extras e Comissões
+
+[cite_start]O 13º Salário deve refletir a sua remuneração real, não apenas o salário base[cite: 87]. Se você fez [horas extras](https://junny.com.br/calculadoras/horas-extras) ou recebeu comissões durante o ano, deve-se calcular a média:
+
+* **Horas Extras:** Soma-se a **quantidade** de horas feitas, divide-se pelos meses trabalhados e multiplica-se pelo valor da hora em dezembro. [cite_start]É obrigatório incluir o reflexo do DSR (Descanso Semanal Remunerado)[cite: 89, 95].
+* **Comissões:** Faz-se a média aritmética dos valores recebidos (geralmente corrigidos) de janeiro a novembro. [cite_start]O ajuste referente às vendas de dezembro é pago até 10 de janeiro do ano seguinte[cite: 103, 104].
+
+---
+
+## Situações Especiais
+
+### Licença-Maternidade
+Durante a licença, o contrato não é suspenso. [cite_start]A empresa paga o valor integral do 13º salário (incluindo médias de variáveis dos últimos 6 meses) e depois compensa esse valor na guia de recolhimento do INSS via eSocial[cite: 158, 164]. Consulte as regras detalhadas de benefícios no site do [INSS - Salário Maternidade](https://www.gov.br/inss/pt-br/direitos-e-deveres/salario-maternidade/valor-do-salario-maternidade).
+
+### Trabalhador Intermitente
+Nesta modalidade, não existe o pagamento acumulado em dezembro. [cite_start]O trabalhador recebe a proporção do 13º salário e das [férias](https://junny.com.br/calculadoras/ferias) ao final de cada convocação de serviço, diluído ao longo do ano[cite: 173].
+
+### Aposentados e Pensionistas
+Aposentados a partir de 65 anos possuem uma **dupla isenção** de Imposto de Renda. [cite_start]Além da faixa de isenção normal, eles têm direito a deduzir mais R$ 1.903,98 da base de cálculo, o que reduz drasticamente o imposto a pagar sobre o benefício[cite: 187, 189].
+
+---
+
+## Perguntas Frequentes sobre 13º Salário
+
+### Qual o prazo máximo para o pagamento da segunda parcela em 2025?
+O prazo legal é dia 20 de dezembro. Porém, em 2025, o dia 20 cai em um sábado. [cite_start]Portanto, o pagamento deve ser antecipado obrigatoriamente para o dia **19 de dezembro de 2025** (sexta-feira)[cite: 74, 229].
+
+### Qual o valor máximo do desconto de INSS no 13º em 2025?
+[cite_start]Para quem recebe acima do teto previdenciário (R$ 8.157,41), o desconto máximo de INSS será de aproximadamente **R$ 951,63**[cite: 121]. Esse valor é a soma das contribuições máximas de cada faixa progressiva e serve de dedução para a base do Imposto de Renda.
+
+### O INSS e o Imposto de Renda são descontados na primeira parcela?
+Não. A primeira parcela (paga até 30/11) corresponde a 50% do salário bruto, sem descontos. [cite_start]Todos os encargos (INSS e IRRF) são descontados integralmente na segunda parcela, sobre o valor total do benefício[cite: 67].
+
+### Quem recebe auxílio-doença tem direito ao décimo terceiro?
+A empresa paga apenas os avos proporcionais aos meses trabalhados (incluindo os primeiros 15 dias de afastamento). [cite_start]O restante do período é pago pelo INSS sob a forma de "Abono Anual"[cite: 167, 168].
+
+### Como funciona o 13º salário para quem ganha comissão?
+Calcula-se a média das comissões recebidas de janeiro a novembro para o pagamento em dezembro. [cite_start]Em janeiro do ano seguinte (até dia 10), a empresa deve recalcular incluindo as comissões de dezembro e pagar a diferença (ajuste)[cite: 103, 104].
+
+### É possível receber a primeira parcela nas férias?
+Sim, desde que o trabalhador tenha solicitado isso formalmente à empresa durante o mês de janeiro do ano corrente. [cite_start]Caso contrário, fica a critério do empregador antecipar ou pagar no prazo legal de novembro[cite: 71].
+
+### O desconto do INSS sobre o 13º é o mesmo do salário mensal?
+A tabela de alíquotas é a mesma, mas o cálculo é feito em separado. [cite_start]O valor do 13º não se soma ao salário de dezembro para apuração do imposto; ele possui tributação exclusiva e definitiva[cite: 124, 125].
+
+-
+
+data de hoje é 11/12/2025

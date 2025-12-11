@@ -1,0 +1,150 @@
+<title>Calculadora Salário Líquido 2025: Exata (Lei 15.191)</title>
+<meta name="description" content="Calcule seu Salário Líquido Dez/2025 com a Lei 15.191. Veja descontos do INSS (Teto R$ 8.157,41), IRRF e a vantagem do Desconto Simplificado.">
+
+# Calculadora de Salário Líquido 2025: Cálculo Exato e Atualizado
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+## Resumo Rápido
+**Resumo em 30 Segundos:**
+* **Salário Mínimo:** R$ 1.518,00.
+* **Teto do INSS:** R$ 8.157,41 (Desconto máximo de aprox. R$ 951,63).
+* **Isenção de IRRF:** Até R$ 2.428,80 (considerando regras vigentes).
+* **Desconto Simplificado:** R$ 607,20 (dedução automática se for mais vantajosa).
+* **Regulação:** Baseado na Lei 15.191 e Portaria Interministerial MPS/MF nº 6.
+
+Entender quanto realmente cairá na sua conta bancária exige mais do que uma conta simples. A partir de maio deste ano, e consolidado agora em dezembro de 2025, o cálculo trabalhista mudou. Com a vigência da **Lei nº 15.191** e o reajuste inflacionário de 4,77% (INPC), as faixas de desconto foram alteradas. Utilizar uma **Calculadora de Salário Líquido** precisa e atualizada é essencial para não ser pego de surpresa. Nossa ferramenta processa automaticamente a escolha entre o **Desconto Simplificado** e as deduções legais, garantindo que você visualize o menor imposto possível dentro da lei.
+
+## Tabelas Oficiais para Referência (2025)
+
+Para garantir a transparência do cálculo, utilizamos os dados oficiais vigentes. O cálculo do INSS é progressivo (calculado por fatias do salário), enquanto o Imposto de Renda (IRRF) incide sobre o valor restante.
+
+### Tabela de Contribuição INSS (Vigência Dez/2025)
+
+| Faixa de Salário de Contribuição (R$) | Alíquota Progressiva | Parcela a Deduzir (R$) |
+| :--- | :---: | :---: |
+| Até 1.518,00 | 7,5% | - |
+| De 1.518,01 até 2.793,88 | 9,0% | R$ 22,77 |
+| De 2.793,89 até 4.190,83 | 12,0% | R$ 106,59 |
+| De 4.190,84 até 8.157,41 | 14,0% | R$ 190,40 |
+
+> **Fonte Oficial:** Dados baseados na [Portaria Interministerial MPS/MF nº 6](https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal).
+
+### Tabela Progressiva Mensal IRRF (Lei 15.191)
+
+| Base de Cálculo (R$) | Alíquota (%) | Parcela a Deduzir do IR (R$) |
+| :--- | :---: | :---: |
+| Até 2.428,80 | Isento | - |
+| De 2.428,81 até 2.826,65 | 7,5% | R$ 182,16 |
+| De 2.826,66 até 3.751,05 | 15,0% | R$ 394,16 |
+| De 3.751,06 até 4.664,68 | 22,5% | R$ 675,49 |
+| Acima de 4.664,68 | 27,5% | R$ 908,73 |
+
+> **Fonte Oficial:** Faixas atualizadas conforme a [Lei nº 15.191/2025](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15191.htm).
+
+---
+
+## Erros Comuns ao Calcular o Salário
+
+O erro mais frequente, que gera frustração na hora de conferir o holerite, é aplicar a alíquota cheia sobre o valor total.
+
+**O erro da "Conta de Padaria":**
+Se você ganha R$ 4.500,00, **não** deve multiplicar esse valor direto por 14% de INSS. Isso resultaria em um desconto incorreto de R$ 630,00. O sistema brasileiro é **progressivo**. Você paga 7,5% sobre a primeira parte do salário (o mínimo), 9% sobre a segunda parte, e assim por diante. O desconto real seria menor devido a essa distribuição.
+
+Outra falha comum é ignorar o impacto dos benefícios e descontos opcionais. Itens como vale-transporte e convênio médico reduzem o líquido, mas não alteram a base de cálculo do INSS, diferentemente de faltas e atrasos que impactam diretamente o resultado da **Calculadora de Salário Líquido**.
+
+## Como Funciona a Metodologia (O "Segredo" do Desconto Simplificado)
+
+A grande novidade para o final de 2025 é a inteligência por trás do **Desconto Simplificado**. A Receita Federal permite agora duas formas de calcular o Imposto de Renda:
+
+1.  **Deduções Legais:** Subtrai-se o INSS pago, dependentes (R$ 189,59 cada) e pensão alimentícia.
+2.  **Desconto Simplificado:** Subtrai-se um valor fixo de **R$ 607,20** direto da base de cálculo. Esta modalidade segue as diretrizes da [Instrução Normativa RFB nº 2.174](http://normas.receita.fazenda.gov.br/sijut2consulta/consulta.action?termoBusca=Instru%E7%E3o+Normativa+RFB+n%BA+2.174).
+
+Nossa calculadora faz as duas contas instantaneamente e aplica a que resultar em **menos imposto** para você. Para quem ganha até dois salários mínimos ajustados, o método simplificado geralmente garante isenção total.
+
+## Como Calcular (Passo a Passo Prático)
+
+Vamos dissecar o cálculo usando dois cenários comuns em dezembro de 2025.
+
+### Exemplo 1: Salário de R$ 5.000,00
+
+**Passo 1: Calcular o INSS**
+O salário de R$ 5.000,00 atinge a faixa de 14%, mas usamos a "Parcela a Deduzir" para facilitar a conta progressiva:
+
+$$(5.000,00 \times 14\%) - 190,40 = \mathbf{R\$~509,60}$$
+
+*Este é o valor descontado para a Previdência. Para conferir apenas este imposto, use nossa [Calculadora de INSS](/calculadoras/inss).*
+
+**Passo 2: Definir a Base do Imposto de Renda (IRRF)**
+* **Cenário A (Dedução Legal):** R$ 5.000,00 - R$ 509,60 (INSS) = Base de R$ 4.490,40.
+* **Cenário B (Desconto Simplificado):** R$ 5.000,00 - R$ 607,20 (Fixo) = Base de R$ 4.392,80.
+
+Como a base do Cenário B é menor, pagaremos menos imposto usando o Simplificado.
+
+**Passo 3: Calcular o IRRF**
+Usando a base do Cenário B (R$ 4.392,80) na tabela de IRRF (Alíquota de 22,5%):
+
+$$(4.392,80 \times 22,5\%) - 675,49 = \mathbf{R\$~312,89}$$
+
+**Resultado Final (R$ 5.000):**
+* **Líquido:** **R$ 4.177,51**
+
+### Exemplo 2: Salário de R$ 8.000,00 (Próximo ao Teto)
+
+Neste caso, como o salário é mais alto, a dedução do INSS será maior que o desconto simplificado fixo (R$ 607,20). O sistema optará automaticamente pelas **Deduções Legais** para reduzir seu imposto.
+
+**Passo 1: Calcular o INSS (Progressivo)**
+$$(8.000,00 \times 14\%) - 190,40 = \mathbf{R\$~929,60}$$
+
+**Passo 2: Definir a Base do IRRF**
+Aqui, o valor do INSS (R$ 929,60) é maior que o desconto simplificado (R$ 607,20). Usamos o INSS como dedução.
+$$8.000,00 - 929,60 = \mathbf{7.070,40} \text{ (Base de Cálculo)}$$
+
+**Passo 3: Calcular o IRRF (Alíquota Máxima)**
+A base de R$ 7.070,40 cai na última faixa (27,5%).
+$$(7.070,40 \times 27,5\%) - 908,73 = \mathbf{R\$~1.035,63}$$
+
+**Resultado Final (R$ 8.000):**
+* **Salário Bruto:** R$ 8.000,00
+* **(-) INSS:** R$ 929,60
+* **(-) IRRF:** R$ 1.035,63
+* **(=) Salário Líquido:** **R$ 6.034,77**
+
+---
+
+## Quem deve usar esta ferramenta?
+
+* **Trabalhadores CLT:** Para conferir se o RH realizou os descontos corretamente no holerite.
+* **Candidatos a Vagas:** Para negociar pretensão salarial sabendo o valor real que cairá na conta.
+* **Prestadores de Serviço:** Para comparar se vale a pena aceitar uma vaga CLT ou continuar como PJ, utilizando nossa ferramenta de [comparação CLT vs PJ](/calculadoras/clt-vs-pj).
+
+## Casos Especiais no Cálculo
+
+### 13º Salário e Férias
+O cálculo apresentado aqui é para o salário mensal padrão. O Décimo Terceiro possui tributação exclusiva (não acumula com o salário do mês para cálculo de IR) e as Férias incluem o terço constitucional, o que eleva a base de tributação temporariamente. Se você precisa simular esses valores, utilize a [Calculadora de Décimo Terceiro](/calculadoras/decimo-terceiro).
+
+### Salários acima do Teto (R$ 8.157,41)
+Para quem ganha acima de R$ 8.157,41, o desconto do INSS trava no teto. Isso significa que, mesmo ganhando R$ 15.000,00, você contribuirá com o valor máximo aproximado de R$ 951,63. O restante do salário sofre apenas a incidência agressiva do Imposto de Renda (27,5%). É um ponto crítico para avaliar seu poder de compra real.
+
+### Dependentes e Pensão
+Cada dependente reduz a base de cálculo do IRRF em R$ 189,59. No entanto, com a regra do Desconto Simplificado de R$ 607,20, muitas vezes "compensa" mais usar o desconto padrão do governo a não ser que você tenha 4 ou mais dependentes. Nossa **Calculadora de Salário Líquido** faz essa análise automaticamente.
+
+## Perguntas Frequentes sobre Salário Líquido 2025
+
+### O adiantamento salarial (vale) altera o imposto?
+Não. O adiantamento é apenas uma antecipação do dinheiro que você já receberia. Os impostos (INSS e IRRF) são calculados sobre o total bruto no final do mês. O valor do vale é descontado do líquido final apenas para "zerar" o que já foi pago.
+
+### Quanto é descontado de quem ganha 1 salário mínimo (R$ 1.518,00)?
+Para quem recebe o piso nacional de R$ 1.518,00, a incidência é mínima. O único desconto aplicado é a contribuição previdenciária de 7,5% (R$ 113,85). Em relação ao Imposto de Renda, este valor fica bem abaixo da faixa de isenção de R$ 2.428,80, garantindo que não haja retenção na fonte nem necessidade de declarar imposto sobre esse rendimento específico.
+
+### O desconto simplificado de R$ 607,20 é opcional?
+Sim, é opcional, mas a legislação obriga a fonte pagadora a utilizar o método mais favorável ao contribuinte. O sistema compara automaticamente: se a soma das suas deduções legais (INSS + dependentes) for inferior a R$ 607,20, o Desconto Simplificado será aplicado. Isso garante que você pague o menor imposto possível sem precisar fazer contas complexas ou solicitar a alteração ao RH.
+
+### Como calcular horas extras no salário líquido?
+As horas extras entram como remuneração. Você deve somar o valor das extras ao salário bruto *antes* de aplicar os descontos. Isso costuma aumentar a base de cálculo e a alíquota de imposto de renda. Para evitar erros no holerite, use nossa [Calculadora de Horas Extras](/calculadoras/horas-extras) para encontrar o valor exato a somar.
+
+### Estagiário tem desconto de INSS?
+Não. Estagiários regidos pela Lei do Estágio não sofrem desconto de INSS nem de FGTS. O único desconto possível é o de Imposto de Renda (Retido na Fonte) caso a bolsa-auxílio ultrapasse a faixa de isenção, o que é raro, mas acontece em grandes empresas.
+
+### Qual o valor máximo que posso pagar de INSS em 2025?
+Devido ao teto previdenciário de R$ 8.157,41, existe um limite rígido de desconto. Mesmo que seu salário bruto seja muito superior, a contribuição ao INSS será travada em aproximadamente R$ 951,63. Esse valor é fixo para todos os trabalhadores que superam o teto, garantindo que o desconto não consuma proporcionalmente a renda de altos executivos além do limite coberto pela aposentadoria oficial.

@@ -7,6 +7,8 @@
 
 # Calculadora FGTS 2025: Saldo, Multa 40% e Status MP 1.290
 
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
 ## Resumo Rápido: Regras Vigentes (Dezembro 2025)
 
 * **Status MP 1.290 (Expirada):** A Medida Provisória perdeu validade em 27/06/2025. O desbloqueio não está mais ativo.
@@ -17,8 +19,6 @@
 
 ## Resumo em 30 Segundos
 **O cenário mudou.** A **MP 1.290**, que permitia o desbloqueio retroativo, **perdeu sua validade** em junho de 2025 e não foi convertida em lei a tempo. Portanto, as regras antigas de retenção do Saque-Aniversário voltam a vigorar para novas demissões. O destaque atual é a **Resolução 1.130**, que segue ativa limitando a farra dos empréstimos: o teto é de **R$ 500,00** por parcela antecipada, com carência de 90 dias. Nossa **Calculadora FGTS** já aplica essas novas regras, além de corrigir o saldo com **JAM** e **Distribuição de Lucros** para um resultado exato e seguro.
-
-[INSERIR COMPONENTE DA CALCULADORA AQUI]
 
 ### Histórico da MP 1.290 (Vigência Encerrada)
 

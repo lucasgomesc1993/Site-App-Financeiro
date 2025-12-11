@@ -1,0 +1,132 @@
+<meta name="title" content="Calculadora de Horas Trabalhadas: Online e Grátis 2025">
+<meta name="description" content="Calculadora de Horas Trabalhadas online e grátis. Converta minutos em decimais, evite erros na folha e siga a Portaria 671. Atualizada para 2025.">
+
+# Calculadora de Horas Trabalhadas Online [Grátis e Atualizada 2025]
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+## Resumo Rápido (Dados Oficiais 2025)
+* **Base Legal:** Cálculos ajustados à **Portaria 671** e Art. 58 da CLT.
+* **Tolerância:** Atrasos ou extras de até **5 minutos** (limite de 10 min diários) não são descontados nem computados.
+* **Hora Noturna:** Aplicação do fator de redução onde **52m 30s** equivalem a 1 hora paga (fator 1,1428).
+* **Cenário 2025:** O ano possui aproximadamente **252 dias úteis** (considerando feriados nacionais), mas o DSR deve ser calculado sobre os dias úteis **do mês da competência**.
+* **Erro Crítico:** 17h30 (relógio) não é 17,30 (decimal). A conversão correta é **17,50**.
+
+## Resumo em 30 Segundos
+A **Calculadora de Horas Trabalhadas** resolve o principal gargalo financeiro do Departamento Pessoal: a confusão entre o tempo do relógio (base 60) e o dinheiro (base 10 ou centesimal). Se você somar horas direto na calculadora comum, o resultado estará errado. Aqui, convertemos automaticamente os minutos para o sistema decimal, aplicamos as regras de tolerância da CLT e garantimos que o pagamento final seja auditável e seguro juridicamente. É ideal para profissionais de RH, gestores e colaboradores que precisam conferir o ponto de dezembro de 2025 sem margem para erros.
+
+## Tabela de Conversão Definitiva: Minutos para Hora Decimal
+Use esta tabela para converter minutos do relógio em frações decimais para a folha de pagamento. Isso evita o "débito técnico de conteúdo" comum em planilhas manuais.
+
+| Minutos (Relógio) | Hora Decimal (Cálculo) | Minutos (Relógio) | Hora Decimal (Cálculo) | Minutos (Relógio) | Hora Decimal (Cálculo) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **01 min** | 0,02 | **21 min** | 0,35 | **41 min** | 0,68 |
+| **02 min** | 0,03 | **22 min** | 0,37 | **42 min** | 0,70 |
+| **03 min** | 0,05 | **23 min** | 0,38 | **43 min** | 0,72 |
+| **04 min** | 0,07 | **24 min** | 0,40 | **44 min** | 0,73 |
+| **05 min** | 0,08 | **25 min** | 0,42 | **45 min** | 0,75 |
+| **06 min** | 0,10 | **26 min** | 0,43 | **46 min** | 0,77 |
+| **07 min** | 0,12 | **27 min** | 0,45 | **47 min** | 0,78 |
+| **08 min** | 0,13 | **28 min** | 0,47 | **48 min** | 0,80 |
+| **09 min** | 0,15 | **29 min** | 0,48 | **49 min** | 0,82 |
+| **10 min** | 0,17 | **30 min** | 0,50 | **50 min** | 0,83 |
+| **11 min** | 0,18 | **31 min** | 0,52 | **51 min** | 0,85 |
+| **12 min** | 0,20 | **32 min** | 0,53 | **52 min** | 0,87 |
+| **13 min** | 0,22 | **33 min** | 0,55 | **53 min** | 0,88 |
+| **14 min** | 0,23 | **34 min** | 0,57 | **54 min** | 0,90 |
+| **15 min** | 0,25 | **35 min** | 0,58 | **55 min** | 0,92 |
+| **16 min** | 0,27 | **36 min** | 0,60 | **56 min** | 0,93 |
+| **17 min** | 0,28 | **37 min** | 0,62 | **57 min** | 0,95 |
+| **18 min** | 0,30 | **38 min** | 0,63 | **58 min** | 0,97 |
+| **19 min** | 0,32 | **39 min** | 0,65 | **59 min** | 0,98 |
+| **20 min** | 0,33 | **40 min** | 0,67 | **60 min** | 1,00 |
+
+> **Fonte Oficial:** Tabela calculada com base na lógica matemática centesimal necessária para cumprimento da [CLT - Consolidação das Leis do Trabalho](https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm).
+
+## A Ciência da Precisão: Erros Comuns e Metodologia
+
+### O Paradoxo Sexagesimal-Centesimal
+O erro mais caro no Departamento Pessoal em 2025 ainda é a confusão de sistemas numéricos. O relógio segue o sistema sexagesimal (base 60), enquanto o dinheiro e a folha de pagamento seguem o sistema centesimal (base 10).
+
+Muitos gestores erram ao assumir que uma jornada encerrada às 17h30 equivale a 17,30 para fins de multiplicação pelo valor da hora. Se você fizer isso, estará roubando 20% dessa meia hora do funcionário ou pagando a menos. A **Calculadora de Horas Trabalhadas** ajusta essa distorção automaticamente.
+
+### Como Calcular (Passo a Passo Matemático)
+
+A conversão correta exige que separemos as horas inteiras dos minutos. A fórmula que aplicamos é a seguinte:
+
+$$\text{Hora Decimal} = \text{Horas Inteiras} + \left( \frac{\text{Minutos Relógio}}{60} \right)$$
+
+**Exemplo 1 (Meia Hora):**
+Imagine um funcionário que trabalhou 17 horas e 30 minutos.
+1.  Mantemos o 17.
+2.  Dividimos os 30 minutos por 60.
+3.  $$\text{Fator Decimal} = \frac{30}{60} = 0,50$$
+4.  Resultado para folha: **17,50 horas**.
+
+**Exemplo 2 (Teto da Hora - 58 Minutos):**
+Considere um colaborador que registrou saída com **58 minutos**.
+1.  Horas inteiras permanecem iguais.
+2.  Dividimos os 58 minutos por 60.
+3.  $$\text{Fator Decimal} = \frac{58}{60} \approx 0,966$$
+4.  Resultado para folha: **0,97 horas**.
+    *Nota: Se você usasse 0,58 na calculadora comum, estaria pagando quase 40% a menos do que o devido.*
+
+Para entender o impacto financeiro disso no seu bolso, vale a pena utilizar nossa [calculadora de salário líquido](https://junny.com.br/calculadoras/salario-liquido) para ver o desconto final após impostos.
+
+### Regra de Tolerância (Artigo 58)
+**Nossa Calculadora de Horas Trabalhadas** também considera a regra de ouro da pontualidade. Segundo o Artigo 58, § 1º da CLT, variações de até 5 minutos (para mais ou para menos) não devem ser computadas, desde que o total diário não exceda 10 minutos.
+
+Esse entendimento é reforçado pela [Súmula 366 do TST](https://www3.tst.jus.br/jurisprudencia/Sumulas_com_indice/Sumula_366.html), que determina que, ultrapassado o limite máximo de 10 minutos diários, será considerada como extra a totalidade do tempo que exceder a jornada normal, pois configura tempo à disposição do empregador.
+
+* **Entrada:** 08:04 (4 min atraso - Dentro da tolerância)
+* **Saída:** 17:03 (3 min extra - Dentro da tolerância)
+* **Total de desvio:** 7 minutos (Abaixo do teto de 10 min).
+* **Resultado:** Zero horas extras e zero descontos.
+
+## Cenários Avançados: Hora Noturna e DSR
+Ferramentas simplistas falham aqui. Se a jornada ocorre entre 22h e 05h, a hora não tem 60 minutos, mas sim **52 minutos e 30 segundos**. Isso é uma ficção jurídica que obriga o pagamento de 8 horas para quem trabalha 7 horas de relógio.
+
+Para quem faz turnos complexos, recomendamos conferir nossa [calculadora de adicional noturno](https://junny.com.br/calculadoras/adicional-noturno) específica para visualizar o valor financeiro deste benefício.
+
+Além disso, as horas extras habituais geram reflexos no Descanso Semanal Remunerado (DSR). O cálculo depende dos dias úteis do mês. O ano de 2025 possui aproximadamente **252 dias úteis** (considerando feriados nacionais, conforme a [Lei 14.759](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/L14759.htm)), mas lembre-se: o DSR deve ser calculado sobre os dias úteis **do mês da competência** (ex: novembro/25 terá 19 ou 20 dias úteis dependendo da cidade).
+
+$$\text{DSR} = \left( \frac{\text{Total de Horas Extras}}{\text{Dias Úteis}} \right) \times \text{Domingos e Feriados} \times \text{Valor da Hora Extra}$$
+
+Para precisão máxima neste ponto, consulte a [calculadora de dias úteis](https://junny.com.br/calculadoras/dias-uteis).
+
+## Arcabouço Jurídico 2025: Portaria 671
+A gestão de ponto moderna é regida pela [Portaria 671](https://www.in.gov.br/en/web/dou/-/portaria-359094137), que consolidou as regras antigas. Hoje, existem três tipos oficiais de registro que você deve conhecer:
+
+1.  **REP-C:** O relógio de parede tradicional que imprime ticket.
+2.  **REP-A:** Softwares alternativos que exigem Acordo Coletivo para validade jurídica.
+3.  **REP-P:** A evolução para 2025. Softwares registrados no INPI que coletam e tratam o ponto simultaneamente, oferecendo maior segurança jurídica.
+
+## Casos Especiais
+
+### Intervalo de Almoço (Intrajornada)
+O período de almoço ou descanso não conta como hora trabalhada, conforme o Art. 71 da CLT. Se o funcionário bate o ponto de saída para o almoço e retorno, esse tempo deve ser deduzido do total bruto da jornada.
+
+### Banco de Horas vs. Hora Extra
+A diferença é o pagamento. Na hora extra, você recebe o valor com adicional (mínimo 50%) na folha do mês. No Banco de Horas, o tempo "sobra" para ser compensado com folgas futuras. A escolha depende do acordo da empresa, mas o cálculo das horas trabalhadas (saldo positivo) é o mesmo. Se você tem dúvidas sobre o valor acumulado, utilize a [calculadora de horas extras](https://junny.com.br/calculadoras/horas-extras).
+
+---
+
+## Perguntas Frequentes sobre Cálculo de Horas (FAQ)
+
+### Como a Calculadora de Horas Trabalhadas converte minutos?
+Para converter minutos do relógio para decimais na folha de pagamento, você deve dividir os minutos exatos por 60. Por exemplo, 15 minutos divididos por 60 resultam em 0,25. Isso é essencial porque 1 hora e 30 minutos equivale financeiramente a 1,5 horas (uma hora e meia), e não 1,30, garantindo o pagamento justo.
+
+### O que é a tolerância de 5 ou 10 minutos no ponto?
+A regra de tolerância, baseada no Artigo 58 da CLT, estabelece que variações de registro de ponto de até 5 minutos (para mais ou menos) não são computadas. Contudo, se a soma diária dessas variações exceder 10 minutos, todo o tempo excedente será considerado integralmente como hora extra ou atraso a descontar.
+
+### A Calculadora de Horas Trabalhadas considera a hora noturna?
+Sim, para fins de pagamento salarial correto. A legislação brasileira define que a hora noturna (trabalhada entre 22h e 05h) tem a duração ficta de 52 minutos e 30 segundos. Na prática, isso significa que a cada 52m 30s de relógio, o trabalhador deve receber o valor equivalente a uma hora cheia (60 minutos) com adicional.
+
+### Como calcular horas trabalhadas com intervalo?
+O cálculo deve subtrair o período de descanso da jornada total para encontrar o tempo efetivo. A fórmula correta é: (Horário de Saída menos Horário de Entrada) menos o Tempo de Intervalo. Se um funcionário entra às 8h, sai às 17h e tem 1h de almoço, o cálculo é (17 - 8) - 1 = 8 horas trabalhadas.
+
+### Quantos dias úteis usar para cálculo de DSR em 2025?
+Embora 2025 tenha aproximadamente 252 dias úteis nacionais (considerando a Lei 14.759), o DSR sobre horas extras deve ser calculado usando apenas os dias úteis do mês específico da competência (o mês do pagamento). Domingos e feriados desse mês específico devem ser contados separadamente para aplicar a fórmula correta do reflexo.
+
+### O almoço conta como hora trabalhada?
+Não. De acordo com o Artigo 71 da CLT, o intervalo destinado a repouso e alimentação (intrajornada) não conta como tempo de serviço efetivo e não deve ser remunerado na jornada padrão. Ele deve ser deduzido do total de horas que o funcionário permaneceu nas dependências da empresa. Nossa Calculadora de Horas Trabalhadas já prevê essa dedução.

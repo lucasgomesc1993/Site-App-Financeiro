@@ -1,0 +1,148 @@
+<title>Calculadora de Horas Extras 2025: Cálculo Exato e DSR</title>
+
+<meta name="description" content="Calculadora de Horas Extras 2025: Valor exato com salário de R$ 1.518, DSR e tabela oficial. Calcule adicional noturno e reflexos agora.">
+
+# Calculadora de Horas Extras 2025
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+**Resumo Rápido (Dados Oficiais 2025):**
+* [cite_start]**Salário Mínimo Base:** R$ 1.518,00 (Salário Mínimo Vigente - LOA 2025)[cite: 6].
+* [cite_start]**Adicionais Padrão:** 50% (dias úteis) e 100% (domingos/feriados)[cite: 5].
+* [cite_start]**Adicional Noturno:** 20% (Regra Geral CLT) ou 50% (se previsto em Convenção Coletiva)[cite: 26, 101, 102].
+* [cite_start]**Divisores:** 220 (para 44h semanais) ou 200 (para 40h semanais)[cite: 34].
+* [cite_start]**Reflexos:** Obrigatório integrar DSR, Férias e 13º Salário[cite: 128].
+
+**Resumo em 30 Segundos**
+
+[cite_start]A **Calculadora de Horas Extras** da Junny é a ferramenta definitiva para trabalhadores CLT e departamentos pessoais ajustarem a remuneração suplementar conforme a legislação vigente em dezembro de 2025[cite: 3, 7, 11]. [cite_start]Com a atualização do salário mínimo para R$ 1.518,00 (consulte a [Lei Orçamentária Anual - LOA 2025](https://www.gov.br/planalto/pt-br/acompanhe-o-planalto/noticias/2024/08/orcamento-de-2025-garante-equilibrio-fiscal-e-aumento-real-do-salario-minimo)) [cite: 6, 17] [cite_start]e as regras consolidadas do TST [cite: 9][cite_start], o cálculo manual exige atenção redobrada[cite: 8]. [cite_start]Esta ferramenta aplica automaticamente o divisor correto (220, 200 ou 180) [cite: 39][cite_start], considera a hora ficta noturna [cite: 118] [cite_start]e projeta os reflexos no Descanso Semanal Remunerado (DSR) [cite: 130][cite_start], garantindo que você receba ou pague exatamente o que a lei determina[cite: 242].
+
+## Tabela Oficial de Adicionais e Divisores (2025)
+
+Para garantir a precisão da sua **Calculadora de Horas Extras**, utilize os parâmetros abaixo, atualizados conforme as práticas de mercado e legislação.
+
+| Tipo de Hora | Adicional Mínimo (CLT) | Divisor Típico | Observação Crítica 2025 |
+| :--- | :--- | :--- | :--- |
+| **Extra Diurna** | [cite_start]50% [cite: 72] | [cite_start]220 / 200 [cite: 34] | [cite_start]Base salarial mínima de R$ 1.518,00[cite: 6, 17]. |
+| **Extra Domingo/Feriado** | [cite_start]100% [cite: 87] | [cite_start]220 / 200 [cite: 34] | [cite_start]Pagamento em dobro obrigatório sem folga compensatória[cite: 87]. |
+| **Adicional Noturno** | [cite_start]20% (Urbano) [cite: 26] | - | [cite_start]Algumas Convenções Coletivas estipulam 50% (verificar sindicato)[cite: 29]. |
+| **Extra Noturna** | [cite_start]50% + 20% [cite: 106] | - | [cite_start]Incide sobre a hora noturna (Súmula 60 TST)[cite: 108]. |
+| **Intrajornada (Almoço)** | [cite_start]50% [cite: 181] | - | [cite_start]Natureza indenizatória (apenas tempo suprimido)[cite: 181]. |
+
+> [cite_start]**Fonte Oficial:** Parâmetros baseados no [Decreto-Lei nº 5.452 (Consolidação das Leis do Trabalho) - Planalto](https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm)[cite: 55, 6].
+
+## Como funciona a Calculadora de Horas Extras
+
+[cite_start]A **Calculadora de Horas Extras** opera processando três variáveis essenciais para entregar o resultado líquido da sua jornada suplementar[cite: 41]. Diferente de uma conta simples de multiplicação, a ferramenta considera:
+
+1.  [cite_start]**A Base de Cálculo:** Soma o salário base a outros adicionais fixos (periculosidade, insalubridade ou tempo de serviço) para encontrar o valor real da hora[cite: 45, 47, 49].
+2.  [cite_start]**O Fator Multiplicador:** Aplica o percentual correto (50%, 100% ou específico de CCT) sobre a hora normal[cite: 72, 87].
+3.  [cite_start]**A Integração de Reflexos:** Calcula automaticamente o impacto dessas horas no seu descanso semanal (DSR) [cite: 130][cite_start], evitando prejuízos financeiros comuns em cálculos manuais[cite: 10].
+
+## Erros Comuns ao Calcular Horas Extras
+
+[cite_start]O erro número um em 2025 não é matemático, mas conceitual: a **conversão de minutos**[cite: 61]. [cite_start]O relógio segue a base 60 (sexagesimal), enquanto a folha de pagamento opera na base 100 (centesimal)[cite: 62].
+
+[cite_start]Muitos gestores ou trabalhadores que dispensam o uso de uma **Calculadora de Horas Extras** adequada multiplicam erroneamente os minutos do relógio pelo valor da hora[cite: 63].
+* [cite_start]**O Erro:** Achar que 1 hora e 30 minutos é igual a 1,3[cite: 63].
+* **A Realidade:** 30 minutos representam 50% de uma hora. [cite_start]Logo, deve-se usar **1,5**[cite: 62, 66].
+* [cite_start]**Impacto:** Ao digitar 1,3 em vez de 1,5, o trabalhador perde 12 minutos de pagamento a cada ocorrência[cite: 63].
+
+## Como Calcular (Passo a Passo e Fórmulas)
+
+### Fórmula Geral (Método Rápido)
+
+$$Valor Total = \left( \frac{\text{Salário Base}}{\text{Divisor}} \right) \times \text{Fator (1,5 ou 2,0)} \times \text{Qtd. Horas}$$
+
+### Método Detalhado (Passo a Passo)
+
+[cite_start]O cálculo correto exige três etapas: encontrar o valor da hora normal, aplicar o adicional e multiplicar pela quantidade de horas (em decimal)[cite: 41].
+
+**1. Encontrar o Valor da Hora Normal (VHN)**
+[cite_start]Divida a remuneração total (Salário + Adicionais Fixos) pelo divisor mensal[cite: 74].
+* [cite_start]Jornada 44h semanais = Divisor 220[cite: 56].
+* [cite_start]Jornada 40h semanais = Divisor 200[cite: 56].
+
+$$VHN = \frac{\text{Remuneração Total}}{\text{Divisor}}$$
+
+**2. Aplicar o Percentual da Hora Extra**
+[cite_start]Multiplique o VHN pelo fator de acréscimo[cite: 75].
+* [cite_start]Para 50%: Multiplicar por 1,5[cite: 75].
+* [cite_start]Para 100%: Multiplicar por 2,0[cite: 90].
+
+$$\text{Valor HE} = VHN \times 1,5$$
+
+**3. Exemplo Real 1 (Salário Mínimo Vigente)**
+[cite_start]Imagine um funcionário com salário de **R$ 1.518,00** (jornada 44h) que fez **10h30min** de extras (50%) no mês[cite: 6, 17].
+
+1.  [cite_start]**Conversão do tempo:** 10h30min = 10,5 horas[cite: 81].
+2.  [cite_start]**Valor Hora Normal:** $$1.518 \div 220 = R\$ 6,90$$[cite: 74].
+3.  **Valor com Adicional (50%):** $$6,90 \times 1,5 = R\$ 10,35$$.
+4.  **Total a Receber:** $$10,35 \times 10,5 = R\$ 108,67$$.
+
+**Exemplo 2 (Alto Salário / Teto)**
+Considere um gerente ou especialista com salário de **R$ 8.000,00** (jornada padrão 220h) que realizou **10 horas extras** em um período crítico de fechamento mensal.
+
+1.  [cite_start]**Valor Hora Normal:** $$8.000 \div 220 = R\$ 36,36$$[cite: 74].
+2.  [cite_start]**Valor com Adicional (50%):** $$36,36 \times 1,5 = R\$ 54,55$$ (Valor da hora extra)[cite: 75].
+3.  **Total a Receber:** $$54,55 \times 10 = R\$ 545,50$$.
+
+Para um planejamento financeiro completo, insira esses valores na nossa [calculadora de salário líquido](https://junny.com.br/calculadoras/salario-liquido) e veja os descontos de IRRF.
+
+## O Reflexo no DSR (Descanso Semanal Remunerado)
+
+[cite_start]Utilizar uma **Calculadora de Horas Extras** confiável é vital para computar o DSR[cite: 130]. [cite_start]As horas extras habituais geram um valor adicional a ser pago no seu dia de descanso[cite: 128]. [cite_start]Em 2025, o cálculo segue rigorosamente a [Lei 605/49](https://www.planalto.gov.br/ccivil_03/leis/l0605.htm) [cite: 132] [cite_start]e a Súmula 172 do TST[cite: 132].
+
+A fórmula é:
+
+$$DSR = \left( \frac{\text{Total Horas Extras}}{\text{Dias Úteis no Mês}} \right) \times \text{Domingos e Feriados}$$
+
+[cite_start]**Atenção:** Para este cálculo, o sábado é considerado dia útil[cite: 136]. [cite_start]Se você fez R$ 1.000,00 de extras em um mês com 25 dias úteis e 5 domingos/feriados, receberá mais **R$ 200,00** de DSR[cite: 140]. Esse valor também impacta o cálculo na hora de [calcular férias](https://junny.com.br/calculadoras/ferias) e o [décimo terceiro](https://junny.com.br/calculadoras/decimo-terceiro).
+
+## Adicional Noturno: Regra Geral (20%) e Exceções
+
+[cite_start]É fundamental consultar a Convenção Coletiva de Trabalho (CCT) da sua categoria em 2025[cite: 29]. [cite_start]Embora a **CLT (Art. 73)** determine que o adicional noturno urbano seja de **20%** sobre a hora diurna [cite: 26][cite_start], diversas categorias podem ter negociado percentuais maiores, chegando a **50%**[cite: 29].
+
+### Hora Extra Noturna (Cumulatividade)
+[cite_start]Se a hora extra for realizada entre 22h e 05h, o custo é cumulativo[cite: 106].
+1.  [cite_start]Calcula-se a hora noturna (VHN + 20% ou % da CCT)[cite: 111].
+2.  [cite_start]Sobre esse valor majorado, aplica-se o adicional de Hora Extra (Súmula 60 do TST)[cite: 108].
+
+**Exemplo de Impacto Financeiro:**
+* [cite_start]**Regra CLT (20%):** Hora Noturna vale 1,2x a hora normal[cite: 28].
+* [cite_start]**Exceção CCT (50%):** Hora Noturna vale 1,5x a hora normal[cite: 30].
+
+[cite_start]Além do valor, lembre-se da **hora ficta**: cada 52 minutos e 30 segundos trabalhados à noite equivalem a 1 hora remunerada[cite: 118].
+
+## Casos Especiais
+
+Para cobrir todas as nuances da legislação, nossa **Calculadora de Horas Extras** contempla também as situações específicas detalhadas abaixo:
+
+### Escala 12x36 e Feriados
+Na escala 12x36, a remuneração mensal abrange o descanso. [cite_start]Porém, a Súmula 444 do TST e entendimentos recentes reforçam que o trabalho em **feriados** nesta escala, se não compensado, deve ser pago em dobro (adicional de 100%)[cite: 153]. [cite_start]O dia normal de trabalho, contudo, não gera hora extra além da 8ª hora[cite: 156].
+
+### Comissionistas
+[cite_start]Para quem recebe comissão, o cálculo é diferente (Súmula 340 do TST)[cite: 162]. [cite_start]Como a comissão já remunera o tempo trabalhado (através das vendas) [cite: 165][cite_start], a empresa deve pagar apenas o **adicional** de hora extra sobre a parte variável, e não a hora cheia[cite: 167].
+
+### Intervalo Intrajornada (Almoço)
+[cite_start]Se a empresa não concede a 1 hora completa de almoço, ela deve pagar o tempo suprimido como hora extra[cite: 181]. [cite_start]Esse pagamento tem natureza indenizatória (não incide INSS/FGTS) [cite: 183] [cite_start]e considera apenas os minutos não gozados, conforme alterações da Reforma Trabalhista[cite: 181].
+
+## Perguntas Frequentes sobre Calculadora de Horas Extras
+
+### Qual o valor da hora extra com o salário mínimo de 2025?
+Considerando o mínimo vigente de **R$ 1.518,00** e um divisor padrão de 220 horas mensais, sua hora normal de trabalho vale **R$ 6,90**. Ao aplicar o adicional padrão de 50% para dias úteis, a hora extra sobe para **R$ 10,35**. [cite_start]Já o trabalho em domingos ou feriados (100%) é remunerado em **R$ 13,80**, sendo o dobro da hora normal[cite: 79, 80, 94].
+
+### Como calcular hora extra no sábado?
+[cite_start]Se o trabalho no sábado exceder a jornada semanal de 44 horas, ele é considerado hora extra[cite: 84]. [cite_start]O adicional padrão aplicável é de **50%**[cite: 85]. [cite_start]Contudo, se sua Convenção Coletiva classificar o sábado como dia de descanso remunerado ou feriado da categoria, o pagamento devido deve ser de 100% sobre o valor da hora normal[cite: 85]. Consulte a Súmula 113 do TST.
+
+### Quem trabalha 40 horas usa qual divisor na calculadora?
+[cite_start]Quem possui contrato de 40 horas semanais deve configurar a **Calculadora de Horas Extras** com o divisor **200**[cite: 34]. [cite_start]O uso do divisor 220, destinado à jornada de 44 horas, resulta em pagamento a menor, pois reduz artificialmente o valor da hora[cite: 215]. [cite_start]O cálculo correto sempre divide o salário por 200, valorizando a hora proporcionalmente[cite: 216].
+
+### O tempo de deslocamento conta como hora extra?
+[cite_start]Não, de acordo com as regras pós-Reforma Trabalhista de 2017[cite: 230]. [cite_start]O período gasto no trajeto entre a residência e o local de trabalho não é mais computado na jornada efetiva[cite: 230]. [cite_start]Isso se aplica mesmo que a empresa forneça o transporte, exceto se houver acordo coletivo específico estipulando o contrário[cite: 231].
+
+### Posso receber horas extras fixas todo mês?
+[cite_start]Não é uma prática legalmente segura, pois a pré-contratação de horas extras fixas é considerada nula pelo TST (Súmula 199)[cite: 223]. [cite_start]Se pagas com habitualidade, elas incorporam o salário para todos os fins[cite: 224]. [cite_start]Contudo, isso não isenta a empresa de pagar as horas extras reais que excedam o limite contratual fixo[cite: 224].
+
+### Quantas horas extras posso fazer por dia (Limite Legal)?
+[cite_start]Pela legislação vigente, o limite máximo permitido é de [**2 horas extras diárias**](https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm#art59) (Art. 59 da CLT)[cite: 72]. [cite_start]Exceder esse teto só é aceito em casos excepcionais de força maior ou para serviços inadiáveis que possam gerar prejuízo, devendo ser devidamente justificado[cite: 188]. [cite_start]Ultrapassar o limite habitual pode gerar multas administrativas para a empresa[cite: 241].

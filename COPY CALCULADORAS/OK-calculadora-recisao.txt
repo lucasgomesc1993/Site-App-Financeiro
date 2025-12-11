@@ -1,0 +1,149 @@
+<meta name="title" content="Calculadora de Rescisão 2025: Cálculo Exato CLT">
+<meta name="description" content="Use nossa Calculadora de Rescisão para simular regras de Dez/2025. Inclui aviso prévio, multa 40% FGTS e descontos INSS/IRRF. Resultado imediato.">
+
+# Calculadora de Rescisão 2025: Guia Completo e Atualizado (CLT)
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+## Resumo Rápido (Dados Oficiais Dezembro/2025)
+
+* **Salário Mínimo Base:** R$ 1.518,00 (referência para pisos e seguro-desemprego).
+* **Teto do INSS:** R$ 8.157,41 (limite máximo de desconto previdenciário).
+* **Prazo de Pagamento:** Até 10 dias corridos após o término do contrato.
+* **Multa do FGTS:** 40% sobre o saldo total histórico (não apenas o saldo atual).
+* **Isenção de IRRF:** Rendimentos até R$ 2.428,80 estão isentos.
+
+O cálculo da rescisão trabalhista é a etapa final e mais crítica da relação de emprego. Esta **calculadora de rescisão** não apenas soma seus direitos, mas aplica as regras tributárias vigentes em dezembro de 2025, considerando a progressividade do INSS e as deduções atualizadas do Imposto de Renda. Se você foi demitido, pediu demissão ou fez um acordo, use a **calculadora de rescisão** abaixo para validar se o valor oferecido pela empresa ("homologação") está correto e evitar prejuízos financeiros permanentes.
+
+## Resumo em 30 Segundos: O Que a **Calculadora de Rescisão** Considera
+
+* **Base:** Salário + Médias de horas extras.
+* **Descontos:** INSS (Teto R$ 8.157,41) e IRRF.
+* **Isentos:** Aviso Prévio, Férias Indenizadas e Multa 40%.
+* **Prazo:** Pagamento em até 10 dias corridos.
+
+## Como funciona a Calculadora de Rescisão
+
+Para obter o resultado exato na nossa **calculadora de rescisão**, siga estes passos simples:
+
+* **Preencha os Dados:** Informe seu último salário bruto, data de admissão e data de saída.
+* **Selecione o Motivo:** Escolha o tipo de desligamento (ex: sem justa causa ou pedido de demissão) e o tipo de aviso prévio.
+* **Visualize o Cálculo:** O sistema processará automaticamente as regras de 2025, exibindo o valor líquido e as deduções legais.
+
+## Tabelas Oficiais para o Cálculo (Vigência 2025)
+
+Para chegar ao valor líquido apresentado pela **calculadora de rescisão**, é necessário deduzir o INSS e o Imposto de Renda (IRRF) incidentes sobre o saldo de salário, 13º proporcional e horas extras. Verbas indenizatórias (como férias indenizadas e multa do FGTS) são isentas destes descontos.
+
+### Tabela Progressiva do INSS (Dezembro 2025)
+
+| Salário de Contribuição (R$) | Alíquota Progressiva | Parcela a Deduzir (R$) |
+| :--- | :--- | :--- |
+| Até R$ 1.518,00 | 7,5% | - |
+| De R$ 1.518,01 a R$ 2.793,88 | 9% | R$ 22,77 |
+| De R$ 2.793,89 a R$ 4.190,83 | 12% | R$ 106,59 |
+| De R$ 4.190,84 a R$ 8.157,41 | 14% | R$ 190,40 |
+
+> **Fonte Oficial:** Dados baseados na [Portaria Interministerial MPS/MF nº 6/2025](https://www.gov.br/inss/pt-br/noticias/confira-como-ficaram-as-aliquotas-de-contribuicao-ao-inss).
+
+**Entenda a Progressividade:** Desde a reforma da previdência, o cálculo do INSS é **progressivo por faixas**. Isso significa que a alíquota não incide cheia sobre o total. Quem ganha R$ 4.000,00, por exemplo, não paga 14% sobre tudo, mas sim taxas fatiadas sobre cada pedaço do salário que se encaixa nas faixas acima, resultando em um desconto menor do que no modelo antigo.
+
+### Tabela do Imposto de Renda (IRRF)
+
+A partir de maio de 2025, aplica-se o desconto simplificado de **R$ 607,20** caso seja mais vantajoso que as deduções legais.
+
+| Base de Cálculo (R$) | Alíquota (%) | Parcela a Deduzir do IR (R$) |
+| :--- | :--- | :--- |
+| Até R$ 2.428,80 | Isento | 0,00 |
+| De R$ 2.428,81 até R$ 2.826,65 | 7,5% | R$ 182,16 |
+| De R$ 2.826,66 até R$ 3.751,05 | 15% | R$ 394,16 |
+| De R$ 3.751,06 até R$ 4.664,68 | 22,5% | R$ 675,49 |
+| Acima de R$ 4.664,68 | 27,5% | R$ 908,73 |
+
+> **Fonte Oficial:** Tabela vigente conforme [Receita Federal do Brasil](https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2025).
+
+---
+
+## Erros Comuns ao Calcular a Rescisão
+
+Muitos trabalhadores perdem dinheiro ao aceitar cálculos simplificados que ignoram as médias variáveis. Se você recebia **comissões, horas extras ou adicional noturno** habitualmente, esses valores devem integrar a base de cálculo para pagamento de férias e 13º salário. Por isso, nossa **calculadora de rescisão** considera esses inputs essenciais para evitar distorções no valor final.
+
+Se você fez muitas horas extras nos últimos meses, utilize nossa [calculadora de horas extras](https://junny.com.br/calculadoras/horas-extras) para verificar a média correta antes de assinar a rescisão.
+
+## Como Calcular a Rescisão (Passo a Passo)
+
+Ao utilizar uma **calculadora de rescisão** confiável, o processo se divide em três etapas lógicas: apuração de proventos (o que entra), apuração de descontos (o que sai) e o cálculo do FGTS.
+
+### 1. Fórmula Rápida (Conceitual)
+$$\text{Rescisão Líquida} = (\text{Verbas Salariais} + \text{Verbas Indenizatórias}) - (\text{INSS} + \text{IRRF} + \text{Adiantamentos})$$
+
+### 2. Detalhamento dos Proventos
+* **Saldo de Salário:** Divida seu salário por 30 e multiplique pelos dias trabalhados no mês.
+* **Aviso Prévio (Lei 12.506/11):** Se for indenizado, são 30 dias + 3 dias por ano completo de casa (até o limite de 90 dias). Consulte a lei na íntegra no [Planalto](https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12506.htm).
+* **13º Salário Proporcional:** 1/12 do salário para cada mês trabalhado (considera-se mês a fração igual ou superior a 15 dias).
+* **Férias:** Vencidas (se houver) + Proporcionais + 1/3 Constitucional sobre a soma de ambas.
+
+### 3. Exemplo 1: Salário Médio (R$ 3.000,00)
+Para ilustrar como a **calculadora de rescisão** processa os dados, imagine um trabalhador demitido sem justa causa com **salário de R$ 3.000,00**, 2 anos de casa e saída dia 10/12/2025.
+
+* **Saldo de Salário (10 dias):** R$ 1.000,00.
+* **Aviso Prévio Indenizado (36 dias):** R$ 3.600,00.
+* **13º Salário (11/12 avos):** R$ 2.750,00.
+* **Férias Vencidas + 1/3:** R$ 4.000,00.
+* **Férias Proporcionais (11/12) + 1/3:** R$ 3.666,66.
+* **Desconto INSS (Progressivo sobre Saldo):** R$ 75,00 (Aprox).
+* **Desconto INSS (Progressivo sobre 13º):** R$ 224,73.
+
+### 4. Exemplo 2: Salário Acima do Teto (R$ 8.500,00)
+Para um executivo com salário de R$ 8.500,00 (acima do teto do INSS de R$ 8.157,41) demitido sem justa causa:
+
+* **Saldo de Salário:** R$ 8.500,00 (considerando mês cheio para o exemplo).
+* **Desconto INSS:** **R$ 951,63** (Valor fixo travado no teto).
+* **Base de Cálculo IRRF:** R$ 7.548,37 (R$ 8.500,00 - R$ 951,63).
+* **Desconto IRRF:** Aplica-se a alíquota máxima de 27,5% sobre a base, deduzindo a parcela da tabela oficial.
+* *Nota: O INSS não incide sobre a parcela do salário que ultrapassa R$ 8.157,41.*
+
+---
+
+## Tipos de Demissão e Direitos Específicos
+
+### Demissão Sem Justa Causa
+O cenário mais comum. Você recebe todas as verbas listadas acima, saca o FGTS e tem direito à multa de 40%. Além disso, recebe as guias para habilitação no benefício temporário, cujo valor você pode estimar na [calculadora de seguro-desemprego](https://junny.com.br/calculadoras/seguro-desemprego).
+
+### Pedido de Demissão
+Neste caso, a iniciativa é sua. Você **perde** o direito ao Aviso Prévio (se não cumprir, a empresa pode descontar), não saca o FGTS, perde a multa de 40% e não tem acesso ao seguro-desemprego. Recebe apenas saldo de salário, férias e 13º proporcional.
+
+### Demissão por Acordo Comum
+Criada pela Reforma Trabalhista, esta modalidade permite que empresa e empregado decidam pelo fim do contrato.
+* **Aviso Prévio:** Se indenizado, é pago pela metade (50%).
+* **Multa do FGTS:** Cai para 20%.
+* **Saque do FGTS:** Permitido sacar até 80% do saldo da conta. Use a [calculadora de FGTS](https://junny.com.br/calculadoras/fgts) para prever o montante que será base na **calculadora de rescisão**.
+* **Seguro-Desemprego:** Não tem direito.
+
+### Rescisão Indireta
+Conhecida como a "justa causa do patrão". Ocorre quando a empresa comete falhas graves (como não recolher FGTS ou atrasar salários). Se reconhecida judicialmente, o trabalhador recebe **todos** os direitos da demissão sem justa causa.
+
+### Diferença: Aviso Trabalhado vs. Indenizado
+No **Aviso Trabalhado**, você continua na empresa por 30 dias (com redução de 2h diárias ou 7 dias corridos) e o valor sofre descontos de INSS/IRRF. No **Aviso Indenizado**, a empresa paga o mês sem você trabalhar; o valor é considerado indenização e, portanto, **isento de descontos** de INSS e Imposto de Renda.
+
+## Perguntas Frequentes sobre Rescisão (FAQ)
+
+### Qual o prazo para pagamento da rescisão em 2025?
+O prazo é unificado para todos os tipos de aviso simulados na **calculadora de rescisão**: a empresa deve pagar as verbas em até **10 dias corridos** após o término do contrato. Se o pagamento atrasar, o empregador deve pagar uma multa equivalente a um salário nominal do trabalhador, conforme determina o Artigo 477 da CLT.
+
+### A multa de 40% do FGTS é sobre o saldo atual ou total?
+A multa de 40% é calculada sobre o **saldo total histórico** de depósitos feitos durante todo o contrato, corrigidos monetariamente. Mesmo que você tenha zerado a conta com o Saque-Aniversário ou compra da casa própria, o cálculo considera o histórico global, e não apenas o saldo residual disponível no momento da demissão.
+
+### Qual o desconto máximo de INSS na rescisão?
+Sim, existe um limite. Para quem ganha acima de R$ 8.157,41, o desconto do INSS trava no teto fixo (R$ 951,63 em 2025). Isso significa que, independentemente se o salário for R$ 10.000,00 ou R$ 20.000,00, a contribuição previdenciária não ultrapassará esse valor máximo estabelecido pela Previdência.
+
+### Como funciona o desconto do Imposto de Renda na rescisão?
+O Imposto de Renda incide apenas sobre verbas de natureza salarial, como saldo de salário e 13º. As verbas indenizatórias — incluindo aviso prévio indenizado, férias indenizadas e a multa de 40% do FGTS — são **totalmente isentas** de IRRF. É fundamental verificar a base de cálculo para não pagar imposto indevido. Verifique o impacto com a [calculadora de salário líquido](https://junny.com.br/calculadoras/salario-liquido).
+
+### O novo salário mínimo de R$ 1.518 afeta minha rescisão?
+Sim. Se sua remuneração base segue o piso nacional, o cálculo deve considerar o novo salário mínimo de R$ 1.518,00 vigente em dezembro de 2025. Isso impacta diretamente o saldo de salário, o valor do aviso prévio e serve de base para o cálculo do teto do seguro-desemprego.
+
+### Tenho direito a férias proporcionais se tiver faltas?
+As faltas injustificadas impactam o período aquisitivo. Até 5 faltas, o direito se mantém integral (30 dias). Entre 6 e 14 faltas, cai para 24 dias, e a redução continua escalonadamente. Se houver mais de 32 faltas injustificadas no ano, você perde totalmente o direito às férias. Consulte a [calculadora de férias](https://junny.com.br/calculadoras/ferias).
+
+### Como calcular a rescisão por falecimento?
+Neste caso, o cálculo assemelha-se ao pedido de demissão, mas sem aviso prévio. Os herdeiros recebem saldo de salário, 13º e férias. Você pode simular os valores base na **calculadora de rescisão** selecionando "Pedido de Demissão", lembrando que o saque do FGTS é imediato para dependentes e não há multa de 40%.
