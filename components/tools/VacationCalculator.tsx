@@ -89,32 +89,16 @@ export const VacationCalculator: React.FC = () => {
         if (base <= 1518.00) {
             discount = base * 0.075;
         } else if (base <= 2793.88) {
-            discount = (1518.00 * 0.075) + ((base - 1518.00) * 0.09);
+            discount = (base * 0.09) - 22.77;
         } else if (base <= 4190.83) {
-            discount = (1518.00 * 0.075) + ((2793.88 - 1518.00) * 0.09) + ((base - 2793.88) * 0.12);
+            discount = (base * 0.12) - 106.59;
         } else {
-            discount = (1518.00 * 0.075) + ((2793.88 - 1518.00) * 0.09) + ((4190.83 - 2793.88) * 0.12) + ((base - 4190.83) * 0.14);
+            discount = (base * 0.14) - 190.40;
         }
         return discount;
     };
 
     const calculateIRRF = (base: number) => {
-        // 2025 Rules: Check Simplified Discount vs Legal Deductions
-        // In this calculator, we are receiving the 'base' which already has INSS and Dependents deducted in the parent function?
-        // Wait, the parent function calls this with `baseINSS - inss - (dependents * 189.59)`.
-        // To implement Simplified Discount correctly, we need to compare:
-        // Option A: Base = Gross - INSS - Dependents
-        // Option B: Base = Gross - SimplifiedDiscount (607.20)
-
-        // HOWEVER, the logic in calculateVacation calculates `baseIRRF` *before* calling this function.
-        // We need to refactor `calculateVacation` to handle the simplified discount comparison logic properly, 
-        // OR handle it here if we pass the Gross Base.
-
-        // Let's stick to the existing structure but update the Table values first.
-        // ACTUALLY, checking the parent function: `const baseIRRF = baseINSS - inss - (dependents * 189.59);`
-        // This forces Option A. I need to update `calculateVacation` to fully support Simplified Discount.
-        // For now, I will update the Table intervals here conforming to 2025.
-
         let discount = 0;
         if (base <= 2428.80) {
             discount = 0;
@@ -135,133 +119,126 @@ export const VacationCalculator: React.FC = () => {
     };
 
     return (
-        <div className="w-full max-w-5xl mx-auto">
-            <div className="grid lg:grid-cols-12 gap-8">
-                {/* Controls */}
-                <div className="lg:col-span-5 space-y-6">
-                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                        <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <Calculator className="w-5 h-5 text-primary" />
-                            Dados das Férias
-                        </h2>
+        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+            <h2 className="text-xl font-semibold flex items-center gap-2 text-white mb-8">
+                <Calculator className="w-5 h-5 text-blue-500" />
+                Simular Férias
+            </h2>
 
-                        <div className="space-y-5">
-                            <div>
-                                <label htmlFor="salary" className="block text-sm text-gray-400 mb-2">Salário Bruto</label>
-                                <div className="relative">
-                                    <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                                    <input
-                                        id="salary"
-                                        aria-label="Salário Bruto"
-                                        type="number"
-                                        value={salary}
-                                        onChange={(e) => setSalary(Number(e.target.value))}
-                                        className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
-                                    />
-                                </div>
-                            </div>
+            <div className="space-y-6">
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label htmlFor="salary" className="text-sm text-gray-400">Salário Bruto</label>
+                        <div className="relative">
+                            <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                            <input
+                                id="salary"
+                                aria-label="Salário Bruto"
+                                type="number"
+                                value={salary}
+                                onChange={(e) => setSalary(Number(e.target.value))}
+                                className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-colors"
+                            />
+                        </div>
+                    </div>
 
-                            <div>
-                                <label htmlFor="days" className="block text-sm text-gray-400 mb-2">Dias de Férias</label>
-                                <div className="relative">
-                                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                                    <select
-                                        id="days"
-                                        aria-label="Dias de Férias"
-                                        value={days}
-                                        onChange={(e) => setDays(Number(e.target.value))}
-                                        className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors appearance-none"
-                                    >
-                                        <option value={10}>10 dias</option>
-                                        <option value={15}>15 dias</option>
-                                        <option value={20}>20 dias</option>
-                                        <option value={30}>30 dias</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="dependents" className="block text-sm text-gray-400 mb-2">Dependentes</label>
-                                <div className="relative">
-                                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                                    <input
-                                        id="dependents"
-                                        aria-label="Dependentes"
-                                        type="number"
-                                        value={dependents}
-                                        onChange={(e) => setDependents(Number(e.target.value))}
-                                        className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-3 pt-2">
-                                <input
-                                    type="checkbox"
-                                    id="sellDays"
-                                    checked={sellDays}
-                                    onChange={(e) => setSellDays(e.target.checked)}
-                                    className="w-5 h-5 rounded border-gray-600 text-primary focus:ring-primary bg-black/30"
-                                />
-                                <label htmlFor="sellDays" className="text-sm text-gray-300 select-none cursor-pointer">
-                                    Vender 10 dias (Abono Pecuniário)
-                                </label>
-                            </div>
+                    <div className="space-y-2">
+                        <label htmlFor="dependents" className="text-sm text-gray-400">Dependentes</label>
+                        <div className="relative">
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                            <input
+                                id="dependents"
+                                aria-label="Dependentes"
+                                type="number"
+                                value={dependents}
+                                onChange={(e) => setDependents(Number(e.target.value))}
+                                className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-colors"
+                            />
                         </div>
                     </div>
                 </div>
 
-                {/* Results */}
-                <div className="lg:col-span-7 space-y-6">
-                    <div className="bg-gradient-to-br from-[#1a1a1a]/80 to-black/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none" />
+                <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <label htmlFor="days" className="text-sm text-gray-400">Dias de Férias</label>
+                        <div className="relative">
+                            <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                            <select
+                                id="days"
+                                aria-label="Dias de Férias"
+                                value={days}
+                                onChange={(e) => setDays(Number(e.target.value))}
+                                className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-colors appearance-none"
+                            >
+                                <option value={10}>10 dias</option>
+                                <option value={15}>15 dias</option>
+                                <option value={20}>20 dias</option>
+                                <option value={30}>30 dias</option>
+                            </select>
+                        </div>
+                    </div>
 
-                        <div className="relative z-10">
-                            <h2 className="text-lg font-medium text-gray-300 mb-6 flex items-center gap-2">
-                                <TrendingUp className="w-5 h-5 text-primary" />
-                                Detalhamento
-                            </h2>
+                    <div className="flex items-end pb-3">
+                        <div className="flex items-center gap-3">
+                            <input
+                                type="checkbox"
+                                id="sellDays"
+                                checked={sellDays}
+                                onChange={(e) => setSellDays(e.target.checked)}
+                                className="w-5 h-5 rounded border-gray-600 text-blue-500 focus:ring-blue-500 bg-black/30 cursor-pointer"
+                            />
+                            <label htmlFor="sellDays" className="text-sm text-gray-300 select-none cursor-pointer">
+                                Vender 10 dias (Abono)
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-                            <div className="space-y-3">
-                                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                                    <span className="text-gray-400">Valor Férias ({days} dias)</span>
-                                    <span className="text-white">{formatCurrency(result.grossVacation)}</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                                    <span className="text-gray-400">1/3 Constitucional</span>
-                                    <span className="text-white">{formatCurrency(result.oneThirdBonus)}</span>
-                                </div>
-                                {sellDays && (
-                                    <>
-                                        <div className="flex justify-between items-center py-2 border-b border-white/5">
-                                            <span className="text-gray-400">Abono Pecuniário (10 dias)</span>
-                                            <span className="text-green-400">+ {formatCurrency(result.allowance)}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center py-2 border-b border-white/5">
-                                            <span className="text-gray-400">1/3 Abono</span>
-                                            <span className="text-green-400">+ {formatCurrency(result.allowanceOneThird)}</span>
-                                        </div>
-                                    </>
-                                )}
+                {/* Result Section */}
+                <div className="pt-4 border-t border-white/5 mt-6">
+                    <div className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-6">
+                        <span className="text-sm text-blue-400 block mb-2">
+                            Valor Líquido a Receber
+                        </span>
+                        <span className="text-4xl font-bold text-white">
+                            {formatCurrency(result.totalNet)}
+                        </span>
+                        <div className="flex justify-center gap-4 mt-3 text-xs">
+                            <span className="text-gray-400">Bruto: {formatCurrency(result.totalGross)}</span>
+                            <span className="text-red-400">Desc: {formatCurrency(result.inss + result.irrf)}</span>
+                        </div>
+                    </div>
 
-                                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                                    <span className="text-gray-400">INSS</span>
-                                    <span className="text-red-400">- {formatCurrency(result.inss)}</span>
-                                </div>
-                                <div className="flex justify-between items-center py-2 border-b border-white/5">
-                                    <span className="text-gray-400">IRRF</span>
-                                    <span className="text-red-400">- {formatCurrency(result.irrf)}</span>
-                                </div>
+                    <div className="space-y-3 text-sm">
+                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                            <span className="text-gray-300">Valor Férias ({days} dias)</span>
+                            <span className="text-white font-medium">{formatCurrency(result.grossVacation)}</span>
+                        </div>
+                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                            <span className="text-gray-300">1/3 Constitucional</span>
+                            <span className="text-white font-medium">{formatCurrency(result.oneThirdBonus)}</span>
+                        </div>
 
-                                <div className="pt-4 mt-4 border-t border-white/10">
-                                    <div className="flex justify-between items-end">
-                                        <span className="text-gray-300 font-medium">Valor Líquido a Receber</span>
-                                        <span className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-400">
-                                            {formatCurrency(result.totalNet)}
-                                        </span>
-                                    </div>
+                        {sellDays && (
+                            <>
+                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                    <span className="text-gray-300">Abono Pecuniário (10 dias)</span>
+                                    <span className="text-emerald-400 font-medium">+ {formatCurrency(result.allowance)}</span>
                                 </div>
-                            </div>
+                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                    <span className="text-gray-300">1/3 Abono</span>
+                                    <span className="text-emerald-400 font-medium">+ {formatCurrency(result.allowanceOneThird)}</span>
+                                </div>
+                            </>
+                        )}
+
+                        <div className="flex justify-between p-2 pl-4 text-xs rounded-lg text-red-300/80">
+                            <span>- INSS</span>
+                            <span>{formatCurrency(result.inss)}</span>
+                        </div>
+                        <div className="flex justify-between p-2 pl-4 text-xs rounded-lg text-red-300/80">
+                            <span>- IRRF</span>
+                            <span>{formatCurrency(result.irrf)}</span>
                         </div>
                     </div>
                 </div>
