@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, HelpCircle, Briefcase, AlertCircle, CheckCircle, Percent, DollarSign, Clock, FileText, XCircle, ArrowRight } from 'lucide-react';
+import { Calculator, HelpCircle, Briefcase, AlertCircle, CheckCircle, Percent, DollarSign, Clock, FileText, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
@@ -80,7 +80,7 @@ export function PLRPage() {
 
         irTax = (gross * tierRate) - deduction;
 
-        // Ensure tax is not negative (though logic above should prevent it if ranges are correct)
+        // Ensure tax is not negative
         if (irTax < 0) irTax = 0;
 
         const netValue = gross - irTax;
@@ -113,7 +113,7 @@ export function PLRPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora PLR 2025: Valor Líquido e Tabela IR Oficial",
+        "name": "Calculadora de PLR 2025: Simule o Valor Líquido e Imposto",
         "url": "https://www.junny.com.br/calculadoras/plr",
         "description": "Use a Calculadora de PLR 2025 para simular o valor líquido. Veja tabela de IR oficial, regras bancários e nova isenção de R$ 8.214,40.",
         "applicationCategory": "FinanceApplication",
@@ -168,7 +168,7 @@ export function PLRPage() {
                         { label: 'Calculadora PLR', href: '/calculadoras/plr' }
                     ]} />
 
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                             <Briefcase className="w-4 h-4 text-blue-500" />
                             <span className="text-sm text-gray-300">Atualizado para 2025</span>
@@ -181,7 +181,7 @@ export function PLRPage() {
 
                 <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator Section */}
-                    <div className="lg:col-span-7">
+                    <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
@@ -265,7 +265,7 @@ export function PLRPage() {
                     </div>
 
                     {/* Right Side Content (Quick Summary) */}
-                    <div className="lg:col-span-5 space-y-6">
+                    <div className="lg:col-span-5 space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                                 <FileText className="w-5 h-5 text-blue-500" />
@@ -303,7 +303,7 @@ export function PLRPage() {
                 </div>
 
                 {/* Resumo em 30 Segundos */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
                             <Clock className="w-6 h-6 text-blue-500" />
@@ -318,7 +318,7 @@ export function PLRPage() {
                 </div>
 
                 {/* Como funciona a PLR */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
                             <HelpCircle className="w-6 h-6 text-blue-500" />
@@ -338,7 +338,7 @@ export function PLRPage() {
                 </div>
 
                 {/* Tabela de IR sobre PLR */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
                             <Briefcase className="w-6 h-6 text-blue-500" />
@@ -375,7 +375,7 @@ export function PLRPage() {
                 </div>
 
                 {/* Erros Comuns */}
-                <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-3xl p-6 md:p-8 mb-12">
+                <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-3xl p-6 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div className="flex items-start gap-4 mb-6">
                         <AlertCircle className="w-8 h-8 text-yellow-500 shrink-0" />
                         <div>
@@ -400,7 +400,7 @@ export function PLRPage() {
                 </div>
 
                 {/* Como Calcular a PLR (Passo a Passo) */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
                             <Calculator className="w-6 h-6 text-blue-500" />
@@ -453,7 +453,7 @@ export function PLRPage() {
                 </div>
 
                 {/* Regras Específicas: Calendário PLR Bancários 2025 */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <h2 className="text-xl md:text-2xl font-bold text-white mb-6">Regras Específicas: Calculadora PLR Bancários 2025</h2>
                     <p className="text-gray-400 mb-6">
                         O setor bancário possui a convenção mais complexa do país. O cálculo é dividido em duas partes e possui "aceleradores" baseados no lucro do banco.
@@ -475,7 +475,7 @@ export function PLRPage() {
                 </div>
 
                 {/* Casos Especiais e Elegibilidade */}
-                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                     <h2 className="text-xl md:text-2xl font-bold text-white mb-6">Casos Especiais e Elegibilidade</h2>
                     <div className="grid md:grid-cols-2 gap-6">
                         <div className="bg-white/5 p-6 rounded-xl border border-white/5">
@@ -516,4 +516,3 @@ export function PLRPage() {
         </section>
     );
 }
-
