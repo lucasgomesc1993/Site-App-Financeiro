@@ -171,7 +171,7 @@ export function OvertimePage() {
                         { label: 'Horas Extras', href: '/calculadoras/horas-extras' }
                     ]} />
 
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                             <Clock className="w-4 h-4 text-blue-500" />
                             <span className="text-sm text-gray-300">Trabalhistas e Previdenciárias</span>
@@ -184,7 +184,7 @@ export function OvertimePage() {
 
                 <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator */}
-                    <div className="lg:col-span-7">
+                    <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
@@ -258,7 +258,7 @@ export function OvertimePage() {
                                     <div className="space-y-2">
                                         <label htmlFor="otnight-input" className="text-sm text-gray-400 flex items-center gap-2">
                                             <span>Horas Extras Noturnas</span>
-                                            <span className="text-[10px] bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded-full">50% + 20%</span>
+                                            <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded-full">50% + 20% Cumulativo</span>
                                         </label>
                                         <input
                                             id="otnight-input"
@@ -269,7 +269,7 @@ export function OvertimePage() {
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
                                             placeholder="Qtd. Horas no Relógio (Calculamos a ficta)"
                                         />
-                                        <p className="text-xs text-gray-500">Insira as horas do relógio trabalhadas entre 22h e 5h. O sistema aplica a hora ficta.</p>
+                                        <p className="text-xs text-gray-500">Insira as horas do relógio trabalhadas entre 22h e 5h. O sistema aplica a hora ficta e os adicionais cumlativos.</p>
                                     </div>
                                 </div>
 
@@ -358,7 +358,7 @@ export function OvertimePage() {
                     </div>
 
                     {/* Sidebar / Info */}
-                    <div className="lg:col-span-5 space-y-8">
+                    <div className="lg:col-span-5 space-y-8 animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
                         {/* Resumo Rápido */}
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
@@ -392,7 +392,7 @@ export function OvertimePage() {
                 </div>
 
                 {/* Main Content Sections */}
-                <div className="max-w-4xl mx-auto space-y-12 mb-24">
+                <div className="max-w-4xl mx-auto space-y-12 mb-24 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
 
                     {/* Resumo em 30 Segundos */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8">

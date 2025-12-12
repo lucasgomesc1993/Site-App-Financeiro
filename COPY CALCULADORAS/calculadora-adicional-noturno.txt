@@ -1,0 +1,154 @@
+## Meta Dados
+
+**Meta Title:** Calculadora Adicional Noturno 2025: Guia Oficial (CLT)
+**Meta Description:** Calcule o Adicional Noturno 2025 com salário de R$ 1.518. Guia CLT sobre hora reduzida (52m30s), DSR e integração com periculosidade.
+
+---
+
+# Calculadora de Adicional Noturno 2025 (Guia Oficial)
+
+## Resumo Rápido: Dados Oficiais Adicional Noturno (Dezembro 2025)
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+* **Salário Mínimo Base:** R$ 1.518,00 (Vigência Jan/2025).
+* **Valor da Hora Mínima:** R$ 6,90 (Divisor 220).
+* **Adicional Urbano:** Mínimo de 20% sobre a hora diurna.
+* **Hora Noturna Reduzida:** 52 minutos e 30 segundos (Fator de conversão 1,1428).
+* **Base de Cálculo:** Inclui Adicional de Periculosidade e Insalubridade se houver (Súmula 60 e OJ 259 TST).
+
+## Resumo em 30 Segundos
+O **Adicional Noturno** não é um prêmio, mas uma reparação biológica obrigatória para quem trabalha entre 22h e 05h (trabalhadores urbanos). Em 2025, o cálculo exige atenção redobrada: além do acréscimo de 20% no valor da hora, a legislação determina que a hora noturna dura apenas 52 minutos e 30 segundos. Na prática, isso significa que trabalhar 7 horas no relógio equivale a receber por 8 horas trabalhadas, gerando um ganho financeiro real superior à porcentagem nominal.
+
+### Tabela Oficial de Alíquotas e Horários (CLT)
+
+A tabela abaixo reflete as regras vigentes do Artigo 73 da CLT e jurisprudência do TST atualizadas para o cenário econômico de 2025.
+
+| Categoria | Horário Noturno | Alíquota Mínima | Hora Reduzida? | Fator Multiplicador Real |
+| :--- | :--- | :--- | :--- | :--- |
+| **Urbano** | 22:00 às 05:00 | **20%** | Sim (52m30s) | $1,3714$ ($1,20 \times 1,1428$) |
+| **Rural (Lavoura)** | 21:00 às 05:00 | **25%** | Não (60m) | $1,25$ |
+| **Rural (Pecuária)** | 20:00 às 04:00 | **25%** | Não (60m) | $1,25$ |
+| **Portuário** | 19:00 às 07:00 | **Variável** | Não | Consultar OGMO |
+
+> **Fonte Oficial:** Baseado no Art. 73 da CLT (Urbano) e Lei nº 5.889/73 (Rural). Consulte o texto integral no [Planalto Gov.br](https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm). Tabela de Fatores baseada em cálculos matemáticos legais.
+
+### Diferença: Adicional Urbano vs Rural
+Enquanto o trabalhador urbano tem a vantagem da **hora ficta reduzida** (trabalha 52m30s mas recebe por 60m) somada à alíquota de 20% prevista na CLT, o trabalhador rural cumpre a hora cheia de 60 minutos. Para compensar a falta de redução no tempo, a **Lei nº 5.889/73** concede ao rural uma alíquota maior, de **25%** sobre a hora normal.
+
+---
+
+## Erros Comuns ao Calcular o Adicional Noturno
+
+A maioria dos erros de folha de pagamento ocorre por simplificações indevidas. O cálculo não é apenas aplicar 20% sobre o salário base.
+
+1.  **Ignorar a Hora Ficta (Reduzida):** O erro número um é calcular a hora noturna como se tivesse 60 minutos. A lei define que ela tem 52 minutos e 30 segundos. Isso obriga o uso de um fator de conversão de **1,142857**. Se você ignora isso, está pagando a menos.
+2.  **Esquecer a Integração de Adicionais:** Segundo a [Orientação Jurisprudencial nº 259 da SDI-1 do TST](https://www.tst.jus.br/oj-sdi-1), o adicional de periculosidade integra a base de cálculo do adicional noturno. O cálculo deve ser em cascata: primeiro soma-se a periculosidade ao salário, depois aplica-se o noturno.
+3.  **Desconsiderar a Prorrogação:** Se o funcionário cumpre a jornada noturna integral e continua trabalhando após as 05:00, as horas da manhã também devem receber o adicional noturno, conforme a [Súmula nº 60 do TST](https://www.tst.jus.br/sumulas).
+
+---
+
+## Como Calcular o Adicional Noturno (Passo a Passo)
+
+Para garantir precisão centesimal, utilizamos a metodologia de "Engenharia da Hora Ficta".
+
+### 1. Defina o Valor da Hora Normal Integrada
+Antes de aplicar os 20%, você precisa saber quanto vale a hora de trabalho considerando outros adicionais fixos.
+
+$$Base~de~Cálculo = Salário~Base + (Salário~Base \times \%Periculosidade) + (Salário~Mínimo \times \%Insalubridade)$$
+
+*Nota: O salário mínimo em 2025 é de R$ 1.518,00.*
+
+### 2. Aplique o Fator de Redução (Hora Noturna)
+Cada hora de relógio trabalhada à noite deve ser multiplicada pelo fator da hora reduzida.
+
+$$Horas~Pagáveis = Horas~Trabalhadas~no~Relógio \times 1,142857$$
+
+### 3. Fórmula Final
+$$Valor~Adicional = (Horas~Pagáveis \times Valor~Hora~Normal) \times 0,20$$
+
+### Exemplo 1: Vigilante com Periculosidade (Cenário 2025)
+Imagine um Vigilante em São Paulo com salário base de R$ 2.148,22 e 30% de periculosidade, trabalhando das 22h às 05h (7 horas de relógio).
+
+1.  **Base de Cálculo:** R$ 2.148,22 + 30% = R$ 2.792,68.
+2.  **Valor da Hora Normal (Divisor 220):** R$ 2.792,68 ÷ 220 = **R$ 12,69**.
+3.  **Conversão da Hora:** 7 horas relógio $\times$ 1,142857 = **8 horas computadas**.
+4.  **Cálculo do Adicional:** (8 horas $\times$ R$ 12,69) $\times$ 20% = **R$ 20,30 por noite**.
+
+Se este trabalhador fizer isso 15 vezes no mês (escala 12x36), o total será aprox. **R$ 304,50** apenas de adicional, sem contar o DSR. Para entender o impacto no valor final recebido, utilize nossa [Calculadora de Salário Líquido](/calculadoras/salario-liquido).
+
+### Exemplo 2: Recepcionista (Salário Mínimo)
+Considere uma recepcionista que ganha o piso nacional de R$ 1.518,00 e trabalha apenas 4 horas em horário noturno por plantão (sem outros adicionais).
+
+1.  **Valor da Hora:** R$ 6,90 (R$ 1.518 ÷ 220).
+2.  **Horas Computadas:** 4 horas relógio $\times$ 1,142857 = **4,57 horas**.
+3.  **Adicional:** (4,57 horas $\times$ R$ 6,90) $\times$ 20% = **R$ 6,31 por noite**.
+
+---
+
+## Reflexos e DSR: O Custo Oculto
+
+O Adicional Noturno tem natureza salarial. Isso significa que ele gera reflexos em outras verbas. Ele deve ser integrado ao cálculo de:
+
+* **DSR (Descanso Semanal Remunerado):** Deve ser calculado separadamente sobre o total de horas noturnas do mês.
+* **Férias e 13º Salário:** Pela média física das horas realizadas.
+* **FGTS e INSS:** Incide sobre o valor bruto total.
+
+Para estimar os custos totais de um funcionário noturno, incluindo impostos patronais, consulte a [Calculadora de Custo de Funcionário](/calculadoras/custo-funcionario).
+
+---
+
+## Tabela INSS 2025 (Progressiva)
+
+Como o adicional noturno aumenta o salário bruto, o trabalhador pode mudar de faixa de contribuição no INSS. Confira a tabela vigente para 2025:
+
+| Faixa de Salário (R$) | Alíquota | Parcela a Deduzir (R$) |
+| :--- | :--- | :--- |
+| Até 1.518,00 | 7,5% | - |
+| De 1.518,01 até 2.793,88 | 9% | 22,77 |
+| De 2.793,89 até 4.190,83 | 12% | 106,59 |
+| De 4.190,84 até 8.157,41 | 14% | 190,40 |
+
+> **Fonte Oficial:** [Tabela de Contribuição Mensal - Gov.br](https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal).
+
+*Dúvida sobre o desconto exato? Use a [Calculadora de INSS Oficial](/calculadoras/inss).*
+
+---
+
+## Casos Especiais e Legislação 2025
+
+### Escala 12x36 e a "Prorrogação"
+A Reforma Trabalhista (Art. 59-A CLT) trouxe controvérsias sobre a prorrogação da jornada noturna na escala 12x36. Em 2025, a regra segura depende da Convenção Coletiva. Para Vigilantes de SP, por exemplo, a CCT 2025 define que o adicional incide apenas das 22h às 05h, sem prorrogação automática. Sempre verifique a convenção da categoria.
+
+### Domésticas e Cuidadores
+A Lei Complementar 150/2015 garante aos empregados domésticos os mesmos direitos do trabalhador urbano, incluindo a hora reduzida de 52m30s. Se o cuidador dorme no emprego mas não permanece em "estado de alerta" ou trabalhando, o adicional **não** é devido. É necessário comprovar o trabalho efetivo ou a prontidão.
+
+### Hora Extra Noturna
+Se o trabalhador faz horas extras no período noturno, o cálculo é cumulativo. Aplica-se o adicional de hora extra (mínimo 50%) sobre o valor da hora já acrescida de 20% do noturno.
+$$Hora~Extra~Noturna = (Hora~Normal \times 1,20) \times 1,50$$
+Na prática, isso representa um aumento de 80% sobre a hora diurna normal. Para simular valores, acesse a [Calculadora de Horas Extras](/calculadoras/horas-extras).
+
+---
+
+## Perguntas Frequentes sobre Adicional Noturno
+
+### Qual o valor da hora noturna em 2025?
+O valor mínimo da hora noturna em 2025, baseada no salário mínimo de R$ 1.518,00, é de **R$ 8,28** (R$ 6,90 + 20%). Porém, se houver adicionais de periculosidade ou insalubridade, este valor base aumenta antes de aplicar os 20%.
+
+### Quem trabalha 12x36 recebe adicional noturno?
+Sim. Quem trabalha na escala 12x36 tem direito ao adicional noturno sobre as horas trabalhadas entre 22h e 05h. A discussão jurídica atual (2025) reside apenas sobre a prorrogação após as 05h da manhã, que depende da convenção coletiva da categoria.
+
+### O intervalo de janta conta como adicional noturno?
+Não. O intervalo intrajornada (hora de janta/descanso) não é remunerado e, portanto, não incide adicional noturno, salvo se o trabalhador for impedido de gozar o intervalo integralmente.
+
+### Existe um valor máximo (teto) para o Adicional Noturno?
+Não. A legislação trabalhista (CLT) não estabelece um teto ou limite financeiro para o pagamento do adicional noturno. O valor será sempre proporcional ao salário do trabalhador: quanto maior a remuneração base e os adicionais (periculosidade/insalubridade), maior será o valor recebido pelas horas noturnas.
+
+### Como calcular adicional noturno sobre periculosidade?
+A conta é feita em cascata. Primeiro, soma-se 30% de periculosidade ao salário base. O resultado dessa soma é dividido pelas horas mensais (ex: 220) para achar o valor da hora. Só então aplica-se os 20% do noturno sobre esse valor majorado (OJ 259 TST).
+
+### O adicional noturno entra no cálculo da rescisão?
+Sim. Se o adicional noturno foi pago com habitualidade, ele integra a base de cálculo para Aviso Prévio, Férias Vencidas/Proporcionais e 13º Salário na rescisão. Calcule seus direitos exatos na [Calculadora de Rescisão](/calculadoras/rescisao).
+
+### Trabalhador rural tem hora reduzida?
+Não. A hora noturna do trabalhador rural (lavoura ou pecuária) tem 60 minutos completos. Em compensação, a alíquota do adicional é maior: 25% sobre a hora normal, em vez dos 20% urbanos.
