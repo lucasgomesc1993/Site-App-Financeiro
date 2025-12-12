@@ -150,6 +150,7 @@ export function TravelCostCalculatorPage() {
                                             <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={distance}
                                                 onChange={(e) => handleInput(e.target.value, setDistance)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all"
@@ -166,6 +167,7 @@ export function TravelCostCalculatorPage() {
                                             <Fuel className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={consumption}
                                                 onChange={(e) => handleInput(e.target.value, setConsumption)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all"
@@ -184,6 +186,7 @@ export function TravelCostCalculatorPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={fuelPrice}
                                                 onChange={(e) => handleInput(e.target.value, setFuelPrice)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all"
@@ -200,6 +203,7 @@ export function TravelCostCalculatorPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={tolls}
                                                 onChange={(e) => handleInput(e.target.value, setTolls)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 focus:ring-1 focus:ring-rose-500/50 transition-all"

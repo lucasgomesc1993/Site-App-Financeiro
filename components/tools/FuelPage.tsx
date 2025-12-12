@@ -145,6 +145,7 @@ export const FuelPage: React.FC = () => {
                                         <input
                                             id="alcoholPrice"
                                             type="number"
+                                            inputMode="decimal"
                                             step="0.01"
                                             placeholder="0,00"
                                             value={alcoholPrice || ''}
@@ -161,6 +162,7 @@ export const FuelPage: React.FC = () => {
                                         <input
                                             id="gasolinePrice"
                                             type="number"
+                                            inputMode="decimal"
                                             step="0.01"
                                             placeholder="0,00"
                                             value={gasolinePrice || ''}

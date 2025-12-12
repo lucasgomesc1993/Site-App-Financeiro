@@ -193,6 +193,7 @@ export function RentVsBuyPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={propertyValue}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setPropertyValue)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -207,6 +208,7 @@ export function RentVsBuyPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={rentValue}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setRentValue)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -220,6 +222,7 @@ export function RentVsBuyPage() {
                                         <label className="text-sm text-gray-400">Rendimento Invest. (% a.m.)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={investmentYield}
                                             onChange={(e) => setInvestmentYield(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -230,6 +233,7 @@ export function RentVsBuyPage() {
                                         <label className="text-sm text-gray-400">Valorização Imóvel (% a.m.)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={appreciationRate}
                                             onChange={(e) => setAppreciationRate(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -240,6 +244,7 @@ export function RentVsBuyPage() {
                                         <label className="text-sm text-gray-400">Período (Anos)</label>
                                         <input
                                             type="number"
+                                            inputMode="numeric"
                                             value={years}
                                             onChange={(e) => setYears(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"

@@ -211,6 +211,7 @@ export function HoursCalculatorPage() {
                                     <label className="text-xs text-gray-400 ml-1">Horário 1</label>
                                     <input
                                         type="text"
+                                        inputMode="numeric"
                                         value={time1}
                                         onChange={(e) => handleTimeInput(e.target.value, setTime1)}
                                         placeholder="08:00"
@@ -240,6 +241,7 @@ export function HoursCalculatorPage() {
                                     <label className="text-xs text-gray-400 ml-1">Horário 2</label>
                                     <input
                                         type="text"
+                                        inputMode="numeric"
                                         value={time2}
                                         onChange={(e) => handleTimeInput(e.target.value, setTime2)}
                                         placeholder="01:00"

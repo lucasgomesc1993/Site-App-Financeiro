@@ -198,6 +198,7 @@ export function NightShiftPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={salary}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setSalary)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
@@ -209,6 +210,7 @@ export function NightShiftPage() {
                                         <label className="text-sm text-gray-400">Jornada Mensal (Horas)</label>
                                         <input
                                             type="number"
+                                            inputMode="numeric"
                                             value={hoursWorked}
                                             onChange={(e) => setHoursWorked(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
@@ -222,6 +224,7 @@ export function NightShiftPage() {
                                         <label className="text-sm text-gray-400">Horas Noturnas (Relógio)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={nightHours}
                                             onChange={(e) => setNightHours(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"

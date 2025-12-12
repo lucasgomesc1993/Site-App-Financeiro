@@ -190,6 +190,7 @@ export function CompoundInterestPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={initialAmount}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setInitialAmount)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
@@ -203,6 +204,7 @@ export function CompoundInterestPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={monthlyContribution}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setMonthlyContribution)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
@@ -218,6 +220,7 @@ export function CompoundInterestPage() {
                                         <div className="flex gap-2">
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={interestRate}
                                                 onChange={(e) => handleNumberInput(e.target.value, setInterestRate)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
@@ -238,6 +241,7 @@ export function CompoundInterestPage() {
                                         <div className="flex gap-2">
                                             <input
                                                 type="text"
+                                                inputMode="numeric"
                                                 value={period}
                                                 onChange={(e) => handleNumberInput(e.target.value, setPeriod)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"

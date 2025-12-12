@@ -161,6 +161,7 @@ export function PercentageCalculatorPage() {
                                 <div className="relative flex-1 w-full">
                                     <input
                                         type="text"
+                                        inputMode="decimal"
                                         value={val1_X}
                                         onChange={(e) => handleInput(e.target.value, setVal1_X)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
@@ -172,6 +173,7 @@ export function PercentageCalculatorPage() {
                                 <div className="relative flex-1 w-full">
                                     <input
                                         type="text"
+                                        inputMode="decimal"
                                         value={val1_Y}
                                         onChange={(e) => handleInput(e.target.value, setVal1_Y)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
@@ -192,6 +194,7 @@ export function PercentageCalculatorPage() {
                                 <div className="relative flex-1 w-full">
                                     <input
                                         type="text"
+                                        inputMode="decimal"
                                         value={val2_X}
                                         onChange={(e) => handleInput(e.target.value, setVal2_X)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
@@ -202,6 +205,7 @@ export function PercentageCalculatorPage() {
                                 <div className="relative flex-1 w-full">
                                     <input
                                         type="text"
+                                        inputMode="decimal"
                                         value={val2_Y}
                                         onChange={(e) => handleInput(e.target.value, setVal2_Y)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
@@ -222,6 +226,7 @@ export function PercentageCalculatorPage() {
                                 <div className="relative flex-1 w-full">
                                     <input
                                         type="text"
+                                        inputMode="decimal"
                                         value={val3_X}
                                         onChange={(e) => handleInput(e.target.value, setVal3_X)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"
@@ -232,6 +237,7 @@ export function PercentageCalculatorPage() {
                                 <div className="relative flex-1 w-full">
                                     <input
                                         type="text"
+                                        inputMode="decimal"
                                         value={val3_Y}
                                         onChange={(e) => handleInput(e.target.value, setVal3_Y)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all text-center"

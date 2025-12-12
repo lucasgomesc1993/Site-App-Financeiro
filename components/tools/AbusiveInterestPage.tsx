@@ -189,6 +189,7 @@ export function AbusiveInterestPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={loanAmount}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setLoanAmount)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-purple-500/50 transition-all"
@@ -207,6 +208,7 @@ export function AbusiveInterestPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={installmentValue}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setInstallmentValue)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-purple-500/50 transition-all"
@@ -218,6 +220,7 @@ export function AbusiveInterestPage() {
                                         <label className="text-sm text-gray-400">Nº de Parcelas</label>
                                         <input
                                             type="number"
+                                            inputMode="numeric"
                                             value={months}
                                             onChange={(e) => setMonths(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-purple-500/50 transition-all"
@@ -231,6 +234,7 @@ export function AbusiveInterestPage() {
                                     <div className="relative">
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={marketRate}
                                             onChange={(e) => {
                                                 const val = e.target.value.replace(/[^0-9,.]/g, '');

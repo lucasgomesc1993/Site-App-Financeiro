@@ -191,6 +191,7 @@ export function FIREPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={monthlyExpense}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setMonthlyExpense)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
@@ -207,6 +208,7 @@ export function FIREPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={currentSavings}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setCurrentSavings)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
@@ -220,6 +222,7 @@ export function FIREPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={monthlyContribution}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setMonthlyContribution)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
@@ -233,6 +236,7 @@ export function FIREPage() {
                                     <label className="text-sm text-gray-400">Taxa de Juros Anual (Real) %</label>
                                     <input
                                         type="text"
+                                        inputMode="decimal"
                                         value={annualReturn}
                                         onChange={(e) => handleNumberInput(e.target.value, setAnnualReturn)}
                                         className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"

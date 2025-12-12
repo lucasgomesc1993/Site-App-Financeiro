@@ -1,0 +1,120 @@
+<meta name="title" content="Calculadora PLR 2025: Valor Líquido e Tabela IR Oficial">
+<meta name="description" content="Use a Calculadora de PLR 2025 para simular o valor líquido. Veja tabela de IR oficial, regras bancários e nova isenção de R$ 8.214,40.">
+
+# Calculadora de PLR 2025: Simule o Valor Líquido e Imposto
+
+### Resumo Rápido (Dados Oficiais Dezembro/2025)
+
+* **Nova Isenção de IR:** Quem recebe até **R$ 8.214,40** de PLR no ano está 100% isento de imposto de renda.
+* **Alíquota Máxima:** A tributação para valores acima de R$ 16.380,38 é de 27,5%, mas com dedução significativa de R$ 3.166,80.
+* **Encargos Trabalhistas:** A PLR é isenta de INSS e FGTS para o empregado, incidindo apenas o Imposto de Renda na Fonte (tributação exclusiva).
+* **Prazo de Pagamento:** Deve ocorrer em, no máximo, duas parcelas por ano, com intervalo trimestral ou semestral, conforme acordo coletivo.
+* **Bancários:** Segue regra específica da CCT 2024/2025 (90% do salário + fixo + parcela adicional).
+
+### Resumo em 30 Segundos
+
+A **Participação nos Lucros e Resultados (PLR)** é um bônus pago pela empresa quando metas corporativas e individuais são atingidas. Diferente do salário mensal, a PLR possui **tributação exclusiva**, o que significa que ela não se soma aos seus rendimentos anuais para elevar a alíquota do seu Imposto de Renda tradicional. Em 2025, a tabela foi atualizada garantindo que mais dinheiro fique no bolso do trabalhador. Nossa **Calculadora de PLR** abaixo simplifica essa conta para você.
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+## Como funciona a PLR
+
+Antes de utilizar a **Calculadora de PLR** para descobrir os valores líquidos, é fundamental entender a mecânica do benefício. A PLR é regulamentada pela Lei 10.101/2000 e funciona como um contrato de desempenho entre patrão e empregado. Ela não é um benefício automático; precisa ser negociada previamente por meio de comissão paritária ou convenção coletiva com o sindicato.
+
+O objetivo é alinhar os interesses: a empresa busca lucro ou produtividade, e o trabalhador recebe uma fatia desse sucesso. Por ser desvinculada da remuneração salarial, a PLR não gera encargos trabalhistas tradicionais, sendo tributada exclusivamente na fonte.
+
+## Tabela de IR sobre PLR (Vigência 2025)
+
+A tributação da PLR é feita "na fonte" e separada dos demais rendimentos. Abaixo, a tabela progressiva válida a partir de maio de 2025:
+
+| Faixa de PLR Anual (R$) | Alíquota (%) | Parcela a Deduzir do IR (R$) |
+| :--- | :---: | :---: |
+| De R$ 0,00 a R$ 8.214,40 | **Isento** | R$ 0,00 |
+| De R$ 8.214,41 a R$ 9.922,28 | 7,5% | R$ 616,08 |
+| De R$ 9.922,29 a R$ 13.167,00 | 15,0% | R$ 1.360,25 |
+| De R$ 13.167,01 a R$ 16.380,38 | 22,5% | R$ 2.347,78 |
+| Acima de R$ 16.380,38 | 27,5% | R$ 3.166,80 |
+
+> **Fonte Oficial:** Dados baseados na [Lei nº 10.101/2000](http://www.planalto.gov.br/ccivil_03/leis/l10101.htm) e atualizações da [Receita Federal do Brasil](https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2025).
+
+## Erros Comuns ao Calcular a PLR
+
+Ao tentar prever o valor a receber na **Calculadora de PLR**, muitos trabalhadores cometem equívocos que geram frustração no dia do pagamento.
+
+1.  **Ignorar a Soma Anual:** O Imposto de Renda é calculado sobre o total recebido no ano-calendário. Se você recebeu R$ 7.000 em fevereiro (isento) e recebe mais R$ 7.000 em dezembro, a base de cálculo será R$ 14.000. O imposto incidirá sobre o total, descontando o que já foi pago (se houver).
+2.  **Confundir PLR com Bônus/Prêmio:** Bônus discricionários (sem regras prévias em acordo coletivo) têm natureza salarial e sofrem incidência de INSS e FGTS. A PLR legítima é isenta destes encargos. Você pode conferir a diferença no valor líquido usando nossa [calculadora de salário líquido](/calculadoras/salario-liquido).
+3.  **Achar que incide Pensão Alimentícia automaticamente:** O STJ pacificou que a PLR **não entra** na base de cálculo da pensão alimentícia, salvo se houver cláusula expressa no acordo de divórcio ou sentença judicial determinando o contrário.
+
+## Como Calcular a PLR (Passo a Passo)
+
+O cálculo do valor bruto depende do modelo da empresa (Metas Corporativas ou Convenção Coletiva), mas a nossa **Calculadora PLR** utiliza a lógica universal do Imposto de Renda 2025 descrita abaixo para definir o valor líquido.
+
+### Fórmula do Imposto Devido
+Para encontrar o valor real que cairá na conta, utilize a fórmula:
+
+$$(Valor~Total~PLR \times Alíquota) - Parcela~a~Deduzir = IR~a~Pagar$$
+
+### Exemplo Prático 1: Analista de Marketing (Setor de Serviços)
+* **PLR Bruta:** R$ 12.000,00
+* **Faixa na Tabela:** De R$ 9.922,29 a R$ 13.167,00 (Alíquota de 15%)
+* **Cálculo:**
+    1.  Multiplicação: R$ 12.000 × 15% = R$ 1.800,00
+    2.  Dedução: R$ 1.800,00 - R$ 1.360,25 (da tabela)
+    3.  **Imposto Devido:** R$ 439,75
+    4.  **Valor Líquido:** R$ 11.560,25
+
+### Exemplo Prático 2: Executivo (Teto da Tabela)
+* **PLR Bruta:** R$ 50.000,00
+* **Faixa na Tabela:** Acima de R$ 16.380,38 (Alíquota de 27,5%)
+* **Cálculo:**
+    1.  Multiplicação: R$ 50.000 × 27,5% = R$ 13.750,00
+    2.  Dedução: R$ 13.750,00 - R$ 3.166,80
+    3.  **Imposto Devido:** R$ 10.583,20
+    4.  **Alíquota Efetiva:** Apenas 21,1% (bem abaixo dos 27,5% nominais).
+
+É esse cálculo detalhado e progressivo que a **Calculadora de PLR** executa em segundos, permitindo que você planeje seus investimentos com o valor exato. Se você deseja aplicar essa quantia, confira nosso guia sobre [investimentos para iniciantes](/blog/investimentos).
+
+## Regras Específicas: Calculadora PLR Bancários 2025
+
+O setor bancário possui a convenção mais complexa do país. O cálculo é dividido em duas partes e possui "aceleradores" baseados no lucro do banco.
+
+1.  **Regra Básica:** 90% do Salário + Valor Fixo (ajustado pelo INPC). Se o total distribuído pelo banco for menor que 5% do lucro líquido, esse valor pode ser aumentado até chegar a 2,2 salários.
+2.  **Parcela Adicional:** Distribuição linear de 2,2% do Lucro Líquido do banco dividido pelo número de funcionários, com um teto específico definido na CCT.
+3.  **Antecipação:** Paga geralmente até setembro, correspondente a cerca de 60% (percentual definido na CCT) da regra básica, descontando-se do valor final em março.
+
+## Casos Especiais e Elegibilidade
+
+### Fui demitido, recebo PLR?
+Sim. A [Súmula 451 do TST](https://www.tst.jus.br/sumulas) garante o pagamento proporcional aos meses trabalhados para empregados demitidos sem justa causa. O cálculo é de 1/12 avos por mês trabalhado (ou fração superior a 14 dias). Para calcular exatamente suas verbas rescisórias, utilize nossa [calculadora de rescisão](/calculadoras/rescisao).
+
+### Pedi demissão, tenho direito?
+Historicamente não, mas a jurisprudência mudou em 2025. Decisões recentes (como o caso Jeitto/TST) indicam que o pedido de demissão não retira o direito à PLR proporcional, pois o funcionário contribuiu para o resultado. Consulte o acordo coletivo da sua categoria.
+
+### Estagiários e Aprendizes recebem?
+Legalmente, não. A Lei 10.101/2000 não abrange estagiários. Se a empresa pagar PLR a estagiários nos mesmos moldes dos funcionários, corre o risco de criar vínculo empregatício. O correto para estagiários são prêmios por desempenho tributados normalmente.
+
+### Licença Maternidade e Afastamentos
+Para a PLR, a licença-maternidade é considerada tempo de serviço efetivo na maioria das convenções (como a dos bancários), não havendo desconto na proporcionalidade. Importante: O STF definiu que a licença começa a contar apenas após a alta hospitalar da mãe ou do bebê (ADI 6327), o que estende o período de estabilidade e recebimento.
+
+## Perguntas Frequentes sobre Calculadora de PLR
+
+### Qual o valor máximo da isenção da PLR em 2025?
+O teto de isenção total na tabela de 2025 é de **R$ 8.214,40**. Isso significa que, se a soma de todas as parcelas recebidas no ano ficar abaixo desse limite, você não paga nada de Imposto de Renda. Ao usar a **Calculadora de PLR**, essa isenção é aplicada automaticamente, enquanto valores superiores são tributados progressivamente apenas sobre o excedente.
+
+### A PLR desconta INSS e FGTS?
+Não. A Participação nos Lucros é totalmente isenta de encargos trabalhistas e previdenciários (INSS e FGTS) tanto para a empresa quanto para o empregado. Isso ocorre porque a Constituição Federal desvinculou a PLR da remuneração salarial. Confira o impacto financeiro disso comparando com o nosso [cálculo do INSS](/calculadoras/inss) sobre salários normais.
+
+### O banco pode descontar dívida da PLR?
+A PLR tem caráter alimentar e não pode sofrer descontos automáticos de dívidas (como cheque especial ou empréstimos) sem autorização expressa do funcionário. No entanto, verifique se o seu contrato de abertura de conta possui cláusulas que permitem o débito em "quaisquer créditos", o que exigiria uma contestação formal junto ao banco.
+
+### Quem recebe PLR tem direito ao 13º salário sobre ela?
+Não. A PLR não integra a remuneração para fins de reflexos em outras verbas trabalhistas. Ou seja, ela não aumenta a base de cálculo do seu [décimo terceiro](/calculadoras/decimo-terceiro), férias ou aviso prévio. Trata-se de um pagamento eventual e apartado do salário contratual mensal.
+
+### Pensionistas pagam pensão sobre a PLR?
+A regra geral consolidada pelo STJ (2024/2025) é que a PLR **não entra** na base de cálculo da pensão alimentícia automaticamente. Por ser uma verba indenizatória e eventual, ela só deve ser incluída se o acordo de alimentos ou a sentença judicial disser explicitamente que a pensão incide sobre "participação nos lucros".
+
+### Quando a PLR deve ser paga?
+A legislação exige que o pagamento ocorra em, no máximo, duas vezes ao ano, com intervalo mínimo de um trimestre civil entre as parcelas. As datas exatas (geralmente uma antecipação no meio do ano e um fechamento no ano seguinte) são definidas obrigatoriamente na Convenção Coletiva de Trabalho da sua categoria.
+
+### Autônomos e PJ têm direito a PLR?
+Não. A PLR é um direito exclusivo de trabalhadores com vínculo empregatício (CLT), regidos pela [Consolidação das Leis do Trabalho](http://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm). Profissionais autônomos ou contratados como PJ recebem conforme seu contrato civil de prestação de serviços, não estando sujeitos às regras de isenção fiscal da Lei 10.101/2000.

@@ -170,6 +170,7 @@ export function RuleOfThreePage() {
                                         <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-cyan-500 font-bold">A</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={a}
                                             onChange={(e) => handleInput(e.target.value, setA)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-4 px-4 text-center text-xl font-bold text-white focus:outline-none focus:border-cyan-500/50 transition-all"
@@ -181,6 +182,7 @@ export function RuleOfThreePage() {
                                         <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-cyan-500 font-bold">C</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={c}
                                             onChange={(e) => handleInput(e.target.value, setC)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-4 px-4 text-center text-xl font-bold text-white focus:outline-none focus:border-cyan-500/50 transition-all"
@@ -196,6 +198,7 @@ export function RuleOfThreePage() {
                                         <span className="absolute -right-6 top-1/2 -translate-y-1/2 text-cyan-500 font-bold">B</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={b}
                                             onChange={(e) => handleInput(e.target.value, setB)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-4 px-4 text-center text-xl font-bold text-white focus:outline-none focus:border-cyan-500/50 transition-all"

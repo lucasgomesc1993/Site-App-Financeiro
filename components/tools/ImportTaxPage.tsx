@@ -198,6 +198,7 @@ export function ImportTaxPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={usdPrice}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setUsdPrice)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-8 pr-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all"
@@ -211,6 +212,7 @@ export function ImportTaxPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={shipping}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setShipping)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-8 pr-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all"
@@ -226,6 +228,7 @@ export function ImportTaxPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={exchangeRate}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setExchangeRate)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-cyan-500/50 transition-all"

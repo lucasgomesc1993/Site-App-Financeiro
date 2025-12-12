@@ -172,6 +172,7 @@ export function EmployeeCostPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={salary}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setSalary)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
@@ -199,6 +200,7 @@ export function EmployeeCostPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={transport}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setTransport)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
@@ -212,6 +214,7 @@ export function EmployeeCostPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={food}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setFood)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"

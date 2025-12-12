@@ -282,6 +282,7 @@ export function OvertimePage() {
                                         <input
                                             id="business-days-input"
                                             type="number"
+                                            inputMode="numeric"
                                             value={businessDays}
                                             onChange={(e) => setBusinessDays(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
@@ -296,6 +297,7 @@ export function OvertimePage() {
                                         <input
                                             id="rest-days-input"
                                             type="number"
+                                            inputMode="numeric"
                                             value={restDays}
                                             onChange={(e) => setRestDays(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"

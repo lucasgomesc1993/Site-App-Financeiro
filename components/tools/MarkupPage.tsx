@@ -165,6 +165,7 @@ export function MarkupPage() {
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={cost}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setCost)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-amber-500/50 transition-all"
@@ -178,6 +179,7 @@ export function MarkupPage() {
                                         <label className="text-sm text-gray-400">Despesas Fixas (%)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={fixedExpenses}
                                             onChange={(e) => setFixedExpenses(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500/50 transition-all"
@@ -188,6 +190,7 @@ export function MarkupPage() {
                                         <label className="text-sm text-gray-400">Despesas Var. (%)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={variableExpenses}
                                             onChange={(e) => setVariableExpenses(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500/50 transition-all"
@@ -198,6 +201,7 @@ export function MarkupPage() {
                                         <label className="text-sm text-gray-400">Lucro Desejado (%)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={profitMargin}
                                             onChange={(e) => setProfitMargin(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-amber-500/50 transition-all"

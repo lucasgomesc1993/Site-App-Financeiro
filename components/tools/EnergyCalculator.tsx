@@ -37,6 +37,7 @@ export const EnergyCalculator: React.FC = () => {
                             <Zap className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                             <input
                                 type="number"
+                                inputMode="decimal"
                                 value={power || ''}
                                 onChange={(e) => setPower(Number(e.target.value))}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all"
@@ -51,6 +52,7 @@ export const EnergyCalculator: React.FC = () => {
                             <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                             <input
                                 type="number"
+                                inputMode="decimal"
                                 value={hoursPerDay || ''}
                                 onChange={(e) => setHoursPerDay(Number(e.target.value))}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all"
@@ -65,6 +67,7 @@ export const EnergyCalculator: React.FC = () => {
                             <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                             <input
                                 type="number"
+                                inputMode="numeric"
                                 value={daysPerMonth || ''}
                                 onChange={(e) => setDaysPerMonth(Number(e.target.value))}
                                 className="w-full bg-black/40 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white focus:border-primary/50 focus:ring-1 focus:ring-primary/50 outline-none transition-all"
@@ -79,6 +82,7 @@ export const EnergyCalculator: React.FC = () => {
                             <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500" />
                             <input
                                 type="number"
+                                inputMode="decimal"
                                 step="0.01"
                                 value={kwhPrice || ''}
                                 onChange={(e) => setKwhPrice(Number(e.target.value))}

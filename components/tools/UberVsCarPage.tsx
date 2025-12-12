@@ -186,6 +186,7 @@ export function UberVsCarPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={carValue}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setCarValue)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -197,6 +198,7 @@ export function UberVsCarPage() {
                                         <label className="text-sm text-gray-400">Km Rodados (Mês)</label>
                                         <input
                                             type="text"
+                                            inputMode="numeric"
                                             value={kmPerMonth}
                                             onChange={(e) => setKmPerMonth(e.target.value)}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -210,6 +212,7 @@ export function UberVsCarPage() {
                                         <label className="text-sm text-gray-400">Preço Combustível</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={fuelPrice}
                                             onChange={(e) => setFuelPrice(e.target.value.replace(',', '.'))}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -220,6 +223,7 @@ export function UberVsCarPage() {
                                         <label className="text-sm text-gray-400">Consumo (km/L)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={consumption}
                                             onChange={(e) => setConsumption(e.target.value.replace(',', '.'))}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -230,6 +234,7 @@ export function UberVsCarPage() {
                                         <label className="text-sm text-gray-400">Preço Uber (por km)</label>
                                         <input
                                             type="text"
+                                            inputMode="decimal"
                                             value={uberPricePerKm}
                                             onChange={(e) => setUberPricePerKm(e.target.value.replace(',', '.'))}
                                             className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -245,6 +250,7 @@ export function UberVsCarPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={insurance}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setInsurance)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"
@@ -258,6 +264,7 @@ export function UberVsCarPage() {
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">R$</span>
                                             <input
                                                 type="text"
+                                                inputMode="decimal"
                                                 value={parking}
                                                 onChange={(e) => handleCurrencyInput(e.target.value, setParking)}
                                                 className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-rose-500/50 transition-all"

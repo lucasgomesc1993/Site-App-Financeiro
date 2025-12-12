@@ -135,6 +135,7 @@ export const VacationCalculator: React.FC = () => {
                                 id="salary"
                                 aria-label="Salário Bruto"
                                 type="number"
+                                inputMode="decimal"
                                 value={salary}
                                 onChange={(e) => setSalary(Number(e.target.value))}
                                 className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-colors"
@@ -150,6 +151,7 @@ export const VacationCalculator: React.FC = () => {
                                 id="dependents"
                                 aria-label="Dependentes"
                                 type="number"
+                                inputMode="numeric"
                                 value={dependents}
                                 onChange={(e) => setDependents(Number(e.target.value))}
                                 className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-colors"

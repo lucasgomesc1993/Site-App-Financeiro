@@ -100,6 +100,7 @@ export const InvestmentSimulator: React.FC = () => {
                                         id="initial-amount"
                                         aria-label="Investimento Inicial"
                                         type="number"
+                                        inputMode="decimal"
                                         value={initialAmount}
                                         onChange={(e) => setInitialAmount(Number(e.target.value))}
                                         className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
@@ -115,6 +116,7 @@ export const InvestmentSimulator: React.FC = () => {
                                         id="monthly-contribution"
                                         aria-label="Aporte Mensal"
                                         type="number"
+                                        inputMode="decimal"
                                         value={monthlyContribution}
                                         onChange={(e) => setMonthlyContribution(Number(e.target.value))}
                                         className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
@@ -131,6 +133,7 @@ export const InvestmentSimulator: React.FC = () => {
                                             id="years"
                                             aria-label="Prazo (Anos)"
                                             type="number"
+                                            inputMode="numeric"
                                             value={years}
                                             onChange={(e) => setYears(Number(e.target.value))}
                                             className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
@@ -145,6 +148,7 @@ export const InvestmentSimulator: React.FC = () => {
                                             id="rate"
                                             aria-label="Taxa Anual (%)"
                                             type="number"
+                                            inputMode="decimal"
                                             value={rate}
                                             onChange={(e) => setRate(Number(e.target.value))}
                                             className="w-full bg-black/30 border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-primary/50 transition-colors"
