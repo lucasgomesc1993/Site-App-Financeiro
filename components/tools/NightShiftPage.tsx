@@ -426,7 +426,7 @@ export function NightShiftPage() {
                         Para garantir precisão centesimal, utilizamos a metodologia de "Engenharia da Hora Ficta".
                     </p>
 
-                    <div className="grid lg:grid-cols-2 gap-8">
+                    <div className="space-y-8">
                         <div>
                             <h3 className="text-lg font-bold text-white mb-4">1. Defina o Valor da Hora Normal Integrada</h3>
                             <p className="text-sm text-gray-300 mb-2">Antes de aplicar os 20%, você precisa saber quanto vale a hora de trabalho considerando outros adicionais fixos.</p>
@@ -442,14 +442,14 @@ export function NightShiftPage() {
                             </div>
 
                             <h3 className="text-lg font-bold text-white mb-4">3. Fórmula Final</h3>
-                            <div className="bg-white/5 p-4 rounded-xl border border-white/5 mb-6 font-mono text-sm text-blue-300">
+                            <div className="bg-white/5 p-4 rounded-xl border border-white/5 mb-2 font-mono text-sm text-blue-300">
                                 Valor Adicional = (Horas Pagáveis × Valor Hora) × 0,20
                             </div>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="grid md:grid-cols-2 gap-6">
                             {/* Exemplo 1 */}
-                            <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="bg-white/5 p-5 rounded-xl border border-white/5 h-full">
                                 <h3 className="text-md font-bold text-white mb-2">Exemplo 1: Vigilante com Periculosidade</h3>
                                 <p className="text-xs text-gray-400 mb-3">Salário R$ 2.148,22 + 30% Periculosidade. 22h às 05h (7h).</p>
                                 <ul className="space-y-1.5 text-xs text-gray-300">
@@ -464,7 +464,7 @@ export function NightShiftPage() {
                             </div>
 
                             {/* Exemplo 2 */}
-                            <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="bg-white/5 p-5 rounded-xl border border-white/5 h-full">
                                 <h3 className="text-md font-bold text-white mb-2">Exemplo 2: Recepcionista (Salário Mínimo)</h3>
                                 <p className="text-xs text-gray-400 mb-3">Piso R$ 1.518,00. Trabalha 4h noturnas.</p>
                                 <ul className="space-y-1.5 text-xs text-gray-300">
