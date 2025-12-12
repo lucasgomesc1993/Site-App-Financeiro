@@ -624,7 +624,7 @@ export function UnemploymentInsurancePage() {
                 <FAQ
                     items={UNEMPLOYMENT_FAQS}
                     title="Perguntas Frequentes sobre Seguro-Desemprego 2025"
-                    className="py-12"
+                    className="py-12 mt-16"
                     showSocialProof={false}
                 />
 
