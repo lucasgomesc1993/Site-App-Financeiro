@@ -5,6 +5,8 @@ meta_description: "Calcule agora o valor do seu Seguro-Desemprego 2025. Teto atu
 
 # Calculadora de Seguro-Desemprego 2025: Simule Valor e Parcelas
 
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
 **Resumo Rápido (Dados Oficiais Dezembro/2025):**
 
 * **Teto Máximo da Parcela:** **R$ 2.424,11** (para médias salariais acima de R$ 3.564,96).
@@ -22,8 +24,6 @@ O **Seguro-Desemprego** é um benefício temporário garantido ao trabalhador de
 O ciclo do benefício começa obrigatoriamente pela solicitação digital, que deve ser feita pelo trabalhador entre o 7º e o 120º dia corrido após a data da demissão. Todo o procedimento é realizado via aplicativo Carteira de Trabalho Digital ou portal Gov.br, onde o sistema puxa automaticamente os dados informados pelo empregador no eSocial. [cite_start]Isso elimina a necessidade de filas e papelada na maioria dos casos, tornando o acesso ao direito muito mais ágil [cite: 136, 140, 146-150].
 
 Após o envio, o requerimento entra em fase de análise processada pelos sistemas da Dataprev. Nessa etapa, um cruzamento de dados massivo verifica se você cumpre os requisitos legais (como tempo de carência e ausência de outra renda). [cite_start]Sendo aprovado, o sistema já define a quantidade de parcelas e as datas de pagamento, que serão creditadas mensalmente na conta bancária informada ou na Poupança Social Digital (Caixa Tem) [cite: 123-128, 154, 155].
-
-[INSERIR COMPONENTE DA CALCULADORA AQUI]
 
 ## Tabela Oficial do Seguro-Desemprego 2025
 

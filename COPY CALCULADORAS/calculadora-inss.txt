@@ -5,6 +5,8 @@ meta_description: "Use nossa Calculadora INSS 2025 oficial. Tabela progressiva, 
 
 # Calculadora de INSS 2025: Tabela Oficial e Desconto Atualizado (Com Dedução)
 
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
 ### Resumo Rápido: Dados Oficiais 2025
 
 A tabela do **INSS 2025** foi atualizada com o novo salário mínimo de R$ 1.518,00 e reajuste de 4,77% no teto previdenciário. Confira abaixo os valores exatos para o cálculo da sua folha de pagamento em dezembro de 2025:
@@ -18,8 +20,6 @@ A tabela do **INSS 2025** foi atualizada com o novo salário mínimo de R$ 1.518
 > **Resumo em 30 segundos:** Em 2025, o teto é R$ 8.157,41 e o desconto segue tabela progressiva. Use a **Calculadora INSS 2025** abaixo para obter o valor líquido exato com a dedução legal.
 
 O cálculo do INSS mudou com o novo salário mínimo de **R$ 1.518,00** vigente em 2025. Para trabalhadores CLT, o desconto não é mais uma porcentagem simples sobre o total, mas sim um cálculo progressivo dividido em faixas salariais. Quem recebe acima de **R$ 8.157,41** pagará o valor fixo de teto, estabelecido em **R$ 951,63**. Esta **Calculadora INSS 2025** aplica a **Portaria Interministerial MPS/MF nº 6** para entregar o valor exato a ser descontado do seu holerite ou pró-labore.
-
-[INSERIR COMPONENTE DA CALCULADORA AQUI]
 
 ## Tabela INSS 2025 Oficial (Com Parcela a Deduzir)
 

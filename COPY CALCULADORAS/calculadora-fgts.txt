@@ -1,131 +1,135 @@
-1. META DADOS
+---
+Meta Title: Calculadora FGTS 2025: Saldo, Multa 40% e Prazo MP 1.290
+Meta Description: Simule seu FGTS com o novo mínimo (R$ 1.518). Calcule a multa de 40% exata, consulte o teto de R$ 8.157 e entenda o fim do prazo da MP 1.290.
+---
 
-- **Meta Title:** Calculadora FGTS 2025: Saldo, Multa 40% e Status MP 1.290
-- **Meta Description:** Use nossa Calculadora FGTS atualizada (Dez/2025). Simule Saldo com JAM, Multa de 40% e veja regras de empréstimo (Res. 1.130) após o fim da MP 1.290.
-
-2. CONTEÚDO DA PÁGINA
-
-# Calculadora FGTS 2025: Saldo, Multa 40% e Status MP 1.290
+# Calculadora de FGTS 2025: Simule Saldo, Multa de 40% e Histórico da MP 1.290
 
 [INSERIR COMPONENTE DA CALCULADORA AQUI]
 
-## Resumo Rápido: Regras Vigentes (Dezembro 2025)
+Em dezembro de 2025, o cenário do FGTS exige atenção redobrada do trabalhador. Enquanto o salário mínimo e o teto do INSS foram reajustados, impactando os depósitos mensais, a janela de oportunidade para saques extraordinários da MP 1.290 se fechou. Esta calculadora atualizada permite simular rescisões com precisão, considerando as novas bases salariais e a distribuição de lucros.
 
-* **Status MP 1.290 (Expirada):** A Medida Provisória perdeu validade em 27/06/2025. O desbloqueio não está mais ativo.
-* **Teto de Empréstimo (Res. 1.130):** Continua valendo o limite de **R$ 500,00** por parcela anual antecipada.
-* **Rentabilidade Real:** Cálculo inclui JAM (3% + TR) e Distribuição de Lucros (índice 0,0204 sobre saldo de 2024).
-* **Base de Cálculo:** Incide sobre horas extras, adicionais e comissões, não apenas o salário base.
-* **Multa de 40%:** Calculada sobre o saldo histórico (tudo que a empresa depositou), mesmo que você tenha sacado.
+**Resumo dos Dados Oficiais (Dezembro/2025):**
 
-## Resumo em 30 Segundos
-**O cenário mudou.** A **MP 1.290**, que permitia o desbloqueio retroativo, **perdeu sua validade** em junho de 2025 e não foi convertida em lei a tempo. Portanto, as regras antigas de retenção do Saque-Aniversário voltam a vigorar para novas demissões. O destaque atual é a **Resolução 1.130**, que segue ativa limitando a farra dos empréstimos: o teto é de **R$ 500,00** por parcela antecipada, com carência de 90 dias. Nossa **Calculadora FGTS** já aplica essas novas regras, além de corrigir o saldo com **JAM** e **Distribuição de Lucros** para um resultado exato e seguro.
+* **Salário Mínimo:** **R$ 1.518,00** (Base para cálculo de piso).
+* **Teto do INSS:** **R$ 8.157,41** (Limite para base de cálculo de depósito).
+* **Alíquota Padrão:** 8% sobre a remuneração bruta.
+* **Rentabilidade Real:** 3% a.a. + TR + Distribuição de Lucros (R$ 12,9 bi distribuídos em 2024).
+* **MP 1.290/2025:** Janela de saque extraordinário **ENCERRADA** em 27/06/2025.
+* **Travas de Antecipação (Res. 1.130):** Novos optantes têm carência de 90 dias para empréstimos.
 
-### Histórico da MP 1.290 (Vigência Encerrada)
+## ⚡ Resumo em 30 Segundos
+O valor do Salário Mínimo subiu para **R$ 1.518,00**, elevando o depósito mensal mínimo. Atenção: O prazo para saque do saldo retido via MP 1.290 **encerrou em 27/06/2025**. Quem não sacou, deve aguardar nova legislação. O foco agora é garantir que a multa de 40% seja calculada sobre o histórico total (incluindo expurgos), e não apenas sobre o saldo atual.
 
-A Medida Provisória nº 1.290 vigorou temporariamente no primeiro semestre. Trabalhadores demitidos entre 2020 e 2025 puderam sacar valores retidos nas seguintes datas passadas. **Atenção:** Se você não realizou o saque durante a vigência, o saldo retornou à condição de bloqueio.
+## Tabela Oficial: Status da MP 1.290 (Histórico)
 
-| Fase | Data (Ocorrida) | Público-Alvo | Status Atual |
-| :--- | :--- | :--- | :--- |
-| **1ª Etapa** | 06/03/2025 | Todos os elegíveis (demitidos 2020-2025) | **Encerrado** |
-| **2ª Etapa** | 17/06/2025 | Trabalhadores com saldo remanescente | **Encerrado** |
+A Medida Provisória 1.290 permitiu temporariamente o saque de valores retidos no Saque-Aniversário. Confira o status atual:
 
-> **Fonte Oficial:** Dados baseados na vigência da [Medida Provisória nº 1.290/2025](https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Mpv/mpv1290.htm) (não convertida em Lei).
+| Faixa de Valor | Janela de Pagamento | Status Atual (Dez/2025) |
+| :--- | :--- | :--- |
+| Valores até R$ 3.000,00 | Março a Junho/2025 | **Encerrado** |
+| Valores acima de R$ 3.000,00 | Abril a Junho/2025 | **Encerrado** |
+| **Multa de 40%** | D+10 da Rescisão | **Ativo** (Regra Padrão) |
+
+> **Fonte Oficial:** Dados baseados no histórico da [Medida Provisória nº 1.290/2025](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/Mpv/mpv1290.htm) e cronogramas operacionais da [CAIXA](https://www.caixa.gov.br/beneficios-trabalhador/fgts/saque-mp-1290-25/Paginas/default.aspx).
 
 ---
 
-## Erros Comuns ao Calcular o FGTS
+## Como Funciona o Cálculo do FGTS em 2025
 
-A maioria das discrepâncias entre o resultado de uma **Calculadora FGTS** online e o extrato real da conta vinculada ocorre por dois motivos principais que você deve evitar:
+O Fundo de Garantia do Tempo de Serviço (FGTS) em 2025 opera sob uma lógica de acumulação composta. Não se trata apenas de depositar 8% do salário. Para chegar ao valor real, é necessário considerar a remuneração global e os índices de [correção monetária](/calculadoras/correcao-monetaria) que agora superam a poupança.
 
-1.  **Usar apenas o Salário Base:** A [Lei 8.036](https://www.planalto.gov.br/ccivil_03/leis/l8036consol.htm) determina que o depósito de 8% incide sobre a **remuneração mensal**. Isso significa que se você faz horas extras, recebe adicional noturno, insalubridade ou comissões, o valor do depósito deve ser maior. Por isso, uma ferramenta precisa solicitar mais dados que apenas o salário bruto para ser precisa.
-2.  **Multa sobre Saldo Atual:** Este é o erro mais grave na rescisão. A multa de 40% é calculada sobre o **Saldo para Fins Rescisórios**. Se você sacou parte do dinheiro para comprar um imóvel ou usou o Saque-Aniversário, a multa continua incidindo sobre o total histórico que a empresa depositou, não sobre o que sobrou na conta.
+### Base de Cálculo Composta
+O depósito mensal incide sobre a **remuneração bruta**, respeitando o teto de contribuição previdenciária de **R$ 8.157,41** (para fins de encargos correlatos) e incidindo integralmente sobre verbas salariais. Devem ser somados:
+* Horas extras e adicionais (noturno, insalubridade, periculosidade).
+* Comissões e gratificações habituais.
+* 13º Salário.
+* Aviso prévio indenizado (conforme Súmula 305 do TST).
 
-Para uma análise completa de verbas demissionais, recomendamos cruzar os dados com nossa [calculadora de rescisão](https://junny.com.br/calculadoras/rescisao), que considera férias e 13º proporcional.
+Se você precisa validar o valor líquido final da sua folha de pagamento, recomendamos cruzar os dados com nossa [calculadora de salário líquido](/calculadoras/salario-liquido).
 
-## Como Funciona a Rentabilidade (O "Turbo" do Lucro)
+### Rentabilidade e Distribuição de Lucros
+Um diferencial crítico em 2025 é a rentabilidade. O fundo rende Taxa Referencial (TR) + 3% ao ano. Além disso, existe a **Distribuição de Resultados**. Em 2024, o Conselho Curador aprovou a distribuição de **R$ 12,9 bilhões** (referentes ao lucro de 2023), aplicando um índice de 0,02042919 sobre o saldo. Isso significa que o dinheiro "parado" no fundo está rendendo acima da inflação em muitos cenários.
 
-O seu dinheiro no FGTS não fica parado. Ele rende mensalmente através do JAM (Juros e Atualização Monetária) e recebe um aporte anual extra.
+## O Fim do Prazo da MP 1.290 e Travas Atuais
 
-* **Juros Fixos:** 3% ao ano para a maioria dos contratos.
-* **Correção Monetária (TR):** Aplicada mensalmente no dia 10.
-* **Distribuição de Resultados:** Desde 2017, o Conselho Curador divide o lucro do fundo com os trabalhadores. Em 2025 (referente a 2024), o índice multiplicador foi de **0,02042919**. Isso garante que a rentabilidade real supere a inflação, diferentemente do que ocorria no passado.
+É crucial alinhar expectativas: a janela de saque extraordinário para demitidos no Saque-Aniversário, aberta pela MP 1.290, **já se fechou**.
+
+### 1. Prazo Encerrado (MP 1.290)
+A MP permitiu saques apenas até **27 de junho de 2025**. Trabalhadores que perderam este prazo não conseguem mais realizar o levantamento do saldo retido com base nesta legislação específica, devendo aguardar o calendário normal do Saque-Aniversário ou nova alteração legislativa.
+
+### 2. Travas de Segurança em Empréstimos (Res. 1.130)
+Para proteger o patrimônio do trabalhador, a [Resolução CCFGTS nº 1.130/2025](https://www.in.gov.br/web/dou/-/resolucao-ccfgts-n-1130-de-07-de-outubro-2025) impôs limites. Quem aderir ao Saque-Aniversário a partir de novembro de 2025 terá que aguardar uma **carência de 90 dias** para contratar qualquer antecipação. Além disso, há um limite de **uma contratação por ano**, com parcelas mínimas de R$ 100,00.
+
+## Erros Comuns ao Calcular a Multa de 40%
+
+O erro mais frequente, responsável por prejuízos milionários aos trabalhadores, é calcular a multa de 40% sobre o **Saldo Atual**.
+
+**A regra correta:** A multa de 40% incide sobre o **total de depósitos realizados** durante a vigência do contrato, devidamente corrigidos.
+
+* **Cenário de Erro:** Você tinha R$ 50.000,00 depositados. Fez um saque-aniversário de R$ 20.000,00. Seu saldo atual é R$ 30.000,00.
+* **Cálculo Errado:** 40% de R$ 30.000 = **R$ 12.000,00**.
+* **Cálculo Certo:** 40% de R$ 50.000 (base histórica) = **R$ 20.000,00**.
+
+Se o cálculo da sua multa estiver incorreto, isso afetará diretamente o valor total da sua verba rescisória. Utilize nossa ferramenta de [rescisão de contrato](/calculadoras/rescisao) para uma auditoria completa dos valores devidos.
 
 ## Como Calcular (Passo a Passo)
 
-Para chegar ao valor exato, utilizamos a seguinte lógica financeira atualizada para Dezembro de 2025:
+Para quem prefere entender a matemática por trás dos números, o processo é dividido em acumulação e penalidade.
 
-### 1. A Fórmula do Depósito Mensal
-O valor que a empresa deve depositar até o dia 20 de cada mês (via Pix no FGTS Digital) é:
+### Método Rápido (Estimativa Mensal)
+Para saber quanto sua empresa deve depositar este mês:
 
-$$D_m = (Sal\acute{a}rio + H.Extras + Adicionais + Comiss\tilde{o}es) \times 0,08$$
+$$Salário~Bruto \times 0,08 = Depósito~Mensal$$
 
-*Nota: Para contratos de Aprendizagem, a alíquota é de 2%.*
+### Cenário 1: Salário Médio e Tempo de Casa
+Trabalhador com 3 anos de casa, salário médio de R$ 4.000,00, demitido sem justa causa em Dezembro de 2025.
 
-### 2. A Evolução do Saldo (Juros Compostos)
-Diferente de uma conta simples, o saldo anterior é corrigido antes de somar o novo depósito. Embora nossa **Calculadora FGTS** faça isso automaticamente, a fórmula utilizada é:
+1.  **Total de Depósitos:** R$ 4.000 × 8% = R$ 320/mês.
+2.  **Acumulado (36 meses):** R$ 320 × 36 = R$ 11.520,00 (valor nominal sem juros).
+3.  **Correção (JAM + Lucros):** Supondo um saldo corrigido de **R$ 12.800,00**.
+4.  **Multa de 40%:** R$ 12.800 × 0,40 = **R$ 5.120,00**.
+5.  **Total a Receber (Saque-Rescisão):** R$ 12.800 + R$ 5.120 = **R$ 17.920,00**.
 
-$$Saldo_{atual} = Saldo_{anterior} \times (1 + TR + 0,002466) + Dep\acute{o}sito_{m\hat{e}s}$$
+### Cenário 2: Novo Salário Mínimo 2025
+Trabalhador recebendo o Piso Nacional atualizado (**R$ 1.518,00**) por 1 ano de trabalho.
 
-### 3. Exemplos Práticos
-
-**Exemplo 1 (Salário Médio):**
-Imagine um trabalhador com remuneração de **R$ 3.000,00**:
-* **Depósito Mensal:** R$ 3.000 × 0,08 = **R$ 240,00**.
-* **Após 12 meses (estimado sem TR):** R$ 2.880,00 (apenas depósitos).
-* **Com Juros e Distribuição de Lucros:** O saldo real saltaria para aproximadamente **R$ 3.050,00** devido à incidência de juros sobre juros e o crédito da distribuição de resultados ao final do período.
-
-**Exemplo 2 (Teto do INSS 2025):**
-Para um trabalhador com remuneração de **R$ 8.157,41** (Teto oficial conforme Portaria MPS/MF nº 6):
-* **Depósito Mensal:** R$ 8.157,41 × 0,08 = **R$ 652,59**.
-* **Observação Importante:** Diferente do INSS, o FGTS **não possui teto** de contribuição. Ao usar a ferramenta para salários acima desse valor (ex: R$ 20.000,00), o sistema aplicará 8% sobre o total (R$ 1.600,00) sem cortes.
-
-Se você precisa comparar o impacto desses descontos no seu bolso mensalmente, utilize nossa ferramenta de [salário líquido](https://junny.com.br/calculadoras/salario-liquido).
-
-## Quem é impactado pelas Novas Regras de 2025?
-
-As mudanças do segundo semestre e o fim da vigência da MP trazem impactos distintos:
-
-* **Demitidos Recentemente:** Com a expiração da MP 1.290 em junho, quem optou pelo Saque-Aniversário e for demitido agora em dezembro volta a receber **apenas a multa de 40%**, ficando com o saldo retido.
-* **Quem busca Empréstimo:** A [Resolução 1.130](https://www.in.gov.br/web/dou/-/resolucao-ccfgts-n-1.130-de-7-de-outubro-de-2025) impôs um teto. Agora, o valor máximo de cada parcela anual antecipada é **R$ 500,00**, e há uma carência de 90 dias após a adesão para tomar crédito.
-* **Empregadores Domésticos:** O recolhimento agora é via DAE no eSocial com alíquota total de 11,2% (8% depósito + 3,2% reserva indenizatória).
+1.  **Depósito Mensal:** R$ 1.518 × 8% = **R$ 121,44**.
+2.  **Acumulado (12 meses):** R$ 121,44 × 12 = **R$ 1.457,28**.
+3.  **Correção estimada:** Com juros e TR, o saldo aproxima-se de **R$ 1.485,00**.
+4.  **Multa de 40%:** R$ 1.485 × 0,40 = **R$ 594,00**.
+5.  **Total a Sacar:** R$ 1.485 + R$ 594 = **R$ 2.079,00**.
 
 ## Casos Especiais
 
-### Rescisão por Acordo (Comum Acordo)
-Nesta modalidade, criada pela Reforma Trabalhista, a multa do FGTS cai pela metade (20%) e o trabalhador pode sacar apenas **80% do saldo** da conta. Os 20% restantes ficam retidos, mas continuam rendendo. Nossa **Calculadora FGTS** ajusta automaticamente esses valores ao selecionar "Motivo: Acordo".
+### Pedido de Demissão
+Ao pedir demissão, o trabalhador **não tem direito** ao saque do saldo acumulado nem à multa de 40%. O valor permanece na conta rendendo juros e correção monetária, podendo ser sacado apenas em situações específicas (aposentadoria, compra da casa própria ou inatividade por 3 anos). Para planejar sua saída, verifique suas [férias proporcionais](/calculadoras/ferias) e outros haveres.
 
-### Antecipação de Saque-Aniversário (Empréstimo Ativo)
-Atenção: A legislação **não perdoa dívidas**. Se o seu saldo do FGTS foi dado como garantia em um empréstimo bancário, ele continua bloqueado até a quitação do contrato. Antes de contratar novos créditos, verifique o impacto no seu orçamento com a [calculadora de juros compostos](https://junny.com.br/calculadoras/juros-compostos).
+### Acordo (Culpa Recíproca ou Comum)
+Quando há um acordo formal entre empresa e empregado ou culpa recíproca, a multa do FGTS cai de 40% para **20%**. Além disso, o trabalhador só pode movimentar **80% do saldo** da conta vinculada.
 
 ### Aposentados que Continuam Trabalhando
-Quem se aposenta mas mantém o vínculo empregatício pode sacar o FGTS mensalmente. Se mudar de emprego, volta à regra geral de saque apenas na demissão. A multa de 40% na demissão, contudo, deve considerar **todos os depósitos** feitos durante o contrato, inclusive os que foram sacados mensalmente.
+Aposentados podem sacar o FGTS mensalmente ou manter o valor rendendo. Se forem demitidos sem justa causa, mantêm o direito à multa de 40% sobre os depósitos feitos durante o contrato vigente, mesmo que já tenham sacado os valores mensais.
 
-Para mais detalhes sobre as regras gerais do fundo, consulte nosso [guia completo sobre FGTS](https://junny.com.br/blog/fgts).
+### Uso para Casa Própria
+O saldo pode ser utilizado para amortizar financiamento habitacional. Nesse caso, o valor sai da conta, mas **continua contando para a base de cálculo da multa de 40%** em caso de demissão futura. Antes de usar o saldo, simule as parcelas do seu imóvel em nossa calculadora de [financiamento imobiliário](/calculadoras/financiamento-imobiliario).
 
----
+## Perguntas Frequentes sobre FGTS
 
-## Perguntas Frequentes sobre Calculadora FGTS
+### Ainda consigo sacar pela MP 1.290 em Dezembro/2025?
+Não. O prazo para adesão e saque extraordinário previsto na MP 1.290 encerrou-se em **27 de junho de 2025**. Atualmente, valem as regras normais de Saque-Aniversário (apenas uma vez ao ano) ou Saque-Rescisão (apenas se optante dessa modalidade).
 
-### A calculadora considera a MP 1.290?
-A **Calculadora FGTS** alerta que a MP perdeu validade em 27/06/2025 e não foi convertida em lei. Portanto, para simulações atuais de demissão, o sistema aplica a regra padrão: se você é optante do Saque-Aniversário, o saldo permanece retido, liberando apenas o saque da multa rescisória de 40%.
+### O aviso prévio indenizado conta para o FGTS?
+Sim. A [Súmula 305 do TST](https://www.tst.jus.br/sumulas) garante que o aviso prévio, mesmo que indenizado (não trabalhado), integra o tempo de serviço para todos os efeitos legais, exigindo o depósito de 8% sobre este valor e sua inclusão na base da multa de 40%.
 
-### Qual é o valor máximo que posso antecipar com a nova regra?
-Com a Resolução 1.130 (vigente desde nov/2025), a parcela anual antecipada não pode exceder **R$ 500,00**. O número de parcelas foi limitado a 5 até out/2026. Isso visa combater o superendividamento, impedindo que o trabalhador comprometa todo o seu fundo de garantia com empréstimos de longo prazo.
+### Posso antecipar o saque-aniversário assim que contratar?
+Não mais. Para novos optantes a partir de novembro de 2025, a Resolução 1.130 impõe uma carência de **90 dias** entre a adesão à modalidade e a primeira operação de crédito (empréstimo), visando proteger a sustentabilidade do fundo.
 
-### A multa de 40% é sobre o saldo atual ou total?
-A multa é sempre calculada sobre o **saldo histórico** (chamado tecnicamente de "saldo para fins rescisórios"). Mesmo que seu saldo atual seja zero devido a saques anteriores para compra de imóvel ou Saque-Aniversário, a empresa deve pagar 40% sobre a soma de tudo o que ela depositou ao longo do contrato.
+### Como saber se a empresa está depositando meu FGTS?
+Com a implementação do **FGTS Digital**, a consulta ficou mais fácil. Acesse o aplicativo oficial do FGTS ou o portal Gov.br. A identificação agora é feita exclusivamente pelo CPF, eliminando a necessidade do número PIS. Se houver falhas, denuncie através da Carteira de Trabalho Digital.
 
-### Onde vejo o "Saldo para Fins Rescisórios"?
-Você pode consultar esse valor exato no aplicativo oficial do FGTS ou no portal do **FGTS Digital**. Ele aparece em uma linha separada do saldo disponível. É essencial usar este número na **Calculadora FGTS** para garantir que a simulação da multa rescisória corresponda exatamente ao valor devido pela empresa.
+### Qual o valor máximo que posso receber de FGTS?
+Não existe um "teto" para o saldo ou recebimento do FGTS, pois ele é proporcional ao salário e tempo de serviço. No entanto, o depósito mensal é limitado pelo Teto do INSS (**R$ 8.157,41** em 2025). Assim, o depósito máximo mensal por vínculo é aprox. R$ 652,59 (8% do teto).
 
-### O FGTS incide sobre o aviso prévio indenizado?
-Sim. Conforme a Súmula 305 do TST, o valor pago a título de aviso prévio indenizado sofre incidência obrigatória de 8% de FGTS. Esse valor deve ser recolhido na guia rescisória pelo empregador e compõe a base de cálculo para a multa de 40%, aumentando o montante final a receber.
-
-### O que acontece se a empresa não depositou o FGTS?
-Você pode verificar a ausência de depósitos diretamente pelo aplicativo, que agora notifica falhas em tempo real graças ao FGTS Digital. A empresa é obrigada a regularizar os pagamentos atrasados com juros e correção monetária. Em caso de demissão sem esses depósitos, utilize nossa [calculadora de seguro-desemprego](https://junny.com.br/calculadoras/seguro-desemprego) para planejamento.
-
----
-> **Referências Normativas:**
-> * [Medida Provisória nº 1.290, de 28 de Fevereiro de 2025](https://www.planalto.gov.br/ccivil_03/_Ato2023-2026/2025/Mpv/mpv1290.htm) (Vigência Encerrada)
-> * [Resolução CCFGTS nº 1.130, de 07 de Outubro de 2025](https://www.in.gov.br/web/dou/-/resolucao-ccfgts-n-1.130-de-7-de-outubro-de-2025)
-> * [Lei nº 8.036/1990 (Dispõe sobre o FGTS)](https://www.planalto.gov.br/ccivil_03/leis/l8036consol.htm)
+### A distribuição de lucros cai na conta de quem já sacou?
+A distribuição de lucros é proporcional ao saldo existente na conta em **31 de dezembro do ano anterior**. Se você sacou tudo antes dessa data, não receberá a distribuição referente àquele ano. Se havia saldo na data-base, o crédito é feito proporcionalmente, mesmo que a conta esteja inativa hoje.
