@@ -100,7 +100,32 @@ export function BusinessDaysPage() {
             const dateString = current.toISOString().split('T')[0];
 
             // Check for holiday
-            const holiday = NATIONAL_HOLIDAYS_2025.find(h => h.date === dateString);
+            // Check for holiday
+            let holiday = NATIONAL_HOLIDAYS_2025.find(h => h.date === dateString);
+
+            // Basic Regional Holiday Logic
+            if (!holiday && state === 'SP') {
+                if (current.getMonth() === 6 && current.getDate() === 9) { // 9 de Julho
+                    holiday = { date: dateString, name: 'Revolução Constitucionalista (SP)', type: 'Feriado Estadual' };
+                }
+                if (city === 'Capital' && current.getMonth() === 0 && current.getDate() === 25) { // 25 de Janeiro
+                    holiday = { date: dateString, name: 'Aniversário de São Paulo', type: 'Feriado Municipal' };
+                }
+                if (city === 'Capital' && current.getMonth() === 10 && current.getDate() === 20) {
+                    // 20 Nov is National now, handled above. Check for others?
+                }
+            }
+            if (!holiday && state === 'RJ') {
+                if (current.getMonth() === 3 && current.getDate() === 23) { // 23 de Abril
+                    holiday = { date: dateString, name: 'Dia de São Jorge (RJ)', type: 'Feriado Estadual' };
+                }
+                if (current.getMonth() === 10 && current.getDate() === 20) {
+                    // Zumbi is now National
+                }
+                if (city === 'Capital' && current.getMonth() === 0 && current.getDate() === 20) { // 20 de Janeiro
+                    holiday = { date: dateString, name: 'Dia de São Sebastião', type: 'Feriado Municipal' };
+                }
+            }
 
             if (holiday) {
                 // It's a holiday (or optional point)
@@ -279,18 +304,18 @@ export function BusinessDaysPage() {
                                         <label className="text-sm text-gray-400">Estado</label>
                                         <div className="relative">
                                             <select
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
+                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-4 pr-10 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
                                                 value={state}
                                                 onChange={(e) => setState(e.target.value)}
                                             >
-                                                <option value="">Selecione o Estado</option>
-                                                <option value="SP">São Paulo</option>
-                                                <option value="RJ">Rio de Janeiro</option>
-                                                <option value="MG">Minas Gerais</option>
-                                                <option value="RS">Rio Grande do Sul</option>
-                                                <option value="BA">Bahia</option>
-                                                <option value="PR">Paraná</option>
-                                                {/* Add more as needed */}
+                                                <option value="" className="bg-[#1a1a1a]">Selecione o Estado</option>
+                                                <option value="SP" className="bg-[#1a1a1a]">São Paulo</option>
+                                                <option value="RJ" className="bg-[#1a1a1a]">Rio de Janeiro</option>
+                                                <option value="MG" className="bg-[#1a1a1a]">Minas Gerais</option>
+                                                <option value="RS" className="bg-[#1a1a1a]">Rio Grande do Sul</option>
+                                                <option value="BA" className="bg-[#1a1a1a]">Bahia</option>
+                                                <option value="PR" className="bg-[#1a1a1a]">Paraná</option>
+                                                <option value="DF" className="bg-[#1a1a1a]">Distrito Federal</option>
                                             </select>
                                             <MapPin className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
@@ -299,14 +324,14 @@ export function BusinessDaysPage() {
                                         <label className="text-sm text-gray-400">Cidade</label>
                                         <div className="relative">
                                             <select
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
+                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-4 pr-10 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                                                 value={city}
                                                 onChange={(e) => setCity(e.target.value)}
                                                 disabled={!state}
                                             >
-                                                <option value="">{state ? "Selecione a Cidade (Opcional)" : "Selecione o Estado Primeiro"}</option>
-                                                <option value="Capital">Capital</option>
-                                                <option value="Interior">Interior</option>
+                                                <option value="" className="bg-[#1a1a1a]">{state ? "Selecione a Cidade (Opcional)" : "Selecione o Estado Primeiro"}</option>
+                                                <option value="Capital" className="bg-[#1a1a1a]">Capital</option>
+                                                <option value="Interior" className="bg-[#1a1a1a]">Interior</option>
                                             </select>
                                             <MapPin className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
