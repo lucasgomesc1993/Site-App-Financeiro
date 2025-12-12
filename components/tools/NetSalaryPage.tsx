@@ -22,7 +22,7 @@ const NET_SALARY_FAQS: FAQItem[] = [
     },
     {
         question: "Como calcular horas extras no salário líquido?",
-        answer: "As horas extras entram como remuneração. Você deve somar o valor das extras ao salário bruto antes de aplicar os descontos."
+        answer: "As horas extras entram como remuneração. Você deve somar o valor das extras ao salário bruto <em>antes</em> de aplicar os descontos. Isso costuma aumentar a base de cálculo e a alíquota de imposto de renda. Para evitar erros no holerite, use nossa <a href='/calculadoras/horas-extras'>Calculadora de Horas Extras</a> para encontrar o valor exato a somar."
     },
     {
         question: "Estagiário tem desconto de INSS?",
@@ -433,7 +433,7 @@ export function NetSalaryPage() {
                                 </table>
                             </div>
                             <p className="text-sm text-gray-500 mt-2">
-                                Fonte: Portaria Interministerial MPS/MF nº 6
+                                Fonte: <a href="https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">Portaria Interministerial MPS/MF nº 6</a>
                             </p>
                         </div>
 
@@ -481,7 +481,7 @@ export function NetSalaryPage() {
                                 </table>
                             </div>
                             <p className="text-sm text-gray-500 mt-2">
-                                * Dedução por dependente: R$ 189,59 | Fonte: Lei nº 15.191/2025
+                                * Dedução por dependente: R$ 189,59 | Fonte: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15191.htm" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">Lei nº 15.191/2025</a>
                             </p>
                         </div>
                     </div>
@@ -529,7 +529,7 @@ export function NetSalaryPage() {
                             </div>
                             <div className="bg-white/5 p-4 rounded-xl">
                                 <strong className="text-white block mb-2">2. Desconto Simplificado</strong>
-                                <p className="text-sm text-gray-400">Subtrai-se fixo R$ 607,20 direto da base (Instrução Normativa RFB nº 2.174).</p>
+                                <p className="text-sm text-gray-400">Subtrai-se fixo R$ 607,20 direto da base (<a href="http://normas.receita.fazenda.gov.br/sijut2consulta/consulta.action?termoBusca=Instru%E7%E3o+Normativa+RFB+n%BA+2.174" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">Instrução Normativa RFB nº 2.174</a>).</p>
                             </div>
                         </div>
                         <p className="text-gray-400 text-sm">
@@ -562,6 +562,9 @@ export function NetSalaryPage() {
                                         <span>INSS (14%)</span>
                                         <span className="text-red-400">- R$ 509,60</span>
                                     </div>
+                                    <p className="text-xs text-gray-500 italic">
+                                        Este é o valor descontado para a Previdência. Para conferir apenas este imposto, use nossa <Link to="/calculadoras/inss" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de INSS</Link>.
+                                    </p>
                                     <div className="flex justify-between border-b border-white/5 pb-2">
                                         <span>Base Legal</span>
                                         <span>R$ 4.490,40</span>
@@ -621,7 +624,7 @@ export function NetSalaryPage() {
                         <ul className="list-disc pl-5 space-y-2">
                             <li><strong className="text-white">Trabalhadores CLT:</strong> Para conferir se o RH realizou os descontos corretamente.</li>
                             <li><strong className="text-white">Candidatos a Vagas:</strong> Para negociar pretensão salarial sabendo o valor real.</li>
-                            <li><strong className="text-white">Prestadores de Serviço:</strong> Para comparar se vale a pena CLT vs PJ.</li>
+                            <li><strong className="text-white">Prestadores de Serviço:</strong> Para comparar se vale a pena CLT vs PJ, utilizando nossa ferramenta de <Link to="/calculadoras/clt-vs-pj" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">comparação CLT vs PJ</Link>.</li>
                         </ul>
                     </div>
 
@@ -677,7 +680,7 @@ export function NetSalaryPage() {
                 />
 
                 <AppPromoBanner />
-            </div>
-        </section>
+            </div >
+        </section >
     );
 }

@@ -22,7 +22,7 @@ const TERMINATION_FAQS: FAQItem[] = [
     },
     {
         question: "Como funciona o desconto do Imposto de Renda na rescisão?",
-        answer: "O IRRF incide apenas sobre verbas de natureza salarial (saldo de salário, 13º). Verbas indenizatórias — como aviso prévio indenizado, férias indenizadas e multa do FGTS — são totalmente isentas de IRRF."
+        answer: "O IRRF incide apenas sobre verbas de natureza salarial (saldo de salário, 13º). Verbas indenizatórias — como aviso prévio indenizado, férias indenizadas e multa do FGTS — são <strong>totalmente isentas</strong> de IRRF. É fundamental verificar a base de cálculo para não pagar imposto indevido. Verifique o impacto com a <a href='/calculadoras/salario-liquido'>calculadora de salário líquido</a>."
     },
     {
         question: "O novo salário mínimo de R$ 1.518 afeta minha rescisão?",
@@ -30,7 +30,7 @@ const TERMINATION_FAQS: FAQItem[] = [
     },
     {
         question: "Tenho direito a férias proporcionais se tiver faltas?",
-        answer: "As faltas injustificadas impactam o período aquisitivo. Até 5 faltas, o direito se mantém integral (30 dias). Entre 6 e 14 faltas, cai para 24 dias. Mais de 32 faltas injustificadas retiram o direito às férias."
+        answer: "As faltas injustificadas impactam o período aquisitivo. Até 5 faltas, o direito se mantém integral (30 dias). Entre 6 e 14 faltas, cai para 24 dias. Mais de 32 faltas injustificadas retiram o direito às férias. Consulte a <a href='/calculadoras/ferias'>calculadora de férias</a>."
     },
     {
         question: "Como calcular a rescisão por falecimento?",
@@ -597,9 +597,14 @@ export function TerminationPage() {
                                     </tbody>
                                 </table>
                             </div>
+                            <div className="mt-4 text-xs text-gray-500 space-y-2">
+                                <p><strong>Fonte Oficial:</strong> Dados baseados na <a href="https://www.gov.br/inss/pt-br/noticias/confira-como-ficaram-as-aliquotas-de-contribuicao-ao-inss" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Portaria Interministerial MPS/MF nº 6/2025</a>.</p>
+                                <p><strong>Entenda a Progressividade:</strong> Desde a reforma da previdência, o cálculo do INSS é <strong>progressivo por faixas</strong>. Isso significa que a alíquota não incide cheia sobre o total. Quem ganha R$ 4.000,00, por exemplo, não paga 14% sobre tudo, mas sim taxas fatiadas sobre cada pedaço do salário que se encaixa nas faixas acima, resultando em um desconto menor do que no modelo antigo.</p>
+                            </div>
                         </div>
                         <div>
-                            <h3 className="text-lg font-bold text-white mb-4">Tabela IRRF (2025)</h3>
+                            <h3 className="text-lg font-bold text-white mb-2">Tabela IRRF (2025)</h3>
+                            <p className="text-xs text-gray-400 mb-4">A partir de maio de 2025, aplica-se o desconto simplificado de <strong>R$ 607,20</strong> caso seja mais vantajoso que as deduções legais.</p>
                             <div className="overflow-x-auto rounded-xl border border-white/10">
                                 <table className="w-full text-sm text-left">
                                     <thead className="bg-white/5 text-gray-300">
@@ -618,7 +623,10 @@ export function TerminationPage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-xs text-gray-400 mt-2">*Dedução por dependente: R$ 189,59.</p>
+                            <div className="mt-2 text-xs text-gray-500 space-y-1">
+                                <p>*Dedução por dependente: R$ 189,59.</p>
+                                <p><strong>Fonte Oficial:</strong> Tabela vigente conforme <a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2025" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Receita Federal do Brasil</a>.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -670,7 +678,7 @@ export function TerminationPage() {
                                 </li>
                                 <li className="flex gap-2">
                                     <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
-                                    <span><strong>Aviso Prévio (Lei 12.506/11):</strong> Se indenizado, 30 dias + 3 dias por ano (limite 90 dias).</span>
+                                    <span><strong>Aviso Prévio (Lei 12.506/11):</strong> Se indenizado, 30 dias + 3 dias por ano (limite 90 dias). Consulte a lei na íntegra no <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12506.htm" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Planalto</a>.</span>
                                 </li>
                                 <li className="flex gap-2">
                                     <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
@@ -729,7 +737,7 @@ export function TerminationPage() {
                             </p>
                             <div className="text-xs text-blue-400 flex items-center gap-1">
                                 <CheckCircle className="w-3 h-3" />
-                                <span>Direito ao Seguro-Desemprego</span>
+                                <span>Direito ao <Link to="/calculadoras/seguro-desemprego" className="underline hover:text-blue-300">Seguro-Desemprego</Link></span>
                             </div>
                         </div>
 
@@ -752,7 +760,7 @@ export function TerminationPage() {
                             <ul className="text-xs text-gray-400 space-y-1 ml-1">
                                 <li>• Aviso Prévio Indenizado: 50%</li>
                                 <li>• Multa FGTS: 20%</li>
-                                <li>• Saque FGTS: Até 80% do saldo</li>
+                                <li>• Saque FGTS: Até 80% do saldo (<Link to="/calculadoras/fgts" className="text-blue-400 hover:underline">calculadora de FGTS</Link>)</li>
                             </ul>
                         </div>
 
