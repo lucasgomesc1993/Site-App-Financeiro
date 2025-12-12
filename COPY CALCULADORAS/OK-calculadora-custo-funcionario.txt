@@ -1,0 +1,152 @@
+<meta name="title" content="Calculadora de Custo de Funcionário 2025: Cálculo Real (CLT)">
+<meta name="description" content="Use nossa Calculadora de Custo de Funcionário 2025 para simular CLT vs PJ. Descubra encargos, reoneração da folha e provisões com dados oficiais.">
+
+# Calculadora de Custo de Funcionário 2025
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+### Resumo Rápido (Dados Oficiais Dezembro/2025)
+* **Salário Mínimo Nacional:** R$ 1.518,00.
+* [cite_start]**Reoneração da Folha:** Setores desonerados pagam **5% de INSS** sobre a folha em 2025[cite: 191].
+* [cite_start]**Encargos Básicos (Lucro Real/Presumido):** ~34,8% a 42% sobre o salário bruto (INSS + RAT + Terceiros + FGTS)[cite: 61].
+* [cite_start]**Simples Nacional:** Isento de INSS Patronal nos Anexos I, II, III e V; paga 20% no Anexo IV[cite: 33, 44].
+* [cite_start]**Provisões Obrigatórias:** Reserve **19,44%** do salário mensalmente para cobrir Férias e 13º[cite: 119].
+
+### Resumo em 30 Segundos
+Saber **quanto custa um funcionário** vai muito além do salário impresso na carteira. Em 2025, com o novo salário mínimo de R$ 1.518,00 e o início da reoneração gradual da folha para 17 setores, a matemática mudou. O custo final de um colaborador CLT varia drasticamente conforme o regime tributário da sua empresa (Simples Nacional, Lucro Presumido ou Real), podendo representar de **1,6 a 2,8 vezes** o valor do salário bruto. Esta **Calculadora de Custo de Funcionário** detalha encargos sociais, provisões de férias e 13º, além de custos invisíveis, para que você proteja sua margem de lucro.
+
+---
+
+## Tabela Oficial: Comparativo de Cargas Tributárias (2025)
+
+A tabela abaixo demonstra como o regime tributário define o peso dos encargos sobre a folha de pagamento.
+
+| Componente do Encargo | Simples Nacional (Anexos I, II, III, V) | Simples Nacional (Anexo IV) | Lucro Presumido / Real |
+| :--- | :--- | :--- | :--- |
+| **INSS Patronal** | 0% (Incluso no DAS) | 20% | 20% |
+| **RAT (Risco Acidente)** | 0% (Incluso no DAS) | 1% a 3% | 1% a 3% |
+| **Terceiros (Sistema S)** | 0% (Incluso no DAS) | 0% | ~ 5,8% |
+| **FGTS** | 8% | 8% | 8% |
+| **Total Estimado** | **~ 8%** | **~ 29% a 33%** | **~ 34,8% a 42%** |
+
+> **Fonte Oficial:** Baseado nas alíquotas da Receita Federal e Tabela RAT/FAP. Consulte as regras detalhadas no [Portal Gov.br sobre alíquotas INSS 2025](https://www.gov.br/inss/pt-br/noticias/confira-como-ficaram-as-aliquotas-de-contribuicao-ao-inss).
+
+---
+
+## A Realidade do Custo: O Mito do "Salário x 2"
+
+Historicamente, muitos gestores usam a conta de padaria de que um funcionário custa o dobro do salário ("2x"). [cite_start]Embora estudos da FGV/CNI indiquem que o custo pode chegar a **2,83 vezes** o salário em cenários de alta rotatividade e ineficiência[cite: 12], essa generalização é perigosa para 2025.
+
+Para empresas no **Simples Nacional (Anexo III)**, por exemplo, o multiplicador real costuma ficar próximo de **1,6x**. Já no **Lucro Presumido**, gira em torno de **1,93x** para salários médios. Aplicar um multiplicador genérico pode fazer você perder competitividade ou precificar seu serviço errado.
+
+### Erros Comuns ao Calcular o Custo
+1.  **Esquecer o Anexo IV do Simples:** Empresas de limpeza, vigilância e construção civil (Anexo IV) pagam 20% de INSS Patronal, diferentemente do restante do Simples. [cite_start]Ignorar isso gera um rombo de 23% a 25% no orçamento[cite: 46].
+2.  **Ignorar a Reoneração (Lei 14.973/2024):** Se sua empresa é de TI, Transportes ou Comunicação, a "desoneração total" acabou. Em 2025, você paga **5% de INSS sobre a folha** além da taxa sobre a receita. Veja os detalhes na [Lei nº 14.973/2024 no Planalto](http://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14973.htm).
+3.  [cite_start]**Não provisionar encargos sobre férias:** Não basta guardar o valor das férias; você precisa guardar o dinheiro para pagar o FGTS e INSS que incidirão sobre essas férias lá na frente[cite: 121].
+
+---
+
+## Como funciona a Calculadora de Custo de Funcionário
+
+Nossa **Calculadora de Custo de Funcionário** utiliza o método de custeio por absorção direta e provisões. Diferente de contas simples que somam apenas o que sai do caixa no dia 05 (salário + guia de imposto), o cálculo correto deve considerar a competência.
+
+O sistema considera três pilares para entregar o resultado:
+1.  **Regime Tributário:** Define se a empresa paga ou não os 20% de cota patronal e terceiros.
+2.  **Verbas Remuneratórias:** Soma salário base, periculosidade ou adicionais (use nossa [ferramenta de adicional noturno](https://junny.com.br/calculadoras/adicional-noturno) para estimar).
+3.  **Provisões Futuras:** Calcula o passivo trabalhista que se acumula mensalmente (férias e 13º proporcionais) e os impostos que incidirão sobre eles.
+
+---
+
+## Como Calcular o Custo (Passo a Passo)
+
+Para chegar ao valor exato ("na vírgula"), utilizamos a metodologia de custo modular. Vamos dividir o custo em três grandes grupos: Encargos Diretos, Provisões e Benefícios.
+
+### A Fórmula do Custo Total
+$$Custo~Total = Salário + Encargos~Diretos + Provisões~(+Reflexos) + Benefícios$$
+
+### 1. Encargos Sociais (O que paga todo mês)
+Incidem diretamente sobre o salário bruto.
+* **FGTS:** 8% (para todos).
+* **INSS Patronal:** 20% (apenas Lucro Real/Presumido e Simples Anexo IV).
+* **RAT x FAP:** Taxa de risco de acidente (1% a 3%) multiplicada pelo índice de sinistralidade da empresa (0,5 a 2,0).
+* **Sistema S:** Média de 5,8% (apenas Lucro Real/Presumido).
+* *Nota:* Para conferir as incidências exatas sobre cada verba, consulte a [Tabela de Incidência da Receita Federal](https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/contribuicoes-previdenciarias).
+
+### 2. Provisões (O "Custo Invisível")
+Direitos que o funcionário adquire mensalmente, mas recebe depois. Você deve reservar:
+* **Férias + 1/3:** 11,11% do salário.
+* **13º Salário:** 8,33% do salário.
+* [cite_start]**Total de Provisão:** **19,44%**[cite: 119].
+* *Atenção:* Sobre esses 19,44% também incidem FGTS e INSS. No Lucro Presumido, isso adiciona mais **6,76%** ao custo mensal.
+
+### 3. Benefícios e Variáveis
+* **Vale-Transporte:** A empresa paga o que exceder 6% do salário. Use nossa [Calculadora de Custo de Viagem](https://junny.com.br/calculadoras/custo-viagem) para simular rotas.
+* **Vale-Alimentação/Refeição:** Custo integral (salvo coparticipação).
+* **Plano de Saúde:** Custo fixo por vida.
+
+---
+
+## Simulações Práticas: Do Básico ao Executivo
+
+### Cenário 1: Analista Pleno (R$ 4.000,00)
+Comparativo para salário médio com benefícios padrão (VR R$ 660,00 + Saúde R$ 300,00).
+
+| Custo | Simples Nacional (Anexo III) | Lucro Presumido |
+| :--- | :--- | :--- |
+| **Salário** | R$ 4.000,00 | R$ 4.000,00 |
+| **Encargos (FGTS/INSS/RAT)** | R$ 320,00 | R$ 1.432,00 |
+| **Provisões (Férias/13º)** | R$ 999,81 | R$ 1.215,98 |
+| **Benefícios** | R$ 1.072,00 | R$ 1.072,00 |
+| **Custo Total Mensal** | **R$ 6.391,81** | **R$ 7.719,98** |
+| **Multiplicador** | **1,60x** | **1,93x** |
+
+### Cenário 2: Executivo / Gerente (R$ 15.000,00)
+Para salários altos, o peso dos benefícios fixos diminui, mas o **INSS Patronal (20%) não tem teto** para a empresa no Lucro Real/Presumido, tornando a contratação CLT extremamente onerosa.
+
+| Custo | Simples Nacional (Anexo III) | Lucro Presumido (Serviços) |
+| :--- | :--- | :--- |
+| **Salário Base** | **R$ 15.000,00** | **R$ 15.000,00** |
+| Encargos (INSS 20% + RAT/Sist.S) | Isento | R$ 4.170,00 (27,8%) |
+| FGTS (8%) | R$ 1.200,00 | R$ 1.200,00 |
+| Provisões (Férias + 13º) | R$ 2.916,00 | R$ 2.916,00 |
+| Encargos s/ Provisões | R$ 233,28 (só FGTS) | R$ 1.043,92 (INSS+Outros) |
+| Benefícios (Estimados) | R$ 1.000,00 | R$ 1.000,00 |
+| **Custo Total Mensal** | **R$ 20.349,28** | **R$ 25.329,92** |
+| **Multiplicador** | **1,35x** | **1,68x** |
+
+> **Nota:** No Lucro Presumido, a empresa paga R$ 3.000,00 apenas de INSS Patronal (20% de 15 mil), pois não há teto para o empregador, diferentemente do desconto do funcionário que trava no teto do INSS.
+
+---
+
+## Casos Especiais e Mudanças para 2025
+
+### O Impacto da Reoneração Gradual
+Para os 17 setores que utilizavam a desoneração da folha (CPRB), 2025 é um ano híbrido. A empresa pagará o imposto sobre a receita bruta (com alíquota reduzida) **MAIS 5% de INSS** sobre a folha de pagamento. [cite_start]Esse percentual subirá para 10% em 2026 e 15% em 2027. Isso exige revisão imediata de contratos de longo prazo[cite: 78, 81].
+
+### Fator R no Simples Nacional
+Empresas do Anexo V podem migrar para o Anexo III (mais barato) se a folha de pagamento for igual ou superior a 28% do faturamento. Aumentar o custo com funcionários (formalização) pode, paradoxalmente, reduzir seu imposto total. Entenda melhor usando nossa ferramenta de [Simples Nacional vs Lucro Presumido](https://junny.com.br/calculadoras/simples-vs-presumido).
+
+### Salário Mínimo e Teto do INSS 2025
+Com o mínimo a **R$ 1.518,00**, todos os benefícios atrelados (como insalubridade) sobem. Já o desconto de INSS do funcionário segue a nova tabela progressiva (7,5% a 14%), com teto de desconto de aprox. R$ 951,63 para quem ganha acima de R$ 8.157,41. Para calcular o valor líquido exato a pagar ao colaborador, acesse a [Calculadora de Salário Líquido](https://junny.com.br/calculadoras/salario-liquido).
+
+---
+
+## Perguntas Frequentes sobre Calculadora de Custo de Funcionário
+
+### Qual o custo de um funcionário no teto do INSS em 2025?
+Se o salário for igual ao teto (aprox. **R$ 8.157,41**), uma empresa no Lucro Presumido pagará cerca de **R$ 13.800,00** mensais (custo total). Isso ocorre porque, embora o desconto do funcionário trave no teto, a empresa continua pagando 20% de INSS patronal sobre o valor total do salário, sem limite.
+
+### Quanto custa um funcionário de um salário mínimo em 2025?
+Para uma empresa no Simples Nacional (Anexo III), um funcionário ganhando **R$ 1.518,00** custa aproximadamente **R$ 2.400,00 a R$ 2.500,00** por mês, considerando provisões de férias, 13º, FGTS e um pacote básico de benefícios (VT e VR). O peso dos benefícios fixos eleva o multiplicador para cerca de 1,65x.
+
+### Como calcular o custo de um funcionário PJ?
+O custo PJ é mais simples: soma-se o valor da Nota Fiscal, impostos assumidos pela empresa (se houver) e custos de compliance. No entanto, para valer a pena para o *profissional*, a regra de mercado sugere que a Nota Fiscal seja **1,4 a 1,6 vezes** o salário CLT equivalente. Compare os cenários na nossa [Calculadora CLT x PJ](https://junny.com.br/calculadoras/clt-vs-pj).
+
+### O que é o RAT e FAP no cálculo da folha?
+O RAT (Risco Ambiental do Trabalho) é uma taxa de 1%, 2% ou 3% sobre a folha para cobrir custos de acidentes. O FAP (Fator Acidentário) é um multiplicador (0,5 a 2,0) que reduz ou dobra essa taxa. Empresas com muitos acidentes pagam o dobro. Investir em segurança reduz diretamente esse custo.
+
+### A empresa paga INSS sobre o Vale-Transporte?
+Não. O Vale-Transporte, quando descontado corretamente (até 6% do salário), e o Vale-Alimentação (quando a empresa adere ao PAT), têm natureza indenizatória. Ou seja, não incide INSS nem FGTS sobre eles, o que ajuda a reduzir o custo total.
+
+### Como funciona a provisão de férias e 13º?
+Mensalmente, você deve guardar **1/12 (8,33%)** do salário para o 13º e **1/12 (8,33%)** + 1/3 constitucional para as férias. [cite_start]Somados, representam **19,44%** do salário[cite: 119]. Se você não reservar esse dinheiro todo mês, terá problemas de caixa em novembro, dezembro e nas épocas de férias.

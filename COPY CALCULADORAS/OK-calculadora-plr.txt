@@ -3,6 +3,8 @@
 
 # Calculadora de PLR 2025: Simule o Valor Líquido e Imposto
 
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
 ### Resumo Rápido (Dados Oficiais Dezembro/2025)
 
 * **Nova Isenção de IR:** Quem recebe até **R$ 8.214,40** de PLR no ano está 100% isento de imposto de renda.
@@ -14,8 +16,6 @@
 ### Resumo em 30 Segundos
 
 A **Participação nos Lucros e Resultados (PLR)** é um bônus pago pela empresa quando metas corporativas e individuais são atingidas. Diferente do salário mensal, a PLR possui **tributação exclusiva**, o que significa que ela não se soma aos seus rendimentos anuais para elevar a alíquota do seu Imposto de Renda tradicional. Em 2025, a tabela foi atualizada garantindo que mais dinheiro fique no bolso do trabalhador. Nossa **Calculadora de PLR** abaixo simplifica essa conta para você.
-
-[INSERIR COMPONENTE DA CALCULADORA AQUI]
 
 ## Como funciona a PLR
 

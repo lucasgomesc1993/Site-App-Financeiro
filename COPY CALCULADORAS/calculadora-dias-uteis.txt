@@ -1,0 +1,131 @@
+Meta Title: Calculadora Dias Úteis 2025: Feriados, Sábados e Excel
+Meta Description: Calculadora Dias Úteis 2025: conte prazos com o novo feriado da Consciência Negra. Inclui tabela oficial, 252 dias bancários e regras CLT.
+
+# Calculadora de Dias Úteis 2025 (Online e Gratuita)
+
+[INSERIR COMPONENTE DA CALCULADORA AQUI]
+
+* **Ano de Referência:** 2025 (Atualizado em Dezembro).
+* **Novo Feriado Nacional:** Dia 20 de Novembro (Consciência Negra) agora é feriado em todo o país (Lei 14.759).
+* **Pagamento de Salário:** Para a CLT, o sábado **é considerado dia útil**. O pagamento deve ocorrer até o 5º dia útil.
+* **Sistema Bancário:** Sábados **não** são dias úteis para vencimento de boletos ou transferências (TED/DOC).
+* **Carnaval 2025:** Dias 03 e 04 de março são pontos facultativos federais, não feriados nacionais (salvo lei local).
+
+**Resumo em 30 Segundos:**
+A **Calculadora Dias Úteis 2025** é essencial para gestores de RH, advogados e profissionais financeiros que precisam de precisão temporal. Diferente de calendários comuns, nossa ferramenta distingue **dias úteis bancários** (segunda a sexta) de **dias úteis comerciais** (que podem incluir sábado). Com a nacionalização do feriado da Consciência Negra e a configuração de "pontes" nas quintas-feiras em 2025, calcular prazos manualmente gera riscos altos de multas trabalhistas ou perda de prazos processuais.
+
+## Como funciona a Calculadora Dias Úteis
+Para garantir precisão máxima, insira as datas de início e fim e selecione se deseja **considerar sábados como dias úteis** (ideal para cálculos trabalhistas). Informe também seu **Estado e Cidade**, pois a ferramenta desconta automaticamente os feriados locais e regionais específicos que impactam sua contagem.
+
+## Calendário Oficial de Feriados Nacionais 2025
+
+Abaixo, listamos as datas que impactam diretamente a contagem de dias úteis em 2025. O calendário considera as portarias do Ministério da Gestão e Inovação e a legislação federal vigente.
+
+| Data | Dia da Semana | Celebração | Tipo Legal | Impacto |
+| :--- | :--- | :--- | :--- | :--- |
+| **01/01** | Quarta-feira | Confraternização Universal | Feriado Nacional | Parada Total |
+| **03/03** | Segunda-feira | Carnaval | Ponto Facultativo | Folga comum |
+| **04/03** | Terça-feira | Carnaval | Ponto Facultativo | Folga comum |
+| **18/04** | Sexta-feira | Paixão de Cristo | Feriado Nacional | Feriadão |
+| **21/04** | Segunda-feira | Tiradentes | Feriado Nacional | Feriadão |
+| **01/05** | Quinta-feira | Dia do Trabalho | Feriado Nacional | Possível ponte |
+| **19/06** | Quinta-feira | Corpus Christi | Ponto Facultativo | Possível ponte |
+| **07/09** | Domingo | Independência do Brasil | Feriado Nacional | Nulo |
+| **12/10** | Domingo | N. Sra. Aparecida | Feriado Nacional | Nulo |
+| **02/11** | Domingo | Finados | Feriado Nacional | Nulo |
+| **15/11** | Sábado | Proclamação da República | Feriado Nacional | Impacto Varejo |
+| **20/11** | Quinta-feira | Dia da Consciência Negra | Feriado Nacional | **Novo (Lei 14.759)** |
+| **25/12** | Quinta-feira | Natal | Feriado Nacional | Parada Total |
+
+> **Fonte Oficial:** Calendário baseado na [Portaria do Ministério da Gestão e da Inovação em Serviços Públicos](https://www.gov.br/gestao/pt-br/assuntos/noticias/2024/dezembro/gestao-divulga-calendario-de-feriados-e-pontos-facultativos-em-2025) e na [Lei nº 14.759/2023](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2023/lei/L14759.htm).
+
+## Erros Comuns ao Calcular Dias Úteis
+
+O erro mais frequente não é matemático, mas jurídico. A confusão entre "Dia Útil Bancário" e "Dia Útil Trabalhista" gera passivos enormes.
+
+1.  **Ignorar o Sábado no Pagamento de Salário:** Muitos RHs usam o calendário bancário (seg-sex) para calcular o 5º dia útil. Isso está incorreto. Para a CLT, o sábado conta. Se o mês começa numa sexta-feira, o 5º dia útil é a quarta-feira seguinte, não a sexta.
+2.  **Confundir Ponto Facultativo com Feriado:** Carnaval e Corpus Christi **não são feriados nacionais**. Empresas privadas só são obrigadas a dar folga se houver lei municipal/estadual ou Convenção Coletiva.
+3.  **Esquecer o Feriado de 20 de Novembro:** Softwares desatualizados ainda consideram esta data como dia útil em muitos estados. Desde o final de 2023, a data é feriado nacional, travando prazos e pagamentos.
+
+## Como Calcular (Passo a Passo e Fórmulas)
+
+Para quem precisa fazer projeções manuais ou auditar sistemas sem depender apenas da **Calculadora Dias Úteis 2025** automática, a lógica de cálculo segue critérios de exclusão rigorosos.
+
+### A Fórmula Lógica
+
+A contagem de dias úteis é uma subtração dos dias não laborais do período total.
+
+$$DU = DT - (FDS + F + PF)$$
+
+Onde:
+* **DU:** Dias Úteis
+* **DT:** Dias Totais (Corridos)
+* **FDS:** Fins de Semana (Sábados e Domingos ou apenas Domingos)
+* **F:** Feriados Nacionais e Locais
+* **PF:** Pontos Facultativos (se a empresa aderir).
+
+### Exemplos Práticos de Contagem
+
+Para ilustrar, veja como a matemática funciona em dois meses distintos de 2025, considerando o calendário bancário (segunda a sexta):
+
+**Cenário A: Agosto de 2025 (Mês Comum sem feriados)**
+* **Dias Totais:** 31
+* **Fins de Semana:** 10 dias (5 sábados e 5 domingos)
+* **Feriados:** 0
+* **Cálculo:** $$31 - 10 - 0 = 21~Dias~Úteis$$
+
+**Cenário B: Novembro de 2025 (Mês Atípico com 3 feriados)**
+Novembro possui 3 feriados (dias 02, 15 e 20). Veja o impacto:
+* **Dias Totais:** 30
+* **Fins de Semana:** 10 dias (Dias 1, 2, 8, 9, 15, 16, 22, 23, 29, 30)
+    * *Nota:* Os feriados de Finados (02) e Proclamação (15) caem no fim de semana, então já estão descontados aqui.
+* **Feriados em dias de semana:** 1 dia (Apenas dia 20; dias 02 e 15 caem no fim de semana).
+* **Cálculo:** $$30 - 10 - 1 = 19~Dias~Úteis$$
+
+### Método Excel (Avançado)
+
+A função simples `=DIATRABALHOTOTAL` do Excel é falha para o varejo, pois exclui automaticamente o sábado. Para precisão profissional, utilize a função **INTL**:
+
+`=DIATRABALHOTOTAL.INTL(data_inicial; data_final; [código_fds]; [feriados])`
+
+* **Código 1:** Exclui Sábado e Domingo (Padrão Escritórios/Bancos).
+* **Código 11:** Exclui apenas Domingo (Padrão Comércio/CLT).
+
+Ao planejar o orçamento anual da empresa, cruze esses dados com a nossa [calculadora de custo de funcionário](https://junny.com.br/calculadoras/custo-funcionario) para entender o impacto das horas não trabalhadas.
+
+## Casos Especiais e Aplicações Práticas
+
+### Pagamento de Salário (CLT)
+Para determinar a data limite de pagamento, você deve contar o sábado como dia útil (exceto se for feriado). No entanto, se o 5º dia útil cair num sábado, a empresa muitas vezes antecipa o pagamento (via TED/DOC) para sexta-feira ou usa o PIX.
+
+### Trabalho em Feriados e Hora Extra
+Se a escala de trabalho cair em um feriado nacional (como o novo feriado de 20 de novembro), o colaborador tem direito a receber o dia em dobro (100%) ou uma folga compensatória. Para conferir o valor exato desse pagamento, utilize nossa [calculadora de horas extras](https://junny.com.br/calculadoras/horas-extras).
+
+### Planejamento de Férias
+Ao programar o descanso, é crucial verificar se o início das férias não coincide com dias proibidos pela Reforma Trabalhista (dois dias que antecedem feriado ou DSR). Utilize nossa [calculadora de férias](https://junny.com.br/calculadoras/ferias) para simular o valor líquido e a melhor data de saída, evitando descontos e garantindo o terço constitucional correto.
+
+### Prazos Processuais (Advogados)
+Com o Novo CPC (Código de Processo Civil), os prazos são contados apenas em dias úteis. Além de excluir feriados e fins de semana, é crucial descontar o **Recesso Forense** (20 de dezembro a 20 de janeiro) e feriados locais onde o processo tramita.
+
+### Mercado Financeiro
+Para investimentos e boletos, vale a regra da FEBRABAN. Sábados, domingos e feriados nacionais não contam. Se o vencimento cai num dia não útil, o pagamento é postergado para o próximo dia útil sem juros. Isso é vital para quem usa a [calculadora de juros compostos](https://junny.com.br/calculadoras/juros-compostos) para projetar rendimentos reais.
+
+## Perguntas Frequentes sobre Dias Úteis
+
+### O sábado é considerado dia útil para pagamento de salário?
+Sim. Segundo o [Artigo 459 da CLT](https://www.planalto.gov.br/ccivil_03/decreto-lei/del5452.htm) e jurisprudência consolidada, o sábado é dia útil para contagem do prazo de pagamento salarial, exceto se coincidir com um feriado. Porém, se o 5º dia cair no sábado, empresas que pagam via TED/DOC devem antecipar para sexta-feira, pois bancos não processam essas transferências no fim de semana.
+
+### Quantos dias úteis terá o ano de 2025?
+O ano de 2025 terá aproximadamente **252 dias úteis** bancários (segunda a sexta), já descontando o novo feriado nacional de 20 de novembro. Para o comércio que funciona aos sábados, esse número é maior. Lembre-se que feriados estaduais (como 9 de Julho em SP) ou municipais reduzem ainda mais essa contagem em cada localidade.
+
+### O dia 20 de novembro é feriado nacional em 2025?
+Sim. A Lei 14.759/2023 tornou o Dia Nacional de Zumbi e da Consciência Negra feriado em todo o território nacional, eliminando a antiga dependência de leis municipais. Portanto, em 2025, o dia 20 de novembro (quinta-feira) é um dia não útil obrigatório para fins bancários, prazos processuais e rotinas trabalhistas em todo o Brasil.
+
+### Como calcular dias úteis no Excel considerando o sábado?
+Use a função avançada `=DIATRABALHOTOTAL.INTL(início; fim; 11; feriados)`. O parâmetro "11" é crucial pois configura apenas o domingo como fim de semana, ideal para o varejo e escalas 6x1. Se você usar a fórmula comum (sem o INTL), o Excel excluirá o sábado automaticamente, gerando erros no cálculo de prazos trabalhistas CLT.
+
+### Teremos muitos "feriadões" em 2025?
+Sim, será um ano de muitas "pontes". Embora três feriados caiam no domingo, datas críticas como Dia do Trabalho (01/05), Corpus Christi (19/06) e Consciência Negra (20/11) caem em quintas-feiras. Isso favorece emendas prolongadas na sexta-feira, o que beneficia o turismo, mas exige planejamento antecipado da indústria para evitar paradas custosas na produção.
+
+### Carnaval é feriado ou dia útil?
+Para a iniciativa privada, o Carnaval (segunda e terça) é tecnicamente dia útil, a menos que exista lei estadual (como no RJ) ou municipal declarando feriado. No âmbito federal, é apenas ponto facultativo. Se não houver lei local ou convenção coletiva, a empresa pode exigir trabalho normal ou negociar compensação.

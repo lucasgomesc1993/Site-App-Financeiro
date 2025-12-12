@@ -50,7 +50,7 @@ const SimplesVsPresumidoPage = lazy(() => import('./components/tools/SimplesVsPr
 const WorkingCapitalPage = lazy(() => import('./components/tools/WorkingCapitalPage').then(module => ({ default: module.WorkingCapitalPage })));
 const ROICalculatorPage = lazy(() => import('./components/tools/ROICalculatorPage').then(module => ({ default: module.ROICalculatorPage })));
 const BarbecueCalculatorPage = lazy(() => import('./components/tools/BarbecueCalculatorPage').then(module => ({ default: module.BarbecueCalculatorPage })));
-const BusinessDaysPage = lazy(() => import('./components/tools/BusinessDaysPage').then(module => ({ default: module.BusinessDaysPage })));
+// const BusinessDaysPage = lazy(() => import('./components/tools/BusinessDaysPage').then(module => ({ default: module.BusinessDaysPage })));
 const RuleOfThreePage = lazy(() => import('./components/tools/RuleOfThreePage').then(module => ({ default: module.RuleOfThreePage })));
 const PercentageCalculatorPage = lazy(() => import('./components/tools/PercentageCalculatorPage').then(module => ({ default: module.PercentageCalculatorPage })));
 const HoursCalculatorPage = lazy(() => import('./components/tools/HoursCalculatorPage').then(module => ({ default: module.HoursCalculatorPage })));
@@ -129,7 +129,7 @@ function App() {
                   <Route path="/calculadoras/capital-de-giro" element={<WorkingCapitalPage />} />
                   <Route path="/calculadoras/roi" element={<ROICalculatorPage />} />
                   <Route path="/calculadoras/churrasco" element={<BarbecueCalculatorPage />} />
-                  <Route path="/calculadoras/dias-uteis" element={<BusinessDaysPage />} />
+                  {/* <Route path="/calculadoras/dias-uteis" element={<BusinessDaysPage />} /> */}
                   <Route path="/calculadoras/regra-de-tres" element={<RuleOfThreePage />} />
                   <Route path="/calculadoras/porcentagem" element={<PercentageCalculatorPage />} />
                   <Route path="/calculadoras/horas" element={<HoursCalculatorPage />} />
