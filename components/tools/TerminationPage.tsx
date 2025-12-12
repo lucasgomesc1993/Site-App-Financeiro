@@ -519,14 +519,14 @@ export function TerminationPage() {
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6">
                             <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                                 <FileText className="w-5 h-5 text-blue-500" />
-                                Resumo Rápido (2025)
+                                Resumo Rápido (Dados Oficiais Dezembro/2025)
                             </h3>
 
                             <div className="space-y-4">
                                 <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                     <div className="text-sm text-gray-400 mb-1">Salário Mínimo Base</div>
                                     <div className="text-lg font-bold text-white">R$ 1.518,00</div>
-                                    <div className="text-xs text-gray-400">Referência para pisos e seguro</div>
+                                    <div className="text-xs text-gray-400">Referência para pisos e seguro-desemprego</div>
                                 </div>
 
                                 <div className="p-4 rounded-xl bg-white/5 border border-white/5">
@@ -561,6 +561,65 @@ export function TerminationPage() {
                     </p>
                 </div>
 
+                {/* Resumo em 30 Segundos */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
+                            <Clock className="w-6 h-6 text-blue-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Resumo em 30 Segundos: O Que a <strong>Calculadora de Rescisão</strong> Considera
+                        </h2>
+                    </div>
+                    <ul className="grid md:grid-cols-2 gap-4 text-gray-300">
+                        <li className="flex gap-3 items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                            <div className="w-2 h-2 rounded-full bg-blue-500" />
+                            <span><strong>Base:</strong> Salário + Médias de horas extras.</span>
+                        </li>
+                        <li className="flex gap-3 items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                            <div className="w-2 h-2 rounded-full bg-red-400" />
+                            <span><strong>Descontos:</strong> INSS (Teto R$ 8.157,41) e IRRF.</span>
+                        </li>
+                        <li className="flex gap-3 items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                            <div className="w-2 h-2 rounded-full bg-green-400" />
+                            <span><strong>Isentos:</strong> Aviso Prévio, Férias Indenizadas e Multa 40%.</span>
+                        </li>
+                        <li className="flex gap-3 items-center bg-white/5 p-3 rounded-xl border border-white/5">
+                            <div className="w-2 h-2 rounded-full bg-yellow-400" />
+                            <span><strong>Prazo:</strong> Pagamento em até 10 dias corridos.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                {/* Como funciona a Calculadora de Rescisão (Instructions) */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
+                            <HelpCircle className="w-6 h-6 text-blue-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Como funciona a Calculadora de Rescisão
+                        </h2>
+                    </div>
+                    <p className="text-gray-400 mb-6">
+                        Para obter o resultado exato na nossa <strong>calculadora de rescisão</strong>, siga estes passos simples:
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-blue-500 font-bold mb-2">01. Preencha os Dados</div>
+                            <p className="text-sm text-gray-300">Informe seu último salário bruto, data de admissão e data de saída.</p>
+                        </div>
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-blue-500 font-bold mb-2">02. Selecione o Motivo</div>
+                            <p className="text-sm text-gray-300">Escolha o tipo de desligamento (ex: sem justa causa ou pedido de demissão) e o tipo de aviso prévio.</p>
+                        </div>
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-blue-500 font-bold mb-2">03. Visualize o Cálculo</div>
+                            <p className="text-sm text-gray-300">O sistema processará automaticamente as regras de 2025, exibindo o valor líquido e as deduções legais.</p>
+                        </div>
+                    </div>
+                </div>
+
                 {/* Content Sections */}
 
                 {/* Tabelas Oficiais */}
@@ -570,7 +629,7 @@ export function TerminationPage() {
                             <Briefcase className="w-6 h-6 text-blue-500" />
                         </div>
                         <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                            Tabelas Oficiais e Parâmetros (2025)
+                            Tabelas Oficiais para o Cálculo (Vigência 2025)
                         </h2>
                     </div>
                     <p className="text-gray-400 mb-8 max-w-3xl">
@@ -579,7 +638,7 @@ export function TerminationPage() {
 
                     <div className="grid md:grid-cols-2 gap-8">
                         <div>
-                            <h3 className="text-lg font-bold text-white mb-4">Tabela INSS (2025)</h3>
+                            <h3 className="text-lg font-bold text-white mb-4">Tabela Progressiva do INSS (Dezembro 2025)</h3>
                             <div className="overflow-x-auto rounded-xl border border-white/10">
                                 <table className="w-full text-sm text-left">
                                     <thead className="bg-white/5 text-gray-300">
@@ -603,7 +662,7 @@ export function TerminationPage() {
                             </div>
                         </div>
                         <div>
-                            <h3 className="text-lg font-bold text-white mb-2">Tabela IRRF (2025)</h3>
+                            <h3 className="text-lg font-bold text-white mb-2">Tabela do Imposto de Renda (IRRF)</h3>
                             <p className="text-xs text-gray-400 mb-4">A partir de maio de 2025, aplica-se o desconto simplificado de <strong>R$ 607,20</strong> caso seja mais vantajoso que as deduções legais.</p>
                             <div className="overflow-x-auto rounded-xl border border-white/10">
                                 <table className="w-full text-sm text-left">
@@ -652,14 +711,14 @@ export function TerminationPage() {
                     </ul>
                 </div>
 
-                {/* Como Funciona o Cálculo / Examples */}
+                {/* Como Calcular a Rescisão (Passo a Passo) */}
                 <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
                     <div className="flex items-start gap-4 mb-6">
                         <div className="bg-blue-500/10 p-3 rounded-xl shrink-0">
                             <Calculator className="w-6 h-6 text-blue-500" />
                         </div>
                         <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
-                            Como Funciona o Cálculo (Passo a Passo)
+                            Como Calcular a Rescisão (Passo a Passo)
                         </h2>
                     </div>
 

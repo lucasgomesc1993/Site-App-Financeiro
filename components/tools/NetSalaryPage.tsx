@@ -333,15 +333,19 @@ export function NetSalaryPage() {
                                 </div>
                                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
                                     <span className="text-sm text-gray-400">Teto do INSS</span>
-                                    <span className="text-sm font-bold text-white">R$ 8.157,41</span>
+                                    <span className="text-sm font-bold text-white text-right">R$ 8.157,41 <br /><span className="text-[10px] font-normal text-gray-500">(Desconto máx. de aprox. R$ 951,63)</span></span>
                                 </div>
                                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
                                     <span className="text-sm text-gray-400">Isenção de IRRF</span>
-                                    <span className="text-sm font-bold text-emerald-400">Até R$ 2.428,80</span>
+                                    <span className="text-sm font-bold text-emerald-400 text-right">Até R$ 2.428,80 <br /><span className="text-[10px] font-normal text-emerald-500/70">(considerando regras vigentes)</span></span>
                                 </div>
                                 <div className="flex items-center justify-between border-b border-white/5 pb-2">
                                     <span className="text-sm text-gray-400">Desconto Simplificado</span>
-                                    <span className="text-sm font-bold text-white">R$ 607,20</span>
+                                    <span className="text-sm font-bold text-white text-right">R$ 607,20 <br /><span className="text-[10px] font-normal text-gray-500">(dedução automática se vantajosa)</span></span>
+                                </div>
+                                <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                                    <span className="text-sm text-gray-400">Regulação</span>
+                                    <span className="text-sm font-bold text-white text-right">Lei 15.191 <br /><span className="text-[10px] font-normal text-gray-500">e Portaria MPS/MF nº 6</span></span>
                                 </div>
                             </div>
                             <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
@@ -404,8 +408,8 @@ export function NetSalaryPage() {
                                     <thead className="bg-white/5">
                                         <tr>
                                             <th className="p-3 text-white font-medium">Faixa de Salário de Contribuição</th>
-                                            <th className="p-3 text-white font-medium text-center">Alíquota</th>
-                                            <th className="p-3 text-white font-medium text-center">Dedução</th>
+                                            <th className="p-3 text-white font-medium text-center">Alíquota Progressiva</th>
+                                            <th className="p-3 text-white font-medium text-center">Parcela a Deduzir</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-400 divide-y divide-white/5">
@@ -447,8 +451,8 @@ export function NetSalaryPage() {
                                     <thead className="bg-white/5">
                                         <tr>
                                             <th className="p-3 text-white font-medium">Base de Cálculo</th>
-                                            <th className="p-3 text-white font-medium text-center">Alíquota</th>
-                                            <th className="p-3 text-white font-medium text-center">Dedução do IR</th>
+                                            <th className="p-3 text-white font-medium text-center">Alíquota (%)</th>
+                                            <th className="p-3 text-white font-medium text-center">Parcela a Deduzir do IR</th>
                                         </tr>
                                     </thead>
                                     <tbody className="text-gray-400 divide-y divide-white/5">

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Briefcase, Calculator, DollarSign, Scale, ArrowRight, Wallet, TrendingUp, TrendingDown, AlertCircle, Building2, HelpCircle, Info, Check } from 'lucide-react';
-import { motion } from 'framer-motion';
+
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
@@ -10,20 +10,28 @@ import { FAQItem } from '../../types';
 
 const CLT_PJ_FAQS: FAQItem[] = [
     {
-        question: "Qual o valor máximo (teto) de desconto do INSS em 2025?",
-        answer: "O teto previdenciário para 2025 é de R$ 8.157,41. Quem ganha salários CLT acima desse valor terá o desconto travado em aproximadamente R$ 951,63 mensais, não incidindo contribuição sobre o excedente."
+        question: "Qual a diferença salarial para valer a pena ser PJ?",
+        answer: "A regra de mercado, validada por nossa <strong>Calculadora CLT vs PJ</strong>, indica que o salário PJ deve ser entre <strong>1,5 e 1,6 vezes</strong> o salário bruto CLT. Além do salário bruto, considere que o CLT tem vale-refeição, plano de saúde e estabilidade. Para compensar esses \"custos invisíveis\" e a falta de aviso prévio, a remuneração PJ precisa ser significativamente maior para gerar a mesma segurança patrimonial."
     },
     {
-        question: "Qual o multiplicador ideal para sair de CLT para PJ em 2025?",
-        answer: "O multiplicador seguro é de 1.5x (50% de aumento sobre o bruto). Para salários baixos (até R$ 4k), 1.3x pode empatar. Para salários altos (acima de R$ 15k), 1.6x gera grande vantagem patrimonial devido à economia tributária."
+        question: "O que é o Fator R no Simples Nacional?",
+        answer: "O governo criou esse mecanismo para incentivar a contratação de funcionários. É um cálculo mensal que define se você paga 6% ou 15,5% de imposto. Se a sua folha de pagamento (incluindo seu próprio Pró-Labore) for igual ou superior a <strong>28%</strong> do faturamento, você paga a alíquota reduzida do Anexo III. Caso contrário, a tributação sobe drasticamente para o Anexo V."
     },
     {
-        question: "PJ tem direito a Seguro-Desemprego?",
-        answer: "Não. O seguro-desemprego é exclusivo para trabalhadores CLT demitidos sem justa causa. O PJ deve construir sua própria reserva de emergência (recomendado 6 a 12 meses de custo de vida) para cobrir o risco de encerramento de contrato."
+        question: "PJ tem direito a férias e 13º salário?",
+        answer: "Por lei, não. O PJ é uma empresa prestadora de serviços e recebe apenas pelo que entrega. Embora a lei não obrigue, muitos contratos de \"PJ Premium\" negociam cláusulas de descanso remunerado (off). Sem essa cláusula escrita no contrato de prestação de serviços, dias não trabalhados (férias ou feriados) significam faturamento zero no final do mês."
     },
     {
-        question: "Quanto custa manter uma empresa PJ (CNPJ)?",
-        answer: "Além dos impostos sobre a nota (DAS), considere custos fixos de contabilidade (R$ 150 a R$ 600/mês), Certificado Digital anual (R$ 200) e taxas de alvará/TFE municipal. Esses custos devem ser deduzidos do valor da proposta antes de calcular seu lucro pessoal."
+        question: "Qual o teto do desconto do INSS em 2025?",
+        answer: "O teto do benefício e da contribuição previdenciária em 2025 é de <strong>R$ 8.157,41</strong>. Esse valor é o limite máximo que o governo usa para calcular o desconto em folha e sua futura aposentadoria. Para empregados, o desconto máximo é de <strong>R$ 951,63</strong> mensais. Mesmo que você ganhe acima disso, o valor do INSS não ultrapassa esse limite."
+    },
+    {
+        question: "Como calcular o salário líquido CLT em 2025?",
+        answer: "O cálculo começa subtraindo a contribuição do INSS (progressiva de 7,5% a 14%, por faixas). Sobre o valor restante (base de cálculo), desconta-se um valor por dependente legal e aplica-se a alíquota do IRRF (até 27,5%). O resultado final é o dinheiro que efetivamente cai na conta. Você pode usar nossa <strong>Calculadora CLT vs PJ</strong> ou a ferramenta específica de <a href='/calculadoras/salario-liquido'>salário líquido</a> para fazer essa conta exata."
+    },
+    {
+        question: "MEI conta como tempo de aposentadoria?",
+        answer: "Sim. O MEI contribui para o INSS e conta como tempo de contribuição. No entanto, o valor do benefício de aposentadoria será <strong>limitado a 1 salário mínimo</strong>, exceto se forem feitas contribuições complementares (facultativas). Profissionais com histórico CLT de salários altos devem considerar previdência privada ou GPS adicional para evitar perda patrimonial na aposentadoria."
     }
 ];
 
@@ -270,17 +278,18 @@ export function CLTVsPJPage() {
     const schema = {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Calculadora CLT vs PJ: Comparativo Completo 2025",
+        "name": "Calculadora CLT vs PJ 2025: Comparativo Salário Líquido",
         "url": "https://www.junny.com.br/calculadoras/clt-vs-pj",
-        "description": "Descubra o que vale mais a pena: ser funcionário CLT ou abrir empresa PJ. Compare salários, impostos, benefícios e veja o lucro real.",
+        "description": "Utilize nossa Calculadora CLT vs PJ 2025 para comparar salário líquido, impostos e benefícios. Descubra se vale a pena migrar de regime com base na equivalência financeira.",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Firefox, Edge.",
         "featureList": [
-            "Comparativo Líquido CLT x PJ",
-            "Cálculo de Impostos (Simples Nacional vs IRRF)",
-            "Estimativa de Benefícios (Férias, 13º, FGTS)",
-            "Análise de Fator R"
+            "Comparação CLT vs PJ 2025",
+            "Cálculo de Salário Líquido",
+            "Cálculo de Impostos (Simples Nacional vs IRPF)",
+            "Análise de Fator R",
+            "Estimativa de Benefícios"
         ],
         "offers": {
             "@type": "Offer",
@@ -292,8 +301,8 @@ export function CLTVsPJPage() {
     return (
         <section className="relative min-h-screen pt-32 pb-24 px-4 overflow-hidden">
             <SEO
-                title="Calculadora CLT vs PJ 2025: Comparativo Real e Salário Líquido"
-                description="Descubra se vale a pena ser PJ ou CLT em 2025. Compare salário líquido, impostos (INSS/IRPF), Fator R e benefícios. Veja cálculo corrigido com o novo teto."
+                title="Calculadora CLT vs PJ 2025: Comparativo Salário Líquido"
+                description="Use nossa Calculadora CLT vs PJ 2025 para simular seu salário líquido real. Descubra se a troca compensa a perda de FGTS e férias com o Fator R."
                 canonical="/calculadoras/clt-vs-pj"
             />
             <script type="application/ld+json">
@@ -325,23 +334,20 @@ export function CLTVsPJPage() {
                         { label: 'CLT vs PJ', href: '/calculadoras/clt-vs-pj' }
                     ]} />
 
-                    <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="text-center mb-12">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
                             <Briefcase className="w-4 h-4 text-blue-500" />
                             <span className="text-sm text-gray-300">Carreira e Contratos</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
-                            Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">CLT vs PJ 2025</span>
+                            Calculadora <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">CLT vs PJ 2025</span>: Comparativo de Salário Líquido e Impostos
                         </h1>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-                            Compare salários, impostos e benefícios. Entenda por que ganhar R$ 10k como PJ não é igual a R$ 10k CLT e evite armadilhas na migração.
-                        </p>
                     </div>
                 </div>
 
                 <div className="grid lg:grid-cols-12 gap-8 mb-16">
                     {/* Calculator Form */}
-                    <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
+                    <div className="lg:col-span-7">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
@@ -449,7 +455,7 @@ export function CLTVsPJPage() {
                     </div>
 
                     {/* Results */}
-                    <div className="lg:col-span-5 h-full animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
+                    <div className="lg:col-span-5 h-full">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col justify-center">
                             {result ? (
                                 <div className="space-y-6">
@@ -536,102 +542,128 @@ export function CLTVsPJPage() {
                     {/* Resumo Rápido */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-10">
                         <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">Resumo em 30 Segundos</h2>
-                        <div className="space-y-4 leading-relaxed">
-                            <p>
-                                A escolha entre o regime celetista e a prestação de serviços como Pessoa Jurídica não é apenas sobre quem paga menos imposto, mas sobre <strong>Disponibilidade Líquida Anual</strong>. Enquanto a CLT oferece um pacote de proteção (FGTS, Férias + 1/3, 13º Salário e Multa Rescisória), o modelo PJ exige que você precifique esses benefícios na sua nota fiscal.
-                            </p>
-                            <p>
-                                Em 2025, a regra de ouro para não perder patrimônio é buscar propostas PJ que sejam, no mínimo, <strong>40% a 50% superiores</strong> ao salário bruto CLT equivalente, cobrindo custos de contador, impostos e, principalmente, planos de saúde individuais.
-                            </p>
+                        <div className="space-y-4 leading-relaxed text-gray-300">
+                            <ul className="space-y-3">
+                                <li className="flex gap-2">
+                                    <Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                                    <span><strong>Teto do INSS:</strong> A contribuição previdenciária incide até o limite de <strong>R$ 8.157,41</strong>.</span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                                    <span><strong>Regra de Ouro:</strong> Para manter o mesmo poder de compra, o faturamento PJ deve ser <strong>1,6x</strong> o salário bruto CLT (ex: R$ 10k CLT = R$ 16k PJ).</span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                                    <span><strong>Limite MEI:</strong> Permanece em <strong>R$ 81.000/ano</strong> até a sanção final do PLP 60/2025, que propõe novo limite de enquadramento ainda não divulgado oficialmente.</span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                                    <span><strong>Fator R:</strong> Empresas do Simples Nacional pagam menos imposto (Anexo III) se a folha de pagamento for igual ou superior a <strong>28%</strong> do faturamento.</span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <Check className="w-5 h-5 text-blue-500 shrink-0 mt-0.5" />
+                                    <span><strong>IRRF 2025:</strong> Isenção para rendimentos até <strong>R$ 2.428,80</strong>.</span>
+                                </li>
+                            </ul>
 
-                            <div className="mt-6 grid md:grid-cols-2 gap-4">
-                                <div className="bg-emerald-500/10 border border-emerald-500/20 p-4 rounded-xl">
-                                    <h4 className="font-bold text-emerald-400 mb-2">Dados Oficiais 2025:</h4>
-                                    <ul className="text-sm space-y-2 text-emerald-100/80">
-                                        <li>• <strong>Teto do INSS:</strong> R$ 8.157,41</li>
-                                        <li>• <strong>Isenção IRPF:</strong> Até R$ 2.428,80</li>
-                                        <li>• <strong>Fator R:</strong> Reduz imposto PJ para 6%</li>
-                                    </ul>
-                                </div>
-                                <div className="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl">
-                                    <h4 className="font-bold text-blue-400 mb-2">Vantagem PJ (Simples Nacional):</h4>
-                                    <p className="text-sm text-blue-100/80">
-                                        O PJ no Anexo III paga significativamente menos imposto em faixas de renda alta comparado à alíquota de 27,5% do IRPF na CLT.
-                                    </p>
-                                </div>
+                            <p className="text-sm text-gray-500 mt-4 italic">*Atualizado em Dezembro de 2025</p>
+
+                            <div className="mt-8 border-t border-white/5 pt-6">
+                                <p className="mb-4">
+                                    A escolha entre o regime CLT (Consolidação das Leis do Trabalho) e a prestação de serviços como PJ (Pessoa Jurídica) deixou de ser apenas uma questão burocrática para se tornar uma estratégia de engenharia financeira. Em dezembro de 2025, com as novas tabelas progressivas do INSS e a complexidade do Fator R no Simples Nacional, comparar apenas o "valor bruto mensal" é o caminho mais rápido para perder dinheiro.
+                                </p>
+                                <p>
+                                    Esta <strong>Calculadora CLT vs PJ</strong> utiliza a metodologia de <strong>Equivalência Financeira Anualizada (EFA)</strong>. Diferente de ferramentas simplistas, nós consideramos o pacote anual completo do CLT (13º, férias remuneradas, FGTS) contra os custos operacionais e impostos reais do PJ, oferecendo um veredito preciso sobre qual modelo coloca mais dinheiro no seu bolso.
+                                </p>
                             </div>
                         </div>
                     </div>
 
                     {/* Tabelas Oficiais */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-10">
-                        <h2 className="text-2xl font-bold text-white mb-6">Tabelas Oficiais de Referência (2025)</h2>
+                        <h2 className="text-2xl font-bold text-white mb-6">Tabelas Oficiais de Referência (Vigência 2025)</h2>
+                        <p className="text-gray-400 mb-8">
+                            Para compreender os resultados gerados pela nossa <strong>Calculadora CLT vs PJ</strong> e validar sua simulação, é fundamental consultar as faixas de tributação vigentes neste mês.
+                        </p>
 
                         <div className="space-y-8">
                             <div>
                                 <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                    <TrendingDown className="w-5 h-5 text-indigo-500" />
-                                    Tabela Progressiva Mensal IRPF (Vigência Maio 2025)
+                                    <TrendingUp className="w-5 h-5 text-indigo-500" />
+                                    Tabela Progressiva INSS 2025 (Teto: R$ 8.157,41)
                                 </h3>
-                                <div className="overflow-x-auto">
+                                <div className="overflow-x-auto rounded-xl border border-white/10">
                                     <table className="w-full text-sm text-left">
                                         <thead className="bg-white/5 text-gray-300">
                                             <tr>
-                                                <th className="px-3 py-3 rounded-l-lg">Base de Cálculo (R$)</th>
+                                                <th className="px-3 py-3 rounded-l-lg">Faixa de Salário de Contribuição (R$)</th>
+                                                <th className="px-3 py-3 rounded-r-lg">Alíquota Aplicada</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="text-gray-400 divide-y divide-white/5">
+                                            <tr><td className="px-3 py-3">Até R$ 1.518,00</td><td className="px-3 py-3">7,5%</td></tr>
+                                            <tr><td className="px-3 py-3">De R$ 1.518,01 até R$ 2.793,88</td><td className="px-3 py-3">9%</td></tr>
+                                            <tr><td className="px-3 py-3">De R$ 2.793,89 até R$ 4.190,83</td><td className="px-3 py-3">12%</td></tr>
+                                            <tr><td className="px-3 py-3">De R$ 4.190,84 até R$ 8.157,41</td><td className="px-3 py-3">14%</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div className="mt-4 text-xs text-gray-400 space-y-2">
+                                    <p><strong>Nota:</strong> O cálculo do INSS para empregados é feito <strong>por faixas cumulativas</strong>, ou seja, cada parcela do salário é tributada com sua respectiva alíquota. <strong>Não há "parcelas a deduzir" no INSS</strong>, ao contrário do IRRF. O valor máximo descontado em 2025 é de <strong>R$ 951,63</strong>.</p>
+                                    <p><strong>Entenda o Cálculo Progressivo:</strong> O desconto do INSS não é aplicado sobre o total do salário com uma única alíquota. O cálculo é fatiado: você paga 7,5% sobre a primeira faixa, 9% sobre a parte que excede essa faixa, e assim por diante. Isso garante que o desconto seja realmente progressivo.</p>
+                                    <p><strong>Fonte Oficial:</strong> Baseado na <a href="https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Tabela de Contribuição Mensal - INSS</a>.</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                                    <TrendingDown className="w-5 h-5 text-indigo-500" />
+                                    Tabela Mensal IRRF 2025
+                                </h3>
+                                <div className="overflow-x-auto rounded-xl border border-white/10">
+                                    <table className="w-full text-sm text-left">
+                                        <thead className="bg-white/5 text-gray-300">
+                                            <tr>
+                                                <th className="px-3 py-3 rounded-l-lg">Base de Cálculo (Salário - INSS - Dependentes)</th>
                                                 <th className="px-3 py-3">Alíquota</th>
                                                 <th className="px-3 py-3 rounded-r-lg">Parcela a Deduzir (R$)</th>
                                             </tr>
                                         </thead>
                                         <tbody className="text-gray-400 divide-y divide-white/5">
-                                            <tr><td className="px-3 py-3">Até 2.428,80</td><td className="px-3 py-3 text-green-400">Isento</td><td className="px-3 py-3">0,00</td></tr>
-                                            <tr><td className="px-3 py-3">2.428,81 a 2.826,65</td><td className="px-3 py-3">7,5%</td><td className="px-3 py-3">182,16</td></tr>
-                                            <tr><td className="px-3 py-3">2.826,66 a 3.751,05</td><td className="px-3 py-3">15,0%</td><td className="px-3 py-3">394,16</td></tr>
-                                            <tr><td className="px-3 py-3">3.751,06 a 4.664,68</td><td className="px-3 py-3">22,5%</td><td className="px-3 py-3">675,49</td></tr>
-                                            <tr><td className="px-3 py-3">Acima de 4.664,68</td><td className="px-3 py-3">27,5%</td><td className="px-3 py-3">869,36</td></tr>
+                                            <tr><td className="px-3 py-3">Até R$ 2.428,80</td><td className="px-3 py-3 text-green-400">Isento</td><td className="px-3 py-3">-</td></tr>
+                                            <tr><td className="px-3 py-3">De R$ 2.428,81 até R$ 2.826,65</td><td className="px-3 py-3">7,5%</td><td className="px-3 py-3">R$ 182,16</td></tr>
+                                            <tr><td className="px-3 py-3">De R$ 2.826,66 até R$ 3.751,05</td><td className="px-3 py-3">15,0%</td><td className="px-3 py-3">R$ 394,16</td></tr>
+                                            <tr><td className="px-3 py-3">De R$ 3.751,06 até R$ 4.664,68</td><td className="px-3 py-3">22,5%</td><td className="px-3 py-3">R$ 675,49</td></tr>
+                                            <tr><td className="px-3 py-3">Acima de R$ 4.664,68</td><td className="px-3 py-3">27,5%</td><td className="px-3 py-3">R$ 908,73</td></tr>
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-
-                            <div>
-                                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                    <Building2 className="w-5 h-5 text-indigo-500" />
-                                    Simples Nacional 2025 - Anexo III (Serviços com Fator R)
-                                </h3>
-                                <p className="text-xs text-gray-500 mb-3">*Aplicável se folha de pagamento for ≥ 28% do faturamento.</p>
-                                <div className="overflow-x-auto">
-                                    <table className="w-full text-sm text-left">
-                                        <thead className="bg-white/5 text-gray-300">
-                                            <tr>
-                                                <th className="px-3 py-3 rounded-l-lg">Receita Bruta 12 Meses (R$)</th>
-                                                <th className="px-3 py-3">Alíquota Nominal</th>
-                                                <th className="px-3 py-3 rounded-r-lg">Valor a Deduzir (R$)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="text-gray-400 divide-y divide-white/5">
-                                            <tr><td className="px-3 py-3">Até 180.000,00</td><td className="px-3 py-3 text-green-400 font-bold">6,00%</td><td className="px-3 py-3">-</td></tr>
-                                            <tr><td className="px-3 py-3">180.000,01 a 360.000,00</td><td className="px-3 py-3">11,20%</td><td className="px-3 py-3">9.360,00</td></tr>
-                                            <tr><td className="px-3 py-3">360.000,01 a 720.000,00</td><td className="px-3 py-3">13,50%</td><td className="px-3 py-3">17.640,00</td></tr>
-                                        </tbody>
-                                    </table>
+                                <div className="mt-4 text-xs text-gray-400">
+                                    <p><strong>Fonte Oficial:</strong> Dados da <a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2025" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Receita Federal do Brasil - Tabelas 2025</a>.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Fator R & Erros Comuns */}
+                    {/* Erros Comuns e Fator R */}
                     <div className="grid md:grid-cols-2 gap-8">
                         <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
                             <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                <AlertCircle className="w-5 h-5 text-orange-500" />
-                                Erros Comuns
+                                <AlertCircle className="w-5 h-5 text-yellow-500" />
+                                A "Pegadinha" do Salário Bruto
                             </h3>
                             <div className="space-y-4 text-sm text-gray-400">
                                 <p>
-                                    O erro mais frequente é a comparação direta entre <strong>Salário Líquido Mensal CLT</strong> e <strong>Valor da Nota Fiscal PJ</strong>. Essa conta ignora que o trabalhador CLT recebe 13,33 salários por ano (13º + 1/3 férias) e FGTS.
+                                    O erro mais frequente ao migrar de carreira é comparar o salário mensal CLT diretamente com a nota fiscal PJ. O trabalhador CLT recebe, na prática, <strong>13,33 remunerações por ano</strong> (12 meses + 13º salário + 1/3 de férias), enquanto o PJ recebe apenas pelo que produz. Uma <strong>Calculadora CLT vs PJ</strong> eficiente deve subtrair essa diferença estrutural antes de mostrar o resultado.
                                 </p>
                                 <p>
-                                    Outro ponto crítico é o <strong>Plano de Saúde</strong>. Planos empresariais (CLT) custam até 300% menos que planos individuais por adesão (PJ). Se não calcular isso, seu "lucro" vira prejuízo.
+                                    Além disso, o CLT possui o depósito compulsório do FGTS (8% do bruto), que funciona como um patrimônio diferido. Ao virar PJ, esse valor desaparece e deve ser embutido na sua precificação.
+                                </p>
+                                <p>
+                                    <strong>A Regra do 1.6x:</strong> O mercado convencionou o "Multiplicador de Ouro" de <strong>1.6x</strong>. Para que a troca valha a pena financeiramente — cobrindo a perda de estabilidade, férias pagas, VR/VA e plano de saúde — o valor bruto PJ deve ser pelo menos 60% maior que o bruto CLT.
+                                </p>
+                                <p className="text-xs mt-2 border-t border-white/5 pt-2">
+                                    Para visualizar o impacto real dessas verbas, você pode usar nossa calculadora de <Link to="/calculadoras/rescisao" className="text-blue-400 hover:underline">rescisão de contrato</Link> para entender o montante acumulado em uma saída CLT.
                                 </p>
                             </div>
                         </div>
@@ -643,64 +675,88 @@ export function CLTVsPJPage() {
                             </h3>
                             <div className="space-y-4 text-sm text-gray-400">
                                 <p>
-                                    Em 2025, profissionais liberais e de tecnologia dependem do <strong>Fator R</strong>. Se a sua empresa PJ não tiver funcionários, sua "folha" será o seu próprio <strong>Pró-labore</strong>.
+                                    Se você não pode ser MEI (profissionais intelectuais como desenvolvedores, engenheiros e arquitetos), sua empresa será tributada pelo Simples Nacional. Aqui reside o segredo da eficiência tributária em 2025: o <strong>Fator R</strong>.
+                                </p>
+                                <p>
+                                    O governo define a alíquota baseada na proporção entre sua folha de pagamento (Pró-Labore) e seu faturamento. Ao utilizar nossa <strong>Calculadora CLT vs PJ</strong>, esse cálculo é feito automaticamente.
                                 </p>
                                 <div className="bg-white/5 p-3 rounded-lg text-center font-mono text-xs md:text-sm text-indigo-300 border border-indigo-500/20">
-                                    Fator R = Massa Salarial (12m) / Receita (12m) ≥ 0,28
+                                    Fator R = Folha de Salários (12m) / Receita Bruta (12m)
                                 </div>
-                                <p>
-                                    Se atingir 28%, paga Anexo III (inicia em 6%). Se for menor, cai no Anexo V (inicia em 15,5%).
+                                <ul className="space-y-1 mt-2 text-xs">
+                                    <li>• <strong>Cenário Vantajoso (Anexo III):</strong> Se Fator R ≥ 28%, imposto inicia em 6%.</li>
+                                    <li>• <strong>Cenário Penalizador (Anexo V):</strong> Se Fator R {'<'} 28%, imposto inicia em 15,5%.</li>
+                                </ul>
+                                <p className="text-xs mt-2">
+                                    <strong>Estratégia Prática:</strong> Para pagar menos imposto, o profissional PJ define um "Pró-Labore" que seja exatamente 28% do faturamento.
+                                </p>
+                                <p className="text-xs">
+                                    <strong>Fonte Oficial:</strong> Consulte no <a href="https://www8.receita.fazenda.gov.br/SimplesNacional/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Portal do Simples Nacional - Receita Federal</a>.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Examples Section */}
+                    {/* Como Calcular e Exemplos */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-10">
-                        <h2 className="text-2xl font-bold text-white mb-6">Como Calcular (Exemplos Reais)</h2>
-
+                        <h2 className="text-2xl font-bold text-white mb-6">Como Calcular o Salário Líquido (Passo a Passo)</h2>
                         <div className="grid md:grid-cols-2 gap-8">
-                            {/* Example 1 */}
-                            <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-white border-b border-white/10 pb-2">Exemplo 1: Profissional Júnior</h3>
-                                <div className="space-y-3 text-sm text-gray-400">
-                                    <p><strong className="text-blue-400">Cenário CLT:</strong> Salário R$ 5.000</p>
-                                    <ul className="list-disc pl-5 space-y-1">
-                                        <li>Líquido Mensal: R$ 4.177,52</li>
-                                        <li>Pacote Anual: ~R$ 60.100 (com benefícios)</li>
-                                    </ul>
-
-                                    <p className="mt-4"><strong className="text-indigo-400">Cenário PJ:</strong> Faturamento R$ 7.500 (1.5x)</p>
-                                    <ul className="list-disc pl-5 space-y-1">
-                                        <li>Custo: Contador + Saúde (~R$ 600)</li>
-                                        <li>Líquido Mensal: ~R$ 6.219</li>
-                                        <li>Pacote Anual: ~R$ 74.628</li>
-                                    </ul>
-                                    <p className="text-emerald-400 text-xs mt-2 bg-emerald-500/10 p-2 rounded border border-emerald-500/20">
-                                        Veredito: Ganho de 20%. Vantajoso, mas exige disciplina.
-                                    </p>
+                            <div>
+                                <h3 className="text-lg font-bold text-white mb-4">Metodologia</h3>
+                                <p className="text-sm text-gray-400 mb-4">
+                                    Para reproduzir manualmente a lógica da <strong>Calculadora CLT vs PJ</strong>, você deve seguir uma ordem rígida de deduções. Primeiro, desconta-se a previdência, e só depois calcula-se o imposto de renda sobre o que sobrou.
+                                </p>
+                                <div className="bg-white/5 p-3 rounded-lg border border-white/5 font-mono text-sm text-blue-300 mb-4">
+                                    Salário Líquido = Bruto - INSS - IRRF
                                 </div>
+                                <ol className="list-decimal pl-4 space-y-2 text-sm text-gray-400">
+                                    <li><strong>Encontre o INSS:</strong> Aplique as alíquotas progressivas por faixa sobre o Salário Bruto.</li>
+                                    <li><strong>Base do IR:</strong> Subtraia o INSS (e valor por dependentes, se houver) do Salário Bruto.</li>
+                                    <li><strong>Encontre o IRRF:</strong> Aplique a alíquota da tabela de IR sobre a base encontrada no passo anterior.</li>
+                                    <li><strong>Resultado:</strong> Subtraia INSS e IRRF do Bruto para chegar ao Líquido.</li>
+                                </ol>
                             </div>
 
-                            {/* Example 2 */}
-                            <div className="space-y-4">
-                                <h3 className="text-lg font-semibold text-white border-b border-white/10 pb-2">Exemplo 2: Profissional Sênior</h3>
-                                <div className="space-y-3 text-sm text-gray-400">
-                                    <p><strong className="text-blue-400">Cenário CLT:</strong> Salário R$ 15.000</p>
-                                    <ul className="list-disc pl-5 space-y-1">
-                                        <li>Descontos: Teto INSS + IR alto</li>
-                                        <li>Pacote Anual: ~R$ 175.000</li>
+                            <div className="space-y-6">
+                                <h3 className="text-lg font-bold text-white border-b border-white/10 pb-2">Exemplo 1: Nível Júnior</h3>
+                                <div className="space-y-1 text-sm text-gray-400">
+                                    <p><strong>CLT (R$ 3.500):</strong></p>
+                                    <ul className="list-disc pl-5">
+                                        <li>INSS: -R$ 313,41</li>
+                                        <li>IRRF: -R$ 83,83</li>
+                                        <li>Líquido: ~R$ 3.102,76</li>
                                     </ul>
+                                </div>
+                                <div className="space-y-1 text-sm text-gray-400">
+                                    <p><strong>PJ (R$ 5.600):</strong></p>
+                                    <ul className="list-disc pl-5">
+                                        <li>Impostos: ~R$ 508,00</li>
+                                        <li>Líquido: ~R$ 5.092,00</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
 
-                                    <p className="mt-4"><strong className="text-indigo-400">Cenário PJ:</strong> Faturamento R$ 22.500 (1.5x)</p>
+                        <div className="mt-8 pt-6 border-t border-white/5">
+                            <h3 className="text-lg font-bold text-white mb-4">Exemplo 2: Nível Sênior (Comparativo Detalhado)</h3>
+                            <div className="grid md:grid-cols-2 gap-8 text-sm text-gray-400">
+                                <div className="space-y-2">
+                                    <p><strong className="text-blue-400">CLT (R$ 12.000 Bruto)</strong></p>
                                     <ul className="list-disc pl-5 space-y-1">
-                                        <li>Impostos: Simples Efetivo (~8%)</li>
-                                        <li>Líquido Mensal: R$ 19.133,81</li>
-                                        <li>Pacote Anual: ~R$ 217.284</li>
+                                        <li>INSS (Teto 2025): -R$ 951,63</li>
+                                        <li>IRRF (27,5%): ~R$ 2.150,00</li>
+                                        <li><strong>Líquido: ~R$ 8.898,37</strong></li>
+                                        <li>+ FGTS, 13º, Férias</li>
                                     </ul>
-                                    <p className="text-emerald-400 text-xs mt-2 bg-emerald-500/10 p-2 rounded border border-emerald-500/20">
-                                        Veredito: R$ 42.000 a mais por ano.
-                                    </p>
+                                </div>
+                                <div className="space-y-2">
+                                    <p><strong className="text-indigo-400">PJ (R$ 18.000 Faturamento)</strong></p>
+                                    <ul className="list-disc pl-5 space-y-1">
+                                        <li>Pró-Labore (28%): R$ 5.040,00</li>
+                                        <li>Impostos Totais: ~R$ 2.123,00 (DAS + Pessoa Física)</li>
+                                        <li>Custos (Contador/Taxas): -R$ 400,00</li>
+                                        <li><strong>Líquido Disponível: ~R$ 15.477,00</strong></li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -708,34 +764,27 @@ export function CLTVsPJPage() {
 
                     {/* Casos Especiais */}
                     <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-10">
-                        <div className="flex items-start gap-4 mb-6">
-                            <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
-                                <HelpCircle className="w-6 h-6 text-emerald-500" />
-                            </div>
-                            <h2 className="text-2xl font-bold text-white mt-1">
-                                Casos Especiais
-                            </h2>
-                        </div>
-
-                        <div className="space-y-6">
+                        <h2 className="text-2xl font-bold text-white mb-6">Casos Especiais e Pontos de Atenção</h2>
+                        <div className="space-y-6 text-gray-400">
                             <div>
-                                <h3 className="text-lg font-bold text-white mb-2">Férias e 13º no PJ</h3>
-                                <p className="text-gray-400 leading-relaxed">
-                                    Legalmente, PJ não tem direito a esses benefícios. "Dias não trabalhados são dias não faturados". Você deve calcular 1/12 da sua receita mensal e guardar em uma aplicação financeira para criar sua própria reserva de férias.
+                                <h3 className="text-lg font-bold text-white mb-2">O Limite do MEI e o "Super MEI"</h3>
+                                <p className="leading-relaxed">
+                                    Muitos profissionais estão na expectativa do PLP 60/2025 (Super MEI). Porém, até 10 de dezembro de 2025, o projeto ainda aguarda aprovação final. O limite seguro continua sendo <strong>R$ 81.000/ano</strong>. Ultrapassar esse valor sem a lei sancionada gera <Link to="/calculadoras/das-mei" className="text-blue-400 hover:underline">desenquadramento retroativo e multas</Link> pesadas.
+                                </p>
+                                <p className="text-xs mt-2"><strong>Fonte:</strong> <a href="https://www25.senado.leg.br/web/atividade/materias/-/materia/167495" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Portal do Senado Federal (PLP 60/2025)</a>.</p>
+                            </div>
+                            <div className="h-px bg-white/5" />
+                            <div>
+                                <h3 className="text-lg font-bold text-white mb-2">Profissionais de TI e o Exterior</h3>
+                                <p className="leading-relaxed">
+                                    Para quem trabalha para o exterior (exportação de serviços), a alíquota de ISS é isenta em muitas cidades e não há incidência de PIS/COFINS, tornando o PJ imbatível. No mercado nacional, a contratação PJ em TI é padrão, mas exige cuidado com a subordinação.
                                 </p>
                             </div>
                             <div className="h-px bg-white/5" />
                             <div>
-                                <h3 className="text-lg font-bold text-white mb-2">Profissionais Autônomos vs MEI</h3>
-                                <p className="text-gray-400 leading-relaxed">
-                                    Cuidado: Profissões intelectuais regulamentadas (Programadores, Engenheiros, Médicos) <strong>não podem ser MEI</strong>. Se abrir indevidamente, corre risco de fiscalização. O caminho correto é abrir uma ME (Microempresa).
-                                </p>
-                            </div>
-                            <div className="h-px bg-white/5" />
-                            <div>
-                                <h3 className="text-lg font-bold text-white mb-2">Aposentadoria e INSS</h3>
-                                <p className="text-gray-400 leading-relaxed">
-                                    No CLT, você contribui sobre o teto. No PJ, geralmente sobre o salário mínimo ou 28%. Isso reduzirá sua aposentadoria oficial. A diferença economizada deve ser investida obrigatoriamente.
+                                <h3 className="text-lg font-bold text-white mb-2">Aposentadoria e Investimentos</h3>
+                                <p className="leading-relaxed">
+                                    O profissional CLT tem contribuição cheia para o INSS. O PJ, ao pagar INSS sobre o Pró-Labore reduzido ou salário mínimo (MEI), terá uma aposentadoria oficial baixa. É obrigatório investir a diferença salarial. Confira nosso guia sobre <Link to="/blog/investimentos" className="text-blue-400 hover:underline">investimentos</Link> para montar sua carteira de longo prazo.
                                 </p>
                             </div>
                         </div>
