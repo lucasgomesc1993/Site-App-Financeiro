@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Calculator, HelpCircle, Wallet, DollarSign, ArrowRight, Building2, TrendingDown, Check, Coins, Calendar, PiggyBank, Briefcase, Zap, AlertTriangle } from 'lucide-react';
+import React, { useState } from 'react';
+import { Calculator, HelpCircle, Wallet, DollarSign, ArrowRight, Building2, TrendingDown, Check, Coins, Calendar, PiggyBank, Briefcase, Zap, AlertTriangle, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
 import { FAQ } from '../FAQ';
 import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQItem } from '../../types';
+import { Tooltip } from '../ui/Tooltip';
 
 const NET_SALARY_FAQS: FAQItem[] = [
     {
@@ -38,17 +39,55 @@ export function NetSalaryPage() {
     const [grossSalary, setGrossSalary] = useState('');
     const [dependents, setDependents] = useState('0');
     const [otherDiscounts, setOtherDiscounts] = useState('');
-    const [result, setResult] = useState<{ inss: number; irrf: number; netSalary: number; totalDiscounts: number; usedSimplified: boolean } | null>(null);
+    const [benefits, setBenefits] = useState('');
+    const [hasMinorDependents, setHasMinorDependents] = useState(false);
+    const [minorDependentsQty, setMinorDependentsQty] = useState('1');
+    const [hasOvertime, setHasOvertime] = useState(false);
+    const [overtimeHours, setOvertimeHours] = useState('');
+    const [validationError, setValidationError] = useState<string | null>(null);
+    const [result, setResult] = useState<{
+        grossSalary: number;
+        baseSalary: number;
+        overtimeValue: number;
+        inss: number;
+        irrf: number;
+        netSalary: number;
+        totalDiscounts: number;
+        usedSimplified: boolean;
+        irrfBaseLegal: number;
+        irrfBaseSimplified: number;
+        others: number;
+        benefitsValue: number;
+    } | null>(null);
 
     const calculate = () => {
-        const salary = parseFloat(grossSalary.replace(/\./g, '').replace(',', '.'));
-        const deps = parseInt(dependents);
-        const others = parseFloat(otherDiscounts.replace(/\./g, '').replace(',', '.') || '0');
+        // Clear previous errors
+        setValidationError(null);
 
-        if (isNaN(salary) || salary === 0) {
-            setResult(null);
+        // Validate required fields
+        if (!grossSalary) {
+            setValidationError('Informe o salário bruto.');
             return;
         }
+
+        const baseSalary = parseFloat(grossSalary.replace(/\./g, '').replace(',', '.'));
+        const deps = parseInt(dependents) || 0;
+        const others = parseFloat(otherDiscounts.replace(/\./g, '').replace(',', '.') || '0');
+        const benefitsValue = parseFloat(benefits.replace(/\./g, '').replace(',', '.') || '0');
+        const overtimeHrs = hasOvertime ? (parseFloat(overtimeHours.replace(/\./g, '').replace(',', '.')) || 0) : 0;
+
+        if (isNaN(baseSalary) || baseSalary <= 0) {
+            setValidationError('Informe um salário válido maior que zero.');
+            return;
+        }
+
+        // Calculate overtime value (50% adicional)
+        // Hora normal = salário / 220
+        const hourlyRate = baseSalary / 220;
+        const overtimeValue = overtimeHrs * hourlyRate * 1.5;
+
+        // Total gross salary including overtime
+        const salary = baseSalary + overtimeValue;
 
         // 1. Calculate INSS (2025 Table Logic - Portaria Interministerial MPS/MF nº 6)
         // Ranges: 1518.00 | 2793.88 | 4190.83 | 8157.41
@@ -63,38 +102,23 @@ export function NetSalaryPage() {
             inss = (salary * 0.14) - 190.40;
         } else {
             // Ceiling calculation
-            // Max deduction calc: (8157.41 * 0.14) - 190.40 = 951.6374 -> approx 951.63 or 951.64 depending on rounding. 
-            // The text says "aprox. R$ 951,63". Let's use the formula on the cap.
             inss = (8157.41 * 0.14) - 190.40;
         }
 
         // 2. Calculate IRRF Base
-        // Legal Deductions
+        // The INSS is ALWAYS subtracted first.
+        // Then we compare: Legal Deductions (dependents × 189.59) vs Simplified Discount (607.20)
         const deductionPerDependent = 189.59;
+        const baseAfterINSS = salary - inss;
 
-        // Scenario A: Legal Deductions
-        let irrfBaseA = salary - inss - (deps * deductionPerDependent);
+        // Scenario A: Legal Deductions (INSS already subtracted + dependents deduction)
+        const legalDeduction = deps * deductionPerDependent;
+        let irrfBaseA = baseAfterINSS - legalDeduction;
 
-        // Scenario B: Simplified Discount
-        // "Subtrai-se um valor fixo de R$ 607,20 direto da base de cálculo"
-        // Note: The simplified discount replaces deductions. Does it replace INSS too?
-        // Text says: "Deduções Legais: Subtrai-se o INSS pago, dependentes... e pensão"
-        // "Desconto Simplificado: Subtrai-se um valor fixo de R$ 607,20 direto da base de cálculo."
-        // Usually, simplified discount replaces the *deductions from the tax base*, but you still deduct INSS first? 
-        // Wait, the text says:
-        // "Exemplo 1: Salário R$ 5.000,00 ... Cenário B (Desconto Simplificado): R$ 5.000,00 - R$ 607,20 (Fixo) = Base de R$ 4.392,80."
-        // THIS IMPLIES R$ 607,20 REPLACES EVERYTHING (INSS included) for the base calculation?
-        // Actually, normally simplified discount replaces (Dependentes + Outras deduções legais like previdência privada, pensão). 
-        // BUT the text example strictly says: "R$ 5.000,00 - R$ 607,20 (Fixo) = Base de R$ 4.392,80". It does NOT subtract INSS in Scenario B example.
-        // Let's look at Scenario A in text: "R$ 5.000,00 - R$ 509,60 (INSS) = Base de R$ 4.490,40." (Assuming 0 dependents).
-        // So yes, based on the user provided text, the Simplified Discount is applied DIRECTLY to Gross Salary, *instead* of (INSS + Dependents).
-        // This is a specific interpretation in the text ("Subtrai-se um valor fixo de R$ 607,20 direto da base de cálculo").
-        // I will follow the text's logic exactly for the calculator to match the examples provided.
+        // Scenario B: Simplified Discount (INSS already subtracted + fixed 607.20)
+        let irrfBaseB = baseAfterINSS - 607.20;
 
-        let irrfBaseB = salary - 607.20;
-
-        // "Nossa calculadora faz as duas contas instantaneamente e aplica a que resultar em menos imposto"
-        // Less tax means SMALLER BASE.
+        // Use the most beneficial deduction (smaller base = less tax)
         let irrfBase = 0;
         let usedSimplified = false;
 
@@ -126,20 +150,36 @@ export function NetSalaryPage() {
         if (irrf < 0) irrf = 0;
 
         const totalDiscounts = inss + irrf + others;
-        const netSalary = salary - totalDiscounts;
+        const netSalary = salary - totalDiscounts + benefitsValue; // Benefits are ADDED
 
         setResult({
+            grossSalary: salary,
+            baseSalary,
+            overtimeValue,
             inss,
             irrf,
             netSalary,
             totalDiscounts,
-            usedSimplified
+            usedSimplified,
+            irrfBaseLegal: irrfBaseA,
+            irrfBaseSimplified: irrfBaseB,
+            others,
+            benefitsValue
         });
     };
 
-    useEffect(() => {
-        calculate();
-    }, [grossSalary, dependents, otherDiscounts]);
+    const handleClear = () => {
+        setGrossSalary('');
+        setDependents('0');
+        setOtherDiscounts('');
+        setBenefits('');
+        setHasMinorDependents(false);
+        setMinorDependentsQty('1');
+        setHasOvertime(false);
+        setOvertimeHours('');
+        setResult(null);
+        setValidationError(null);
+    };
 
     const formatCurrency = (value: string) => {
         const number = value.replace(/\D/g, '');
@@ -162,7 +202,8 @@ export function NetSalaryPage() {
             "Cálculo exato Lei 15.191",
             "Tabela INSS Progressiva 2025",
             "Comparação Desconto Simplificado x Legal",
-            "Simulação com Dependentes"
+            "Simulação com Dependentes",
+            "Validação de Campos com Mensagens de Erro"
         ],
         "offers": {
             "@type": "Offer",
@@ -198,7 +239,7 @@ export function NetSalaryPage() {
 
             {/* Background Orbs */}
             <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
-            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-green-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
+            <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none mix-blend-screen" />
 
             <div className="max-w-7xl mx-auto relative z-10">
                 <div className="mb-8">
@@ -209,38 +250,43 @@ export function NetSalaryPage() {
 
                     <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-                            <Wallet className="w-4 h-4 text-emerald-500" />
+                            <Wallet className="w-4 h-4 text-blue-500" />
                             <span className="text-sm text-gray-300">Atualizado: Lei nº 15.191 (Dez/2025)</span>
                         </div>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 tracking-tight">
                             Calculadora de Salário Líquido 2025: <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 to-blue-500">Cálculo Exato e Atualizado</span>
+                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">Cálculo Exato e Atualizado</span>
                         </h1>
                     </div>
                 </div>
 
-                <div className="grid lg:grid-cols-12 gap-8 mb-16">
+                <div className="mb-12">
                     {/* Calculator */}
-                    <div className="lg:col-span-7 animate-in fade-in slide-in-from-left-4 duration-700 delay-200">
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
+                    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 delay-200">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
                             <div className="flex items-center justify-between mb-8">
                                 <h2 className="text-xl font-semibold flex items-center gap-2 text-white">
-                                    <Calculator className="w-5 h-5 text-emerald-500" />
-                                    Simulador
+                                    <Calculator className="w-5 h-5 text-blue-500" />
+                                    Simular Salário Líquido
                                 </h2>
                             </div>
 
                             <div className="space-y-6">
+                                {/* Salary Input */}
                                 <div className="space-y-2">
-                                    <label className="text-sm text-gray-400">Salário Bruto</label>
+                                    <div className="flex items-center gap-1">
+                                        <label htmlFor="grossSalary" className="text-sm text-gray-400">Salário Bruto</label>
+                                        <Tooltip content="Valor total do seu salário sem os descontos (conforme carteira ou holerite)." />
+                                    </div>
                                     <div className="relative">
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                         <input
+                                            id="grossSalary"
                                             type="text"
                                             inputMode="decimal"
                                             value={grossSalary}
                                             onChange={(e) => handleCurrencyInput(e.target.value, setGrossSalary)}
-                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all font-medium"
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all font-medium"
                                             placeholder="0,00"
                                         />
                                     </div>
@@ -248,138 +294,389 @@ export function NetSalaryPage() {
 
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Número de Dependentes</label>
+                                        <div className="flex items-center gap-1">
+                                            <label htmlFor="dependents" className="text-sm text-gray-400">Nº de Dependentes</label>
+                                            <Tooltip content="Informe quantos dependentes você declara no Imposto de Renda (filhos, cônjuge, etc). Cada um reduz a base em R$ 189,59." />
+                                        </div>
                                         <input
+                                            id="dependents"
                                             type="number"
                                             inputMode="numeric"
                                             value={dependents}
                                             onChange={(e) => setDependents(e.target.value)}
-                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
                                             placeholder="0"
                                             min="0"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm text-gray-400">Outros Descontos</label>
+                                        <div className="flex items-center gap-1">
+                                            <label htmlFor="benefits" className="text-sm text-gray-400">Benefícios (VR, VT, Plano)</label>
+                                            <Tooltip content="Valor total de descontos de benefícios como vale-refeição, vale-transporte, plano de saúde, etc." />
+                                        </div>
                                         <div className="relative">
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                             <input
+                                                id="benefits"
                                                 type="text"
                                                 inputMode="decimal"
-                                                value={otherDiscounts}
-                                                onChange={(e) => handleCurrencyInput(e.target.value, setOtherDiscounts)}
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-emerald-500/50 transition-all"
+                                                value={benefits}
+                                                onChange={(e) => handleCurrencyInput(e.target.value, setBenefits)}
+                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
                                                 placeholder="0,00"
                                             />
                                         </div>
                                     </div>
                                 </div>
 
-                                <div className="pt-6 border-t border-white/5">
-                                    <div className="bg-emerald-500/10 p-6 rounded-2xl border border-emerald-500/20 text-center mb-6 relative overflow-hidden">
-                                        <div className="relative z-10">
-                                            <span className="text-sm text-emerald-400 block mb-2 font-medium">Salário Líquido Estimado</span>
-                                            <span className="block text-4xl md:text-5xl font-bold text-white tracking-tight">
-                                                {result ? `R$ ${result.netSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : 'R$ 0,00'}
-                                            </span>
-                                            {result && result.netSalary > 0 && (
-                                                <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/20 text-xs text-emerald-300">
-                                                    <Check className="w-3 h-3" />
-                                                    Cálculo Oficial 2025
-                                                </div>
-                                            )}
+                                {/* Outros Descontos */}
+                                <div className="space-y-2">
+                                    <div className="flex items-center gap-1">
+                                        <label htmlFor="otherDiscounts" className="text-sm text-gray-400">Outros Descontos</label>
+                                        <Tooltip content="Descontos adicionais como empréstimo consignado, pensão alimentícia, adiantamentos, etc." />
+                                    </div>
+                                    <div className="relative">
+                                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
+                                        <input
+                                            id="otherDiscounts"
+                                            type="text"
+                                            inputMode="decimal"
+                                            value={otherDiscounts}
+                                            onChange={(e) => handleCurrencyInput(e.target.value, setOtherDiscounts)}
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                            placeholder="0,00"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Checkbox Options */}
+                                <div className="space-y-3 pt-2">
+                                    {/* Dependentes menores de 14 anos */}
+                                    <div className="flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between">
+                                        <div
+                                            className="flex items-center gap-3 cursor-pointer"
+                                            onClick={() => setHasMinorDependents(!hasMinorDependents)}
+                                        >
+                                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasMinorDependents ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
+                                                {hasMinorDependents && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-sm text-gray-300">
+                                                    Dependentes menores de 14 anos
+                                                </span>
+                                                <Tooltip content="Empregados com filhos menores de 14 anos têm direito ao salário-família (benefício pago pelo INSS)." />
+                                            </div>
                                         </div>
+                                        {hasMinorDependents && (
+                                            <div className="flex items-center gap-2 ml-8 md:ml-0">
+                                                <span className="text-xs text-gray-400">Quantidade:</span>
+                                                <input
+                                                    type="text"
+                                                    inputMode="numeric"
+                                                    value={minorDependentsQty}
+                                                    onChange={(e) => setMinorDependentsQty(e.target.value.replace(/[^0-9]/g, ''))}
+                                                    className="w-16 bg-[#0a0a0a] border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm text-center focus:outline-none focus:border-blue-500/50"
+                                                    placeholder="0"
+                                                />
+                                            </div>
+                                        )}
                                     </div>
 
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10">
-                                            <span className="text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1">
-                                                INSS
-                                            </span>
-                                            <span className="text-lg font-bold text-red-400">
-                                                {result ? `- R$ ${result.inss.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '---'}
-                                            </span>
-                                        </div>
-                                        <div className="bg-white/5 p-4 rounded-xl border border-white/5 text-center transition-colors hover:bg-white/10">
-                                            <span className="text-xs text-gray-400 block mb-1 flex items-center justify-center gap-1">
-                                                IRRF
-                                            </span>
-                                            <span className="text-lg font-bold text-red-400">
-                                                {result ? `- R$ ${result.irrf.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : '---'}
-                                            </span>
-                                            {result?.usedSimplified && (
-                                                <span className="block text-[10px] text-emerald-400 mt-1">
-                                                    (Simplificado)
+                                    {/* Horas Extras */}
+                                    <div className="flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between">
+                                        <div
+                                            className="flex items-center gap-3 cursor-pointer"
+                                            onClick={() => setHasOvertime(!hasOvertime)}
+                                        >
+                                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasOvertime ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
+                                                {hasOvertime && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-sm text-gray-300">
+                                                    Horas extras
                                                 </span>
-                                            )}
+                                                <Tooltip content="Horas trabalhadas além da jornada normal. O adicional padrão é 50% sobre a hora normal." />
+                                            </div>
+                                        </div>
+                                        {hasOvertime && (
+                                            <div className="flex items-center gap-2 ml-8 md:ml-0">
+                                                <span className="text-xs text-gray-400">Quantidade de horas:</span>
+                                                <input
+                                                    type="text"
+                                                    inputMode="decimal"
+                                                    value={overtimeHours}
+                                                    onChange={(e) => setOvertimeHours(e.target.value.replace(/[^0-9,]/g, ''))}
+                                                    className="w-20 bg-[#0a0a0a] border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm text-center focus:outline-none focus:border-blue-500/50"
+                                                    placeholder="0"
+                                                />
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Validation Error Message */}
+                                {validationError && (
+                                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-center gap-2">
+                                        <AlertCircle className="w-5 h-5 shrink-0" />
+                                        {validationError}
+                                    </div>
+                                )}
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-col-reverse md:flex-row gap-4 pt-4">
+                                    <button
+                                        onClick={handleClear}
+                                        className="md:flex-1 bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 rounded-xl border border-white/10 transition-colors flex items-center justify-center gap-2"
+                                    >
+                                        Limpar
+                                    </button>
+                                    {!result && (
+                                        <button
+                                            onClick={calculate}
+                                            className="md:flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                        >
+                                            <Calculator className="w-5 h-5" />
+                                            Calcular Salário Líquido
+                                        </button>
+                                    )}
+                                    {result && (
+                                        <button
+                                            onClick={() => { setResult(null); setTimeout(calculate, 0); }}
+                                            className="md:flex-[2] bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                        >
+                                            <Calculator className="w-5 h-5" />
+                                            Calcular Novamente
+                                        </button>
+                                    )}
+                                </div>
+
+                                {/* Result Block */}
+                                {result && (
+                                    <div className="pt-6 animate-in fade-in slide-in-from-top-4 duration-500 space-y-6 border-t border-white/10 mt-6">
+
+                                        {/* Total Section */}
+                                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-2xl shadow-2xl relative overflow-hidden group mb-6">
+                                            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-white/20 transition-all duration-700"></div>
+
+                                            <div className="relative z-10 grid md:grid-cols-2 gap-6 items-center">
+                                                <div>
+                                                    <span className="text-blue-100 text-sm font-medium uppercase tracking-wider mb-1 block">Salário Líquido Estimado</span>
+                                                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                                                        R$ {result.netSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                    </span>
+                                                    <p className="text-blue-200/80 text-xs mt-2">
+                                                        *Cálculo estimado baseado nas tabelas vigentes em Dez/2025.
+                                                    </p>
+                                                </div>
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="flex justify-between items-center text-sm border-b border-white/20 pb-2">
+                                                        <span className="text-blue-100">Salário Bruto</span>
+                                                        <span className="text-white font-medium">R$ {result.grossSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                    <div className="flex justify-between items-center text-sm pt-1">
+                                                        <span className="text-blue-200">Total Descontos</span>
+                                                        <span className="text-white font-medium">- R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            {/* Proventos */}
+                                            <div className="space-y-3">
+                                                <h4 className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                                                    Proventos (Entrada)
+                                                </h4>
+                                                <div className="space-y-2">
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                        <span className="text-gray-300 text-sm">Salário Base</span>
+                                                        <span className="text-green-300 font-medium text-sm">+ R$ {result.baseSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                    {result.overtimeValue > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">Horas Extras (50%)</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.overtimeValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.benefitsValue > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">Benefícios (VR, VT, etc.)</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.benefitsValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Descontos */}
+                                            <div className="space-y-3">
+                                                <h4 className="text-sm font-semibold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                                                    Descontos
+                                                </h4>
+                                                <div className="space-y-2">
+                                                    {result.inss > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                            <span className="text-red-200/70 text-sm">INSS</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.inss.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.irrf > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                            <div className="flex items-center gap-1">
+                                                                <span className="text-red-200/70 text-sm">IRRF</span>
+                                                                {result.usedSimplified && (
+                                                                    <span className="text-[10px] text-emerald-400 bg-emerald-500/20 px-1.5 py-0.5 rounded">(Simplificado)</span>
+                                                                )}
+                                                            </div>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.irrf.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.others > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                            <span className="text-red-200/70 text-sm">Outros Descontos</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.others.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.irrf === 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                                            <div className="flex items-center gap-1">
+                                                                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                                                                <span className="text-emerald-300 text-sm">IRRF</span>
+                                                            </div>
+                                                            <span className="text-emerald-400 font-medium text-sm">Isento</span>
+                                                        </div>
+                                                    )}
+                                                    {result.totalDiscounts === 0 && (
+                                                        <div className="p-4 text-center text-gray-400 text-sm italic border border-white/5 rounded-lg border-dashed">
+                                                            Sem descontos aplicáveis
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* Comparison Box */}
+                                        <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                                            <h4 className="text-sm font-medium text-white mb-3 flex items-center gap-2">
+                                                <Zap className="w-4 h-4 text-yellow-400" />
+                                                Comparação de Métodos (IRRF)
+                                            </h4>
+                                            <div className="grid grid-cols-2 gap-3">
+                                                <div className={`p-3 rounded-lg border ${!result.usedSimplified ? 'bg-blue-500/10 border-blue-500/30' : 'bg-white/5 border-white/5'}`}>
+                                                    <span className="text-xs text-gray-400 block">Base Legal</span>
+                                                    <span className={`text-sm font-bold ${!result.usedSimplified ? 'text-blue-400' : 'text-white'}`}>
+                                                        R$ {Math.max(0, result.irrfBaseLegal).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                    </span>
+                                                    {!result.usedSimplified && <span className="text-[10px] text-blue-300 block mt-1">✓ Mais vantajoso</span>}
+                                                </div>
+                                                <div className={`p-3 rounded-lg border ${result.usedSimplified ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-white/5 border-white/5'}`}>
+                                                    <span className="text-xs text-gray-400 block">Simplificado (-R$ 607,20)</span>
+                                                    <span className={`text-sm font-bold ${result.usedSimplified ? 'text-emerald-400' : 'text-white'}`}>
+                                                        R$ {Math.max(0, result.irrfBaseSimplified).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                    </span>
+                                                    {result.usedSimplified && <span className="text-[10px] text-emerald-300 block mt-1">✓ Mais vantajoso</span>}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Resumo e Para onde vai - lado a lado */}
+                <div className="grid md:grid-cols-2 gap-6 mb-16">
+                    {/* Resumo Rápido */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 animate-in fade-in slide-in-from-left-4 duration-700">
+                        <div className="flex items-center gap-2 mb-4">
+                            <Zap className="w-5 h-5 text-yellow-400" />
+                            <h2 className="text-xl font-bold text-white">Resumo em 30 Segundos</h2>
+                        </div>
+                        <div className="space-y-4">
+                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                                <span className="text-sm text-gray-400">Salário Mínimo Base</span>
+                                <span className="text-sm font-bold text-white">R$ 1.518,00</span>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                                <span className="text-sm text-gray-400">Teto do INSS</span>
+                                <span className="text-sm font-bold text-white text-right">R$ 8.157,41 <br /><span className="text-[10px] font-normal text-gray-400">(Desconto máx. de aprox. R$ 951,63)</span></span>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                                <span className="text-sm text-gray-400">Isenção de IRRF</span>
+                                <span className="text-sm font-bold text-blue-400 text-right">Até R$ 2.428,80 <br /><span className="text-[10px] font-normal text-blue-400">(considerando regras vigentes)</span></span>
+                            </div>
+                            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                                <span className="text-sm text-gray-400">Desconto Simplificado</span>
+                                <span className="text-sm font-bold text-white text-right">R$ 607,20 <br /><span className="text-[10px] font-normal text-gray-400">(dedução automática se vantajosa)</span></span>
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm text-gray-400">Regulação</span>
+                                <span className="text-sm font-bold text-white text-right">Lei 15.191 <br /><span className="text-[10px] font-normal text-gray-400">e Portaria MPS/MF nº 6</span></span>
+                            </div>
+                        </div>
+                        <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
+                            <p className="text-xs text-red-300 leading-relaxed">
+                                <strong>Atenção:</strong> O cálculo trabalhista mudou. A partir de maio e consolidado em Dez/2025, novas faixas (Lei nº 15.191) estão valendo.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Para onde vai o dinheiro */}
+                    <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 animate-in fade-in slide-in-from-right-4 duration-700">
+                        <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                            <Coins className="w-5 h-5 text-blue-500" />
+                            Para onde vai o dinheiro?
+                        </h3>
+                        <div className="space-y-5">
+                            <div className="flex gap-4 items-start">
+                                <div className="w-2 h-2 rounded-full bg-red-400 mt-2 shrink-0" />
+                                <div>
+                                    <strong className="text-white text-sm block">INSS (Previdência Social)</strong>
+                                    <p className="text-sm text-gray-400 mt-1">
+                                        Garante sua aposentadoria, auxílio-doença, salário-maternidade e outros benefícios. O desconto é progressivo até o teto de R$ 951,63 (aprox).
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="flex gap-4 items-start">
+                                <div className="w-2 h-2 rounded-full bg-red-400 mt-2 shrink-0" />
+                                <div>
+                                    <strong className="text-white text-sm block">Imposto de Renda (IRRF)</strong>
+                                    <p className="text-sm text-gray-400 mt-1">
+                                        Incide sobre o restante após o INSS. O governo aplica alíquotas progressivas de 7,5% a 27,5% sobre a base de cálculo.
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    {/* Resumo Rápido */}
-                    <div className="lg:col-span-5 space-y-6 animate-in fade-in slide-in-from-right-4 duration-700 delay-400">
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                            <div className="flex items-center gap-2 mb-4">
-                                <Zap className="w-5 h-5 text-yellow-400" />
-                                <h2 className="text-xl font-bold text-white">Resumo em 30 Segundos</h2>
-                            </div>
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <span className="text-sm text-gray-400">Salário Mínimo Base</span>
-                                    <span className="text-sm font-bold text-white">R$ 1.518,00</span>
-                                </div>
-                                <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <span className="text-sm text-gray-400">Teto do INSS</span>
-                                    <span className="text-sm font-bold text-white text-right">R$ 8.157,41 <br /><span className="text-[10px] font-normal text-gray-500">(Desconto máx. de aprox. R$ 951,63)</span></span>
-                                </div>
-                                <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <span className="text-sm text-gray-400">Isenção de IRRF</span>
-                                    <span className="text-sm font-bold text-emerald-400 text-right">Até R$ 2.428,80 <br /><span className="text-[10px] font-normal text-emerald-500/70">(considerando regras vigentes)</span></span>
-                                </div>
-                                <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <span className="text-sm text-gray-400">Desconto Simplificado</span>
-                                    <span className="text-sm font-bold text-white text-right">R$ 607,20 <br /><span className="text-[10px] font-normal text-gray-500">(dedução automática se vantajosa)</span></span>
-                                </div>
-                                <div className="flex items-center justify-between border-b border-white/5 pb-2">
-                                    <span className="text-sm text-gray-400">Regulação</span>
-                                    <span className="text-sm font-bold text-white text-right">Lei 15.191 <br /><span className="text-[10px] font-normal text-gray-500">e Portaria MPS/MF nº 6</span></span>
-                                </div>
-                            </div>
-                            <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl">
-                                <p className="text-xs text-red-300 leading-relaxed">
-                                    <strong>Atenção:</strong> O cálculo trabalhista mudou. A partir de maio e consolidado em Dez/2025, novas faixas (Lei nº 15.191) estão valendo.
-                                </p>
-                            </div>
+                {/* Como usar esta Calculadora (Instructions) */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                            <HelpCircle className="w-6 h-6 text-emerald-500" />
                         </div>
-
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8">
-                            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                <Coins className="w-5 h-5 text-emerald-500" />
-                                Para onde vai o dinheiro?
-                            </h3>
-                            <div className="space-y-4">
-                                <div className="flex gap-4 items-start">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 shrink-0" />
-                                    <div>
-                                        <strong className="text-white text-sm block">INSS</strong>
-                                        <p className="text-xs text-gray-400 mt-1">
-                                            Garante sua aposentadoria e auxílios. Desconto progressivo até o teto de R$ 951,63 (aprox).
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex gap-4 items-start">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 shrink-0" />
-                                    <div>
-                                        <strong className="text-white text-sm block">Imposto de Renda (IRRF)</strong>
-                                        <p className="text-xs text-gray-400 mt-1">
-                                            Incide sobre o restante. O governo "ataca" seu salário progressivamente de 7.5% a 27.5%.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Como usar esta Calculadora de Salário Líquido
+                        </h2>
+                    </div>
+                    <p className="text-gray-400 mb-6">
+                        Para obter o resultado exato na nossa <strong>calculadora de salário líquido</strong>, siga estes passos simples:
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-emerald-400 font-bold mb-2">01. Informe o Salário Bruto</div>
+                            <p className="text-sm text-gray-300">Digite o valor total do seu salário antes dos descontos (conforme holerite ou carteira).</p>
+                        </div>
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-emerald-400 font-bold mb-2">02. Adicione Dependentes</div>
+                            <p className="text-sm text-gray-300">Informe o número de dependentes para dedução no IRRF (R$ 189,59 por dependente).</p>
+                        </div>
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-emerald-400 font-bold mb-2">03. Clique em Calcular</div>
+                            <p className="text-sm text-gray-300">O sistema processará automaticamente as regras de 2025, exibindo o valor líquido e as deduções.</p>
                         </div>
                     </div>
                 </div>
@@ -436,8 +733,8 @@ export function NetSalaryPage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-sm text-gray-500 mt-2">
-                                Fonte: <a href="https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">Portaria Interministerial MPS/MF nº 6</a>
+                            <p className="text-sm text-gray-400 mt-2">
+                                Fonte: <a href="https://www.gov.br/inss/pt-br/direitos-e-deveres/inscricao-e-contribuicao/tabela-de-contribuicao-mensal" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline decoration-emerald-400/50 hover:decoration-emerald-400">Portaria Interministerial MPS/MF nº 6</a>
                             </p>
                         </div>
 
@@ -484,8 +781,8 @@ export function NetSalaryPage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <p className="text-sm text-gray-500 mt-2">
-                                * Dedução por dependente: R$ 189,59 | Fonte: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15191.htm" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">Lei nº 15.191/2025</a>
+                            <p className="text-sm text-gray-400 mt-2">
+                                * Dedução por dependente: R$ 189,59 | Fonte: <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2025/lei/L15191.htm" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline decoration-emerald-400/50 hover:decoration-emerald-400">Lei nº 15.191/2025</a>
                             </p>
                         </div>
                     </div>
@@ -533,7 +830,7 @@ export function NetSalaryPage() {
                             </div>
                             <div className="bg-white/5 p-4 rounded-xl">
                                 <strong className="text-white block mb-2">2. Desconto Simplificado</strong>
-                                <p className="text-sm text-gray-400">Subtrai-se fixo R$ 607,20 direto da base (<a href="http://normas.receita.fazenda.gov.br/sijut2consulta/consulta.action?termoBusca=Instru%E7%E3o+Normativa+RFB+n%BA+2.174" target="_blank" rel="noopener noreferrer" className="text-emerald-400 hover:underline">Instrução Normativa RFB nº 2.174</a>).</p>
+                                <p className="text-sm text-gray-400">Subtrai-se fixo R$ 607,20 direto da base (<a href="http://normas.receita.fazenda.gov.br/sijut2consulta/consulta.action?termoBusca=Instru%E7%E3o+Normativa+RFB+n%BA+2.174" target="_blank" rel="noopener noreferrer" className="text-emerald-400 underline decoration-emerald-400/50 hover:decoration-emerald-400">Instrução Normativa RFB nº 2.174</a>).</p>
                             </div>
                         </div>
                         <p className="text-gray-400 text-sm">
@@ -566,7 +863,7 @@ export function NetSalaryPage() {
                                         <span>INSS (14%)</span>
                                         <span className="text-red-400">- R$ 509,60</span>
                                     </div>
-                                    <p className="text-xs text-gray-500 italic">
+                                    <p className="text-xs text-gray-400 italic">
                                         Este é o valor descontado para a Previdência. Para conferir apenas este imposto, use nossa <Link to="/calculadoras/inss" className="text-emerald-400 hover:text-emerald-300 underline decoration-emerald-400/30">Calculadora de INSS</Link>.
                                     </p>
                                     <div className="flex justify-between border-b border-white/5 pb-2">
