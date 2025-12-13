@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calculator, HelpCircle, Briefcase, AlertCircle, ArrowRight, Calendar, DollarSign, FileText, Clock, Percent, CheckCircle, XCircle } from 'lucide-react';
+import { DatePicker } from '../ui/DatePicker';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
@@ -232,9 +233,15 @@ export function TerminationPage() {
         setResult({ totalGross, totalNet, totalDiscounts, breakdown });
     };
 
-    useEffect(() => {
-        calculate();
-    }, [salary, startDate, endDate, reason, balanceFGTS, hasExpiredVacation]);
+    const handleClear = () => {
+        setSalary('');
+        setStartDate('');
+        setEndDate('');
+        setReason('sem_justa_causa');
+        setBalanceFGTS('');
+        setHasExpiredVacation(false);
+        setResult(null);
+    };
 
     const formatCurrency = (value: string) => {
         const number = value.replace(/\D/g, '');
@@ -328,33 +335,19 @@ export function TerminationPage() {
 
                             <div className="space-y-6">
                                 {/* Dates Row */}
-                                <div className="grid md:grid-cols-2 gap-6 w-full">
-                                    <div className="space-y-2">
-                                        <label htmlFor="startDate" className="text-sm text-gray-400">Data de Admissão</label>
-                                        <div className="relative">
-                                            <input
-                                                id="startDate"
-                                                type="date"
-                                                value={startDate}
-                                                onChange={(e) => setStartDate(e.target.value)}
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all [color-scheme:dark] [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:bg-transparent"
-                                            />
-                                            <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                                        </div>
-                                    </div>
-                                    <div className="space-y-2">
-                                        <label htmlFor="endDate" className="text-sm text-gray-400">Data de Afastamento</label>
-                                        <div className="relative">
-                                            <input
-                                                id="endDate"
-                                                type="date"
-                                                value={endDate}
-                                                onChange={(e) => setEndDate(e.target.value)}
-                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all [color-scheme:dark] [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:bg-transparent"
-                                            />
-                                            <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                                        </div>
-                                    </div>
+                                <div className="grid md:grid-cols-2 gap-6 w-full relative z-20">
+                                    <DatePicker
+                                        label="Data de Admissão"
+                                        value={startDate}
+                                        onChange={setStartDate}
+                                        placeholder="Selecione data"
+                                    />
+                                    <DatePicker
+                                        label="Data de Afastamento"
+                                        value={endDate}
+                                        onChange={setEndDate}
+                                        placeholder="Selecione data"
+                                    />
                                 </div>
 
                                 {/* Salary & Reason */}
@@ -423,93 +416,110 @@ export function TerminationPage() {
                                     </div>
                                 )}
 
-                                {/* Result Block */}
-                                <div className="pt-2">
-                                    <div className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4">
-                                        <span className="text-sm text-blue-400 block mb-2">
-                                            Valor Líquido Estimado
-                                        </span>
-                                        <span className="text-4xl font-bold text-white">
-                                            {result ? `R$ ${result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}` : 'R$ 0,00'}
-                                        </span>
+                                {/* Action Buttons */}
+                                <div className="flex gap-4 pt-4">
+                                    <button
+                                        onClick={handleClear}
+                                        className="flex-1 bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 rounded-xl border border-white/10 transition-colors flex items-center justify-center gap-2"
+                                    >
+                                        Limpar
+                                    </button>
+                                    <button
+                                        onClick={calculate}
+                                        className="flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                    >
+                                        <Calculator className="w-5 h-5" />
+                                        Calcular Rescisão
+                                    </button>
+                                </div>
 
-                                        {result && (
+                                {/* Result Block */}
+                                {result && (
+                                    <div className="pt-2 animate-in fade-in slide-in-from-top-4 duration-500">
+                                        <div className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4">
+                                            <span className="text-sm text-blue-400 block mb-2">
+                                                Valor Líquido Estimado
+                                            </span>
+                                            <span className="text-4xl font-bold text-white">
+                                                R$ {result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                            </span>
+
                                             <div className="flex justify-center gap-4 mt-3 text-xs">
                                                 <span className="text-gray-400">Bruto: R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                 <span className="text-red-400">Descontos: R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                             </div>
+                                        </div>
+
+                                        {result.breakdown && (
+                                            <div className="grid grid-cols-1 gap-3 text-sm">
+                                                {result.breakdown.salaryBalance > 0 && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                        <span className="text-gray-300">Saldo de Salário</span>
+                                                        <span className="text-white font-medium">R$ {result.breakdown.salaryBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                                {result.breakdown.inssSalary > 0 && (
+                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                        <span>- INSS (Sobre Salário)</span>
+                                                        <span>R$ {result.breakdown.inssSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                                {result.breakdown.irrfSalary > 0 && (
+                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                        <span>- IRRF (Sobre Salário)</span>
+                                                        <span>R$ {result.breakdown.irrfSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+
+                                                {(result.breakdown.vacationProportional > 0) && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                        <span className="text-gray-300">Férias + 1/3 (Prop)</span>
+                                                        <span className="text-white font-medium">R$ {(result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+
+                                                {(result.breakdown.vacationExpired > 0) && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                        <span className="text-gray-300">Férias Vencidas + 1/3</span>
+                                                        <span className="text-white font-medium">R$ {(result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+
+                                                {(result.breakdown.thirteenthProportional > 0) && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                        <span className="text-gray-300">13º Salário Prop.</span>
+                                                        <span className="text-white font-medium">R$ {result.breakdown.thirteenthProportional.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                                {result.breakdown.inss13 > 0 && (
+                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                        <span>- INSS (Sobre 13º)</span>
+                                                        <span>R$ {result.breakdown.inss13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                                {result.breakdown.irrf13 > 0 && (
+                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
+                                                        <span>- IRRF (Sobre 13º)</span>
+                                                        <span>R$ {result.breakdown.irrf13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+
+                                                {result.breakdown.noticeIndemnified > 0 && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                        <span className="text-gray-300">Aviso Prévio Indenizado</span>
+                                                        <span className="text-white font-medium">R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                                {result.breakdown.fgtsFine > 0 && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                        <span className="text-gray-300">Multa FGTS</span>
+                                                        <span className="text-white font-medium">R$ {result.breakdown.fgtsFine.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                            </div>
                                         )}
                                     </div>
-
-                                    {result && result.breakdown && (
-                                        <div className="grid grid-cols-1 gap-3 text-sm">
-                                            {result.breakdown.salaryBalance > 0 && (
-                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">Saldo de Salário</span>
-                                                    <span className="text-white font-medium">R$ {result.breakdown.salaryBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-                                            {result.breakdown.inssSalary > 0 && (
-                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                    <span>- INSS (Sobre Salário)</span>
-                                                    <span>R$ {result.breakdown.inssSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-                                            {result.breakdown.irrfSalary > 0 && (
-                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                    <span>- IRRF (Sobre Salário)</span>
-                                                    <span>R$ {result.breakdown.irrfSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-
-                                            {(result.breakdown.vacationProportional > 0) && (
-                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">Férias + 1/3 (Prop)</span>
-                                                    <span className="text-white font-medium">R$ {(result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-
-                                            {(result.breakdown.vacationExpired > 0) && (
-                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">Férias Vencidas + 1/3</span>
-                                                    <span className="text-white font-medium">R$ {(result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-
-                                            {(result.breakdown.thirteenthProportional > 0) && (
-                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">13º Salário Prop.</span>
-                                                    <span className="text-white font-medium">R$ {result.breakdown.thirteenthProportional.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-                                            {result.breakdown.inss13 > 0 && (
-                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                    <span>- INSS (Sobre 13º)</span>
-                                                    <span>R$ {result.breakdown.inss13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-                                            {result.breakdown.irrf13 > 0 && (
-                                                <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                    <span>- IRRF (Sobre 13º)</span>
-                                                    <span>R$ {result.breakdown.irrf13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-
-                                            {result.breakdown.noticeIndemnified > 0 && (
-                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">Aviso Prévio Indenizado</span>
-                                                    <span className="text-white font-medium">R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-                                            {result.breakdown.fgtsFine > 0 && (
-                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                    <span className="text-gray-300">Multa FGTS</span>
-                                                    <span className="text-white font-medium">R$ {result.breakdown.fgtsFine.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                </div>
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -555,10 +565,13 @@ export function TerminationPage() {
                 </div>
 
                 {/* Intro Text (Moved Below Calculator) */}
-                <div className="max-w-4xl mx-auto mb-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
-                    <p className="text-lg text-gray-300 leading-relaxed">
-                        O cálculo da rescisão trabalhista é a etapa final e mais crítica da relação de emprego. Esta <strong>calculadora de rescisão</strong> não apenas soma seus direitos, mas aplica as regras tributárias vigentes em dezembro de 2025, considerando a progressividade do INSS e as deduções atualizadas do Imposto de Renda. Se você foi demitido, pediu demissão ou fez um acordo, use a <strong>calculadora de rescisão</strong> acima para validar se o valor oferecido pela empresa ("homologação") está correto e evitar prejuízos financeiros permanentes.
-                    </p>
+                {/* Intro Text (Moved Below Calculator) */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 mb-12 animate-in fade-in slide-in-from-bottom-4 duration-700 delay-500">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <p className="text-lg text-gray-300 leading-relaxed">
+                            O cálculo da rescisão trabalhista é a etapa final e mais crítica da relação de emprego. Esta <strong>calculadora de rescisão</strong> não apenas soma seus direitos, mas aplica as regras tributárias vigentes em dezembro de 2025, considerando a progressividade do INSS e as deduções atualizadas do Imposto de Renda. Se você foi demitido, pediu demissão ou fez um acordo, use a <strong>calculadora de rescisão</strong> acima para validar se o valor oferecido pela empresa ("homologação") está correto e evitar prejuízos financeiros permanentes.
+                        </p>
+                    </div>
                 </div>
 
                 {/* Resumo em 30 Segundos */}
@@ -606,15 +619,15 @@ export function TerminationPage() {
                     </p>
                     <div className="grid md:grid-cols-3 gap-6">
                         <div className="bg-white/5 p-5 rounded-xl border border-white/5">
-                            <div className="text-blue-500 font-bold mb-2">01. Preencha os Dados</div>
+                            <div className="text-blue-400 font-bold mb-2">01. Preencha os Dados</div>
                             <p className="text-sm text-gray-300">Informe seu último salário bruto, data de admissão e data de saída.</p>
                         </div>
                         <div className="bg-white/5 p-5 rounded-xl border border-white/5">
-                            <div className="text-blue-500 font-bold mb-2">02. Selecione o Motivo</div>
+                            <div className="text-blue-400 font-bold mb-2">02. Selecione o Motivo</div>
                             <p className="text-sm text-gray-300">Escolha o tipo de desligamento (ex: sem justa causa ou pedido de demissão) e o tipo de aviso prévio.</p>
                         </div>
                         <div className="bg-white/5 p-5 rounded-xl border border-white/5">
-                            <div className="text-blue-500 font-bold mb-2">03. Visualize o Cálculo</div>
+                            <div className="text-blue-400 font-bold mb-2">03. Visualize o Cálculo</div>
                             <p className="text-sm text-gray-300">O sistema processará automaticamente as regras de 2025, exibindo o valor líquido e as deduções legais.</p>
                         </div>
                     </div>
@@ -636,7 +649,7 @@ export function TerminationPage() {
                         Para chegar ao valor líquido apresentado pela <strong>calculadora de rescisão</strong>, é necessário deduzir o INSS e o Imposto de Renda (IRRF) incidentes sobre o saldo de salário, 13º proporcional e horas extras. Verbas indenizatórias (como férias indenizadas e multa do FGTS) são isentas destes descontos.
                     </p>
 
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 gap-8">
                         <div>
                             <h3 className="text-lg font-bold text-white mb-4">Tabela Progressiva do INSS (Dezembro 2025)</h3>
                             <div className="overflow-x-auto rounded-xl border border-white/10">
@@ -656,8 +669,8 @@ export function TerminationPage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="mt-4 text-xs text-gray-500 space-y-2">
-                                <p><strong>Fonte Oficial:</strong> Dados baseados na <a href="https://www.gov.br/inss/pt-br/noticias/confira-como-ficaram-as-aliquotas-de-contribuicao-ao-inss" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Portaria Interministerial MPS/MF nº 6/2025</a>.</p>
+                            <div className="mt-4 text-xs text-gray-400 space-y-2">
+                                <p><strong>Fonte Oficial:</strong> Dados baseados na <a href="https://www.gov.br/inss/pt-br/noticias/confira-como-ficaram-as-aliquotas-de-contribuicao-ao-inss" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300">Portaria Interministerial MPS/MF nº 6/2025</a>.</p>
                                 <p><strong>Entenda a Progressividade:</strong> Desde a reforma da previdência, o cálculo do INSS é <strong>progressivo por faixas</strong>. Isso significa que a alíquota não incide cheia sobre o total. Quem ganha R$ 4.000,00, por exemplo, não paga 14% sobre tudo, mas sim taxas fatiadas sobre cada pedaço do salário que se encaixa nas faixas acima, resultando em um desconto menor do que no modelo antigo.</p>
                             </div>
                         </div>
@@ -682,9 +695,9 @@ export function TerminationPage() {
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="mt-2 text-xs text-gray-500 space-y-1">
+                            <div className="mt-2 text-xs text-gray-400 space-y-1">
                                 <p>*Dedução por dependente: R$ 189,59.</p>
-                                <p><strong>Fonte Oficial:</strong> Tabela vigente conforme <a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2025" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Receita Federal do Brasil</a>.</p>
+                                <p><strong>Fonte Oficial:</strong> Tabela vigente conforme <a href="https://www.gov.br/receitafederal/pt-br/assuntos/meu-imposto-de-renda/tabelas/2025" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300">Receita Federal do Brasil</a>.</p>
                             </div>
                         </div>
                     </div>
@@ -722,7 +735,7 @@ export function TerminationPage() {
                         </h2>
                     </div>
 
-                    <div className="grid lg:grid-cols-2 gap-8">
+                    <div className="space-y-8">
                         <div>
                             <h3 className="text-lg font-bold text-white mb-4">1. Fórmula Rápida (Conceitual)</h3>
                             <div className="bg-white/5 p-4 rounded-xl border border-white/5 mb-6 font-mono text-sm text-blue-300">
@@ -737,7 +750,7 @@ export function TerminationPage() {
                                 </li>
                                 <li className="flex gap-2">
                                     <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
-                                    <span><strong>Aviso Prévio (Lei 12.506/11):</strong> Se indenizado, 30 dias + 3 dias por ano (limite 90 dias). Consulte a lei na íntegra no <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12506.htm" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">Planalto</a>.</span>
+                                    <span><strong>Aviso Prévio (Lei 12.506/11):</strong> Se indenizado, 30 dias + 3 dias por ano (limite 90 dias). Consulte a lei na íntegra no <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12506.htm" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline hover:text-blue-300">Planalto</a>.</span>
                                 </li>
                                 <li className="flex gap-2">
                                     <CheckCircle className="w-4 h-4 text-blue-500 mt-0.5 shrink-0" />
@@ -750,9 +763,9 @@ export function TerminationPage() {
                             </ul>
                         </div>
 
-                        <div className="space-y-6">
+                        <div className="grid md:grid-cols-2 gap-6">
                             {/* Exemplo 1 */}
-                            <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="bg-white/5 p-5 rounded-xl border border-white/5 h-full">
                                 <h3 className="text-md font-bold text-white mb-2">Exemplo 1: Salário R$ 3.000,00</h3>
                                 <p className="text-xs text-gray-400 mb-3">Sem justa causa, 2 anos de casa, saída 10/12/2025.</p>
                                 <ul className="space-y-1.5 text-xs text-gray-300">
@@ -767,7 +780,7 @@ export function TerminationPage() {
                             </div>
 
                             {/* Exemplo 2 */}
-                            <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="bg-white/5 p-5 rounded-xl border border-white/5 h-full">
                                 <h3 className="text-md font-bold text-white mb-2">Exemplo 2: Salário R$ 8.500,00 (Acima do Teto)</h3>
                                 <p className="text-xs text-gray-400 mb-3">Executivo, sem justa causa.</p>
                                 <ul className="space-y-1.5 text-xs text-gray-300">
