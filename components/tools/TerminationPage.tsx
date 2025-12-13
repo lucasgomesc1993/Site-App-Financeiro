@@ -669,17 +669,17 @@ export function TerminationPage() {
                                 )}
 
                                 {/* Action Buttons */}
-                                <div className="flex gap-4 pt-4">
+                                <div className="flex flex-col-reverse md:flex-row gap-4 pt-4">
                                     <button
                                         onClick={handleClear}
-                                        className="flex-1 bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 rounded-xl border border-white/10 transition-colors flex items-center justify-center gap-2"
+                                        className="md:flex-1 bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 rounded-xl border border-white/10 transition-colors flex items-center justify-center gap-2"
                                     >
                                         Limpar
                                     </button>
                                     {!result && (
                                         <button
                                             onClick={calculate}
-                                            className="flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                            className="md:flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                                         >
                                             <Calculator className="w-5 h-5" />
                                             Calcular Rescisão
@@ -688,7 +688,7 @@ export function TerminationPage() {
                                     {result && (
                                         <button
                                             onClick={() => { setResult(null); setTimeout(calculate, 0); }}
-                                            className="flex-[2] bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                            className="md:flex-[2] bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
                                         >
                                             <Calculator className="w-5 h-5" />
                                             Calcular Novamente
