@@ -347,6 +347,7 @@ export function TerminationPage() {
                 vacationExpiredThird,
                 noticeIndemnified,
                 fgtsFine,
+                fgtsWithdrawal: balanceFGTSValue + fgtsFine, // Total FGTS available for withdrawal
                 inssSalary,
                 inss13,
                 irrfSalary,
@@ -733,6 +734,15 @@ export function TerminationPage() {
                                                         <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
                                                             <span className="text-gray-300 text-sm">Multa FGTS</span>
                                                             <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.fgtsFine.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.fgtsWithdrawal > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 mt-2">
+                                                            <div className="flex items-center gap-1">
+                                                                <span className="text-amber-200 text-sm font-medium">Total FGTS para Saque</span>
+                                                                <Tooltip content="Valor total disponível para saque: Saldo do FGTS + Multa rescisória. Depositado na conta do FGTS." />
+                                                            </div>
+                                                            <span className="text-amber-300 font-bold text-sm">R$ {result.breakdown.fgtsWithdrawal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                 </div>
