@@ -685,6 +685,15 @@ export function TerminationPage() {
                                             Calcular Rescisão
                                         </button>
                                     )}
+                                    {result && (
+                                        <button
+                                            onClick={() => { setResult(null); setTimeout(calculate, 0); }}
+                                            className="flex-[2] bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                        >
+                                            <Calculator className="w-5 h-5" />
+                                            Calcular Novamente
+                                        </button>
+                                    )}
                                 </div>
 
                                 {/* Result Block */}
