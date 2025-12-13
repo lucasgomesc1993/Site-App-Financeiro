@@ -656,6 +656,33 @@ export function TerminationPage() {
                                 {result && (
                                     <div className="pt-6 animate-in fade-in slide-in-from-top-4 duration-500 space-y-6 border-t border-white/10 mt-6">
 
+                                        {/* Total Section */}
+                                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-2xl shadow-2xl relative overflow-hidden group mb-6">
+                                            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-white/20 transition-all duration-700"></div>
+
+                                            <div className="relative z-10 grid md:grid-cols-2 gap-6 items-center">
+                                                <div>
+                                                    <span className="text-blue-100 text-sm font-medium uppercase tracking-wider mb-1 block">Valor Líquido a Receber</span>
+                                                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                                                        R$ {result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                                    </span>
+                                                    <p className="text-blue-200/80 text-xs mt-2">
+                                                        *O valor pode variar centavos dependendo da data exata do pagamento.
+                                                    </p>
+                                                </div>
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="flex justify-between items-center text-sm border-b border-white/20 pb-2">
+                                                        <span className="text-blue-100">Total Proventos</span>
+                                                        <span className="text-white font-medium">R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                    <div className="flex justify-between items-center text-sm pt-1">
+                                                        <span className="text-blue-200">Total Descontos</span>
+                                                        <span className="text-white font-medium">- R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div className="grid md:grid-cols-2 gap-4">
                                             {/* Proventos */}
                                             <div className="space-y-3">
@@ -754,33 +781,6 @@ export function TerminationPage() {
                                                             Sem descontos aplicáveis
                                                         </div>
                                                     )}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* Total Section */}
-                                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-2xl shadow-2xl relative overflow-hidden group">
-                                            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-white/20 transition-all duration-700"></div>
-
-                                            <div className="relative z-10 grid md:grid-cols-2 gap-6 items-center">
-                                                <div>
-                                                    <span className="text-blue-100 text-sm font-medium uppercase tracking-wider mb-1 block">Valor Líquido a Receber</span>
-                                                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                                                        R$ {result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                                    </span>
-                                                    <p className="text-blue-200/80 text-xs mt-2">
-                                                        *O valor pode variar centavos dependendo da data exata do pagamento.
-                                                    </p>
-                                                </div>
-                                                <div className="flex flex-col gap-2">
-                                                    <div className="flex justify-between items-center text-sm border-b border-white/20 pb-2">
-                                                        <span className="text-blue-100">Total Proventos</span>
-                                                        <span className="text-white font-medium">R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                    <div className="flex justify-between items-center text-sm pt-1">
-                                                        <span className="text-blue-200">Total Descontos</span>
-                                                        <span className="text-white font-medium">- R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
