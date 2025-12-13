@@ -47,6 +47,7 @@ export function TerminationPage() {
     const [contractEndDate, setContractEndDate] = useState(''); // For Experience Contract Early Termination
     const [reason, setReason] = useState('sem_justa_causa');
     const [noticeType, setNoticeType] = useState('indenizado'); // trabalhado, indenizado, nao_cumprido, dispensado
+    const [dependents, setDependents] = useState('');
     const [balanceFGTS, setBalanceFGTS] = useState('');
     const [hasExpiredVacation, setHasExpiredVacation] = useState(false);
 
@@ -124,6 +125,7 @@ export function TerminationPage() {
         const end = new Date(endDate + 'T12:00:00');
         const salaryValue = parseFloat(salary.replace(/\./g, '').replace(',', '.'));
         const balanceFGTSValue = parseFloat(balanceFGTS.replace(/\./g, '').replace(',', '.') || '0');
+        const dependentsCount = parseInt(dependents) || 0;
 
         if (isNaN(salaryValue) || end < start) return;
 
@@ -324,10 +326,10 @@ export function TerminationPage() {
         // Notice Indemnified and Art 479 are usually exempt from INSS/IRRF
 
         let irrfBaseSalary = salaryBalance - inssSalary;
-        let irrfSalary = calculateIRRF(irrfBaseSalary, inssSalary);
+        let irrfSalary = calculateIRRF(irrfBaseSalary, inssSalary, dependentsCount);
 
         let irrfBase13 = thirteenthProportional - inss13;
-        let irrf13 = calculateIRRF(irrfBase13, inss13);
+        let irrf13 = calculateIRRF(irrfBase13, inss13, dependentsCount);
 
         const totalDiscounts = inssSalary + inss13 + irrfSalary + irrf13 + noticeDeduction;
         const totalNet = totalGross - totalDiscounts;
@@ -364,6 +366,7 @@ export function TerminationPage() {
         setContractEndDate('');
         setReason('sem_justa_causa');
         setNoticeType('indenizado');
+        setDependents('');
         setBalanceFGTS('');
         setHasExpiredVacation(false);
         setResult(null);
@@ -509,6 +512,22 @@ export function TerminationPage() {
                                                 placeholder="0,00"
                                             />
                                         </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-1">
+                                            <label htmlFor="dependents" className="text-sm text-gray-400">Nº de Dependentes</label>
+                                            <Tooltip content="Informe quantos dependentes você declara no Imposto de Renda (filhos, cônjuge, etc) para desconto no IRRF." />
+                                        </div>
+                                        <input
+                                            id="dependents"
+                                            type="number"
+                                            value={dependents}
+                                            onChange={(e) => setDependents(e.target.value)}
+                                            className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                            placeholder="0"
+                                            min="0"
+                                        />
                                     </div>
 
                                     <div className="space-y-2">
