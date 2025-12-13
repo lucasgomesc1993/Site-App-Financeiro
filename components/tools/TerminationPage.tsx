@@ -360,11 +360,13 @@ export function TerminationPage() {
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Firefox, Edge.",
         "featureList": [
-            "Cálculo de Rescisão CLT 2025",
-            "Simulação de Multa do FGTS (40%)",
-            "Cálculo de Férias e 13º Proporcionais",
-            "Aviso Prévio Indenizado",
-            "Cálculo de Descontos INSS e IRRF"
+            "Cálculo de Rescisão CLT 2025 (Com e Sem Justa Causa)",
+            "Cálculo de Indenização Art. 479 (Contrato de Experiência)",
+            "Simulação de Rescisão por Falecimento ou Aposentadoria",
+            "Simulação de Multa do FGTS (40% e 20%)",
+            "Cálculo de Férias Vencidas/Proporcionais e 13º Salário",
+            "Aviso Prévio Indenizado (Lei 12.506/2011)",
+            "Cálculo de Descontos INSS e IRRF (Tabelas 2025)"
         ],
         "offers": {
             "@type": "Offer",
