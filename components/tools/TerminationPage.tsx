@@ -58,6 +58,7 @@ export function TerminationPage() {
         totalDiscounts: number;
         breakdown: any
     } | null>(null);
+    const [validationError, setValidationError] = useState<string | null>(null);
 
     // 2025 Tables (Tabelas Oficiais conforme Portaria Interministerial MPS/MF nº 2/2025)
     const INSS_TABLE = [
@@ -119,7 +120,22 @@ export function TerminationPage() {
     };
 
     const calculate = () => {
-        if (!startDate || !endDate || !salary) return;
+        // Clear previous errors
+        setValidationError(null);
+
+        // Validate required fields
+        if (!startDate) {
+            setValidationError('Informe a data de admissão.');
+            return;
+        }
+        if (!endDate) {
+            setValidationError('Informe a data de afastamento.');
+            return;
+        }
+        if (!salary) {
+            setValidationError('Informe o salário bruto.');
+            return;
+        }
 
         const start = new Date(startDate + 'T12:00:00');
         const end = new Date(endDate + 'T12:00:00');
@@ -127,7 +143,14 @@ export function TerminationPage() {
         const balanceFGTSValue = parseFloat(balanceFGTS.replace(/\./g, '').replace(',', '.') || '0');
         const dependentsCount = parseInt(dependents) || 0;
 
-        if (isNaN(salaryValue) || end < start) return;
+        if (isNaN(salaryValue) || salaryValue <= 0) {
+            setValidationError('Informe um salário válido.');
+            return;
+        }
+        if (end < start) {
+            setValidationError('A data de afastamento não pode ser anterior à data de admissão.');
+            return;
+        }
 
         // Base Calculations
         const diffTime = Math.abs(end.getTime() - start.getTime());
@@ -371,6 +394,7 @@ export function TerminationPage() {
         setBalanceFGTS('');
         setHasExpiredVacation(false);
         setResult(null);
+        setValidationError(null);
     };
 
     const formatCurrency = (value: string) => {
@@ -630,6 +654,14 @@ export function TerminationPage() {
                                             />
                                         </div>
                                         <p className="text-xs text-gray-400">Informe o saldo total acumulado para cálculo correto da multa.</p>
+                                    </div>
+                                )}
+
+                                {/* Validation Error Message */}
+                                {validationError && (
+                                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-center gap-2">
+                                        <AlertCircle className="w-5 h-5 shrink-0" />
+                                        {validationError}
                                     </div>
                                 )}
 
