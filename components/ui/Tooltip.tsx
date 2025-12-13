@@ -21,10 +21,23 @@ export function Tooltip({ content, className }: TooltipProps) {
     const updatePosition = () => {
         if (buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect();
-            // Center above the button
+            const tooltipWidth = 256; // w-64 = 16rem = 256px
+            const padding = 12; // padding from screen edges
+
+            let left = rect.left + (rect.width / 2);
+
+            // Prevent overflow on left edge
+            if (left - (tooltipWidth / 2) < padding) {
+                left = (tooltipWidth / 2) + padding;
+            }
+            // Prevent overflow on right edge
+            if (left + (tooltipWidth / 2) > window.innerWidth - padding) {
+                left = window.innerWidth - (tooltipWidth / 2) - padding;
+            }
+
             setPosition({
-                top: rect.top - 4, // Fixed position uses viewport coordinates
-                left: rect.left + (rect.width / 2),
+                top: rect.top - 4,
+                left: left,
             });
         }
     };
@@ -53,6 +66,7 @@ export function Tooltip({ content, className }: TooltipProps) {
                 onMouseLeave={() => setIsVisible(false)}
                 onClick={(e) => {
                     e.preventDefault(); // Prevent form submit or focus issues
+                    e.stopPropagation(); // Prevent triggering parent click handlers (like checkbox toggle)
                     updatePosition();
                     setIsVisible(!isVisible);
                 }}
