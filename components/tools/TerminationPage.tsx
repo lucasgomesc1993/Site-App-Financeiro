@@ -317,7 +317,7 @@ export function TerminationPage() {
         // Sum everything
         totalGross = salaryBalance + thirteenthProportional + vacationProportional +
             vacationThird + vacationExpired + vacationExpiredThird +
-            noticeIndemnified + art479Indemnification;
+            noticeIndemnified + art479Indemnification + fgtsFine;
 
         // Discounts
         let inssSalary = calculateINSS(salaryBalance);
