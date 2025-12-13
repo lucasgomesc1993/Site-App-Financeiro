@@ -268,6 +268,7 @@ export function DatePicker({ value, onChange, label, id, className, placeholder 
                     onClick={() => setIsOpen(!isOpen)}
                     className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
                     tabIndex={-1}
+                    aria-label="Abrir calendário"
                 >
                     <CalendarIcon className="w-4 h-4" />
                 </button>

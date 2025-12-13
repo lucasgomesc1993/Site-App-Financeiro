@@ -640,13 +640,15 @@ export function TerminationPage() {
                                     >
                                         Limpar
                                     </button>
-                                    <button
-                                        onClick={calculate}
-                                        className="flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
-                                    >
-                                        <Calculator className="w-5 h-5" />
-                                        Calcular Rescisão
-                                    </button>
+                                    {!result && (
+                                        <button
+                                            onClick={calculate}
+                                            className="flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                        >
+                                            <Calculator className="w-5 h-5" />
+                                            Calcular Rescisão
+                                        </button>
+                                    )}
                                 </div>
 
                                 {/* Result Block */}
