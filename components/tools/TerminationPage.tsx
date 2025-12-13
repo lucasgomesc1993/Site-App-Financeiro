@@ -477,7 +477,6 @@ export function TerminationPage() {
                                         <DatePicker
                                             value={startDate}
                                             onChange={setStartDate}
-                                            placeholder="Selecione data"
                                         />
                                     </div>
                                     <div className="space-y-2">
@@ -488,7 +487,6 @@ export function TerminationPage() {
                                         <DatePicker
                                             value={endDate}
                                             onChange={setEndDate}
-                                            placeholder="Selecione data"
                                         />
                                     </div>
                                 </div>
@@ -591,7 +589,6 @@ export function TerminationPage() {
                                         <DatePicker
                                             value={contractEndDate}
                                             onChange={setContractEndDate}
-                                            placeholder="Selecione data"
                                             className="border-blue-500/30"
                                         />
                                         <p className="text-xs text-gray-400 mt-1">

@@ -20,23 +20,26 @@ interface DatePickerProps {
     error?: string;
 }
 
-export function DatePicker({ value, onChange, label, id, className, placeholder = "Selecione uma data", error }: DatePickerProps) {
+export function DatePicker({ value, onChange, label, id, className, placeholder = "DD/MM/AAAA", error }: DatePickerProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [inputValue, setInputValue] = useState('');
     const containerRef = useRef<HTMLDivElement>(null);
     const [view, setView] = useState<'days' | 'months' | 'years'>('days');
 
-    // Initialize selectedDate from value
+    // Initialize selectedDate and inputValue from value
     useEffect(() => {
         if (value) {
             const date = typeof value === 'string' ? new Date(value + 'T12:00:00') : value;
             if (!isNaN(date.getTime())) {
                 setSelectedDate(date);
                 setCurrentDate(date);
+                setInputValue(format(date, 'dd/MM/yyyy'));
             }
         } else {
             setSelectedDate(null);
+            setInputValue('');
         }
     }, [value]);
 
@@ -52,6 +55,38 @@ export function DatePicker({ value, onChange, label, id, className, placeholder 
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        let raw = e.target.value.replace(/\D/g, ''); // Remove non-digits
+
+        // Limit to 8 digits (ddMMyyyy)
+        if (raw.length > 8) raw = raw.slice(0, 8);
+
+        let formatted = raw;
+        if (raw.length > 2) formatted = `${raw.slice(0, 2)}/${raw.slice(2)}`;
+        if (raw.length > 4) formatted = `${formatted.slice(0, 5)}/${raw.slice(4)}`;
+
+        setInputValue(formatted);
+
+        // Validation
+        if (raw.length === 8) {
+            const day = parseInt(raw.slice(0, 2));
+            const month = parseInt(raw.slice(2, 4)) - 1; // 0-indexed
+            const year = parseInt(raw.slice(4, 8));
+
+            const date = new Date(year, month, day);
+
+            // Check if valid date (e.g. not 31/02 or invalid month)
+            if (date.getDate() === day && date.getMonth() === month && date.getFullYear() === year) {
+                setSelectedDate(date);
+                setCurrentDate(date);
+                onChange(format(date, 'yyyy-MM-dd'));
+            }
+        } else if (raw.length === 0) {
+            setSelectedDate(null);
+            onChange('');
+        }
+    };
+
     const nextMonth = () => setCurrentDate(addMonths(currentDate, 1));
     const prevMonth = () => setCurrentDate(subMonths(currentDate, 1));
     const nextYear = () => setCurrentDate(addMonths(currentDate, 12));
@@ -60,7 +95,7 @@ export function DatePicker({ value, onChange, label, id, className, placeholder 
     const onDateClick = (day: Date) => {
         // Format to YYYY-MM-DD for consistency with input type="date"
         const formattedDate = format(day, 'yyyy-MM-dd');
-        onChange(formattedDate);
+        onChange(formattedDate); // This will trigger useEffect which updates inputValue
         setIsOpen(false);
         setView('days');
     };
@@ -213,21 +248,28 @@ export function DatePicker({ value, onChange, label, id, className, placeholder 
     return (
         <div className={cn("space-y-2", className)} ref={containerRef}>
             {label && <label htmlFor={id} className="text-sm text-gray-400">{label}</label>}
-            <div className="relative">
+            <div className="relative group">
+                <input
+                    id={id}
+                    type="text"
+                    inputMode="numeric"
+                    value={inputValue}
+                    onChange={handleInputChange}
+                    placeholder={placeholder}
+                    maxLength={10}
+                    className={cn(
+                        "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-4 pr-12 text-white placeholder-gray-500 transition-all focus:outline-none focus:border-blue-500/50",
+                        error && "border-red-500/50 focus:border-red-500/50"
+                    )}
+                />
+
                 <button
                     type="button"
                     onClick={() => setIsOpen(!isOpen)}
-                    className={cn(
-                        "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-left flex items-center justify-between transition-all focus:outline-none focus:border-blue-500/50",
-                        !selectedDate && "text-gray-400",
-                        selectedDate && "text-white",
-                        isOpen && "border-blue-500/50"
-                    )}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
+                    tabIndex={-1}
                 >
-                    <span className="truncate">
-                        {selectedDate ? format(selectedDate, "dd 'de' MMMM 'de' yyyy", { locale: ptBR }) : placeholder}
-                    </span>
-                    <CalendarIcon className="w-4 h-4 text-gray-400 shrink-0" />
+                    <CalendarIcon className="w-4 h-4" />
                 </button>
 
                 {isOpen && (
