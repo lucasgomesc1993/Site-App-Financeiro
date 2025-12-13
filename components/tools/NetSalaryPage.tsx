@@ -295,8 +295,8 @@ export function NetSalaryPage() {
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-1">
-                                            <label htmlFor="dependents" className="text-sm text-gray-400">Nº de Dependentes</label>
-                                            <Tooltip content="Informe quantos dependentes você declara no Imposto de Renda (filhos, cônjuge, etc). Cada um reduz a base em R$ 189,59." />
+                                            <label htmlFor="dependents" className="text-sm text-gray-400">Nº de Dependentes (IRRF)</label>
+                                            <Tooltip content="Informe todos os dependentes do IR: cônjuge, filhos (de qualquer idade), pais idosos, etc. Cada um reduz R$ 189,59 do imposto." />
                                         </div>
                                         <input
                                             id="dependents"
@@ -308,11 +308,41 @@ export function NetSalaryPage() {
                                             placeholder="0"
                                             min="0"
                                         />
+                                        {/* Dependentes menores de 14 anos - abaixo do input de dependentes */}
+                                        <div className="flex flex-col gap-3 p-3 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between">
+                                            <div
+                                                className="flex items-center gap-3 cursor-pointer"
+                                                onClick={() => setHasMinorDependents(!hasMinorDependents)}
+                                            >
+                                                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasMinorDependents ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
+                                                    {hasMinorDependents && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                                                </div>
+                                                <div className="flex items-center gap-1">
+                                                    <span className="text-xs text-gray-300">
+                                                        Filhos menores de 14 anos
+                                                    </span>
+                                                    <Tooltip content="Gera direito ao Salário-Família (até R$ 62,04/filho para salários até R$ 1.819,26). O valor é SOMADO ao seu salário líquido." />
+                                                </div>
+                                            </div>
+                                            {hasMinorDependents && (
+                                                <div className="flex items-center gap-2 ml-8 md:ml-0">
+                                                    <span className="text-xs text-gray-400">Qtd:</span>
+                                                    <input
+                                                        type="text"
+                                                        inputMode="numeric"
+                                                        value={minorDependentsQty}
+                                                        onChange={(e) => setMinorDependentsQty(e.target.value.replace(/[^0-9]/g, ''))}
+                                                        className="w-14 bg-[#0a0a0a] border border-white/20 rounded-lg px-2 py-1 text-white text-sm text-center focus:outline-none focus:border-blue-500/50"
+                                                        placeholder="0"
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
                                     <div className="space-y-2">
                                         <div className="flex items-center gap-1">
-                                            <label htmlFor="benefits" className="text-sm text-gray-400">Benefícios (VR, VT, Plano)</label>
-                                            <Tooltip content="Valor total de descontos de benefícios como vale-refeição, vale-transporte, plano de saúde, etc." />
+                                            <label htmlFor="benefits" className="text-sm text-gray-400">Benefícios Recebidos</label>
+                                            <Tooltip content="Valor de benefícios que você RECEBE da empresa (VR, VA, auxílios). É SOMADO ao salário líquido final." />
                                         </div>
                                         <div className="relative">
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
@@ -333,7 +363,7 @@ export function NetSalaryPage() {
                                 <div className="space-y-2">
                                     <div className="flex items-center gap-1">
                                         <label htmlFor="otherDiscounts" className="text-sm text-gray-400">Outros Descontos</label>
-                                        <Tooltip content="Descontos adicionais como empréstimo consignado, pensão alimentícia, adiantamentos, etc." />
+                                        <Tooltip content="Descontos fixos em folha (consignado, pensão, VT, plano de saúde). É SUBTRAÍDO do salário líquido." />
                                     </div>
                                     <div className="relative">
                                         <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
@@ -349,69 +379,35 @@ export function NetSalaryPage() {
                                     </div>
                                 </div>
 
-                                {/* Checkbox Options */}
-                                <div className="space-y-3 pt-2">
-                                    {/* Dependentes menores de 14 anos */}
-                                    <div className="flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between">
-                                        <div
-                                            className="flex items-center gap-3 cursor-pointer"
-                                            onClick={() => setHasMinorDependents(!hasMinorDependents)}
-                                        >
-                                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasMinorDependents ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
-                                                {hasMinorDependents && <CheckCircle className="w-3.5 h-3.5 text-white" />}
-                                            </div>
-                                            <div className="flex items-center gap-1">
-                                                <span className="text-sm text-gray-300">
-                                                    Dependentes menores de 14 anos
-                                                </span>
-                                                <Tooltip content="Empregados com filhos menores de 14 anos têm direito ao salário-família (benefício pago pelo INSS)." />
-                                            </div>
+                                {/* Horas Extras */}
+                                <div className="flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between">
+                                    <div
+                                        className="flex items-center gap-3 cursor-pointer"
+                                        onClick={() => setHasOvertime(!hasOvertime)}
+                                    >
+                                        <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasOvertime ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
+                                            {hasOvertime && <CheckCircle className="w-3.5 h-3.5 text-white" />}
                                         </div>
-                                        {hasMinorDependents && (
-                                            <div className="flex items-center gap-2 ml-8 md:ml-0">
-                                                <span className="text-xs text-gray-400">Quantidade:</span>
-                                                <input
-                                                    type="text"
-                                                    inputMode="numeric"
-                                                    value={minorDependentsQty}
-                                                    onChange={(e) => setMinorDependentsQty(e.target.value.replace(/[^0-9]/g, ''))}
-                                                    className="w-16 bg-[#0a0a0a] border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm text-center focus:outline-none focus:border-blue-500/50"
-                                                    placeholder="0"
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    {/* Horas Extras */}
-                                    <div className="flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between">
-                                        <div
-                                            className="flex items-center gap-3 cursor-pointer"
-                                            onClick={() => setHasOvertime(!hasOvertime)}
-                                        >
-                                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasOvertime ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
-                                                {hasOvertime && <CheckCircle className="w-3.5 h-3.5 text-white" />}
-                                            </div>
-                                            <div className="flex items-center gap-1">
-                                                <span className="text-sm text-gray-300">
-                                                    Horas extras
-                                                </span>
-                                                <Tooltip content="Horas trabalhadas além da jornada normal. O adicional padrão é 50% sobre a hora normal." />
-                                            </div>
+                                        <div className="flex items-center gap-1">
+                                            <span className="text-sm text-gray-300">
+                                                Horas extras (50%)
+                                            </span>
+                                            <Tooltip content="Horas além da jornada normal. Calcula: (salário ÷ 220) × 1,5 × horas. O valor é SOMADO ao salário bruto antes dos descontos." />
                                         </div>
-                                        {hasOvertime && (
-                                            <div className="flex items-center gap-2 ml-8 md:ml-0">
-                                                <span className="text-xs text-gray-400">Quantidade de horas:</span>
-                                                <input
-                                                    type="text"
-                                                    inputMode="decimal"
-                                                    value={overtimeHours}
-                                                    onChange={(e) => setOvertimeHours(e.target.value.replace(/[^0-9,]/g, ''))}
-                                                    className="w-20 bg-[#0a0a0a] border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm text-center focus:outline-none focus:border-blue-500/50"
-                                                    placeholder="0"
-                                                />
-                                            </div>
-                                        )}
                                     </div>
+                                    {hasOvertime && (
+                                        <div className="flex items-center gap-2 ml-8 md:ml-0">
+                                            <span className="text-xs text-gray-400">Horas:</span>
+                                            <input
+                                                type="text"
+                                                inputMode="decimal"
+                                                value={overtimeHours}
+                                                onChange={(e) => setOvertimeHours(e.target.value.replace(/[^0-9,]/g, ''))}
+                                                className="w-20 bg-[#0a0a0a] border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm text-center focus:outline-none focus:border-blue-500/50"
+                                                placeholder="0"
+                                            />
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Validation Error Message */}
@@ -981,7 +977,7 @@ export function NetSalaryPage() {
                 />
 
                 <AppPromoBanner />
-            </div >
-        </section >
+            </div>
+        </section>
     );
 }
