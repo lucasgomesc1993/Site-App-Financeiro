@@ -654,104 +654,136 @@ export function TerminationPage() {
 
                                 {/* Result Block */}
                                 {result && (
-                                    <div className="pt-2 animate-in fade-in slide-in-from-top-4 duration-500">
-                                        <div className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 p-6 rounded-2xl border border-blue-500/20 text-center mb-4">
-                                            <span className="text-sm text-blue-400 block mb-2">
-                                                Valor Líquido Estimado
-                                            </span>
-                                            <span className="text-4xl font-bold text-white">
-                                                R$ {result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                            </span>
+                                    <div className="pt-6 animate-in fade-in slide-in-from-top-4 duration-500 space-y-6 border-t border-white/10 mt-6">
 
-                                            <div className="flex justify-center gap-4 mt-3 text-xs">
-                                                <span className="text-gray-400">Bruto: R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                <span className="text-red-400">Descontos: R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                        <div className="grid md:grid-cols-2 gap-4">
+                                            {/* Proventos */}
+                                            <div className="space-y-3">
+                                                <h4 className="text-sm font-semibold text-green-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
+                                                    Proventos (Entradas)
+                                                </h4>
+                                                <div className="space-y-2">
+                                                    {result.breakdown.salaryBalance > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">Saldo de Salário</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.salaryBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {(result.breakdown.vacationProportional > 0) && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">Férias + 1/3 (Prop.)</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {(result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {(result.breakdown.vacationExpired > 0) && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">Férias Vencidas + 1/3</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {(result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {(result.breakdown.thirteenthProportional > 0) && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">13º Salário Prop.</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.thirteenthProportional.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.noticeIndemnified > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">Aviso Prévio Indenizado</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.art479Indemnification > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <div className="flex items-center gap-1">
+                                                                <span className="text-gray-300 text-sm">Indenização Art. 479</span>
+                                                                <Tooltip content="Metade da remuneração calculada sobre os dias que faltavam para o término do contrato." />
+                                                            </div>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.art479Indemnification.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.fgtsFine > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                            <span className="text-gray-300 text-sm">Multa FGTS</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.fgtsFine.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            {/* Descontos */}
+                                            <div className="space-y-3">
+                                                <h4 className="text-sm font-semibold text-red-400 uppercase tracking-wider mb-2 flex items-center gap-2">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                                                    Descontos
+                                                </h4>
+                                                <div className="space-y-2">
+                                                    {result.breakdown.inssSalary > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
+                                                            <span className="text-red-200/70 text-sm">INSS (Salário)</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.inssSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.inss13 > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
+                                                            <span className="text-red-200/70 text-sm">INSS (13º)</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.inss13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.irrfSalary > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
+                                                            <span className="text-red-200/70 text-sm">IRRF (Salário)</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.irrfSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.irrf13 > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
+                                                            <span className="text-red-200/70 text-sm">IRRF (13º)</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.irrf13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.breakdown.noticeDeduction > 0 && (
+                                                        <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
+                                                            <span className="text-red-200/70 text-sm">Desconto Aviso Prévio</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.noticeDeduction.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        </div>
+                                                    )}
+                                                    {result.totalDiscounts === 0 && (
+                                                        <div className="p-4 text-center text-gray-500 text-sm italic border border-white/5 rounded-lg border-dashed">
+                                                            Sem descontos aplicáveis
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
 
-                                        {result.breakdown && (
-                                            <div className="grid grid-cols-1 gap-3 text-sm">
-                                                {result.breakdown.salaryBalance > 0 && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                        <span className="text-gray-300">Saldo de Salário</span>
-                                                        <span className="text-white font-medium">R$ {result.breakdown.salaryBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-                                                {result.breakdown.inssSalary > 0 && (
-                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                        <span>- INSS (Sobre Salário)</span>
-                                                        <span>R$ {result.breakdown.inssSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-                                                {result.breakdown.irrfSalary > 0 && (
-                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                        <span>- IRRF (Sobre Salário)</span>
-                                                        <span>R$ {result.breakdown.irrfSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
+                                        {/* Total Section */}
+                                        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 rounded-2xl shadow-2xl relative overflow-hidden group">
+                                            <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-white/20 transition-all duration-700"></div>
 
-                                                {(result.breakdown.vacationProportional > 0) && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                        <span className="text-gray-300">Férias + 1/3 (Prop)</span>
-                                                        <span className="text-white font-medium">R$ {(result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            <div className="relative z-10 grid md:grid-cols-2 gap-6 items-center">
+                                                <div>
+                                                    <span className="text-blue-100 text-sm font-medium uppercase tracking-wider mb-1 block">Valor Líquido a Receber</span>
+                                                    <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                                                        R$ {result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                                    </span>
+                                                    <p className="text-blue-200/80 text-xs mt-2">
+                                                        *O valor pode variar centavos dependendo da data exata do pagamento.
+                                                    </p>
+                                                </div>
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="flex justify-between items-center text-sm border-b border-white/20 pb-2">
+                                                        <span className="text-blue-100">Total Proventos</span>
+                                                        <span className="text-white font-medium">R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                     </div>
-                                                )}
-
-                                                {(result.breakdown.vacationExpired > 0) && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                        <span className="text-gray-300">Férias Vencidas + 1/3</span>
-                                                        <span className="text-white font-medium">R$ {(result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    <div className="flex justify-between items-center text-sm pt-1">
+                                                        <span className="text-blue-200">Total Descontos</span>
+                                                        <span className="text-white font-medium">- R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                     </div>
-                                                )}
-
-                                                {(result.breakdown.thirteenthProportional > 0) && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                        <span className="text-gray-300">13º Salário Prop.</span>
-                                                        <span className="text-white font-medium">R$ {result.breakdown.thirteenthProportional.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-                                                {result.breakdown.inss13 > 0 && (
-                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                        <span>- INSS (Sobre 13º)</span>
-                                                        <span>R$ {result.breakdown.inss13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-                                                {result.breakdown.irrf13 > 0 && (
-                                                    <div className="flex justify-between p-2 pl-6 text-xs rounded-lg text-red-400">
-                                                        <span>- IRRF (Sobre 13º)</span>
-                                                        <span>R$ {result.breakdown.irrf13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-
-                                                {result.breakdown.noticeIndemnified > 0 && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                        <span className="text-gray-300">Aviso Prévio Indenizado</span>
-                                                        <span className="text-white font-medium">R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-                                                {result.breakdown.noticeDeduction > 0 && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-                                                        <span className="text-red-300">Desconto Aviso Prévio</span>
-                                                        <span className="text-red-300 font-medium">- R$ {result.breakdown.noticeDeduction.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-                                                {result.breakdown.art479Indemnification > 0 && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                        <div className="flex items-center gap-1">
-                                                            <span className="text-gray-300">Indenização Art. 479 CLT</span>
-                                                            <Tooltip content="Metade da remuneração calculada sobre os dias que faltavam para o término do contrato." />
-                                                        </div>
-                                                        <span className="text-white font-medium">R$ {result.breakdown.art479Indemnification.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
-                                                {result.breakdown.fgtsFine > 0 && (
-                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
-                                                        <span className="text-gray-300">Multa FGTS</span>
-                                                        <span className="text-white font-medium">R$ {result.breakdown.fgtsFine.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                                    </div>
-                                                )}
+                                                </div>
                                             </div>
-                                        )}
+                                        </div>
                                     </div>
                                 )}
                             </div>
