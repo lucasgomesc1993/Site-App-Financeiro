@@ -46,6 +46,7 @@ export function TerminationPage() {
     const [endDate, setEndDate] = useState('');
     const [contractEndDate, setContractEndDate] = useState(''); // For Experience Contract Early Termination
     const [reason, setReason] = useState('sem_justa_causa');
+    const [noticeType, setNoticeType] = useState('indenizado'); // trabalhado, indenizado, nao_cumprido, dispensado
     const [balanceFGTS, setBalanceFGTS] = useState('');
     const [hasExpiredVacation, setHasExpiredVacation] = useState(false);
 
@@ -221,6 +222,7 @@ export function TerminationPage() {
 
         let totalGross = 0;
 
+        let noticeDeduction = 0; // Para pedido de demissão com aviso não cumprido
         let noticeIndemnified = 0;
         let noticeDays = 0;
         let fgtsFine = 0;
@@ -236,11 +238,20 @@ export function TerminationPage() {
 
         switch (reason) {
             case 'sem_justa_causa':
-                noticeIndemnified = (salaryValue / 30) * noticeDays;
-                fgtsFine = (balanceFGTSValue + (totalGross * 0.08)) * 0.40; // Approx base increase
-                // Note: Real calculation needs exact deposits. We assume user inputs TOTAL balance including recent.
+                // Options: indenizado, trabalhado
+                if (noticeType === 'indenizado') {
+                    // Full Indemnity: 30 days + proportional
+                    noticeIndemnified = (salaryValue / 30) * noticeDays;
+                } else if (noticeType === 'trabalhado') {
+                    // Worked: 30 days are in Salary Balance. Only proportional days (Lei 12.506) are indemnified if > 30.
+                    // noticeDays already contains total (30 + extra).
+                    const proportionalDays = Math.max(0, noticeDays - 30);
+                    noticeIndemnified = (salaryValue / 30) * proportionalDays;
+                }
+
                 fgtsFine = balanceFGTSValue * 0.40;
                 break;
+
             case 'com_justa_causa':
                 noticeIndemnified = 0;
                 fgtsFine = 0;
@@ -248,18 +259,30 @@ export function TerminationPage() {
                 vacationProportional = 0;
                 vacationThird = 0;
                 break;
+
             case 'pedido_demissao':
-                noticeIndemnified = 0;
                 fgtsFine = 0;
+                // Options: trabalhado, nao_cumprido, dispensado
+                if (noticeType === 'nao_cumprido') {
+                    // Deduct 1 month salary
+                    noticeDeduction = salaryValue;
+                }
+                // trabalhado -> paid in salary balance.
+                // dispensado -> no deduction, no payment.
                 break;
+
             case 'acordo':
+                // Acordo: 50% of notice (if indemnified).
+                // Usually agreement implies indemnified notice (half).
                 noticeIndemnified = ((salaryValue / 30) * noticeDays) / 2;
                 fgtsFine = balanceFGTSValue * 0.20;
                 break;
+
             case 'experience_term': // Término de contrato de experiência no prazo
                 noticeIndemnified = 0;
-                fgtsFine = 0; // Saque permitido, mas sem multa de 40%
+                fgtsFine = 0;
                 break;
+
             case 'experience_early_employer': // Rescisão antecipada pelo empregador (Contrato de Experiência)
                 noticeIndemnified = 0; // Não há aviso prévio, mas sim indenização Art. 479
                 fgtsFine = balanceFGTSValue * 0.40;
@@ -277,10 +300,12 @@ export function TerminationPage() {
                     }
                 }
                 break;
+
             case 'retirement': // Aposentadoria do empregado
                 noticeIndemnified = 0;
                 fgtsFine = 0;
                 break;
+
             case 'employer_death': // Falecimento do empregador (Pessoa Física)
                 noticeIndemnified = (salaryValue / 30) * noticeDays;
                 fgtsFine = balanceFGTSValue * 0.40;
@@ -295,6 +320,7 @@ export function TerminationPage() {
         // Discounts
         let inssSalary = calculateINSS(salaryBalance);
         let inss13 = calculateINSS(thirteenthProportional);
+
         // Notice Indemnified and Art 479 are usually exempt from INSS/IRRF
 
         let irrfBaseSalary = salaryBalance - inssSalary;
@@ -303,7 +329,7 @@ export function TerminationPage() {
         let irrfBase13 = thirteenthProportional - inss13;
         let irrf13 = calculateIRRF(irrfBase13, inss13);
 
-        const totalDiscounts = inssSalary + inss13 + irrfSalary + irrf13;
+        const totalDiscounts = inssSalary + inss13 + irrfSalary + irrf13 + noticeDeduction;
         const totalNet = totalGross - totalDiscounts;
 
         setResult({
@@ -325,7 +351,8 @@ export function TerminationPage() {
                 irrf13,
                 monthsWorked,
                 yearsOfService,
-                art479Indemnification
+                art479Indemnification,
+                noticeDeduction
             }
         });
     };
@@ -336,6 +363,7 @@ export function TerminationPage() {
         setEndDate('');
         setContractEndDate('');
         setReason('sem_justa_causa');
+        setNoticeType('indenizado');
         setBalanceFGTS('');
         setHasExpiredVacation(false);
         setResult(null);
@@ -361,6 +389,7 @@ export function TerminationPage() {
         "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Firefox, Edge.",
         "featureList": [
             "Cálculo de Rescisão CLT 2025 (Com e Sem Justa Causa)",
+            "Opções de Aviso Prévio (Trabalhado, Indenizado, Descontado)",
             "Cálculo de Indenização Art. 479 (Contrato de Experiência)",
             "Simulação de Rescisão por Falecimento ou Aposentadoria",
             "Simulação de Multa do FGTS (40% e 20%)",
@@ -483,10 +512,10 @@ export function TerminationPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label htmlFor="reason" className="text-sm text-gray-400 flex items-center gap-1">
-                                            Motivo
+                                        <div className="flex items-center gap-1">
+                                            <label htmlFor="reason" className="text-sm text-gray-400">Motivo</label>
                                             <Tooltip content="Selecione o motivo da rescisão para aplicar as regras corretas de cálculo." />
-                                        </label>
+                                        </div>
                                         <div className="relative">
                                             <select
                                                 id="reason"
@@ -506,6 +535,31 @@ export function TerminationPage() {
                                             <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
                                     </div>
+
+                                    {(reason === 'sem_justa_causa' || reason === 'pedido_demissao') && (
+                                        <div className="space-y-2 animate-in fade-in slide-in-from-top-1 duration-300">
+                                            <div className="flex items-center gap-1">
+                                                <label htmlFor="noticeType" className="text-sm text-gray-400">Aviso Prévio</label>
+                                                <Tooltip content="Defina se o aviso foi trabalhado, indenizado ou não cumprido." />
+                                            </div>
+                                            <div className="relative">
+                                                <select
+                                                    id="noticeType"
+                                                    value={noticeType}
+                                                    onChange={(e) => setNoticeType(e.target.value)}
+                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all appearance-none cursor-pointer"
+                                                >
+                                                    <option value="trabalhado">Trabalhado</option>
+                                                    <option value="indenizado">Indenizado pelo empregador</option>
+                                                    {reason === 'pedido_demissao' && (
+                                                        <option value="nao_cumprido">Não cumprido pelo empregado</option>
+                                                    )}
+                                                    <option value="dispensado">Dispensado</option>
+                                                </select>
+                                                <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Conditional Field for Contract End Date */}
@@ -654,6 +708,12 @@ export function TerminationPage() {
                                                     <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
                                                         <span className="text-gray-300">Aviso Prévio Indenizado</span>
                                                         <span className="text-white font-medium">R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                                {result.breakdown.noticeDeduction > 0 && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                                                        <span className="text-red-300">Desconto Aviso Prévio</span>
+                                                        <span className="text-red-300 font-medium">- R$ {result.breakdown.noticeDeduction.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                     </div>
                                                 )}
                                                 {result.breakdown.art479Indemnification > 0 && (
