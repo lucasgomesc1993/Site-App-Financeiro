@@ -4,7 +4,7 @@ import { PostCard } from '../components/blog/PostCard';
 import { SEO } from '../components/SEO';
 import { Post, Author } from '../types/blog';
 import { Github, Linkedin, Twitter, Mail, MapPin, Calendar, ExternalLink } from 'lucide-react';
-import { Layout } from '../components/CalculatorLayout'; // Or just use a div since App.tsx handles layout? App.tsx handles Header/Footer.
+// Layout is handled by App.tsx (Header/Footer)
 
 import { AUTHOR } from '../constants/author';
 
