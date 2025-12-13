@@ -464,7 +464,10 @@ export function TerminationPage() {
                                 {/* Salary & Reason */}
                                 <div className="grid md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label htmlFor="salary" className="text-sm text-gray-400">Salário Bruto</label>
+                                        <div className="flex items-center gap-1">
+                                            <label htmlFor="salary" className="text-sm text-gray-400">Salário Bruto</label>
+                                            <Tooltip content="Valor total do seu salário sem os descontos (conforme carteira ou holerite)." />
+                                        </div>
                                         <div className="relative">
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                             <input
