@@ -416,14 +416,17 @@ export function TerminationPage() {
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript. Works on Chrome, Safari, Firefox, Edge.",
         "featureList": [
-            "Cálculo de Rescisão CLT 2025 (Com e Sem Justa Causa)",
-            "Opções de Aviso Prévio (Trabalhado, Indenizado, Descontado)",
-            "Cálculo de Indenização Art. 479 (Contrato de Experiência)",
-            "Simulação de Rescisão por Falecimento ou Aposentadoria",
-            "Simulação de Multa do FGTS (40% e 20%)",
-            "Cálculo de Férias Vencidas/Proporcionais e 13º Salário",
-            "Aviso Prévio Indenizado (Lei 12.506/2011)",
-            "Cálculo de Descontos INSS e IRRF (Tabelas 2025)"
+            "Cálculo de Rescisão CLT (Sem Justa Causa, Justa Causa, Pedido de Demissão)",
+            "Rescisão por Acordo - Reforma Trabalhista (Art. 484-A)",
+            "Aviso Prévio Proporcional (Lei 12.506/2011) - Trabalhado, Indenizado ou Dispensado",
+            "Contrato de Experiência - Término e Rescisão Antecipada (Art. 479)",
+            "Rescisão por Aposentadoria ou Falecimento do Empregador (PF)",
+            "Cálculo de Multa FGTS (40% e 20%) com Total para Saque",
+            "Férias Proporcionais + 1/3 e Férias Vencidas",
+            "13º Salário Proporcional",
+            "Desconto INSS Progressivo (Tabela 2025)",
+            "Desconto IRRF com Dedução por Dependentes (Tabela 2025)",
+            "Validação de Campos e Mensagens de Erro"
         ],
         "offers": {
             "@type": "Offer",
