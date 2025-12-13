@@ -663,7 +663,7 @@ export function TerminationPage() {
                                                 <div>
                                                     <span className="text-blue-100 text-sm font-medium uppercase tracking-wider mb-1 block">Valor Líquido a Receber</span>
                                                     <span className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                                                        R$ {result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                                        R$ {result.totalNet.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                     </span>
                                                     <p className="text-blue-200/80 text-xs mt-2">
                                                         *O valor pode variar centavos dependendo da data exata do pagamento.
@@ -672,11 +672,11 @@ export function TerminationPage() {
                                                 <div className="flex flex-col gap-2">
                                                     <div className="flex justify-between items-center text-sm border-b border-white/20 pb-2">
                                                         <span className="text-blue-100">Total Proventos</span>
-                                                        <span className="text-white font-medium">R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        <span className="text-white font-medium">R$ {result.totalGross.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                     </div>
                                                     <div className="flex justify-between items-center text-sm pt-1">
                                                         <span className="text-blue-200">Total Descontos</span>
-                                                        <span className="text-white font-medium">- R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                        <span className="text-white font-medium">- R$ {result.totalDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -693,31 +693,31 @@ export function TerminationPage() {
                                                     {result.breakdown.salaryBalance > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
                                                             <span className="text-gray-300 text-sm">Saldo de Salário</span>
-                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.salaryBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.salaryBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {(result.breakdown.vacationProportional > 0) && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
                                                             <span className="text-gray-300 text-sm">Férias + 1/3 (Prop.)</span>
-                                                            <span className="text-green-300 font-medium text-sm">+ R$ {(result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {(result.breakdown.vacationProportional + result.breakdown.vacationThird).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {(result.breakdown.vacationExpired > 0) && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
                                                             <span className="text-gray-300 text-sm">Férias Vencidas + 1/3</span>
-                                                            <span className="text-green-300 font-medium text-sm">+ R$ {(result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {(result.breakdown.vacationExpired + result.breakdown.vacationExpiredThird).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {(result.breakdown.thirteenthProportional > 0) && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
                                                             <span className="text-gray-300 text-sm">13º Salário Prop.</span>
-                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.thirteenthProportional.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.thirteenthProportional.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.breakdown.noticeIndemnified > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
                                                             <span className="text-gray-300 text-sm">Aviso Prévio Indenizado</span>
-                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.breakdown.art479Indemnification > 0 && (
@@ -726,13 +726,13 @@ export function TerminationPage() {
                                                                 <span className="text-gray-300 text-sm">Indenização Art. 479</span>
                                                                 <Tooltip content="Metade da remuneração calculada sobre os dias que faltavam para o término do contrato." />
                                                             </div>
-                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.art479Indemnification.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.art479Indemnification.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.breakdown.fgtsFine > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
                                                             <span className="text-gray-300 text-sm">Multa FGTS</span>
-                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.fgtsFine.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-green-300 font-medium text-sm">+ R$ {result.breakdown.fgtsFine.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                 </div>
@@ -748,31 +748,31 @@ export function TerminationPage() {
                                                     {result.breakdown.inssSalary > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
                                                             <span className="text-red-200/70 text-sm">INSS (Salário)</span>
-                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.inssSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.inssSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.breakdown.inss13 > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
                                                             <span className="text-red-200/70 text-sm">INSS (13º)</span>
-                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.inss13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.inss13.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.breakdown.irrfSalary > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
                                                             <span className="text-red-200/70 text-sm">IRRF (Salário)</span>
-                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.irrfSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.irrfSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.breakdown.irrf13 > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
                                                             <span className="text-red-200/70 text-sm">IRRF (13º)</span>
-                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.irrf13.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.irrf13.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.breakdown.noticeDeduction > 0 && (
                                                         <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10">
                                                             <span className="text-red-200/70 text-sm">Desconto Aviso Prévio</span>
-                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.noticeDeduction.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                            <span className="text-red-300 font-medium text-sm">- R$ {result.breakdown.noticeDeduction.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                                                         </div>
                                                     )}
                                                     {result.totalDiscounts === 0 && (
