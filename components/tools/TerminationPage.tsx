@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calculator, HelpCircle, Briefcase, AlertCircle, ArrowRight, Calendar, DollarSign, FileText, Clock, Percent, CheckCircle, XCircle } from 'lucide-react';
+import { Calculator, HelpCircle, Briefcase, AlertCircle, ArrowRight, Calendar, DollarSign, FileText, Clock, Percent, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
 import { DatePicker } from '../ui/DatePicker';
 import { Tooltip } from '../ui/Tooltip';
 import { Link } from 'react-router-dom';
@@ -551,7 +551,7 @@ export function TerminationPage() {
                                                 <option value="retirement">Aposentadoria do Empregado</option>
                                                 <option value="employer_death">Falecimento do Empregador (PF)</option>
                                             </select>
-                                            <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                                            <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
                                     </div>
 
@@ -575,7 +575,7 @@ export function TerminationPage() {
                                                     )}
                                                     <option value="dispensado">Dispensado</option>
                                                 </select>
-                                                <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                                                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                             </div>
                                         </div>
                                     )}
