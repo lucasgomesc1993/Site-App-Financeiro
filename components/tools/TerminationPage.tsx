@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Calculator, HelpCircle, Briefcase, AlertCircle, ArrowRight, Calendar, DollarSign, FileText, Clock, Percent, CheckCircle, XCircle } from 'lucide-react';
 import { DatePicker } from '../ui/DatePicker';
+import { Tooltip } from '../ui/Tooltip';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
@@ -43,6 +44,7 @@ export function TerminationPage() {
     const [salary, setSalary] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [contractEndDate, setContractEndDate] = useState(''); // For Experience Contract Early Termination
     const [reason, setReason] = useState('sem_justa_causa');
     const [balanceFGTS, setBalanceFGTS] = useState('');
     const [hasExpiredVacation, setHasExpiredVacation] = useState(false);
@@ -115,128 +117,224 @@ export function TerminationPage() {
     };
 
     const calculate = () => {
-        const sal = parseFloat(salary.replace(/\./g, '').replace(',', '.'));
-        const fgts = parseFloat(balanceFGTS.replace(/\./g, '').replace(',', '.') || '0');
+        if (!startDate || !endDate || !salary) return;
 
-        if (isNaN(sal) || !startDate || !endDate) {
-            setResult(null);
-            return;
-        }
+        const start = new Date(startDate + 'T12:00:00');
+        const end = new Date(endDate + 'T12:00:00');
+        const salaryValue = parseFloat(salary.replace(/\./g, '').replace(',', '.'));
+        const balanceFGTSValue = parseFloat(balanceFGTS.replace(/\./g, '').replace(',', '.') || '0');
 
-        const start = new Date(startDate);
-        const end = new Date(endDate);
+        if (isNaN(salaryValue) || end < start) return;
 
-        if (end < start) {
-            setResult(null);
-            return;
-        }
-
-        // Logic estimation
+        // Base Calculations
         const diffTime = Math.abs(end.getTime() - start.getTime());
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        const yearsWorked = Math.floor(diffDays / 365);
-        const monthsWorkedTotal = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+        const daysWorkedTotal = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const yearsOfService = Math.floor(daysWorkedTotal / 365);
 
-        let totalGross = 0;
-        let totalDiscounts = 0;
-        const breakdown: any = {};
+        let monthsWorked = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+        if (end.getDate() >= 15) monthsWorked += 1; // Fraction >= 15 days counts as month
+
+        // Daily Salary
+        const calculatedDailySalary = salaryValue / 30;
 
         // 1. Saldo de Salário
-        const daysInLastMonth = new Date(end.getFullYear(), end.getMonth() + 1, 0).getDate();
-        const lastDay = end.getDate();
+        const daysInFiringMonth = end.getDate();
+        const salaryBalance = (salaryValue / 30) * daysInFiringMonth;
 
-        // Logic: Pay 30 days if full month, otherwise days worked
-        if (lastDay === 31 || (end.getMonth() === 1 && lastDay >= 28)) breakdown.salaryBalance = sal;
-        else breakdown.salaryBalance = (sal / 30) * lastDay;
+        // 2. 13º Salário Proporcional
+        // Count months worked in current year
+        let monthsInCurrentYear = end.getMonth(); // 0-indexed (Jan=0, so Dec=11 means 11 full months passed? No.)
+        // Actually, if we are in Oct (9), and date >= 15, we have 10 months.
+        // Let's use a simpler approach for 13th: months from Jan 1st of end year to end date
+        const startOfYear = new Date(end.getFullYear(), 0, 1);
+        let months13 = 0;
 
-        totalGross += breakdown.salaryBalance;
+        // If admission was this year, count from admission
+        const effectiveStart = start > startOfYear ? start : startOfYear;
 
-        // INSS on Salary Balance
-        const inssSalary = calculateINSS(breakdown.salaryBalance);
-        breakdown.inssSalary = inssSalary;
-        totalDiscounts += inssSalary;
+        // Calculation of months for 13th
+        // If workings days in a month >= 15, count it.
+        // Iterate months from effectiveStart to end
+        let currentIter = new Date(effectiveStart.getFullYear(), effectiveStart.getMonth(), 1);
+        while (currentIter <= end) {
+            const monthEnd = new Date(currentIter.getFullYear(), currentIter.getMonth() + 1, 0);
+            let daysInMonthWorking = 0;
 
-        // IRRF on Salary Balance
-        const irrfSalary = Math.max(0, calculateIRRF(breakdown.salaryBalance, inssSalary));
-        breakdown.irrfSalary = irrfSalary;
-        totalDiscounts += irrfSalary;
+            // Start date in this month?
+            const startDay = (currentIter.getMonth() === effectiveStart.getMonth() && currentIter.getFullYear() === effectiveStart.getFullYear()) ? effectiveStart.getDate() : 1;
 
+            // End date in this month?
+            const endDay = (currentIter.getMonth() === end.getMonth() && currentIter.getFullYear() === end.getFullYear()) ? end.getDate() : monthEnd.getDate();
 
-        // 2. Aviso Prévio
-        let noticeDays = 30; // Min
-        if (yearsWorked >= 1) noticeDays += (yearsWorked * 3);
-        if (noticeDays > 90) noticeDays = 90;
+            daysInMonthWorking = endDay - startDay + 1;
 
-        if (reason === 'sem_justa_causa') {
-            breakdown.noticeIndemnified = (sal / 30) * noticeDays;
-            totalGross += breakdown.noticeIndemnified;
-        } else if (reason === 'acordo') {
-            breakdown.noticeIndemnified = ((sal / 30) * noticeDays) / 2; // Half notice
-            totalGross += breakdown.noticeIndemnified;
+            if (daysInMonthWorking >= 15) {
+                months13++;
+            }
+            currentIter.setMonth(currentIter.getMonth() + 1);
         }
-        // Notice Indemnified is Exempt from INSS and usually IRRF.
 
-        // 3. Férias
-        const currentPeriodMonths = monthsWorkedTotal % 12;
-        const accruedVacation = (sal / 12) * currentPeriodMonths;
-        const vacationThird = accruedVacation / 3;
+        let thirteenthProportional = (salaryValue / 12) * months13;
 
-        breakdown.vacationProportional = accruedVacation;
-        breakdown.vacationThird = vacationThird;
+        // 3. Férias Proporcionais + 1/3
+        // Months since last anniversary of admission
+        // This is complex. Simplified: (months worked since last vacation acquisition period start)
+        // Let's approximate: (Total Months % 12)
+        // Correct way: Find last anniversary. Count months from there.
+        const anniversary = new Date(start);
+        anniversary.setFullYear(end.getFullYear());
+        if (anniversary > end) anniversary.setFullYear(end.getFullYear() - 1);
 
-        // Expired Vacation
-        if (hasExpiredVacation) {
-            breakdown.vacationExpired = sal;
-            breakdown.vacationExpiredThird = sal / 3;
+        // Count months from anniversary to end
+        let vacationMonths = 0;
+        currentIter = new Date(anniversary.getFullYear(), anniversary.getMonth(), anniversary.getDate());
+        // Move to first full month start? No, use <15 days rule> relative to monthly blocks from anniversary.
+        // Actually, CLT says "fraction superior a 14 days".
+        // Let's use the difference in months + check days
+        let tempDate = new Date(anniversary);
+        while (tempDate < end) {
+            tempDate.setMonth(tempDate.getMonth() + 1);
+            if (tempDate <= end || (tempDate.getMonth() === end.getMonth() && (end.getDate() - tempDate.getDate() + 30) % 30 >= 14)) { // Rough approx
+                // Better: just count full months + check remaining days
+            }
+        }
+        // Simplified Logic for Vacation Months (standard practice):
+        // (End Month - Anniversary Month) + (End Day >= Anniversary Day ? 0 : -1) ...
+        // Re-using logic:
+        let periodStart = new Date(anniversary);
+        let vacMonthsRaw = (end.getFullYear() - periodStart.getFullYear()) * 12 + (end.getMonth() - periodStart.getMonth());
+        if (end.getDate() < periodStart.getDate()) vacMonthsRaw--;
+
+        // Check fraction of last month
+        // Days remaining
+        let daysRemaining = end.getDate() - periodStart.getDate();
+        if (daysRemaining < 0) daysRemaining += 30; // approx
+
+        if (daysRemaining >= 14) vacMonthsRaw++;
+
+        let vacationProportional = (salaryValue / 12) * vacMonthsRaw;
+        let vacationThird = vacationProportional / 3;
+
+        // Férias Vencidas
+        const vacationExpired = hasExpiredVacation ? salaryValue : 0;
+        const vacationExpiredThird = vacationExpired / 3;
+
+        let totalGross = 0;
+
+        let noticeIndemnified = 0;
+        let noticeDays = 0;
+        let fgtsFine = 0;
+        let art479Indemnification = 0; // Multa Art. 479 (metade dos dias restantes)
+
+        // Notice Calculation
+        // Lei 12.506/2011: 30 days + 3 days per year of service (up to 90 days)
+        if (yearsOfService >= 1) {
+            noticeDays = 30 + (Math.min(yearsOfService, 20) * 3);
         } else {
-            breakdown.vacationExpired = 0;
-            breakdown.vacationExpiredThird = 0;
+            noticeDays = 30;
         }
 
-        if (reason !== 'justa_causa') {
-            totalGross += breakdown.vacationProportional + breakdown.vacationThird + breakdown.vacationExpired + breakdown.vacationExpiredThird;
+        switch (reason) {
+            case 'sem_justa_causa':
+                noticeIndemnified = (salaryValue / 30) * noticeDays;
+                fgtsFine = (balanceFGTSValue + (totalGross * 0.08)) * 0.40; // Approx base increase
+                // Note: Real calculation needs exact deposits. We assume user inputs TOTAL balance including recent.
+                fgtsFine = balanceFGTSValue * 0.40;
+                break;
+            case 'com_justa_causa':
+                noticeIndemnified = 0;
+                fgtsFine = 0;
+                thirteenthProportional = 0;
+                vacationProportional = 0;
+                vacationThird = 0;
+                break;
+            case 'pedido_demissao':
+                noticeIndemnified = 0;
+                fgtsFine = 0;
+                break;
+            case 'acordo':
+                noticeIndemnified = ((salaryValue / 30) * noticeDays) / 2;
+                fgtsFine = balanceFGTSValue * 0.20;
+                break;
+            case 'experience_term': // Término de contrato de experiência no prazo
+                noticeIndemnified = 0;
+                fgtsFine = 0; // Saque permitido, mas sem multa de 40%
+                break;
+            case 'experience_early_employer': // Rescisão antecipada pelo empregador (Contrato de Experiência)
+                noticeIndemnified = 0; // Não há aviso prévio, mas sim indenização Art. 479
+                fgtsFine = balanceFGTSValue * 0.40;
+
+                // Art. 479 Calculation
+                if (endDate && contractEndDate) {
+                    const end = new Date(endDate + 'T12:00:00');
+                    const contractEnd = new Date(contractEndDate + 'T12:00:00');
+                    if (contractEnd > end) {
+                        const remainingTime = contractEnd.getTime() - end.getTime();
+                        const remainingDays = Math.ceil(remainingTime / (1000 * 3600 * 24));
+                        if (remainingDays > 0) {
+                            art479Indemnification = (calculatedDailySalary * remainingDays) / 2;
+                        }
+                    }
+                }
+                break;
+            case 'retirement': // Aposentadoria do empregado
+                noticeIndemnified = 0;
+                fgtsFine = 0;
+                break;
+            case 'employer_death': // Falecimento do empregador (Pessoa Física)
+                noticeIndemnified = (salaryValue / 30) * noticeDays;
+                fgtsFine = balanceFGTSValue * 0.40;
+                break;
         }
-        // Vacations are Indemnified -> Exempt from INSS/IRRF in Rescission (usually)
 
-        // 4. 13º Salário
-        let monthsInYear = end.getMonth() + 1;
-        if (end.getDate() < 15) monthsInYear -= 1;
+        // Sum everything
+        totalGross = salaryBalance + thirteenthProportional + vacationProportional +
+            vacationThird + vacationExpired + vacationExpiredThird +
+            noticeIndemnified + art479Indemnification;
 
-        const thirteenth = (sal / 12) * monthsInYear;
-        breakdown.thirteenthProportional = thirteenth;
+        // Discounts
+        let inssSalary = calculateINSS(salaryBalance);
+        let inss13 = calculateINSS(thirteenthProportional);
+        // Notice Indemnified and Art 479 are usually exempt from INSS/IRRF
 
-        if (reason !== 'justa_causa') {
-            totalGross += breakdown.thirteenthProportional;
+        let irrfBaseSalary = salaryBalance - inssSalary;
+        let irrfSalary = calculateIRRF(irrfBaseSalary, inssSalary);
 
-            // INSS on 13th
-            const inss13 = calculateINSS(thirteenth);
-            breakdown.inss13 = inss13;
-            totalDiscounts += inss13;
+        let irrfBase13 = thirteenthProportional - inss13;
+        let irrf13 = calculateIRRF(irrfBase13, inss13);
 
-            // IRRF on 13th (Exclusive)
-            const irrf13 = Math.max(0, calculateIRRF(thirteenth, inss13));
-            breakdown.irrf13 = irrf13;
-            totalDiscounts += irrf13;
-        }
-
-        // 5. FGTS Fine
-        if (reason === 'sem_justa_causa') {
-            breakdown.fgtsFine = fgts * 0.40;
-            totalGross += breakdown.fgtsFine;
-        } else if (reason === 'acordo') {
-            breakdown.fgtsFine = fgts * 0.20;
-            totalGross += breakdown.fgtsFine;
-        }
-
+        const totalDiscounts = inssSalary + inss13 + irrfSalary + irrf13;
         const totalNet = totalGross - totalDiscounts;
 
-        setResult({ totalGross, totalNet, totalDiscounts, breakdown });
+        setResult({
+            totalGross,
+            totalNet,
+            totalDiscounts,
+            breakdown: {
+                salaryBalance,
+                thirteenthProportional,
+                vacationProportional,
+                vacationThird,
+                vacationExpired,
+                vacationExpiredThird,
+                noticeIndemnified,
+                fgtsFine,
+                inssSalary,
+                inss13,
+                irrfSalary,
+                irrf13,
+                monthsWorked,
+                yearsOfService,
+                art479Indemnification
+            }
+        });
     };
 
     const handleClear = () => {
         setSalary('');
         setStartDate('');
         setEndDate('');
+        setContractEndDate('');
         setReason('sem_justa_causa');
         setBalanceFGTS('');
         setHasExpiredVacation(false);
@@ -335,19 +433,30 @@ export function TerminationPage() {
 
                             <div className="space-y-6">
                                 {/* Dates Row */}
+                                {/* Dates Row */}
                                 <div className="grid md:grid-cols-2 gap-6 w-full relative z-20">
-                                    <DatePicker
-                                        label="Data de Admissão"
-                                        value={startDate}
-                                        onChange={setStartDate}
-                                        placeholder="Selecione data"
-                                    />
-                                    <DatePicker
-                                        label="Data de Afastamento"
-                                        value={endDate}
-                                        onChange={setEndDate}
-                                        placeholder="Selecione data"
-                                    />
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-1">
+                                            <label className="text-sm text-gray-400">Data de Admissão</label>
+                                            <Tooltip content="Data que consta na sua carteira de trabalho (início do contrato)." />
+                                        </div>
+                                        <DatePicker
+                                            value={startDate}
+                                            onChange={setStartDate}
+                                            placeholder="Selecione data"
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center gap-1">
+                                            <label className="text-sm text-gray-400">Data de Afastamento</label>
+                                            <Tooltip content="Seu último dia trabalhado (ou o projetado pelo aviso prévio)." />
+                                        </div>
+                                        <DatePicker
+                                            value={endDate}
+                                            onChange={setEndDate}
+                                            placeholder="Selecione data"
+                                        />
+                                    </div>
                                 </div>
 
                                 {/* Salary & Reason */}
@@ -369,7 +478,10 @@ export function TerminationPage() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <label htmlFor="reason" className="text-sm text-gray-400">Motivo</label>
+                                        <label htmlFor="reason" className="text-sm text-gray-400 flex items-center gap-1">
+                                            Motivo
+                                            <Tooltip content="Selecione o motivo da rescisão para aplicar as regras corretas de cálculo." />
+                                        </label>
                                         <div className="relative">
                                             <select
                                                 id="reason"
@@ -381,25 +493,54 @@ export function TerminationPage() {
                                                 <option value="pedido_demissao">Pedido de Demissão</option>
                                                 <option value="com_justa_causa">Justa Causa</option>
                                                 <option value="acordo">Acordo (Comum Acordo)</option>
+                                                <option value="experience_term">Término Contrato Experiência</option>
+                                                <option value="experience_early_employer">Rescisão Antecipada Empregador (Experiência)</option>
+                                                <option value="retirement">Aposentadoria do Empregado</option>
+                                                <option value="employer_death">Falecimento do Empregador (PF)</option>
                                             </select>
                                             <AlertCircle className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
                                         </div>
                                     </div>
                                 </div>
 
+                                {/* Conditional Field for Contract End Date */}
+                                {reason === 'experience_early_employer' && (
+                                    <div className="animate-in fade-in slide-in-from-top-2 duration-300 space-y-2">
+                                        <div className="flex items-center gap-1">
+                                            <label className="text-sm text-blue-400 font-medium">Data Prevista para Término</label>
+                                            <Tooltip content="Data que o contrato de experiência deveria acabar originalmente. Necessário para calcular a indenização do Art. 479." />
+                                        </div>
+                                        <DatePicker
+                                            value={contractEndDate}
+                                            onChange={setContractEndDate}
+                                            placeholder="Selecione data"
+                                            className="border-blue-500/30"
+                                        />
+                                        <p className="text-xs text-gray-400 mt-1">
+                                            Necessário para calcular a indenização do Art. 479 da CLT.
+                                        </p>
+                                    </div>
+                                )}
+
                                 {/* Expired Vacation Checkbox */}
                                 <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 cursor-pointer hover:bg-white/10 transition-colors" onClick={() => setHasExpiredVacation(!hasExpiredVacation)}>
                                     <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all ${hasExpiredVacation ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
                                         {hasExpiredVacation && <CheckCircle className="w-3.5 h-3.5 text-white" />}
                                     </div>
-                                    <span className="text-sm text-gray-300">Possui férias vencidas (1 ano)?</span>
+                                    <div className="flex items-center">
+                                        <span className="text-sm text-gray-300">Possui férias vencidas (1 ano)?</span>
+                                        <Tooltip content="Marque se você completou mais de 1 ano sem tirar férias (férias vencidas)." />
+                                    </div>
                                 </div>
 
 
                                 {/* Conditional Fields */}
-                                {(reason === 'sem_justa_causa' || reason === 'acordo') && (
+                                {(reason === 'sem_justa_causa' || reason === 'acordo' || reason === 'experience_early_employer' || reason === 'employer_death') && (
                                     <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                                        <label htmlFor="balanceFGTS" className="text-sm text-gray-400">Saldo do FGTS (para multa)</label>
+                                        <label htmlFor="balanceFGTS" className="text-sm text-gray-400 flex items-center gap-1">
+                                            Saldo do FGTS (para multa)
+                                            <Tooltip content="Informe o saldo atual do FGTS para cálculo da multa de 40% ou 20%." />
+                                        </label>
                                         <div className="relative">
                                             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                             <input
@@ -508,6 +649,15 @@ export function TerminationPage() {
                                                     <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
                                                         <span className="text-gray-300">Aviso Prévio Indenizado</span>
                                                         <span className="text-white font-medium">R$ {result.breakdown.noticeIndemnified.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                    </div>
+                                                )}
+                                                {result.breakdown.art479Indemnification > 0 && (
+                                                    <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                                                        <div className="flex items-center gap-1">
+                                                            <span className="text-gray-300">Indenização Art. 479 CLT</span>
+                                                            <Tooltip content="Metade da remuneração calculada sobre os dias que faltavam para o término do contrato." />
+                                                        </div>
+                                                        <span className="text-white font-medium">R$ {result.breakdown.art479Indemnification.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                                     </div>
                                                 )}
                                                 {result.breakdown.fgtsFine > 0 && (
