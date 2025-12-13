@@ -1231,7 +1231,7 @@ const PercentageCalculatorPage = lazy(() => import("./assets/PercentageCalculato
 const HoursCalculatorPage = lazy(() => import("./assets/HoursCalculatorPage-D3F4TGdH.js").then((module) => ({ default: module.HoursCalculatorPage })));
 const TravelCostCalculatorPage = lazy(() => import("./assets/TravelCostCalculatorPage-b7XSRnYs.js").then((module) => ({ default: module.TravelCostCalculatorPage })));
 const SecretSantaPage = lazy(() => import("./assets/SecretSantaPage-RSOFwx7L.js").then((module) => ({ default: module.SecretSantaPage })));
-const CLTVsPJPage = lazy(() => import("./assets/CLTVsPJPage-Bf4gbSD7.js").then((module) => ({ default: module.CLTVsPJPage })));
+const CLTVsPJPage = lazy(() => import("./assets/CLTVsPJPage-8LT6zvP7.js").then((module) => ({ default: module.CLTVsPJPage })));
 const MonetaryCorrectionPage = lazy(() => import("./assets/MonetaryCorrectionPage-C8_rMXS7.js").then((module) => ({ default: module.MonetaryCorrectionPage })));
 const ImportTaxPage = lazy(() => import("./assets/ImportTaxPage-C8jCQmAf.js").then((module) => ({ default: module.ImportTaxPage })));
 const AbusiveInterestPage = lazy(() => import("./assets/AbusiveInterestPage-CX62iIbE.js").then((module) => ({ default: module.AbusiveInterestPage })));

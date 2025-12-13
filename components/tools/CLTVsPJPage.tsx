@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Briefcase, Calculator, DollarSign, Scale, ArrowRight, Wallet, TrendingUp, TrendingDown, AlertCircle, Building2, HelpCircle, Info, Check } from 'lucide-react';
-
+import { Briefcase, Calculator, DollarSign, Scale, ArrowRight, Wallet, TrendingUp, TrendingDown, AlertCircle, Building2, HelpCircle, Info, Check, CheckCircle, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SEO } from '../SEO';
 import { Breadcrumb } from '../Breadcrumb';
 import { FAQ } from '../FAQ';
 import { AppPromoBanner } from '../AppPromoBanner';
 import { FAQItem } from '../../types';
+import { Tooltip } from '../ui/Tooltip';
 
 const CLT_PJ_FAQS: FAQItem[] = [
     {
@@ -39,16 +39,33 @@ export function CLTVsPJPage() {
     // CLT States
     const [salary, setSalary] = useState('');
     const [benefits, setBenefits] = useState('');
+    const [dependents, setDependents] = useState('0');
+    const [otherDiscounts, setOtherDiscounts] = useState('');
+    const [hasOvertime, setHasOvertime] = useState(false);
+    const [overtimeHours, setOvertimeHours] = useState('');
 
     // PJ States
     const [pjSalary, setPjSalary] = useState('');
     const [proLabore, setProLabore] = useState('');
     const [useRFactorOptimization, setUseRFactorOptimization] = useState(true);
 
+    // Validation
+    const [validationError, setValidationError] = useState<string | null>(null);
+
     const [result, setResult] = useState<{
         cltTotal: number;
         netClt: number;
-
+        cltDetails: {
+            grossSalary: number;
+            inss: number;
+            irrf: number;
+            benefits: number;
+            otherDiscounts: number;
+            fgts: number;
+            thirteenth: number;
+            vacation: number;
+            overtimeValue: number;
+        };
         pjDetails: {
             revenue: number;
             taxRate: number;
@@ -62,7 +79,6 @@ export function CLTVsPJPage() {
             annex: string;
             factorR: number;
         };
-
         difference: number;
     } | null>(null);
 
@@ -76,38 +92,47 @@ export function CLTVsPJPage() {
     }, [pjSalary, useRFactorOptimization]);
 
     const calculate = () => {
-        const salaryVal = parseFloat(salary.replace(/\./g, '').replace(',', '.') || '0');
-        const benefitsVal = parseFloat(benefits.replace(/\./g, '').replace(',', '.') || '0');
-        const pjVal = parseFloat(pjSalary.replace(/\./g, '').replace(',', '.') || '0');
-        const proLaboreVal = parseFloat(proLabore.replace(/\./g, '').replace(',', '.') || '0');
+        setValidationError(null);
 
-        if (salaryVal === 0 && pjVal === 0) {
-            setResult(null);
+        // Validation - require both sides for comparison
+        if (!salary || !pjSalary) {
+            setValidationError('Preencha o Salário Bruto CLT e o Faturamento PJ para comparar.');
             return;
         }
 
+        const salaryVal = parseFloat(salary.replace(/\./g, '').replace(',', '.') || '0');
+        const benefitsVal = parseFloat(benefits.replace(/\./g, '').replace(',', '.') || '0');
+        const deps = parseInt(dependents) || 0;
+        const others = parseFloat(otherDiscounts.replace(/\./g, '').replace(',', '.') || '0');
+        const overtimeHrs = hasOvertime ? (parseFloat(overtimeHours.replace(/\./g, '').replace(',', '.')) || 0) : 0;
+        const pjVal = parseFloat(pjSalary.replace(/\./g, '').replace(',', '.') || '0');
+        const proLaboreVal = parseFloat(proLabore.replace(/\./g, '').replace(',', '.') || '0');
+
+        // Calculate overtime value (50% adicional)
+        const hourlyRate = salaryVal / 220;
+        const overtimeValue = overtimeHrs * hourlyRate * 1.5;
+        const totalGrossClt = salaryVal + overtimeValue;
+
         // --- CLT Logic (2025 Rules) ---
         let inss = 0;
-        if (salaryVal <= 1518.00) {
-            inss = salaryVal * 0.075;
-        } else if (salaryVal <= 2793.88) {
-            inss = 1518.00 * 0.075 + (salaryVal - 1518.00) * 0.09;
-        } else if (salaryVal <= 4190.83) {
-            inss = 1518.00 * 0.075 + (2793.88 - 1518.00) * 0.09 + (salaryVal - 2793.88) * 0.12;
-        } else if (salaryVal <= 8157.41) {
-            inss = 1518.00 * 0.075 + (2793.88 - 1518.00) * 0.09 + (4190.83 - 2793.88) * 0.12 + (salaryVal - 4190.83) * 0.14;
+        if (totalGrossClt <= 1518.00) {
+            inss = totalGrossClt * 0.075;
+        } else if (totalGrossClt <= 2793.88) {
+            inss = 1518.00 * 0.075 + (totalGrossClt - 1518.00) * 0.09;
+        } else if (totalGrossClt <= 4190.83) {
+            inss = 1518.00 * 0.075 + (2793.88 - 1518.00) * 0.09 + (totalGrossClt - 2793.88) * 0.12;
+        } else if (totalGrossClt <= 8157.41) {
+            inss = 1518.00 * 0.075 + (2793.88 - 1518.00) * 0.09 + (4190.83 - 2793.88) * 0.12 + (totalGrossClt - 4190.83) * 0.14;
         } else {
-            // Ceiling
-            inss = 1518.00 * 0.075 +
-                (2793.88 - 1518.00) * 0.09 +
-                (4190.83 - 2793.88) * 0.12 +
-                (8157.41 - 4190.83) * 0.14;
+            inss = 1518.00 * 0.075 + (2793.88 - 1518.00) * 0.09 + (4190.83 - 2793.88) * 0.12 + (8157.41 - 4190.83) * 0.14;
         }
 
-        // IRRF Base Logic (Simplified vs Legal)
-        const irrfBaseLegal = salaryVal - inss;
-        const irrfBaseSimplified = salaryVal - 607.20;
-        const irrfBase = Math.max(0, Math.min(irrfBaseLegal, irrfBaseSimplified));
+        // IRRF Base Logic (Simplified vs Legal with dependents)
+        const deductionPerDependent = 189.59;
+        const irrfBaseLegal = totalGrossClt - inss - (deps * deductionPerDependent);
+        const irrfBaseSimplified = totalGrossClt - inss - 607.20;
+        const usedSimplified = irrfBaseSimplified < irrfBaseLegal;
+        const irrfBase = Math.max(0, usedSimplified ? irrfBaseSimplified : irrfBaseLegal);
 
         // IRRF 2025
         let irrf = 0;
@@ -124,12 +149,12 @@ export function CLTVsPJPage() {
         }
         if (irrf < 0) irrf = 0;
 
-        const netCltMonthly = salaryVal - inss - irrf;
-        // CLT Comparable = Net + Benefits + (13th + Vacation + FGTS)/12
-        const fgts = salaryVal * 0.08;
-        const thirteenth = salaryVal / 12;
-        const vacation = (salaryVal + salaryVal / 3) / 12;
+        const netCltMonthly = totalGrossClt - inss - irrf - others;
+        const fgts = totalGrossClt * 0.08;
+        const thirteenth = totalGrossClt / 12;
+        const vacation = (totalGrossClt + totalGrossClt / 3) / 12;
         const cltComparableMonthly = netCltMonthly + benefitsVal + fgts + thirteenth + vacation;
+
 
 
         // --- PJ Logic (With Progressive Simples Nacional) ---
@@ -208,18 +233,23 @@ export function CLTVsPJPage() {
         }
 
         // Pro-labore Taxes (Person)
-        // INSS on Pro-labore (11% fixed purely for simplicity on business owner, max ceiling)
+        // INSS on Pro-labore (11% fixed for business owner contribution, max ceiling)
         let inssProLabore = 0;
         if (proLaboreVal <= 8157.41) {
             inssProLabore = proLaboreVal * 0.11;
         } else {
-            inssProLabore = 8157.41 * 0.11; // Ceiling approximation
+            inssProLabore = 8157.41 * 0.11; // Ceiling: R$ 897,31
         }
 
         // IRRF on Pro-labore (Same 2025 rules)
-        const irrfPLBaseLegal = proLaboreVal - inssProLabore;
-        const irrfPLBaseSimplified = proLaboreVal - 607.20;
-        const irrfProLaboreBase = Math.max(0, Math.min(irrfPLBaseLegal, irrfPLBaseSimplified));
+        // Compare Legal vs Simplified and use the more beneficial (lower base = less tax)
+        const baseAfterINSSPL = proLaboreVal - inssProLabore;
+        const irrfPLBaseLegal = baseAfterINSSPL; // No dependents for PJ owner in this calc
+        const irrfPLBaseSimplified = baseAfterINSSPL - 607.20;
+
+        // Use the lower base (results in less tax)
+        const usedSimplifiedPL = irrfPLBaseSimplified < irrfPLBaseLegal;
+        const irrfProLaboreBase = Math.max(0, usedSimplifiedPL ? irrfPLBaseSimplified : irrfPLBaseLegal);
 
         let irrfProLabore = 0;
         if (irrfProLaboreBase <= 2428.80) {
@@ -236,8 +266,11 @@ export function CLTVsPJPage() {
         if (irrfProLabore < 0) irrfProLabore = 0;
 
         const netProLabore = proLaboreVal - inssProLabore - irrfProLabore;
-        const companyCost = pjVal - pjTaxAmount - proLaboreVal - accountantCost;
-        const exemptProfit = companyCost; // Assuming all remaining is profit logic
+
+        // Company remaining after taxes, pro-labore and accountant
+        const companyRemaining = pjVal - pjTaxAmount - proLaboreVal - accountantCost;
+        // Exempt profit cannot be negative (if costs exceed revenue, profit is 0)
+        const exemptProfit = Math.max(0, companyRemaining);
 
         // Owner Pocket = Net Pro Labore + Exempt Profit
         const finalPjPocket = netProLabore + exemptProfit;
@@ -245,6 +278,17 @@ export function CLTVsPJPage() {
         setResult({
             cltTotal: cltComparableMonthly,
             netClt: netCltMonthly,
+            cltDetails: {
+                grossSalary: totalGrossClt,
+                inss,
+                irrf,
+                benefits: benefitsVal,
+                otherDiscounts: others,
+                fgts,
+                thirteenth,
+                vacation,
+                overtimeValue
+            },
             pjDetails: {
                 revenue: pjVal,
                 taxRate: pjTaxRate,
@@ -262,9 +306,19 @@ export function CLTVsPJPage() {
         });
     };
 
-    useEffect(() => {
-        calculate();
-    }, [salary, benefits, pjSalary, proLabore]);
+    const handleClear = () => {
+        setSalary('');
+        setBenefits('');
+        setDependents('0');
+        setOtherDiscounts('');
+        setHasOvertime(false);
+        setOvertimeHours('');
+        setPjSalary('');
+        setProLabore('');
+        setUseRFactorOptimization(true);
+        setResult(null);
+        setValidationError(null);
+    };
 
     const formatCurrency = (value: string) => {
         const number = value.replace(/\D/g, '');
@@ -361,7 +415,10 @@ export function CLTVsPJPage() {
                                     <h3 className="text-sm font-medium text-blue-400 mb-4 uppercase tracking-wider">Opção CLT</h3>
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-sm text-gray-400">Salário Bruto Mensal</label>
+                                            <div className="flex items-center gap-1">
+                                                <label className="text-sm text-gray-400">Salário Bruto Mensal</label>
+                                                <Tooltip content="Valor total do seu salário sem os descontos (conforme carteira ou holerite)." />
+                                            </div>
                                             <div className="relative">
                                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                                 <input
@@ -375,7 +432,10 @@ export function CLTVsPJPage() {
                                             </div>
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm text-gray-400">Benefícios (VR, VA, Plano)</label>
+                                            <div className="flex items-center gap-1">
+                                                <label className="text-sm text-gray-400">Benefícios (VR, VA, Plano)</label>
+                                                <Tooltip content="Valor de benefícios que você RECEBE da empresa. É SOMADO ao salário líquido." />
+                                            </div>
                                             <div className="relative">
                                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                                 <input
@@ -388,6 +448,68 @@ export function CLTVsPJPage() {
                                                 />
                                             </div>
                                         </div>
+                                        <div className="space-y-2">
+                                            <div className="flex items-center gap-1">
+                                                <label className="text-sm text-gray-400">Nº de Dependentes (IRRF)</label>
+                                                <Tooltip content="Cada dependente reduz R$ 189,59 da base de cálculo do IRRF." />
+                                            </div>
+                                            <input
+                                                type="number"
+                                                inputMode="numeric"
+                                                value={dependents}
+                                                onChange={(e) => setDependents(e.target.value)}
+                                                className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                                placeholder="0"
+                                                min="0"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <div className="flex items-center gap-1">
+                                                <label className="text-sm text-gray-400">Outros Descontos</label>
+                                                <Tooltip content="Descontos fixos em folha (consignado, pensão, VT, plano de saúde). É SUBTRAÍDO do salário líquido." />
+                                            </div>
+                                            <div className="relative">
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
+                                                <input
+                                                    type="text"
+                                                    inputMode="decimal"
+                                                    value={otherDiscounts}
+                                                    onChange={(e) => handleCurrencyInput(e.target.value, setOtherDiscounts)}
+                                                    className="w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all"
+                                                    placeholder="0,00"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/* Horas Extras */}
+                                    <div className="flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between mt-4">
+                                        <div
+                                            className="flex items-center gap-3 cursor-pointer"
+                                            onClick={() => setHasOvertime(!hasOvertime)}
+                                        >
+                                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasOvertime ? 'bg-blue-500 border-blue-500' : 'border-gray-500'}`}>
+                                                {hasOvertime && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-sm text-gray-300">
+                                                    Horas extras (50%)
+                                                </span>
+                                                <Tooltip content="Informe a média de horas extras mensais que você faz ou fará. Calcula: (salário ÷ 220) × 1,5 × horas. O valor é SOMADO ao bruto." />
+                                            </div>
+                                        </div>
+                                        {hasOvertime && (
+                                            <div className="flex items-center gap-2 ml-8 md:ml-0">
+                                                <span className="text-xs text-gray-400">Horas:</span>
+                                                <input
+                                                    type="text"
+                                                    inputMode="decimal"
+                                                    value={overtimeHours}
+                                                    onChange={(e) => setOvertimeHours(e.target.value.replace(/[^0-9,]/g, ''))}
+                                                    className="w-20 bg-[#0a0a0a] border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm text-center focus:outline-none focus:border-blue-500/50"
+                                                    placeholder="0"
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 
@@ -395,7 +517,10 @@ export function CLTVsPJPage() {
                                     <h3 className="text-sm font-medium text-indigo-400 mb-4 uppercase tracking-wider">Opção PJ</h3>
                                     <div className="grid md:grid-cols-2 gap-6">
                                         <div className="space-y-2">
-                                            <label className="text-sm text-gray-400">Faturamento Mensal</label>
+                                            <div className="flex items-center gap-1">
+                                                <label className="text-sm text-gray-400">Faturamento Mensal</label>
+                                                <Tooltip content="Valor total que você recebe/fatura como PJ por mês (nota fiscal)." />
+                                            </div>
                                             <div className="relative">
                                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
                                                 <input
@@ -410,19 +535,9 @@ export function CLTVsPJPage() {
                                         </div>
 
                                         <div className="space-y-2">
-                                            <div className="flex justify-between items-center">
+                                            <div className="flex items-center gap-1">
                                                 <label className="text-sm text-gray-400">Pró-labore Definido</label>
-                                                <div className="flex items-center gap-2">
-                                                    <label className="text-xs text-indigo-400 cursor-pointer flex items-center gap-1">
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={useRFactorOptimization}
-                                                            onChange={(e) => setUseRFactorOptimization(e.target.checked)}
-                                                            className="rounded border-white/10 bg-white/5 text-indigo-500 focus:ring-indigo-500"
-                                                        />
-                                                        Otimizar Fator R (28%)
-                                                    </label>
-                                                </div>
+                                                <Tooltip content="Valor que você retira como salário da sua empresa. Base para INSS/IRRF pessoal." />
                                             </div>
                                             <div className="relative">
                                                 <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">R$</span>
@@ -431,7 +546,7 @@ export function CLTVsPJPage() {
                                                     inputMode="decimal"
                                                     value={proLabore}
                                                     onChange={(e) => {
-                                                        setUseRFactorOptimization(false); // Disable auto-calc if user types
+                                                        setUseRFactorOptimization(false);
                                                         handleCurrencyInput(e.target.value, setProLabore);
                                                     }}
                                                     className={`w-full bg-[#0a0a0a] border rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none transition-all ${useRFactorOptimization ? 'border-indigo-500/30 text-indigo-300' : 'border-white/10 focus:border-indigo-500/50'}`}
@@ -441,13 +556,63 @@ export function CLTVsPJPage() {
                                         </div>
                                     </div>
 
-                                    {result && (
-                                        <div className="mt-4 p-3 rounded-lg bg-white/5 text-xs text-gray-400 flex items-center justify-between">
-                                            <span>Fator R Calculado: <strong>{(result.pjDetails.factorR * 100).toFixed(1)}%</strong></span>
-                                            <span className={`px-2 py-0.5 rounded ${result.pjDetails.factorR >= 0.28 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-                                                {result.pjDetails.annex}
-                                            </span>
+                                    {/* Otimizar Fator R - Styled Checkbox */}
+                                    <div className="flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between mt-4">
+                                        <div
+                                            className="flex items-center gap-3 cursor-pointer"
+                                            onClick={() => setUseRFactorOptimization(!useRFactorOptimization)}
+                                        >
+                                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${useRFactorOptimization ? 'bg-indigo-500 border-indigo-500' : 'border-gray-500'}`}>
+                                                {useRFactorOptimization && <CheckCircle className="w-3.5 h-3.5 text-white" />}
+                                            </div>
+                                            <div className="flex items-center gap-1">
+                                                <span className="text-sm text-gray-300">
+                                                    Otimizar Fator R (28%)
+                                                </span>
+                                                <Tooltip content="Define automaticamente o pró-labore em 28% do faturamento para atingir Anexo III (imposto menor)." />
+                                            </div>
                                         </div>
+                                        {result && (
+                                            <span className={`px-2 py-0.5 rounded text-xs ${result.pjDetails.factorR >= 0.28 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                                                Fator R: {(result.pjDetails.factorR * 100).toFixed(1)}% - {result.pjDetails.annex}
+                                            </span>
+                                        )}
+                                    </div>
+                                </div>
+
+                                {/* Validation Error Message */}
+                                {validationError && (
+                                    <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-center gap-2">
+                                        <AlertCircle className="w-5 h-5 shrink-0" />
+                                        {validationError}
+                                    </div>
+                                )}
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-col-reverse md:flex-row gap-4 pt-4 border-t border-white/5">
+                                    <button
+                                        onClick={handleClear}
+                                        className="md:flex-1 bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 rounded-xl border border-white/10 transition-colors flex items-center justify-center gap-2"
+                                    >
+                                        Limpar
+                                    </button>
+                                    {!result && (
+                                        <button
+                                            onClick={calculate}
+                                            className="md:flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                        >
+                                            <Calculator className="w-5 h-5" />
+                                            Comparar CLT vs PJ
+                                        </button>
+                                    )}
+                                    {result && (
+                                        <button
+                                            onClick={calculate}
+                                            className="md:flex-[2] bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
+                                        >
+                                            <Calculator className="w-5 h-5" />
+                                            Calcular Novamente
+                                        </button>
                                     )}
                                 </div>
                             </div>
@@ -456,83 +621,196 @@ export function CLTVsPJPage() {
 
                     {/* Results */}
                     <div className="lg:col-span-5 h-full">
-                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full flex flex-col justify-center">
+                        <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-8 h-full">
                             {result ? (
                                 <div className="space-y-6">
-                                    <div className={`p-4 rounded-xl border ${result.difference > 0 ? 'bg-indigo-500/10 border-indigo-500/20' : 'bg-blue-500/10 border-blue-500/20'}`}>
-                                        <h3 className="text-lg font-bold text-white mb-1 flex items-center gap-2">
-                                            <Scale className="w-5 h-5" />
-                                            Veredito:
-                                        </h3>
-                                        <p className="text-2xl font-bold">
-                                            {result.difference > 0 ? (
-                                                <span className="text-indigo-400">PJ compensa mais</span>
-                                            ) : (
-                                                <span className="text-blue-400">CLT compensa mais</span>
+                                    {/* Veredito Header */}
+                                    <div className={`p-6 rounded-2xl shadow-2xl relative overflow-hidden group ${result.difference > 0 ? 'bg-gradient-to-br from-indigo-600 to-purple-700' : 'bg-gradient-to-br from-blue-600 to-indigo-700'}`}>
+                                        <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-white/20 transition-all duration-700"></div>
+
+                                        <div className="relative z-10">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <Scale className="w-5 h-5 text-white/80" />
+                                                <span className="text-white/80 text-sm font-medium uppercase tracking-wider">Veredito</span>
+                                            </div>
+                                            <p className="text-3xl md:text-4xl font-bold text-white tracking-tight">
+                                                {result.difference > 0 ? 'PJ compensa mais' : 'CLT compensa mais'}
+                                            </p>
+                                            <p className="text-white/70 text-sm mt-2">
+                                                Diferença: <strong className="text-white">R$ {Math.abs(result.difference).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}/mês</strong>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* CLT Breakdown */}
+                                    <div className="space-y-3">
+                                        <h4 className="text-sm font-semibold text-blue-400 uppercase tracking-wider flex items-center gap-2">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                            CLT (Pacote Mensal)
+                                        </h4>
+                                        <div className="space-y-2">
+                                            {/* Proventos */}
+                                            <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                <span className="text-gray-300 text-sm">Salário Bruto</span>
+                                                <span className="text-green-300 font-medium text-sm">+ R$ {result.cltDetails.grossSalary.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            {result.cltDetails.overtimeValue > 0 && (
+                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                    <span className="text-gray-300 text-sm">Horas Extras (50%)</span>
+                                                    <span className="text-green-300 font-medium text-sm">+ R$ {result.cltDetails.overtimeValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
                                             )}
-                                        </p>
-                                        <p className="text-sm text-gray-400 mt-2">
-                                            Diferença aproximada: <strong>R$ {Math.abs(result.difference).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</strong> por mês no bolso.
-                                        </p>
+                                            {result.cltDetails.benefits > 0 && (
+                                                <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                    <span className="text-gray-300 text-sm">Benefícios</span>
+                                                    <span className="text-green-300 font-medium text-sm">+ R$ {result.cltDetails.benefits.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            )}
+                                            <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                <span className="text-gray-300 text-sm">FGTS (8%)</span>
+                                                <span className="text-green-300 font-medium text-sm">+ R$ {result.cltDetails.fgts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                <span className="text-gray-300 text-sm">13º (proporcional)</span>
+                                                <span className="text-green-300 font-medium text-sm">+ R$ {result.cltDetails.thirteenth.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                <span className="text-gray-300 text-sm">Férias + 1/3 (proporcional)</span>
+                                                <span className="text-green-300 font-medium text-sm">+ R$ {result.cltDetails.vacation.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            {/* Descontos */}
+                                            <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                <span className="text-red-200/70 text-sm">(-) INSS</span>
+                                                <span className="text-red-300 font-medium text-sm">- R$ {result.cltDetails.inss.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            {result.cltDetails.irrf > 0 ? (
+                                                <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                    <span className="text-red-200/70 text-sm">(-) IRRF</span>
+                                                    <span className="text-red-300 font-medium text-sm">- R$ {result.cltDetails.irrf.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            ) : (
+                                                <div className="flex justify-between p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+                                                    <div className="flex items-center gap-1">
+                                                        <CheckCircle className="w-4 h-4 text-emerald-400" />
+                                                        <span className="text-emerald-300 text-sm">IRRF</span>
+                                                    </div>
+                                                    <span className="text-emerald-400 font-medium text-sm">Isento</span>
+                                                </div>
+                                            )}
+                                            {result.cltDetails.otherDiscounts > 0 && (
+                                                <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                    <span className="text-red-200/70 text-sm">(-) Outros Descontos</span>
+                                                    <span className="text-red-300 font-medium text-sm">- R$ {result.cltDetails.otherDiscounts.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                                </div>
+                                            )}
+                                            {/* Total */}
+                                            <div className="flex justify-between p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+                                                <span className="text-blue-200 text-sm font-medium">Total CLT no Bolso</span>
+                                                <span className="text-blue-300 font-bold text-sm">R$ {result.cltTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                        </div>
                                     </div>
 
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center p-3 rounded-lg bg-white/5">
-                                            <div>
-                                                <span className="text-sm text-gray-400 block">CLT (Pacote Mensal)</span>
-                                                <span className="text-xs text-gray-500">Líquido + Benefícios + Provisões</span>
+                                    {/* PJ Breakdown */}
+                                    <div className="space-y-3">
+                                        <h4 className="text-sm font-semibold text-indigo-400 uppercase tracking-wider flex items-center gap-2">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+                                            PJ (Disponível Líquido)
+                                        </h4>
+                                        <div className="space-y-2">
+                                            <div className="flex justify-between p-3 rounded-lg bg-white/5 border border-white/5 hover:border-green-500/30 transition-colors">
+                                                <span className="text-gray-300 text-sm">Faturamento</span>
+                                                <span className="text-white font-medium text-sm">R$ {result.pjDetails.revenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
                                             </div>
-                                            <span className="text-lg font-bold text-white">
-                                                R$ {result.cltTotal.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                                            <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                <div className="flex items-center gap-1">
+                                                    <span className="text-red-200/70 text-sm">(-) Impostos</span>
+                                                    <span className="text-[10px] text-gray-400 bg-white/10 px-1.5 py-0.5 rounded">{result.pjDetails.annex}</span>
+                                                </div>
+                                                <span className="text-red-300 font-medium text-sm">- R$ {result.pjDetails.taxAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                <span className="text-red-200/70 text-sm">(-) Pró-labore (INSS+IRRF)</span>
+                                                <span className="text-red-300 font-medium text-sm">- R$ {(result.pjDetails.inssProLabore + result.pjDetails.irrfProLabore).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            <div className="flex justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/10 hover:border-red-500/30 transition-colors">
+                                                <span className="text-red-200/70 text-sm">(-) Contador</span>
+                                                <span className="text-red-300 font-medium text-sm">- R$ 300,00</span>
+                                            </div>
+                                            <div className="flex justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                                                <span className="text-green-200 text-sm">Pró-labore Líquido</span>
+                                                <span className="text-green-300 font-medium text-sm">+ R$ {result.pjDetails.netProLabore.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            <div className="flex justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                                                <span className="text-green-200 text-sm">Lucro Isento</span>
+                                                <span className="text-green-300 font-medium text-sm">+ R$ {result.pjDetails.exemptProfit.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                            <div className="flex justify-between p-3 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
+                                                <span className="text-indigo-200 text-sm font-medium">Total PJ no Bolso</span>
+                                                <span className="text-indigo-300 font-bold text-sm">R$ {result.pjDetails.finalPjPocket.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Fator R Info */}
+                                    <div className={`p-4 rounded-xl border ${result.pjDetails.factorR >= 0.28 ? 'bg-emerald-500/10 border-emerald-500/20' : 'bg-amber-500/10 border-amber-500/20'}`}>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-2">
+                                                <Zap className={`w-4 h-4 ${result.pjDetails.factorR >= 0.28 ? 'text-emerald-400' : 'text-amber-400'}`} />
+                                                <span className={`text-sm font-medium ${result.pjDetails.factorR >= 0.28 ? 'text-emerald-300' : 'text-amber-300'}`}>
+                                                    Fator R: {(result.pjDetails.factorR * 100).toFixed(1)}%
+                                                </span>
+                                            </div>
+                                            <span className={`text-xs px-2 py-0.5 rounded ${result.pjDetails.factorR >= 0.28 ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                                                {result.pjDetails.factorR >= 0.28 ? 'Anexo III ✓' : 'Anexo V'}
                                             </span>
                                         </div>
-                                        <div className="flex justify-between items-center p-3 rounded-lg bg-white/5">
-                                            <div>
-                                                <span className="text-sm text-gray-400 block">PJ (Disponível Líquido)</span>
-                                                <span className="text-xs text-gray-500">Pró-labore Líq. + Lucro Isento</span>
-                                            </div>
-                                            <span className="text-lg font-bold text-white">
-                                                R$ {result.pjDetails.finalPjPocket.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                                            </span>
-                                        </div>
+                                        {result.pjDetails.factorR < 0.28 && (
+                                            <p className="text-xs text-amber-300/70 mt-2">
+                                                ⚠ Aumente o pró-labore para 28% do faturamento para pagar menos imposto.
+                                            </p>
+                                        )}
                                     </div>
 
-                                    {/* Breakdown Mini-Table */}
-                                    <div className="mt-2 text-xs text-gray-500 space-y-1 border-t border-white/5 pt-2">
-                                        <div className="flex justify-between">
-                                            <span>(-) Imposto PJ ({result.pjDetails.taxRate * 100}%)</span>
-                                            <span className="text-red-400">R$ {result.pjDetails.taxAmount.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>(-) Contador</span>
-                                            <span className="text-red-400">R$ 300,00</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span>(-) INSS/IRRF (Pessoa Física)</span>
-                                            <span className="text-red-400">R$ {(result.pjDetails.inssProLabore + result.pjDetails.irrfProLabore).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-4 pt-4 border-t border-white/5">
-                                        <h4 className="text-sm font-medium text-gray-300 mb-3">Na prática (Dinheiro na Mão):</h4>
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <span className="text-xs text-gray-500 block">Salário Líquido CLT</span>
-                                                <span className="text-base font-bold text-blue-300">R$ {result.netClt.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                            </div>
-                                            <div>
-                                                <span className="text-xs text-gray-500 block">Entrada Líquida PJ</span>
-                                                <span className="text-base font-bold text-indigo-300">R$ {result.pjDetails.finalPjPocket.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <p className="text-xs text-gray-500 text-center">
+                                        *Cálculo estimado. Consulte um contador para valores exatos.
+                                    </p>
                                 </div>
                             ) : (
                                 <div className="text-center text-gray-400 py-12">
                                     <Scale className="w-16 h-16 mx-auto mb-4 text-gray-600" />
-                                    <p>Preencha os dois lados para ver o comparativo detalhado com Fator R.</p>
+                                    <p>Preencha os campos e clique em Comparar para ver o resultado.</p>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* Como usar esta Calculadora */}
+                <div className="bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12">
+                    <div className="flex items-start gap-4 mb-6">
+                        <div className="bg-emerald-500/10 p-3 rounded-xl shrink-0">
+                            <HelpCircle className="w-6 h-6 text-emerald-500" />
+                        </div>
+                        <h2 className="text-xl md:text-2xl font-bold text-white leading-tight mt-1">
+                            Como usar esta Calculadora CLT vs PJ
+                        </h2>
+                    </div>
+                    <p className="text-gray-400 mb-6">
+                        Para obter uma comparação precisa entre as opções de contratação, siga estes passos:
+                    </p>
+                    <div className="grid md:grid-cols-3 gap-6">
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-emerald-400 font-bold mb-2">01. Preencha o lado CLT</div>
+                            <p className="text-sm text-gray-300">Informe seu salário bruto, benefícios (VR, VA, plano), dependentes e outros descontos em folha.</p>
+                        </div>
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-emerald-400 font-bold mb-2">02. Preencha o lado PJ</div>
+                            <p className="text-sm text-gray-300">Informe o faturamento mensal proposto. Use a otimização de Fator R (28%) para pagar menos imposto.</p>
+                        </div>
+                        <div className="bg-white/5 p-5 rounded-xl border border-white/5">
+                            <div className="text-emerald-400 font-bold mb-2">03. Compare os resultados</div>
+                            <p className="text-sm text-gray-300">Veja o veredito final: qual opção coloca mais dinheiro no seu bolso considerando todos os fatores.</p>
                         </div>
                     </div>
                 </div>
@@ -566,7 +844,7 @@ export function CLTVsPJPage() {
                                 </li>
                             </ul>
 
-                            <p className="text-sm text-gray-500 mt-4 italic">*Atualizado em Dezembro de 2025</p>
+                            <p className="text-sm text-gray-400 mt-4 italic">*Atualizado em Dezembro de 2025</p>
 
                             <div className="mt-8 border-t border-white/5 pt-6">
                                 <p className="mb-4">

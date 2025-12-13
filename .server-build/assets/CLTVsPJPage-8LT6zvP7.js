@@ -1,11 +1,12 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
-import { Briefcase, Calculator, Scale, Check, TrendingUp, TrendingDown, AlertCircle } from "lucide-react";
+import { Briefcase, Calculator, CheckCircle, AlertCircle, Scale, HelpCircle, Check, TrendingUp, TrendingDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { S as SEO } from "./SEO-Cm8ngfJd.js";
 import { B as Breadcrumb } from "./Breadcrumb-B-PV_K4y.js";
 import { FAQ } from "./FAQ-DBChmTgn.js";
 import { AppPromoBanner } from "./AppPromoBanner-DsGa7GAJ.js";
+import { T as Tooltip } from "./Tooltip-D5PFHMNL.js";
 import "../entry-server.js";
 import "react-dom/server";
 import "react-fast-compare";
@@ -15,6 +16,9 @@ import "stream";
 import "framer-motion";
 import "./CalculatorContext-CjI84puU.js";
 import "./author-BdzMjBtJ.js";
+import "react-dom";
+import "clsx";
+import "tailwind-merge";
 const CLT_PJ_FAQS = [
   {
     question: "Qual a diferença salarial para valer a pena ser PJ?",
@@ -44,9 +48,14 @@ const CLT_PJ_FAQS = [
 function CLTVsPJPage() {
   const [salary, setSalary] = useState("");
   const [benefits, setBenefits] = useState("");
+  const [dependents, setDependents] = useState("0");
+  const [otherDiscounts, setOtherDiscounts] = useState("");
+  const [hasOvertime, setHasOvertime] = useState(false);
+  const [overtimeHours, setOvertimeHours] = useState("");
   const [pjSalary, setPjSalary] = useState("");
   const [proLabore, setProLabore] = useState("");
   const [useRFactorOptimization, setUseRFactorOptimization] = useState(true);
+  const [validationError, setValidationError] = useState(null);
   const [result, setResult] = useState(null);
   useEffect(() => {
     if (useRFactorOptimization && pjSalary) {
@@ -56,29 +65,38 @@ function CLTVsPJPage() {
     }
   }, [pjSalary, useRFactorOptimization]);
   const calculate = () => {
-    const salaryVal = parseFloat(salary.replace(/\./g, "").replace(",", ".") || "0");
-    const benefitsVal = parseFloat(benefits.replace(/\./g, "").replace(",", ".") || "0");
-    const pjVal = parseFloat(pjSalary.replace(/\./g, "").replace(",", ".") || "0");
-    const proLaboreVal = parseFloat(proLabore.replace(/\./g, "").replace(",", ".") || "0");
-    if (salaryVal === 0 && pjVal === 0) {
-      setResult(null);
+    setValidationError(null);
+    if (!salary && !pjSalary) {
+      setValidationError("Informe pelo menos um valor (CLT ou PJ) para calcular.");
       return;
     }
+    const salaryVal = parseFloat(salary.replace(/\./g, "").replace(",", ".") || "0");
+    const benefitsVal = parseFloat(benefits.replace(/\./g, "").replace(",", ".") || "0");
+    const deps = parseInt(dependents) || 0;
+    const others = parseFloat(otherDiscounts.replace(/\./g, "").replace(",", ".") || "0");
+    const overtimeHrs = hasOvertime ? parseFloat(overtimeHours.replace(/\./g, "").replace(",", ".")) || 0 : 0;
+    const pjVal = parseFloat(pjSalary.replace(/\./g, "").replace(",", ".") || "0");
+    const proLaboreVal = parseFloat(proLabore.replace(/\./g, "").replace(",", ".") || "0");
+    const hourlyRate = salaryVal / 220;
+    const overtimeValue = overtimeHrs * hourlyRate * 1.5;
+    const totalGrossClt = salaryVal + overtimeValue;
     let inss = 0;
-    if (salaryVal <= 1518) {
-      inss = salaryVal * 0.075;
-    } else if (salaryVal <= 2793.88) {
-      inss = 1518 * 0.075 + (salaryVal - 1518) * 0.09;
-    } else if (salaryVal <= 4190.83) {
-      inss = 1518 * 0.075 + (2793.88 - 1518) * 0.09 + (salaryVal - 2793.88) * 0.12;
-    } else if (salaryVal <= 8157.41) {
-      inss = 1518 * 0.075 + (2793.88 - 1518) * 0.09 + (4190.83 - 2793.88) * 0.12 + (salaryVal - 4190.83) * 0.14;
+    if (totalGrossClt <= 1518) {
+      inss = totalGrossClt * 0.075;
+    } else if (totalGrossClt <= 2793.88) {
+      inss = 1518 * 0.075 + (totalGrossClt - 1518) * 0.09;
+    } else if (totalGrossClt <= 4190.83) {
+      inss = 1518 * 0.075 + (2793.88 - 1518) * 0.09 + (totalGrossClt - 2793.88) * 0.12;
+    } else if (totalGrossClt <= 8157.41) {
+      inss = 1518 * 0.075 + (2793.88 - 1518) * 0.09 + (4190.83 - 2793.88) * 0.12 + (totalGrossClt - 4190.83) * 0.14;
     } else {
       inss = 1518 * 0.075 + (2793.88 - 1518) * 0.09 + (4190.83 - 2793.88) * 0.12 + (8157.41 - 4190.83) * 0.14;
     }
-    const irrfBaseLegal = salaryVal - inss;
-    const irrfBaseSimplified = salaryVal - 607.2;
-    const irrfBase = Math.max(0, Math.min(irrfBaseLegal, irrfBaseSimplified));
+    const deductionPerDependent = 189.59;
+    const irrfBaseLegal = totalGrossClt - inss - deps * deductionPerDependent;
+    const irrfBaseSimplified = totalGrossClt - inss - 607.2;
+    const usedSimplified = irrfBaseSimplified < irrfBaseLegal;
+    const irrfBase = Math.max(0, usedSimplified ? irrfBaseSimplified : irrfBaseLegal);
     let irrf = 0;
     if (irrfBase <= 2428.8) {
       irrf = 0;
@@ -92,10 +110,10 @@ function CLTVsPJPage() {
       irrf = irrfBase * 0.275 - 908.73;
     }
     if (irrf < 0) irrf = 0;
-    const netCltMonthly = salaryVal - inss - irrf;
-    const fgts = salaryVal * 0.08;
-    const thirteenth = salaryVal / 12;
-    const vacation = (salaryVal + salaryVal / 3) / 12;
+    const netCltMonthly = totalGrossClt - inss - irrf - others;
+    const fgts = totalGrossClt * 0.08;
+    const thirteenth = totalGrossClt / 12;
+    const vacation = (totalGrossClt + totalGrossClt / 3) / 12;
     const cltComparableMonthly = netCltMonthly + benefitsVal + fgts + thirteenth + vacation;
     const accountantCost = 300;
     const factorR = pjVal > 0 ? proLaboreVal / pjVal : 0;
@@ -192,9 +210,19 @@ function CLTVsPJPage() {
       difference: finalPjPocket - cltComparableMonthly
     });
   };
-  useEffect(() => {
-    calculate();
-  }, [salary, benefits, pjSalary, proLabore]);
+  const handleClear = () => {
+    setSalary("");
+    setBenefits("");
+    setDependents("0");
+    setOtherDiscounts("");
+    setHasOvertime(false);
+    setOvertimeHours("");
+    setPjSalary("");
+    setProLabore("");
+    setUseRFactorOptimization(true);
+    setResult(null);
+    setValidationError(null);
+  };
   const formatCurrency = (value) => {
     const number = value.replace(/\D/g, "");
     return (Number(number) / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2 });
@@ -277,7 +305,10 @@ function CLTVsPJPage() {
               /* @__PURE__ */ jsx("h3", { className: "text-sm font-medium text-blue-400 mb-4 uppercase tracking-wider", children: "Opção CLT" }),
               /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
                 /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Salário Bruto Mensal" }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Salário Bruto Mensal" }),
+                    /* @__PURE__ */ jsx(Tooltip, { content: "Valor total do seu salário sem os descontos (conforme carteira ou holerite)." })
+                  ] }),
                   /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                     /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
                     /* @__PURE__ */ jsx(
@@ -294,7 +325,10 @@ function CLTVsPJPage() {
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Benefícios (VR, VA, Plano)" }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Benefícios (VR, VA, Plano)" }),
+                    /* @__PURE__ */ jsx(Tooltip, { content: "Valor de benefícios que você RECEBE da empresa. É SOMADO ao salário líquido." })
+                  ] }),
                   /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                     /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
                     /* @__PURE__ */ jsx(
@@ -309,6 +343,74 @@ function CLTVsPJPage() {
                       }
                     )
                   ] })
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Nº de Dependentes (IRRF)" }),
+                    /* @__PURE__ */ jsx(Tooltip, { content: "Cada dependente reduz R$ 189,59 da base de cálculo do IRRF." })
+                  ] }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "number",
+                      inputMode: "numeric",
+                      value: dependents,
+                      onChange: (e) => setDependents(e.target.value),
+                      className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-blue-500/50 transition-all",
+                      placeholder: "0",
+                      min: "0"
+                    }
+                  )
+                ] }),
+                /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Outros Descontos" }),
+                    /* @__PURE__ */ jsx(Tooltip, { content: "Descontos fixos em folha (consignado, pensão, VT, plano de saúde). É SUBTRAÍDO do salário líquido." })
+                  ] }),
+                  /* @__PURE__ */ jsxs("div", { className: "relative", children: [
+                    /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
+                    /* @__PURE__ */ jsx(
+                      "input",
+                      {
+                        type: "text",
+                        inputMode: "decimal",
+                        value: otherDiscounts,
+                        onChange: (e) => handleCurrencyInput(e.target.value, setOtherDiscounts),
+                        className: "w-full bg-[#0a0a0a] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white focus:outline-none focus:border-blue-500/50 transition-all",
+                        placeholder: "0,00"
+                      }
+                    )
+                  ] })
+                ] })
+              ] }),
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between mt-4", children: [
+                /* @__PURE__ */ jsxs(
+                  "div",
+                  {
+                    className: "flex items-center gap-3 cursor-pointer",
+                    onClick: () => setHasOvertime(!hasOvertime),
+                    children: [
+                      /* @__PURE__ */ jsx("div", { className: `w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${hasOvertime ? "bg-blue-500 border-blue-500" : "border-gray-500"}`, children: hasOvertime && /* @__PURE__ */ jsx(CheckCircle, { className: "w-3.5 h-3.5 text-white" }) }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Horas extras (50%)" }),
+                        /* @__PURE__ */ jsx(Tooltip, { content: "Horas além da jornada normal. Calcula: (salário ÷ 220) × 1,5 × horas. O valor é SOMADO ao salário bruto antes dos descontos." })
+                      ] })
+                    ]
+                  }
+                ),
+                hasOvertime && /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-2 ml-8 md:ml-0", children: [
+                  /* @__PURE__ */ jsx("span", { className: "text-xs text-gray-400", children: "Horas:" }),
+                  /* @__PURE__ */ jsx(
+                    "input",
+                    {
+                      type: "text",
+                      inputMode: "decimal",
+                      value: overtimeHours,
+                      onChange: (e) => setOvertimeHours(e.target.value.replace(/[^0-9,]/g, "")),
+                      className: "w-20 bg-[#0a0a0a] border border-white/20 rounded-lg px-3 py-1.5 text-white text-sm text-center focus:outline-none focus:border-blue-500/50",
+                      placeholder: "0"
+                    }
+                  )
                 ] })
               ] })
             ] }),
@@ -316,7 +418,10 @@ function CLTVsPJPage() {
               /* @__PURE__ */ jsx("h3", { className: "text-sm font-medium text-indigo-400 mb-4 uppercase tracking-wider", children: "Opção PJ" }),
               /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-2 gap-6", children: [
                 /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Faturamento Mensal" }),
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Faturamento Mensal" }),
+                    /* @__PURE__ */ jsx(Tooltip, { content: "Valor total que você recebe/fatura como PJ por mês (nota fiscal)." })
+                  ] }),
                   /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                     /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
                     /* @__PURE__ */ jsx(
@@ -333,20 +438,9 @@ function CLTVsPJPage() {
                   ] })
                 ] }),
                 /* @__PURE__ */ jsxs("div", { className: "space-y-2", children: [
-                  /* @__PURE__ */ jsxs("div", { className: "flex justify-between items-center", children: [
+                  /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
                     /* @__PURE__ */ jsx("label", { className: "text-sm text-gray-400", children: "Pró-labore Definido" }),
-                    /* @__PURE__ */ jsx("div", { className: "flex items-center gap-2", children: /* @__PURE__ */ jsxs("label", { className: "text-xs text-indigo-400 cursor-pointer flex items-center gap-1", children: [
-                      /* @__PURE__ */ jsx(
-                        "input",
-                        {
-                          type: "checkbox",
-                          checked: useRFactorOptimization,
-                          onChange: (e) => setUseRFactorOptimization(e.target.checked),
-                          className: "rounded border-white/10 bg-white/5 text-indigo-500 focus:ring-indigo-500"
-                        }
-                      ),
-                      "Otimizar Fator R (28%)"
-                    ] }) })
+                    /* @__PURE__ */ jsx(Tooltip, { content: "Valor que você retira como salário da sua empresa. Base para INSS/IRRF pessoal." })
                   ] }),
                   /* @__PURE__ */ jsxs("div", { className: "relative", children: [
                     /* @__PURE__ */ jsx("span", { className: "absolute left-4 top-1/2 -translate-y-1/2 text-gray-400", children: "R$" }),
@@ -367,16 +461,67 @@ function CLTVsPJPage() {
                   ] })
                 ] })
               ] }),
-              result && /* @__PURE__ */ jsxs("div", { className: "mt-4 p-3 rounded-lg bg-white/5 text-xs text-gray-400 flex items-center justify-between", children: [
-                /* @__PURE__ */ jsxs("span", { children: [
-                  "Fator R Calculado: ",
-                  /* @__PURE__ */ jsxs("strong", { children: [
-                    (result.pjDetails.factorR * 100).toFixed(1),
-                    "%"
-                  ] })
-                ] }),
-                /* @__PURE__ */ jsx("span", { className: `px-2 py-0.5 rounded ${result.pjDetails.factorR >= 0.28 ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`, children: result.pjDetails.annex })
+              /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3 p-4 rounded-xl bg-white/5 border border-white/5 md:flex-row md:items-center md:justify-between mt-4", children: [
+                /* @__PURE__ */ jsxs(
+                  "div",
+                  {
+                    className: "flex items-center gap-3 cursor-pointer",
+                    onClick: () => setUseRFactorOptimization(!useRFactorOptimization),
+                    children: [
+                      /* @__PURE__ */ jsx("div", { className: `w-5 h-5 rounded border flex items-center justify-center transition-all shrink-0 ${useRFactorOptimization ? "bg-indigo-500 border-indigo-500" : "border-gray-500"}`, children: useRFactorOptimization && /* @__PURE__ */ jsx(CheckCircle, { className: "w-3.5 h-3.5 text-white" }) }),
+                      /* @__PURE__ */ jsxs("div", { className: "flex items-center gap-1", children: [
+                        /* @__PURE__ */ jsx("span", { className: "text-sm text-gray-300", children: "Otimizar Fator R (28%)" }),
+                        /* @__PURE__ */ jsx(Tooltip, { content: "Define automaticamente o pró-labore em 28% do faturamento para atingir Anexo III (imposto menor)." })
+                      ] })
+                    ]
+                  }
+                ),
+                result && /* @__PURE__ */ jsxs("span", { className: `px-2 py-0.5 rounded text-xs ${result.pjDetails.factorR >= 0.28 ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`, children: [
+                  "Fator R: ",
+                  (result.pjDetails.factorR * 100).toFixed(1),
+                  "% - ",
+                  result.pjDetails.annex
+                ] })
               ] })
+            ] }),
+            validationError && /* @__PURE__ */ jsxs("div", { className: "p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-sm flex items-center gap-2", children: [
+              /* @__PURE__ */ jsx(AlertCircle, { className: "w-5 h-5 shrink-0" }),
+              validationError
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col-reverse md:flex-row gap-4 pt-4 border-t border-white/5", children: [
+              /* @__PURE__ */ jsx(
+                "button",
+                {
+                  onClick: handleClear,
+                  className: "md:flex-1 bg-white/5 hover:bg-white/10 text-gray-300 font-medium py-3 rounded-xl border border-white/10 transition-colors flex items-center justify-center gap-2",
+                  children: "Limpar"
+                }
+              ),
+              !result && /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  onClick: calculate,
+                  className: "md:flex-[2] bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2",
+                  children: [
+                    /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5" }),
+                    "Comparar CLT vs PJ"
+                  ]
+                }
+              ),
+              result && /* @__PURE__ */ jsxs(
+                "button",
+                {
+                  onClick: () => {
+                    setResult(null);
+                    setTimeout(calculate, 0);
+                  },
+                  className: "md:flex-[2] bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2",
+                  children: [
+                    /* @__PURE__ */ jsx(Calculator, { className: "w-5 h-5" }),
+                    "Calcular Novamente"
+                  ]
+                }
+              )
             ] })
           ] })
         ] }) }),
@@ -465,6 +610,27 @@ function CLTVsPJPage() {
           /* @__PURE__ */ jsx(Scale, { className: "w-16 h-16 mx-auto mb-4 text-gray-600" }),
           /* @__PURE__ */ jsx("p", { children: "Preencha os dois lados para ver o comparativo detalhado com Fator R." })
         ] }) }) })
+      ] }),
+      /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-8 mb-12", children: [
+        /* @__PURE__ */ jsxs("div", { className: "flex items-start gap-4 mb-6", children: [
+          /* @__PURE__ */ jsx("div", { className: "bg-emerald-500/10 p-3 rounded-xl shrink-0", children: /* @__PURE__ */ jsx(HelpCircle, { className: "w-6 h-6 text-emerald-500" }) }),
+          /* @__PURE__ */ jsx("h2", { className: "text-xl md:text-2xl font-bold text-white leading-tight mt-1", children: "Como usar esta Calculadora CLT vs PJ" })
+        ] }),
+        /* @__PURE__ */ jsx("p", { className: "text-gray-400 mb-6", children: "Para obter uma comparação precisa entre as opções de contratação, siga estes passos:" }),
+        /* @__PURE__ */ jsxs("div", { className: "grid md:grid-cols-3 gap-6", children: [
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-5 rounded-xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-emerald-400 font-bold mb-2", children: "01. Preencha o lado CLT" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "Informe seu salário bruto, benefícios (VR, VA, plano), dependentes e outros descontos em folha." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-5 rounded-xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-emerald-400 font-bold mb-2", children: "02. Preencha o lado PJ" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "Informe o faturamento mensal proposto. Use a otimização de Fator R (28%) para pagar menos imposto." })
+          ] }),
+          /* @__PURE__ */ jsxs("div", { className: "bg-white/5 p-5 rounded-xl border border-white/5", children: [
+            /* @__PURE__ */ jsx("div", { className: "text-emerald-400 font-bold mb-2", children: "03. Compare os resultados" }),
+            /* @__PURE__ */ jsx("p", { className: "text-sm text-gray-300", children: "Veja o veredito final: qual opção coloca mais dinheiro no seu bolso considerando todos os fatores." })
+          ] })
+        ] })
       ] }),
       /* @__PURE__ */ jsxs("div", { className: "max-w-4xl mx-auto space-y-12 mb-24 text-gray-300", children: [
         /* @__PURE__ */ jsxs("div", { className: "bg-[#1a1a1a]/50 backdrop-blur-xl border border-white/5 rounded-3xl p-6 md:p-10", children: [
@@ -835,4 +1001,4 @@ function CLTVsPJPage() {
 export {
   CLTVsPJPage
 };
-//# sourceMappingURL=CLTVsPJPage-Bf4gbSD7.js.map
+//# sourceMappingURL=CLTVsPJPage-8LT6zvP7.js.map
